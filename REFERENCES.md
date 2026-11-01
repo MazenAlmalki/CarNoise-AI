@@ -106,3 +106,18 @@ Additional publisher pages:
 - Earlier cited **U.S. FTC Auto Repair Basics** and **The AA** unusual car noises guide were also used.
 
 Actual implementation: `server/textRetrieval.js` performs keyword and phrase lookup, and `server/index.js` includes the retrieved content and URLs in the local Llama prompt. **CLAP, vector embeddings, FAISS, and fine-tuning are not involved in typed-text retrieval.** Nothing here has been reviewed as a confirmed mechanic service diagnosis.
+
+
+## 8. Multimodal models and runtime dependencies (November 2026)
+
+| Technology | Official source | Use in Warshatak V5 | Deployment status |
+|---|---|---|---|
+| Qwen3.5, 2B | https://ollama.com/library/qwen3.5 | Modern compact text model for natural automotive chat; independent local Ollama download needed | Integrated by model name; local runtime unverified |
+| Qwen3-VL, 2B | https://ollama.com/library/qwen3-vl | Image and extracted video frame descriptions, not sound | Integrated by model name; local runtime unverified |
+| CLAP / LAION | https://huggingface.co/docs/transformers/model_doc/clap | Zero-shot audio-to-text similarity through a separate Python process | Optional model written, OFF by default and not validated |
+| FFmpeg | https://ffmpeg.org/ | Extract up to two image frames and audio from uploaded video | User must install separately |
+| PyTorch | https://pytorch.org/get-started/locally/ | Run CLAP locally in Python | Optional, not installed for user here |
+| Hugging Face Transformers | https://huggingface.co/docs/transformers/index | CLAP implementation and processor | Optional, not installed for user here |
+| Multer | https://github.com/expressjs/multer | Multipart request upload to Node backend | Dependency added to package.json |
+
+**Sources are official vendor/project documentation.** Model capabilities vary by available build and hardware. Upgrading the app's model configuration is not equivalent to proving higher-quality diagnosis, and video/audio similarity is not a professional automotive inspection.
