@@ -33,6 +33,21 @@ function validateResult(v) {
   return {title:trim(v.title,120),summary:trim(v.summary),severity:v.severity,reasons,nextSteps,urgentSigns:strings(v.urgentSigns)};
 }
 app.get('/api/health',(_req,res)=>res.json({ok:true,llamaConfigured:true,llamaMode:process.env.LLAMA_API_URL?.trim()?'custom':'local-ollama'}));
+app.get('/api/model-status',async(_req,res)=>{
+ const chat=process.env.CHAT_MODEL?.trim()||process.env.LLAMA_MODEL?.trim()||'qwen3.5:2b';
+ const vision=process.env.VISION_MODEL?.trim()||'qwen3-vl:2b';
+ const configured={chat,vision,audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',audioModel:process.env.CLAP_MODEL?.trim()||'laion/clap-htsat-unfused'};
+ try{
+  const response=await fetch('http://127.0.0.1:11434/api/tags',{signal:AbortSignal.timeout(4000)});
+  if(!response.ok)throw Error('Ollama model listing unavailable');
+  const json=await response.json();
+  const installed=Array.isArray(json.models)?json.models.map(m=>m.name).filter(name=>typeof name==='string'):[];
+  res.json({ollamaReachable:true,configured,installed,chatInstalled:installed.includes(chat),visionInstalled:installed.includes(vision)});
+ }catch{
+  res.json({ollamaReachable:false,configured,installed:[],chatInstalled:false,visionInstalled:false});
+ }
+});
+
 app.post('/api/analyze',async(req,res)=>{
   const data=req.body||{}, description=trim(data.description,600);
   const language=data.language==='en'?'en':'ar';
@@ -100,12 +115,12 @@ app.post('/api/chat',async(req,res)=>{
       {role:'user',content:message}
     ];
     const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({model,temperature:0.35,max_tokens:450,messages,stream:false}),signal:AbortSignal.timeout(local?120000:30000)});
-    if(!response.ok){console.error('Llama chat provider:',response.status);return res.status(502).json({error:language==='en'?'Could not get an answer from Llama. Check Ollama and your installed model.':'تعذر الرد من Llama. تأكد أن Ollama شغال والنموذج محمّل.'});}
+    if(!response.ok){console.error('Llama chat provider:',response.status);return res.status(502).json({error:language==='en'?'AI model unavailable. Check Ollama and the model configured in .env.':'تعذّر الرد من مودل الذكاء الاصطناعي. تأكد أن Ollama شغال والمودل المحدد في .env محمّل.'});}
     const payload=await response.json();
     const reply=chatString(payload?.choices?.[0]?.message?.content,1900);
-    if(!reply)return res.status(502).json({error:language==='en'?'Llama returned an empty reply.':'Llama رجع رد فارغ، حاول مرة ثانية.'});
+    if(!reply)return res.status(502).json({error:language==='en'?'AI model returned an empty reply.':'المودل رجع رد فارغ، حاول مرة ثانية.'});
     return res.json({reply,knowledgeMatches:matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}))});
-  }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach Llama. Make sure Ollama is running.':'تعذر الاتصال بـ Llama، تأكد أن Ollama شغال.'});}
+  }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
 });
 
 app.use('/api',(_req,res)=>res.status(404).json({error:'مسار غير موجود.'}));
