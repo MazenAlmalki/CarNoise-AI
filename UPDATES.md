@@ -156,3 +156,12 @@ python scripts/import_kwerimoto.py
 - Deploy an accessible public version with an appropriate hosted Llama inference service.
 
 **Evidence of implementation:** GitHub commits, existing source and documentation. **Evidence still needed:** performance metrics, user study, dataset/license verification, and end-to-end screenshots or test reports. Add those as they become available rather than claiming unperformed tests.
+
+
+### Phase 7 — Typed automotive descriptions and lightweight text RAG (November 1, 2026)
+- Added **40** bilingual knowledge cards in `data/typed_symptoms_v1.json`, covering brakes, engine, cooling, steering, wheels, suspension, transmission, starting, electrical symptoms, and more.
+- Added Saudi Arabic conversational aliases (e.g., `الفرامل تحك`, `المكينة تحتر`, `السيارة ترج وهي واقفة`) and English equivalents.
+- Implemented `server/textRetrieval.js`: local Arabic-normalized keyword and phrase search (not ML embeddings).
+- Updated `server/index.js` so `POST /api/analyze` retrieves up to three candidates based on typed descriptions and forwards their source URL, possible causes, and next steps to Llama. Response now includes `knowledgeMatches` as structured metadata.
+- Source material drawn from consumer automotive advice by the U.S. FTC, AAA, The AA, and RAC. Each card contains a URL, and none claims to be mechanic-confirmed ground truth.
+- **Remaining:** test retrieval quality, Arabic aliases, and live Ollama end-to-end; build a separate emergency-rules check; evaluate false matches and add source badges in UI; no audio classification yet.
