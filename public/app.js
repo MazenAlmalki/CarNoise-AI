@@ -116,7 +116,7 @@ async function sendChat(text){
  }catch(error){
   if(state.cases.some(x=>x.id===active.id)){
    // Remove only the failed user turn so it can be retried without duplicated chat context.
-   const index=active.messages.findLastIndex(x=>x.role==='user'&&x.content===message);
+   let index=-1;for(let i=active.messages.length-1;i>=0;i--){if(active.messages[i].role==='user'&&active.messages[i].content===message){index=i;break;}}
    if(index>=0)active.messages.splice(index,1);
    persist();
   }
@@ -139,7 +139,7 @@ function renderSession(){
   $('messages').replaceChildren();$('resultBox').replaceChildren();
   $('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');
   for(const msg of session.messages)addMessage(msg.content,msg.role);
-  if(session.mediaName)addMessage((state.lang==='ar'?'مقطع محفوظ للرجوع له فقط: ':'Saved media for reference only: ')+session.mediaName,'assistant');
+  if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
   $('attachButton').disabled=true;$('recordButton').disabled=true;
   $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
