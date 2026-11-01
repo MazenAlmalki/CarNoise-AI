@@ -10,14 +10,14 @@ Warshatak (ورشتك) is an Arabic/English vehicle-noise assistant with a respo
 - Four guided questions, possible causes, urgency, safety guidance
 - Audio/video file uploads and microphone recordings, with local playback
 
-**Current audio limitation:** attachments are saved locally in IndexedDB, not sent to Llama. The default Meta Llama 3.2 model is text-only and **cannot recognize recorded vehicle sounds**. Uploaded media is for playback and reference, not automatic audio diagnosis. A separate audio model/processing pipeline is required to classify actual recordings. See `AUDIO_INTEGRATION_PLAN.md`.
+**Multimodal V5:** Files remain saved locally in IndexedDB for history, and **when the user presses Send with a new attachment**, a copy is temporarily uploaded to this Node backend for processing. Images and sampled video frames use the configured vision model. Optional CLAP may analyze audio if specifically installed and enabled. The default chat model itself **cannot listen to sound**, and similarity results are not verified diagnoses. See [`MULTIMODAL_SETUP.md`](MULTIMODAL_SETUP.md).
 
 ## Free Llama on Windows
 
-1. Install [Ollama](https://ollama.com/download).
+1. Install or update [Ollama](https://ollama.com/download).
 2. Run:
    ```powershell
-   ollama pull llama3.2:3b
+   ollama pull qwen3.5:2b
    ```
 3. From the CarNoise-AI folder:
    ```powershell
@@ -26,13 +26,13 @@ Warshatak (ورشتك) is an Arabic/English vehicle-noise assistant with a respo
    ```
 4. Open http://localhost:3000
 
-The backend defaults to `http://127.0.0.1:11434/v1/chat/completions` with the `llama3.2:3b` model and no API key. Ollama must be running locally.
+The chat backend defaults to a modern compact `qwen3.5:2b` model (unless `.env` overrides it) at `http://127.0.0.1:11434/v1/chat/completions` and no API key. Ollama must be running locally.
 
 For a cloud provider create your own `.env` using `.env.example` and set `LLAMA_API_URL`, `LLAMA_API_KEY`, and `LLAMA_MODEL`. Never commit secrets. A deployed backend cannot access Ollama on a user's own laptop through localhost.
 
 ## Data and privacy
 
-Vehicle names, issues, and AI result summaries are stored in **this browser's localStorage**; attached media is saved in **this browser's IndexedDB**. This is **not a cloud account** and data will not sync across devices. Browser clearing, storage limits, or private browsing may erase it. Descriptions, guided answers and up to five summaries of previous issues for the active car are transmitted to your configured Llama endpoint for analysis. Audio/video files are not uploaded to the backend. Choose a provider you trust and avoid putting personal identifying information in descriptions.
+Vehicle names, issues, and AI result summaries are stored in **this browser's localStorage**; attached media is saved in **this browser's IndexedDB**. This is **not a cloud account** and data will not sync across devices. Browser clearing, storage limits, or private browsing may erase it. Descriptions, guided answers and up to five summaries of previous issues for the active car are transmitted to your configured Llama endpoint for analysis. **V5 change:** When attached to the first chat message and sent, image/audio/video is temporarily uploaded to this Node server for processing; the temporary file is removed afterward. The optional audio model requires installation. External AI providers may receive text and derived media descriptions if configured. Audio/video is not silently uploaded before Send. Choose a provider you trust and avoid putting personal identifying information in descriptions.
 
 ## API
 
@@ -108,3 +108,13 @@ Run `npm.cmd run check`, then test `npm.cmd run dev` with an available Ollama mo
 - Retrieval uses a source-grounded keyword matcher, not vector-semantic RAG, and retrieved symptoms are not confirmed diagnoses.
 
 Test by running `npm.cmd run check`, `npm.cmd run dev`, then submit `السيارة ترج وهي واقفة` and follow with `وألاحظ إنها تزيد مع المكيف`. The AI should answer both without displaying the fixed multiple-choice questionnaire.
+
+
+## V5 — text, photo, video and optional sound inference (November 2026)
+- **Text chat:** `qwen3.5:2b` via Ollama; previous turns and publisher-source text retrieval; Riyadh local date inserted at request time to reduce stale-date answers.
+- **Image/video visual understanding:** `qwen3-vl:2b` via a dedicated Ollama `/api/chat` request. Video samples at 0s and 2s using FFmpeg, **not full video temporal reasoning**.
+- **Audio (optional):** Python/PyTorch/Transformers `laion/clap-htsat-unfused` scores sound-versus-text similarity; the model is **OFF by default** until installed and enabled. Similarity is not a mechanical diagnosis.
+- **Backend:** `POST /api/media/analyze` processes an uploaded media file (25MB max) with a temporary file deleted on completion. `POST /api/chat` accepts optional cautious media observations as context.
+- **Browser:** the selected media is sent **only after Send**; still retained for local history. Media processing errors produce an explicit warning and the textual conversation can continue.
+- **Actual test status:** GitHub source and configuration are updated; the user's local Ollama, FFmpeg and CLAP environments have **not** been independently tested.
+- **Setup:** [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md). Existing private `.env` must be updated manually (the example alone does not change it).
