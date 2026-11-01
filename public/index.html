@@ -47,7 +47,7 @@
       <div class="feature-strip"><div><span>✧</span><span data-i18n="featureOne">سجل لكل سيارة</span></div><div><span>⌁</span><span data-i18n="featureTwo">ملفات صوت وفيديو</span></div><div><span>◇</span><span data-i18n="featureThree">عربي وإنجليزي</span></div></div>
     </div>
     <section id="conversation" class="conversation hidden" aria-live="polite"><div id="messages" class="messages"></div><div id="questionBox" class="question-card hidden"><div class="question-top"><span id="questionCount"></span><div class="progress"><span id="questionProgress"></span></div></div><h2 id="questionText"></h2><div id="choices" class="choices"></div></div><section id="resultBox" class="results hidden"></section></section>
-    <div id="busy" class="busy hidden" role="status"><span class="spinner"></span><span data-i18n="analyzing">جاري التحليل...</span></div>
+    <div id="busy" class="busy typing-status hidden" role="status" aria-live="polite"><span class="typing-avatar" aria-hidden="true">✦</span><div class="typing-body"><span id="typingLabel" data-i18n="analyzing">جاري تجهيز الرد...</span><div class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
     <div id="errorBox" class="error-box hidden" role="alert"></div>
   </main>
   <div class="composer-area">
