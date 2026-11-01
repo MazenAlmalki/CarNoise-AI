@@ -1,45 +1,50 @@
 # CarNoise AI — وش صوت السيارة؟
 
-Arabic-first, responsive web app for exploring **possible** causes of unusual car noises. It asks four guided questions and requests an analysis from Meta Llama. Results are not confirmed diagnoses.
+An Arabic/English vehicle-noise assistant with a responsive dashboard, light/dark themes, vehicle folders and history, and optional local audio/video attachments.
 
-## Free local Meta Llama (no API key)
+## Features
+- Arabic / English user interface and Llama output (language setting preserved locally)
+- Dark / light theme (saved locally)
+- Multiple vehicles and a separate history for each
+- Previous five analyzed issues for the selected vehicle are passed to Llama as **unconfirmed context** on the next analysis
+- Four guided questions, possible causes, urgency, safety guidance
+- Audio/video file uploads and microphone recordings, with local playback
 
-1. Install Ollama for Windows from https://ollama.com/download.
-2. Open PowerShell and download the model once:
+**Current audio limitation:** attachments are saved locally in IndexedDB, not sent to Llama. The default Meta Llama 3.2 model is text-only and **cannot recognize recorded vehicle sounds**. Uploaded media is for playback and reference, not automatic audio diagnosis. A separate audio model/processing pipeline is required to classify actual recordings. See `AUDIO_INTEGRATION_PLAN.md`.
 
+## Free Llama on Windows
+
+1. Install [Ollama](https://ollama.com/download).
+2. Run:
    ```powershell
    ollama pull llama3.2:3b
    ```
-
-3. Keep Ollama running. Then in the project folder:
-
+3. From the CarNoise-AI folder:
    ```powershell
    npm.cmd install
    npm.cmd run dev
    ```
+4. Open http://localhost:3000
 
-4. Open http://localhost:3000 and complete all four questions. The app talks to Ollama at `http://127.0.0.1:11434/v1/chat/completions`.
+The backend defaults to `http://127.0.0.1:11434/v1/chat/completions` with the `llama3.2:3b` model and no API key. Ollama must be running locally.
 
-**No API key is needed for local Ollama.** The default model is `llama3.2:3b` (~2 GB download). The smaller `llama3.2:1b` model (~1.3 GB) can be selected with `LLAMA_MODEL=llama3.2:1b` in a local `.env` file after downloading it, but its quality may be lower. Arabic output and structured JSON are not guaranteed; test carefully.
+For a cloud provider create your own `.env` using `.env.example` and set `LLAMA_API_URL`, `LLAMA_API_KEY`, and `LLAMA_MODEL`. Never commit secrets. A deployed backend cannot access Ollama on a user's own laptop through localhost.
 
-## Optional cloud Llama
+## Data and privacy
 
-Copy `.env.example` to `.env`. Set `LLAMA_API_URL`, `LLAMA_API_KEY` and `LLAMA_MODEL` to your authorized provider's values. Do not commit `.env` or share API keys.
+Vehicle names, issues, and AI result summaries are stored in **this browser's localStorage**; attached media is saved in **this browser's IndexedDB**. This is **not a cloud account** and data will not sync across devices. Browser clearing, storage limits, or private browsing may erase it. Descriptions, guided answers and up to five summaries of previous issues for the active car are transmitted to your configured Llama endpoint for analysis. Audio/video files are not uploaded to the backend. Choose a provider you trust and avoid putting personal identifying information in descriptions.
 
-## Stack and API
+## API
 
-- Node.js 20+, Express, HTML, CSS, JavaScript
-- Local Meta Llama 3.2 through Ollama (or compatible cloud provider)
-- `GET /api/health` reports backend configuration, **not** actual Ollama availability.
-- `POST /api/analyze`: JSON body with `description`, `timing`, `sound`, `location`, `frequency`; returns `result` with `severity`, `reasons`, `nextSteps`, and `urgentSigns`.
+`GET /api/health`: reports backend setup (not actual Ollama readiness).
 
-## Project status
-- [x] Guided responsive Arabic UI
-- [x] Express API with validation, rate limits, errors and timeouts
-- [x] Default local Ollama adapter, no API key
-- [ ] Test against user's actual local Ollama installation
-- [ ] Deploy to a server with its own accessible Llama service for public use
+`POST /api/analyze`: JSON with `description`, Arabic canonical values for `timing`, `sound`, `location`, `frequency`, optional `language: 'ar'|'en'` and optional `history` (past case snippets). Returns `result` with `title`, `summary`, `severity` (`low`, `medium`, `high`), `reasons`, `nextSteps`, and `urgentSigns`.
 
-**Important:** A public hosted backend cannot call your laptop's `localhost`. For a deployed production app, configure a reachable hosted Ollama service or a cloud Meta Llama provider.
+## Status
 
-See `OPENCODE_TASK.md` for testing and deployment tasks.
+- [x] Bilingual responsive frontend and theme toggle
+- [x] Multi-car browser-local history and media playback
+- [x] Backend with validation, free local Ollama adapter and past issue context
+- [ ] Test all workflows against an installed Ollama model and different browsers
+- [ ] Implement specialist audio/video classification model
+- [ ] Deploy to a public host with accessible AI endpoint
