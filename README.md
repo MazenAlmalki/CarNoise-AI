@@ -57,3 +57,13 @@ Vehicle names, issues, and AI result summaries are stored in **this browser's lo
 - `DATA_COLLECTION_GUIDE.md`: field definitions, privacy, RAG and evaluation recommendations.
 
 These are starter educational reference records, not a diagnostic ground-truth dataset. The live app does not yet retrieve from these files automatically. A reliable next step is to add retrieval (RAG) using reviewed cards, then expand with actual independently verified service outcomes before QLoRA training.
+
+
+## Audio source and automotive guidance research (November 2026)
+
+- `data/audio_sources_v1.json`: **12** linked audio recordings with source attribution and licenses (10 Freesound CC0, 2 public-domain Wikimedia Commons). Audio **files are not downloaded into the repository**.
+- `data/audio_dataset_catalog_v1.json`: **4** external collection leads with documented research and license constraints.
+- `data/source_comments_v1.json`: **12** paraphrased evidence notes sourced from established automotive/consumer organizations (AAA, The AA, US FTC); not user comments or verified service cases.
+- `data/AUDIO_SOURCES_README.md`: licensing, reliability distinctions and the suggested CLAP+RAG evaluation workflow.
+
+These files are ready for review and future data ingestion; audio matching is **not yet integrated into the running app**.
