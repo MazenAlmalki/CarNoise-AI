@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { mkdir, mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
+import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
@@ -19,7 +19,7 @@ async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
 function fileExtension(type){
  const supported={
   'image/jpeg':'.jpg','image/png':'.png','image/webp':'.webp',
-  'audio/wav':'.wav','audio/x-wav':'.wav','audio/mpeg':'.mp3','audio/mp4':'.m4a','audio/ogg':'.ogg','audio/webm':'.webm',
+  'audio/wav':'.wav','audio/x-wav':'.wav','audio/mpeg':'.mp3','audio/mp4':'.m4a','audio/x-m4a':'.m4a','audio/aac':'.aac','audio/ogg':'.ogg','audio/webm':'.webm',
   'video/mp4':'.mp4','video/webm':'.webm','video/quicktime':'.mov'
  };
  return supported[type]||null;
@@ -48,9 +48,11 @@ async function videoFrames(input,temp){
  const results=[];
  for(const [index,seconds] of [0,1].entries()){
   const output=path.join(temp,'frame-'+index+'.jpg');
-  // Frames at 0s and 2s. Silent videos are still visually analyzable.
-  await runProcess(ffmpeg,['-hide_banner','-loglevel','error','-ss',String(seconds*2),'-i',input,'-frames:v','1','-vf','scale=640:-2','-y',output],{timeout:30000});
-  results.push((await readFile(output)).toString('base64'));
+  // Sample 0 and 2 seconds; clips shorter than 2s can still use frame 0.
+  try{
+   await runProcess(ffmpeg,['-hide_banner','-loglevel','error','-ss',String(seconds*2),'-i',input,'-frames:v','1','-vf','scale=640:-2','-y',output],{timeout:30000});
+   results.push((await readFile(output)).toString('base64'));
+  }catch(error){if(!results.length)throw error;}
  }
  return results;
 }
