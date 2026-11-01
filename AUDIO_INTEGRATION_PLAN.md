@@ -1,22 +1,29 @@
-# Audio/video identification plan
+# Audio and video implementation status — Warshatak V5
 
-## What works today
-- Users can choose an audio or video file (up to 25 MB) or record from a microphone.
-- The file stays inside the user's browser, stored in IndexedDB and associated with that vehicle's case.
-- Files can be replayed from the history on the same browser/device.
-- Text + guided answers and summaries of past issues are analyzed by Llama.
+**Last updated: November 2026.** This document supersedes the older V3 plan. For installation, read [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md).
 
-## Not yet implemented
-**Automated recognition of the actual recorded sound is not available.** Meta Llama 3.2:3b, the app's default Ollama model, accepts text only. Do NOT tell users the existing Llama API can listen to attachments.
+## Implemented in GitHub source
+- The user may attach an **image, audio or video** to their first message, or record with a microphone.
+- Upon clicking **Send**, a temporary copy of the attached file is uploaded to the local Express server with the user's text. The browser also saves media to IndexedDB for future playback. Maximum size is 25 MB.
+- Images are analyzed by a separately configured Ollama vision model (default `qwen3-vl:2b`).
+- Videos use FFmpeg to extract up to two **still frames** (0s and 2s) that the visual model can describe.
+- A separate optional **CLAP** audio model can compare uploaded audio to descriptions such as engine ticking and brake squeal. This requires Python, PyTorch, Transformers and FFmpeg; it is **disabled by default**.
+- The chat model uses available media observations as *tentative context*. If a media subsystem fails, the UI warns the user and continues with text-only chat.
 
-## Suggested next phase for OpenCode
-1. Add a separate audio inference component that genuinely accepts waveform data (specialized sound event detection/classification model). For video, extract the audio track safely first, and optionally allow a separate vision model to inspect visuals.
-2. Test a small, CPU-friendly automotive/audio-event classifier running locally, with clear model provenance and class label limitations.
-3. Build a media analysis API that reads bounded-size files, checks actual formats, limits duration, rate-limits and times out work, and removes temporary server files.
-4. Return `soundEvents`, model confidence and `limitations`; include the actual classifier's results as **supporting evidence** alongside user text for Llama.
-5. Confirm Arabic/English output and never treat model output as conclusive vehicle diagnostics; include risk-specific safety warnings.
-6. Require clear opt-in before transmitting recordings to any external/cloud model provider.
-7. If model or media analysis fails, display a clear message. Do not invent a recognized audio result.
+## Not yet verified or implemented
+- End-to-end working inference on the user's Windows/Ollama machine; model downloads and audio dependencies are still required.
+- A calibrated audio similarity index against over 1,000 real **rights-cleared, professionally labeled** car recordings.
+- Speech transcription from voice messages (CLAP is **not** a speech-to-text model).
+- True full-length video understanding: only sampled frames plus optional soundtrack are processed.
+- Professional mechanical fault diagnosis, repair confirmation, or measured audio-model accuracy.
+- Full production-grade media hardening, detailed consent management and public deployment.
 
-## Privacy
-Vehicle cases and media currently remain in browser storage, except text descriptions and history snippets that are sent to the configured Llama backend. Never sync or upload sound recordings silently.
+## Next development milestones
+1. Install and test the small text model, vision model, FFmpeg, and optional CLAP service on the target machine.
+2. Test real short audio and video examples while monitoring RAM usage and latency; 8 GB RAM can be restrictive.
+3. Add a separate automatic speech-recognition model if users need voice commands or dictated problem descriptions.
+4. Build rights-cleared car-noise embeddings and an evaluated similarity search against verified test cases.
+5. Add explicit media consent, robust content validation, safe storage/retention and authenticated access before public deployment.
+
+## Why a similar sound is not a diagnosis
+A CLAP score indicates how compatible audio is with a generic sound description, not that a specific car part is defective. Many components create similar sounds. Any high-risk brake, steering, fire or overheating symptoms must prioritize safe human inspection over model certainty.
