@@ -80,3 +80,35 @@ body{
 @media(prefers-reduced-motion:reduce){
  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+
+
+/* Warshatak V3: file and folder controls + animated interactions */
+.brand-name{font-family:'IBM Plex Sans Arabic',Inter,system-ui,sans-serif;direction:inherit;letter-spacing:-.2px}
+.brand-name em{font-family:Inter,sans-serif}
+.folder-item,.history-item{display:flex;align-items:center;gap:4px;position:relative;border-radius:13px;animation:folderSlide .34s cubic-bezier(.2,.8,.2,1) both}
+.folder-item:nth-child(2),.history-item:nth-child(2){animation-delay:.04s}
+.folder-item:nth-child(3),.history-item:nth-child(3){animation-delay:.08s}
+.folder-item:nth-child(4),.history-item:nth-child(4){animation-delay:.12s}
+.folder-item .car-row,.history-item .history-row{min-width:0;flex:1}
+.folder-item:hover,.history-item:hover{background:var(--panel2)}
+.delete-action{flex:0 0 28px;width:28px;height:29px;border:1px solid transparent;color:var(--subtle);background:transparent;border-radius:8px;font-size:13px;opacity:.62;transition:background .22s,color .22s,opacity .22s,transform .22s}
+.delete-action:hover,.delete-action:focus-visible{opacity:1;background:#e66a7820;border-color:#e66a7840;color:#ef8b95;transform:scale(1.08) rotate(8deg)}
+.folder-item:hover .delete-action,.history-item:hover .delete-action{opacity:1}
+.media-delete-btn{background:#e66a7815;border:1px solid #dd747d55;color:#e78b94;border-radius:10px;padding:8px 13px;font-size:12px;margin-top:10px;transition:transform .22s,background .22s}
+.media-delete-btn:hover{background:#e66a7830;transform:translateY(-2px)}
+.car-dialog[open]{animation:modalPop .38s cubic-bezier(.18,.89,.3,1.18) both}
+.car-dialog::backdrop{animation:backdropIn .28s both}
+.workspace{animation:workspaceAppear .6s ease both}
+.topbar .pill-btn:active,.tool-btn:active,.suggestion:active{transform:scale(.94)}
+.sidebar .primary-btn span:first-child{display:inline-block;transition:transform .4s}
+.sidebar .primary-btn:hover span:first-child{transform:rotate(90deg)}
+.history-item .history-row:hover,.folder-item .car-row:hover{transform:translateX(0)}
+.intro h1{filter:drop-shadow(0 4px 32px #a57df41a)}
+.brand-icon:hover{animation:brandSpin .7s cubic-bezier(.2,.8,.2,1)}
+@keyframes folderSlide{from{opacity:0;transform:translateY(9px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes modalPop{from{opacity:0;transform:translateY(25px) scale(.9)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes backdropIn{from{opacity:0}to{opacity:1}}
+@keyframes workspaceAppear{from{opacity:.3}to{opacity:1}}
+@keyframes brandSpin{50%{transform:rotate(-12deg) scale(1.08)}}
+@media(hover:none){.delete-action{opacity:1}}
+@media(prefers-reduced-motion:reduce){.folder-item,.history-item,.car-dialog[open],.car-dialog::backdrop,.workspace{animation:none!important}}
