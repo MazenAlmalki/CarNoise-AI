@@ -1,6 +1,6 @@
-# CarNoise AI — وش صوت السيارة؟
+# ورشتك | Warshatak
 
-An Arabic/English vehicle-noise assistant with a responsive dashboard, light/dark themes, vehicle folders and history, and optional local audio/video attachments.
+Warshatak (ورشتك) is an Arabic/English vehicle-noise assistant with a responsive dashboard, light/dark themes, vehicle folders and history, and optional local audio/video attachments.
 
 ## Features
 - Arabic / English user interface and Llama output (language setting preserved locally)
