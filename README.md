@@ -77,3 +77,8 @@ New in `data/`:
 - `../scripts/import_kwerimoto.py` — imports upstream KweriMoto **1,067-row manifest** into `data/imported/kwerimoto_index.jsonl` with an audit report. Run it yourself on a network-enabled machine. Only metadata is downloaded.
   
 No 1,067 individual audio files or metadata rows have been imported into this GitHub repository yet. Publisher-reported sample counts must not be confused with data already downloaded or rights-cleared. See `data/LARGE_AUDIO_COLLECTION.md`.
+
+## Project report documents
+
+- [UPDATES.md](UPDATES.md) — development timeline, actual tools used, implemented features and work still pending.
+- [REFERENCES.md](REFERENCES.md) — automotive knowledge, original audio sources, large datasets, licenses and technology references.
