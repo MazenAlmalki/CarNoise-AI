@@ -82,3 +82,15 @@ No 1,067 individual audio files or metadata rows have been imported into this Gi
 
 - [UPDATES.md](UPDATES.md) — development timeline, actual tools used, implemented features and work still pending.
 - [REFERENCES.md](REFERENCES.md) — automotive knowledge, original audio sources, large datasets, licenses and technology references.
+
+
+## Typed symptom knowledge retrieval (November 2026)
+- `data/typed_symptoms_v1.json`: **40** bilingual automotive symptom reference cards including Saudi colloquial text variations, possible causes, cautious next steps, and publisher source links.
+- `server/textRetrieval.js`: simple offline **keyword/phrase-based retrieval** from these cards, with Arabic text normalization.
+- `POST /api/analyze` now retrieves up to **3** plausible cards based on the user's typed description and includes them in the Llama request as tentative source-grounded context. The API also returns `knowledgeMatches` with source URLs for debugging / future source display.
+- The 40 cards summarize publications, **not mechanic-confirmed case diagnoses**. Keyword retrieval may miss synonyms or produce irrelevant matches; the app must never treat a match as proof of a fault.
+- **Not implemented:** audio embeddings, semantic/vector RAG, automatic audio recognition, and mechanic-verified evaluation.
+
+Example user descriptions: `السيارة ترج وهي واقفة`, `الدركسون يرج على الخط`, `الفرامل تحك`, `المكينة تحتر`, `car shakes at idle`.
+
+Run `npm.cmd run check`, then test `npm.cmd run dev` with an available Ollama model. The new retrieval code is committed but has not been tested end to end against the user's Ollama instance.
