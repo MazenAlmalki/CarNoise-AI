@@ -1,34 +1,45 @@
 # CarNoise AI — وش صوت السيارة؟
 
-Saudi-focused Arabic RTL web app that asks drivers about unusual car noises, then uses Meta Llama to suggest **possible explanations**, urgency and appropriate next steps — not a confirmed mechanical diagnosis.
+Arabic-first, responsive web app for exploring **possible** causes of unusual car noises. It asks four guided questions and requests an analysis from Meta Llama. Results are not confirmed diagnoses.
 
-## Technology
-- Frontend: responsive HTML, CSS, vanilla JavaScript
-- Backend: Node.js 20+, Express
-- AI: Meta Llama via configurable OpenAI-compatible chat completion API
+## Free local Meta Llama (no API key)
 
-## Get started
-```bash
-npm install
-cp .env.example .env
-npm run dev
-```
-On PowerShell, use `Copy-Item .env.example .env`.
-Open http://localhost:3000
+1. Install Ollama for Windows from https://ollama.com/download.
+2. Open PowerShell and download the model once:
 
-Populate `LLAMA_API_URL`, `LLAMA_API_KEY`, `LLAMA_MODEL` inside `.env`. Do not commit keys.
+   ```powershell
+   ollama pull llama3.2:3b
+   ```
 
-## API
-- `GET /api/health`
-- `POST /api/analyze`: JSON with `description`, `timing`, `sound`, `location`, `frequency`.
-- Response: `{ "result": { "title":"...", "summary":"...", "severity":"low|medium|high", "reasons":[{"title":"...", "explanation":"..."}], "nextSteps":["..."], "urgentSigns":["..."] }, "poweredBy":"Llama" }`.
+3. Keep Ollama running. Then in the project folder:
 
-The guided UI works before Llama configuration, but actual analysis requires the real provider. The app reports a configuration error rather than showing fabricated analysis.
+   ```powershell
+   npm.cmd install
+   npm.cmd run dev
+   ```
 
-## Status
-- [x] Responsive Arabic chat interface and guided questions
-- [x] API, input validation, loading/errors, Llama adapter
-- [ ] Verify real Llama model with OpenCode
-- [ ] Deploy publicly and test end-to-end
+4. Open http://localhost:3000 and complete all four questions. The app talks to Ollama at `http://127.0.0.1:11434/v1/chat/completions`.
 
-Follow `OPENCODE_TASK.md` for the next steps.
+**No API key is needed for local Ollama.** The default model is `llama3.2:3b` (~2 GB download). The smaller `llama3.2:1b` model (~1.3 GB) can be selected with `LLAMA_MODEL=llama3.2:1b` in a local `.env` file after downloading it, but its quality may be lower. Arabic output and structured JSON are not guaranteed; test carefully.
+
+## Optional cloud Llama
+
+Copy `.env.example` to `.env`. Set `LLAMA_API_URL`, `LLAMA_API_KEY` and `LLAMA_MODEL` to your authorized provider's values. Do not commit `.env` or share API keys.
+
+## Stack and API
+
+- Node.js 20+, Express, HTML, CSS, JavaScript
+- Local Meta Llama 3.2 through Ollama (or compatible cloud provider)
+- `GET /api/health` reports backend configuration, **not** actual Ollama availability.
+- `POST /api/analyze`: JSON body with `description`, `timing`, `sound`, `location`, `frequency`; returns `result` with `severity`, `reasons`, `nextSteps`, and `urgentSigns`.
+
+## Project status
+- [x] Guided responsive Arabic UI
+- [x] Express API with validation, rate limits, errors and timeouts
+- [x] Default local Ollama adapter, no API key
+- [ ] Test against user's actual local Ollama installation
+- [ ] Deploy to a server with its own accessible Llama service for public use
+
+**Important:** A public hosted backend cannot call your laptop's `localhost`. For a deployed production app, configure a reachable hosted Ollama service or a cloud Meta Llama provider.
+
+See `OPENCODE_TASK.md` for testing and deployment tasks.
