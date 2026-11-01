@@ -189,3 +189,8 @@ python scripts/import_kwerimoto.py
 - Privacy change: media retained in browser IndexedDB and **temporarily uploaded to the app backend upon Send**. Local temporary files are removed after inference. Real production deployment needs privacy/security review and user consent design.
 - Added `MULTIMODAL_SETUP.md` with Windows installation instructions and model limitations; updated UI labels, README, and model settings.
 - **Unverified:** required models installed on the user's laptop, end-to-end real inference, performance with 8 GB RAM, FFmpeg runtime, and optional Python CLAP dependencies. Audio matching is OFF by default until setup.
+
+
+- Added `GET /api/model-status` to report local Ollama reachability, configured text/vision models and installed tags (not a full inference test).
+- Improved low-memory behavior by unloading the vision model after its request, and enabled file-only media submissions without mandatory text.
+- Updated sidebar privacy notice to distinguish local vehicle history from temporary upload of user-submitted attachments.
