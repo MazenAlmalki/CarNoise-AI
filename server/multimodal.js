@@ -35,7 +35,7 @@ async function visualDescription(images,language){
  const model=process.env.VISION_MODEL?.trim()||'qwen3-vl:2b';
  const instruction=language==='en'?'Describe only directly visible vehicle parts, lights and events in these still frames, briefly. Do not guess a mechanical fault or pretend you heard any audio.':'صف الأجزاء والعلامات والأحداث المرئية فقط في هذه الصور بإيجاز. لا تفترض عطلًا ميكانيكيًا ولا تدّع سماع الصوت.';
  const response=await fetch(host+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({model,stream:false,messages:[{role:'user',content:instruction,images}],options:{num_predict:200}}),
+  body:JSON.stringify({model,stream:false,keep_alive:0,messages:[{role:'user',content:instruction,images}],options:{num_predict:200}}),
   signal:AbortSignal.timeout(120000)});
  if(!response.ok)throw new Error('Vision model unavailable. Install it with ollama pull '+model);
  const data=await response.json();
