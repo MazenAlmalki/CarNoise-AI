@@ -32,6 +32,7 @@ function validateResult(v) {
 app.get('/api/health',(_req,res)=>res.json({ok:true,llamaConfigured:true,llamaMode:process.env.LLAMA_API_URL?.trim()?'custom':'local-ollama'}));
 app.post('/api/analyze',async(req,res)=>{
   const data=req.body||{}, description=trim(data.description,600);
+  const language=data.language==='en'?'en':'ar';
   if(description.length<8) return res.status(400).json({error:'اكتب وصفًا للصوت من 8 أحرف على الأقل.'});
   for(const [key,values] of Object.entries(choices)) if(!values.includes(data[key])) return res.status(400).json({error:'أكمل جميع أسئلة وصف الصوت أولًا.'});
   const LLAMA_API_URL=process.env.LLAMA_API_URL?.trim() || 'http://127.0.0.1:11434/v1/chat/completions';
@@ -44,7 +45,7 @@ app.post('/api/analyze',async(req,res)=>{
     if(!isLocal && !LLAMA_API_KEY) return res.status(503).json({error:'أضف مفتاح مزود Llama في .env.'});
     const headers={'Content-Type':'application/json'};
     if(LLAMA_API_KEY) headers.Authorization='Bearer '+LLAMA_API_KEY;
-    const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({model:LLAMA_MODEL,temperature:0.25,max_tokens:1200,response_format:{type:'json_object'},messages:[{role:'system',content:prompt},{role:'user',content:JSON.stringify({description,timing:data.timing,sound:data.sound,location:data.location,frequency:data.frequency})}]}),signal:AbortSignal.timeout(isLocal?120000:30000)});
+    const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({model:LLAMA_MODEL,temperature:0.25,max_tokens:1200,response_format:{type:'json_object'},messages:[{role:'system',content:prompt+(language==='en'?' Write every user-visible value in clear English, including title, summary, reasons, nextSteps, urgentSigns. Keep JSON keys in English.':' اكتب جميع النصوص بالعربية.')},{role:'user',content:JSON.stringify({description,timing:data.timing,sound:data.sound,location:data.location,frequency:data.frequency})}]}),signal:AbortSignal.timeout(isLocal?120000:30000)});
     if(!response.ok){console.error('Llama provider:',response.status);return res.status(502).json({error:isLocal?'تأكد أنك حمّلت نموذج llama3.2:3b باستخدام Ollama.':'خدمة Llama غير متاحة حاليًا، جرّب لاحقًا.'});}
     const json=await response.json();
     let raw=json?.choices?.[0]?.message?.content;
