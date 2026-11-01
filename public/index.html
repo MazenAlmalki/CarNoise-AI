@@ -20,7 +20,7 @@
   <div id="carList" class="car-list"></div>
   <div class="side-label history-heading"><span data-i18n="history">سجل المشاكل</span><span id="historyCount" class="count">0</span></div>
   <div id="historyList" class="history-list"></div>
-  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">بيانات سياراتك محفوظة على هذا الجهاز فقط.</span></div><div class="made">ورشتك <span>·</span> V3</div></div>
+  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">بيانات سياراتك محفوظة على هذا الجهاز فقط.</span></div><div class="made">ورشتك <span>·</span> V4</div></div>
 </aside>
 <div id="overlay" class="overlay hidden"></div>
 <div class="workspace">
@@ -37,7 +37,7 @@
       <div class="hero-glow"></div>
       <div class="eyebrow"><span class="spark">✦</span><span data-i18n="eyebrow">افهم سيارتك بشكل أفضل</span></div>
       <h1 data-i18n-html="heroTitle">سيارتك تتكلم.<br><span>خلّنا نفهمها.</span></h1>
-      <p class="subtitle" data-i18n="heroDescription">وصف سريع للصوت، وأسئلة بسيطة، واحتمالات تساعدك تتصرف صح.</p>
+      <p class="subtitle" data-i18n="heroDescription">تكلم مع ورشتك عن مشكلة سيارتك، واسأل وناقش على راحتك.</p>
       <div class="prompt-label" data-i18n="tryExample">ابدأ بصوت تسمعه</div>
       <div class="suggestions">
         <button class="suggestion" data-example="brakes"><span class="suggest-icon orange">◉</span><span data-i18n="exampleBrakes">صرير الفرامل</span><b>↗</b></button>
@@ -53,8 +53,8 @@
   <div class="composer-area">
     <div id="mediaPreview" class="media-preview hidden"></div>
     <form id="composer" class="composer">
-      <div class="composer-main"><textarea id="description" rows="2" maxlength="600" data-i18n-placeholder="inputPlaceholder" placeholder="وش الصوت اللي تسمعه؟"></textarea></div>
-      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach audio/video" aria-label="Attach audio/video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">حلّل الصوت</span><span>↗</span></button></div>
+      <div class="composer-main"><textarea id="description" rows="2" maxlength="600" data-i18n-placeholder="inputPlaceholder" placeholder="وش المشكلة اللي تواجهك في السيارة؟"></textarea></div>
+      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach audio/video" aria-label="Attach audio/video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">إرسال</span><span>↗</span></button></div>
     </form>
     <p class="footer-note" data-i18n="disclaimer">النتائج احتمالية وليست تشخيصًا. المقاطع تُحفظ محليًا ولا يحللها Llama النصي بعد.</p>
   </div>
