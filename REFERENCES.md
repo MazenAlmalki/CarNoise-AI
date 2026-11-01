@@ -90,3 +90,19 @@ For deeper collection notes, see `data/AUDIO_SOURCES_README.md`, `data/LARGE_AUD
 - Respect individual dataset licenses, access restrictions, privacy, and reuse rights.
 - Never claim that uploading audio currently produces a recognized mechanical fault. It does not.
 - Cite the original publisher page and author for each reused asset; review source accuracy and licensing again before final submission.
+
+
+## 7. Added typed-symptom source coverage (November 1, 2026)
+
+`data/typed_symptoms_v1.json` contains 40 bilingual, source-linked cards for users who **type a problem description**. Cards are paraphrases and suggestions, not verified diagnoses or actual repair outcomes.
+
+Additional publisher pages:
+- AAA — tune-up warning signs: https://mwg.aaa.com/automotive/auto-repair/articles/car-tune-up-warning-signs-checklist
+- AAA — car will not start: https://ww1.aaa.com/autorepair/articles/14-reasons-why-your-car-wont-start
+- AAA — maintenance warning signs: https://exchange.aaa.com/adulting-with-aaa/car-care/the-what-when-and-why-of-car-maintenance/
+- AAA — recognizing common mechanical problems: https://ace.aaa.com/automotive/advocacy/recognize-symptoms-most-common-car-mechanical-problems.html
+- AAA Club Alliance — warning signs: https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore
+- RAC — unusual vehicle noises: https://www.rac.co.uk/drive/advice/know-how/guide-to-unusual-vehicle-noises/
+- Earlier cited **U.S. FTC Auto Repair Basics** and **The AA** unusual car noises guide were also used.
+
+Actual implementation: `server/textRetrieval.js` performs keyword and phrase lookup, and `server/index.js` includes the retrieved content and URLs in the local Llama prompt. **CLAP, vector embeddings, FAISS, and fine-tuning are not involved in typed-text retrieval.** Nothing here has been reviewed as a confirmed mechanic service diagnosis.
