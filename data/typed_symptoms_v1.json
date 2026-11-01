@@ -1,0 +1,993 @@
+[
+  {
+    "id": "T001",
+    "category": "brakes",
+    "symptom_ar": "صوت صرير عند الضغط على الفرامل",
+    "symptom_en": "Squeal when braking",
+    "aliases": [
+      "الفرامل تصفر",
+      "الفحمات تصفر",
+      "صوت مع الفرامل",
+      "brake squeal",
+      "brakes squeaking"
+    ],
+    "possible_causes_ar": [
+      "قد يتعلق بتآكل فحمات الفرامل أو احتكاك مؤقت؛ الصوت وحده لا يحدد السبب"
+    ],
+    "possible_causes_en": [
+      "Could relate to brake pad wear or temporary friction; sound alone cannot confirm a fault"
+    ],
+    "safe_next_step_ar": "اطلب فحص الفرامل إذا استمر الصرير",
+    "safe_next_step_en": "Request a brake inspection if it persists",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T002",
+    "category": "brakes",
+    "symptom_ar": "طحن معدني عند الفرملة",
+    "symptom_en": "Grinding while braking",
+    "aliases": [
+      "الفرامل تحك",
+      "صوت حديد بالفرامل",
+      "حكة لما افرمل",
+      "brakes grinding",
+      "scraping brake"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بتآكل أجزاء الفرامل أو وجود جسم غريب قرب القرص"
+    ],
+    "possible_causes_en": [
+      "May involve worn brake parts or debris near the disc"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا عاجلًا للفرامل وتوقف بأمان إن تأثرت قدرتها على الإيقاف",
+    "safe_next_step_en": "Get prompt brake inspection; stop safely if braking is impaired",
+    "urgency_hint": "high",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T003",
+    "category": "brakes",
+    "symptom_ar": "دعسة الفرامل صارت إسفنجية",
+    "symptom_en": "Spongy brake pedal",
+    "aliases": [
+      "دعسة الفرامل لينة",
+      "الفرامل ضعيفة",
+      "البريك لين",
+      "spongy brake",
+      "soft brake pedal"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على مشكلة تستدعي فحص نظام الفرامل؛ لا يمكن تحديدها بالنص"
+    ],
+    "possible_causes_en": [
+      "May indicate a brake system fault that requires inspection"
+    ],
+    "safe_next_step_ar": "لا تواصل القيادة عند ضعف الفرملة واطلب مساعدة مختصة",
+    "safe_next_step_en": "Do not continue driving if braking is compromised; seek professional assistance",
+    "urgency_hint": "high",
+    "source_url": "https://exchange.aaa.com/adulting-with-aaa/car-care/the-what-when-and-why-of-car-maintenance/",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T004",
+    "category": "brakes",
+    "symptom_ar": "دعسة الفرامل تنزل للأرض",
+    "symptom_en": "Brake pedal sinks to floor",
+    "aliases": [
+      "الفرامل تغوص",
+      "البريك يوصل تحت",
+      "brake pedal sinks",
+      "brake pedal to floor"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى خلل خطير في نظام الفرامل"
+    ],
+    "possible_causes_en": [
+      "May indicate a serious braking-system problem"
+    ],
+    "safe_next_step_ar": "توقف بأمان ولا تقد السيارة حتى يفحصها مختص",
+    "safe_next_step_en": "Stop safely and avoid driving until professionally inspected",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T005",
+    "category": "brakes",
+    "symptom_ar": "السيارة تسحب يمين أو يسار عند الفرملة",
+    "symptom_en": "Car pulls when braking",
+    "aliases": [
+      "السيارة تحدف مع البريك",
+      "تسحب يمين اذا فرملت",
+      "تسحب يسار بالفرامل",
+      "pulls while braking"
+    ],
+    "possible_causes_ar": [
+      "قد يتعلق بتفاوت الفرملة أو مشكلة في نظام الفرامل"
+    ],
+    "possible_causes_en": [
+      "May reflect uneven braking or related brake-system problems"
+    ],
+    "safe_next_step_ar": "اطلب تقييمًا سريعًا من فني؛ إذا تأثر التحكم توقف بأمان",
+    "safe_next_step_en": "Arrange prompt inspection; stop safely if steering or braking is affected",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T006",
+    "category": "brakes",
+    "symptom_ar": "رجفة في المقود أثناء الفرملة",
+    "symptom_en": "Steering wheel vibration when braking",
+    "aliases": [
+      "المقود يرج عند البريك",
+      "دركسون يرج مع الفرامل",
+      "steering vibration when braking"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بأقراص الفرامل أو أجزاء أخرى تحتاج فحصًا"
+    ],
+    "possible_causes_en": [
+      "May involve brake rotors or other components"
+    ],
+    "safe_next_step_ar": "اطلب فحص الفرامل والعجلات",
+    "safe_next_step_en": "Have the brakes and wheels inspected",
+    "urgency_hint": "medium",
+    "source_url": "https://exchange.aaa.com/adulting-with-aaa/car-care/the-what-when-and-why-of-car-maintenance/",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T007",
+    "category": "brakes",
+    "symptom_ar": "لمبة تحذير الفرامل شغالة",
+    "symptom_en": "Brake warning lamp on",
+    "aliases": [
+      "لمبة البريك",
+      "لمبة الفرامل حمراء",
+      "brake warning light"
+    ],
+    "possible_causes_ar": [
+      "يشير إلى تحذير بنظام الفرامل أو حالة تتطلب التحقق من دليل السيارة"
+    ],
+    "possible_causes_en": [
+      "Indicates a brake-related warning that needs professional assessment"
+    ],
+    "safe_next_step_ar": "إذا صاحبه ضعف في الفرامل فتوقف بأمان واطلب مساعدة",
+    "safe_next_step_en": "If braking is impaired, stop safely and get assistance",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T008",
+    "category": "engine",
+    "symptom_ar": "المحرك يرج عند الوقوف",
+    "symptom_en": "Engine shakes at idle",
+    "aliases": [
+      "السيارة ترج وهي واقفة",
+      "نتعة عند الوقوف",
+      "الماكينة ترج",
+      "rough idle",
+      "car shaking at idle"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بخلل في أداء المحرك أو الاشتعال؛ توجد أسباب متعددة"
+    ],
+    "possible_causes_en": [
+      "May relate to rough engine operation or ignition issues; many causes are possible"
+    ],
+    "safe_next_step_ar": "اطلب فحص المحرك إذا استمرت الرجفة أو زادت",
+    "safe_next_step_en": "Arrange an engine inspection if persistent or worsening",
+    "urgency_hint": "medium",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T009",
+    "category": "engine",
+    "symptom_ar": "السيارة تطفي فجأة عند الوقوف",
+    "symptom_en": "Engine stalls at idle",
+    "aliases": [
+      "السيارة تفصل عند الإشارة",
+      "المكينة تطفي لحالها",
+      "engine stalling",
+      "car stalls"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى مشكلة في تشغيل المحرك أو أنظمته"
+    ],
+    "possible_causes_en": [
+      "May indicate an engine running or related system problem"
+    ],
+    "safe_next_step_ar": "توقف بمكان آمن واطلب فحصًا؛ تجنب القيادة عند التوقف المتكرر",
+    "safe_next_step_en": "Stop in a safe location and request an inspection; avoid driving if stalling repeats",
+    "urgency_hint": "high",
+    "source_url": "https://mwg.aaa.com/automotive/auto-repair/articles/car-tune-up-warning-signs-checklist",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T010",
+    "category": "engine",
+    "symptom_ar": "عزم السيارة ضعيف عند الدعس",
+    "symptom_en": "Poor acceleration",
+    "aliases": [
+      "السيارة مكتومة",
+      "ما تسحب",
+      "ضعف العزم",
+      "poor acceleration",
+      "sluggish car"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بمشكلة في أداء المحرك أو نقل القوة"
+    ],
+    "possible_causes_en": [
+      "May reflect an engine performance or power-delivery issue"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا لدى مختص خاصة مع ظهور لمبة المكينة",
+    "safe_next_step_en": "Have the vehicle inspected, especially if a warning light appears",
+    "urgency_hint": "medium",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T011",
+    "category": "engine",
+    "symptom_ar": "لمبة المكينة مضاءة",
+    "symptom_en": "Check engine light on",
+    "aliases": [
+      "لمبة تشيك انجن",
+      "لمبة المحرك",
+      "check engine light",
+      "engine light"
+    ],
+    "possible_causes_ar": [
+      "يشير إلى أن نظام التشخيص اكتشف حالة تتطلب فحصًا ولا يحدد وحده القطعة التالفة"
+    ],
+    "possible_causes_en": [
+      "The diagnostic system has detected a condition needing assessment; the light alone does not identify the failed part"
+    ],
+    "safe_next_step_ar": "احجز فحصًا باستخدام معدات تشخيص مناسبة",
+    "safe_next_step_en": "Arrange a diagnostic inspection",
+    "urgency_hint": "medium",
+    "source_url": "https://mwg.aaa.com/automotive/auto-repair/articles/car-tune-up-warning-signs-checklist",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T012",
+    "category": "engine",
+    "symptom_ar": "لمبة ضغط الزيت الحمراء مضاءة",
+    "symptom_en": "Red oil pressure warning",
+    "aliases": [
+      "لمبة الزيت حمراء",
+      "ضغط الزيت",
+      "red oil light",
+      "oil pressure warning"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى انخفاض ضغط الزيت واحتمال ضرر للمحرك"
+    ],
+    "possible_causes_en": [
+      "May indicate low oil pressure and a risk of engine damage"
+    ],
+    "safe_next_step_ar": "توقف بأمان وأطفئ المحرك واطلب مساعدة فنية",
+    "safe_next_step_en": "Stop safely, switch off the engine, and get professional help",
+    "urgency_hint": "high",
+    "source_url": "https://ace.aaa.com/automotive/advocacy/recognize-symptoms-most-common-car-mechanical-problems.html",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T013",
+    "category": "engine",
+    "symptom_ar": "حرارة المكينة مرتفعة",
+    "symptom_en": "Engine overheating",
+    "aliases": [
+      "المكينة تحتر",
+      "مؤشر الحرارة فوق",
+      "engine overheating",
+      "temperature gauge high"
+    ],
+    "possible_causes_ar": [
+      "ارتفاع حرارة المحرك قد يرتبط بنظام التبريد"
+    ],
+    "possible_causes_en": [
+      "Overheating can involve the cooling system"
+    ],
+    "safe_next_step_ar": "توقف بأمان وأطفئ المحرك ولا تفتح غطاء نظام تبريد ساخن",
+    "safe_next_step_en": "Stop safely, switch off the engine, and never open a hot cooling system",
+    "urgency_hint": "high",
+    "source_url": "https://ace.aaa.com/automotive/advocacy/recognize-symptoms-most-common-car-mechanical-problems.html",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T014",
+    "category": "engine",
+    "symptom_ar": "طقطقة مستمرة من المحرك وهو شغال",
+    "symptom_en": "Engine ticking while running",
+    "aliases": [
+      "طقطقة المكينة",
+      "تك تك من المحرك",
+      "engine ticking",
+      "engine tapping"
+    ],
+    "possible_causes_ar": [
+      "قد ترتبط بمستوى الزيت أو أجزاء أخرى داخل المحرك"
+    ],
+    "possible_causes_en": [
+      "May involve oil level or other internal engine components"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا إذا استمرت الطقطقة بعد الإحماء",
+    "safe_next_step_en": "Have the engine inspected if ticking persists after warm-up",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T015",
+    "category": "engine",
+    "symptom_ar": "طرق قوي من المحرك",
+    "symptom_en": "Heavy engine knocking",
+    "aliases": [
+      "دق قوي بالمكينة",
+      "المكينة تدق",
+      "engine knocking",
+      "heavy knock"
+    ],
+    "possible_causes_ar": [
+      "قد يكون علامة على خلل مهم في أجزاء المحرك"
+    ],
+    "possible_causes_en": [
+      "May indicate a significant internal engine or related problem"
+    ],
+    "safe_next_step_ar": "توقف بأمان واطلب تقييمًا عاجلًا بدل متابعة القيادة",
+    "safe_next_step_en": "Stop safely and seek urgent professional assessment",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T016",
+    "category": "engine",
+    "symptom_ar": "صوت صفير مرتبط بدورات المحرك",
+    "symptom_en": "Squeal following engine RPM",
+    "aliases": [
+      "صوت صفير مع الدعس",
+      "سير يصفر",
+      "belt squeal",
+      "engine squealing"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بسير ملحقات المحرك في السيارات المجهزة به"
+    ],
+    "possible_causes_en": [
+      "May be associated with an accessory belt where fitted"
+    ],
+    "safe_next_step_ar": "اطلب فحص نظام السيور في الورشة",
+    "safe_next_step_en": "Have the belt system checked",
+    "urgency_hint": "medium",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T017",
+    "category": "engine",
+    "symptom_ar": "صوت طقطقة بعد إطفاء السيارة",
+    "symptom_en": "Clicking after engine shutoff",
+    "aliases": [
+      "طقطقة بعد اطفي المكينه",
+      "صوت بعد اطفاء المحرك",
+      "clicking after shutdown"
+    ],
+    "possible_causes_ar": [
+      "قد يكون صوت تمدد وانكماش أثناء تبريد مكونات المحرك؛ استمرار صوت غير معتاد يستحق فحصًا"
+    ],
+    "possible_causes_en": [
+      "May be normal thermal cooling sounds, although persistent unusual noise should be checked"
+    ],
+    "safe_next_step_ar": "إذا صاحب الصوت تسريب أو رائحة أو بخار ابتعد واطلب فحصًا",
+    "safe_next_step_en": "If accompanied by leaks, strong smells, or steam, stay clear and seek help",
+    "urgency_hint": "low",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T018",
+    "category": "engine",
+    "symptom_ar": "أسمع فحيحًا من تحت الكبوت",
+    "symptom_en": "Hissing under hood",
+    "aliases": [
+      "هس هس من المكينه",
+      "فحيح من المحرك",
+      "hissing under bonnet",
+      "sizzling under hood"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بتسرب سوائل أو هواء؛ لا يمكن تحديد المصدر دون فحص"
+    ],
+    "possible_causes_en": [
+      "Could be a fluid or air leak; the source cannot be confirmed remotely"
+    ],
+    "safe_next_step_ar": "لا تلمس أجزاء ساخنة ولا تفتح أنظمة مضغوطة واطلب فحصًا",
+    "safe_next_step_en": "Do not touch hot parts or open pressurized systems; seek inspection",
+    "urgency_hint": "high",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T019",
+    "category": "starting",
+    "symptom_ar": "المحرك ما يشتغل ويطلع نقر سريع",
+    "symptom_en": "Rapid clicking, no start",
+    "aliases": [
+      "السيارة ما تدق سلف",
+      "تك تك لما اشغل",
+      "rapid clicking no start"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بضعف البطارية أو توصيلات نظام التشغيل"
+    ],
+    "possible_causes_en": [
+      "May relate to a weak battery or starting circuit"
+    ],
+    "safe_next_step_ar": "اطلب فحص البطارية ونظام التشغيل",
+    "safe_next_step_en": "Have the battery and starting system checked",
+    "urgency_hint": "medium",
+    "source_url": "https://ww1.aaa.com/autorepair/articles/14-reasons-why-your-car-wont-start",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T020",
+    "category": "starting",
+    "symptom_ar": "السلف يدور لكن السيارة ما تشتغل",
+    "symptom_en": "Cranks but won't start",
+    "aliases": [
+      "تدق سلف وما تشتغل",
+      "يدور السلف بس ما تقوم",
+      "cranks no start"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بعدة أنظمة مثل الاشتعال أو الوقود أو إدارة المحرك"
+    ],
+    "possible_causes_en": [
+      "Several systems could be involved, including ignition, fuel delivery or control"
+    ],
+    "safe_next_step_ar": "اطلب تشخيصًا متخصصًا؛ لا تفترض أن البطارية وحدها السبب",
+    "safe_next_step_en": "Seek professional diagnosis; do not assume the battery alone is responsible",
+    "urgency_hint": "medium",
+    "source_url": "https://ww1.aaa.com/autorepair/articles/14-reasons-why-your-car-wont-start",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T021",
+    "category": "starting",
+    "symptom_ar": "صعوبة تشغيل السيارة صباحًا",
+    "symptom_en": "Hard starting in morning",
+    "aliases": [
+      "تتأخر بالتشغيل الصبح",
+      "تحتاج محاولات عشان تشتغل",
+      "hard starting"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بالبطارية أو نظام التشغيل أو إدارة المحرك"
+    ],
+    "possible_causes_en": [
+      "May relate to battery, starting, or engine management systems"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا إذا تكرر الأمر",
+    "safe_next_step_en": "Arrange an inspection if it repeats",
+    "urgency_hint": "medium",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T022",
+    "category": "electrical",
+    "symptom_ar": "الأنوار تضعف مع الوقوف",
+    "symptom_en": "Headlights dim at idle",
+    "aliases": [
+      "النور يضعف بالإشارة",
+      "اللمبات تخفت",
+      "headlights dim at idle"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى مشكلة في منظومة الشحن أو كهرباء السيارة"
+    ],
+    "possible_causes_en": [
+      "May indicate a charging or electrical system problem"
+    ],
+    "safe_next_step_ar": "اطلب اختبارًا للنظام الكهربائي والشحن",
+    "safe_next_step_en": "Have the electrical charging system checked",
+    "urgency_hint": "medium",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T023",
+    "category": "electrical",
+    "symptom_ar": "البطارية تفضى باستمرار",
+    "symptom_en": "Battery repeatedly dies",
+    "aliases": [
+      "البطارية تنام",
+      "كل شوي اشحن البطارية",
+      "battery keeps dying"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على ضعف البطارية أو مشكلة في الشحن أو استهلاك كهربائي"
+    ],
+    "possible_causes_en": [
+      "May involve battery condition, charging, or electrical drain"
+    ],
+    "safe_next_step_ar": "اطلب فحص البطارية والشحن والاستهلاك الكهربائي",
+    "safe_next_step_en": "Request a battery, charging, and parasitic-drain assessment",
+    "urgency_hint": "medium",
+    "source_url": "https://ww1.aaa.com/autorepair/articles/14-reasons-why-your-car-wont-start",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T024",
+    "category": "wheels",
+    "symptom_ar": "رجفة بالمقود على السرعات",
+    "symptom_en": "Steering wheel shakes at speed",
+    "aliases": [
+      "الدركسون يرج على الخط",
+      "اهتزاز على سرعة عالية",
+      "steering wheel vibration highway"
+    ],
+    "possible_causes_ar": [
+      "قد ترتبط بعدم اتزان العجلات أو حالة الإطارات"
+    ],
+    "possible_causes_en": [
+      "May relate to wheel imbalance or tire condition"
+    ],
+    "safe_next_step_ar": "اطلب فحص الإطارات وترصيص العجلات؛ إذا ساء التحكم توقف بأمان",
+    "safe_next_step_en": "Have tires and wheel balance checked; stop safely if handling worsens",
+    "urgency_hint": "medium",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T025",
+    "category": "wheels",
+    "symptom_ar": "ونة تزيد مع السرعة",
+    "symptom_en": "Humming increases with speed",
+    "aliases": [
+      "صوت ونه عالخط",
+      "ونة من الكفرات",
+      "rumbling with speed",
+      "wheel humming"
+    ],
+    "possible_causes_ar": [
+      "قد ترتبط بمحامل العجلات أو الإطارات"
+    ],
+    "possible_causes_en": [
+      "May relate to wheel bearings or tire condition"
+    ],
+    "safe_next_step_ar": "اطلب فحص العجلات والإطارات في الورشة",
+    "safe_next_step_en": "Have wheels and tires inspected",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T026",
+    "category": "wheels",
+    "symptom_ar": "صوت خبط إيقاعي من الإطار",
+    "symptom_en": "Slapping sound from wheel",
+    "aliases": [
+      "طق طق من الكفر",
+      "صوت كفر يضرب",
+      "slapping tire noise"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على تلف أو انخفاض ضغط الإطار"
+    ],
+    "possible_causes_en": [
+      "May indicate tire damage or low pressure"
+    ],
+    "safe_next_step_ar": "توقف بأمان وافحص الإطار لدى مختص؛ لا تتابع إن بدا تالفًا",
+    "safe_next_step_en": "Stop safely and seek tire inspection; do not continue if the tire appears damaged",
+    "urgency_hint": "high",
+    "source_url": "https://www.rac.co.uk/drive/advice/know-how/guide-to-unusual-vehicle-noises/",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T027",
+    "category": "suspension",
+    "symptom_ar": "طقطقة عند المطبات",
+    "symptom_en": "Clunking over bumps",
+    "aliases": [
+      "خبط على المطبات",
+      "طق عند الحفرة",
+      "suspension clunk",
+      "clunk over bumps"
+    ],
+    "possible_causes_ar": [
+      "قد ترتبط بأجزاء التعليق أو تثبيت العادم"
+    ],
+    "possible_causes_en": [
+      "May involve suspension parts or exhaust mounting"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا لنظام التعليق وتثبيتات العادم",
+    "safe_next_step_en": "Have the suspension and exhaust mounts checked",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T028",
+    "category": "suspension",
+    "symptom_ar": "السيارة تميل أو تتمايل كثيرًا",
+    "symptom_en": "Car sways or handles poorly",
+    "aliases": [
+      "السيارة تعوم",
+      "تميل بالمنعطفات",
+      "poor handling",
+      "car wandering"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بالإطارات أو نظام التعليق أو ضبط العجلات"
+    ],
+    "possible_causes_en": [
+      "May involve tire condition, suspension, or alignment"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا؛ إذا أصبح التحكم غير آمن فتوقف بأمان",
+    "safe_next_step_en": "Get an inspection; stop safely if control becomes unsafe",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T029",
+    "category": "steering",
+    "symptom_ar": "صوت عند لف الدركسون",
+    "symptom_en": "Noise when turning steering wheel",
+    "aliases": [
+      "طقطقة اذا لفيت",
+      "صرير مع لف المقود",
+      "noise steering",
+      "grinding when turning"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بأجزاء التوجيه أو أنظمة المساعدة حسب نوع السيارة"
+    ],
+    "possible_causes_en": [
+      "May involve steering components or assistance systems depending on vehicle"
+    ],
+    "safe_next_step_ar": "افحص نظام التوجيه، خصوصًا مع صعوبة التحريك",
+    "safe_next_step_en": "Have steering inspected, especially if turning becomes difficult",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T030",
+    "category": "steering",
+    "symptom_ar": "المقود ثقيل فجأة",
+    "symptom_en": "Sudden hard steering",
+    "aliases": [
+      "الدركسون قفل",
+      "المقود صار ثقيل",
+      "hard steering",
+      "lost steering assist"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى مشكلة خطيرة في نظام التوجيه أو المساعدة"
+    ],
+    "possible_causes_en": [
+      "May indicate a serious steering or assist-system fault"
+    ],
+    "safe_next_step_ar": "توقف بأمان ولا تواصل القيادة قبل الفحص",
+    "safe_next_step_en": "Stop safely and do not continue until inspected",
+    "urgency_hint": "high",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T031",
+    "category": "transmission",
+    "symptom_ar": "السيارة تنتفض عند تبديل القير",
+    "symptom_en": "Harsh gear shifting",
+    "aliases": [
+      "نتعة القير",
+      "القير يدق",
+      "rough shifting",
+      "transmission jerks"
+    ],
+    "possible_causes_ar": [
+      "قد يشير إلى مشكلة في ناقل الحركة أو تشغيله؛ توجد أسباب أخرى"
+    ],
+    "possible_causes_en": [
+      "May indicate a transmission-related problem among other causes"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا متخصصًا إذا تكرر الأمر",
+    "safe_next_step_en": "Have the transmission inspected if it repeats",
+    "urgency_hint": "medium",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T032",
+    "category": "transmission",
+    "symptom_ar": "عداد RPM يرتفع والسيارة ما تتسارع",
+    "symptom_en": "RPM rises without acceleration",
+    "aliases": [
+      "القير يفلت",
+      "الدورات ترتفع بدون عزم",
+      "transmission slipping",
+      "rpm goes up no acceleration"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على انزلاق ناقل الحركة أو خلل في نقل القوة"
+    ],
+    "possible_causes_en": [
+      "May indicate transmission slipping or other power-delivery issues"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا عاجلًا وتجنب متابعة القيادة إذا فقدت السيارة القوة",
+    "safe_next_step_en": "Seek prompt inspection; avoid driving if power delivery fails",
+    "urgency_hint": "high",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T033",
+    "category": "transmission",
+    "symptom_ar": "صوت طحن وقت تغيير الغيار",
+    "symptom_en": "Grinding while changing gear",
+    "aliases": [
+      "القير يحك",
+      "صوت حكة مع التعشيق",
+      "gear grinding",
+      "grinding gears"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بالقابض في السيارات اليدوية أو أجزاء ناقل الحركة"
+    ],
+    "possible_causes_en": [
+      "May involve the clutch on manual vehicles or transmission components"
+    ],
+    "safe_next_step_ar": "اطلب فحص ناقل الحركة",
+    "safe_next_step_en": "Have transmission components checked",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T034",
+    "category": "exhaust",
+    "symptom_ar": "صوت هدير عالي فجأة مع الدعس",
+    "symptom_en": "Sudden loud exhaust roar",
+    "aliases": [
+      "صوت شكمان عالي",
+      "السيارة صوتها صار عالي",
+      "roaring exhaust",
+      "loud exhaust"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بتسرب أو تلف في نظام العادم"
+    ],
+    "possible_causes_en": [
+      "May involve an exhaust leak or damage"
+    ],
+    "safe_next_step_ar": "اطلب فحص العادم وتجنب أماكن مغلقة مع احتمال وجود تسريب",
+    "safe_next_step_en": "Have exhaust inspected and avoid enclosed spaces if a leak is suspected",
+    "urgency_hint": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T035",
+    "category": "exhaust",
+    "symptom_ar": "صوت رجة معدنية من أسفل السيارة",
+    "symptom_en": "Metallic rattle underneath car",
+    "aliases": [
+      "خشخشة تحت السيارة",
+      "رجة بالشكمان",
+      "rattling underneath"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بتثبيتات العادم أو أجزاء سفلية غير ثابتة"
+    ],
+    "possible_causes_en": [
+      "May be linked to exhaust mounts or loose underbody components"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا للجزء السفلي لدى مختص",
+    "safe_next_step_en": "Have the underside checked by a professional",
+    "urgency_hint": "medium",
+    "source_url": "https://www.rac.co.uk/drive/advice/know-how/guide-to-unusual-vehicle-noises/",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T036",
+    "category": "exhaust",
+    "symptom_ar": "رائحة عادم قوية داخل السيارة",
+    "symptom_en": "Exhaust smell inside cabin",
+    "aliases": [
+      "ريحة شكمان داخل",
+      "ريحة دخان داخل السيارة",
+      "exhaust smell inside car"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على دخول غازات العادم إلى المقصورة"
+    ],
+    "possible_causes_en": [
+      "May indicate exhaust gases entering the cabin"
+    ],
+    "safe_next_step_ar": "توقف بأمان واخرج إلى هواء نقي ولا تتابع القيادة حتى يفحصها مختص",
+    "safe_next_step_en": "Stop safely, move into fresh air, and do not continue until inspected",
+    "urgency_hint": "high",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T037",
+    "category": "cooling",
+    "symptom_ar": "بخار يطلع من الكبوت",
+    "symptom_en": "Steam from hood",
+    "aliases": [
+      "دخان ابيض من الكبوت",
+      "بخار من المكينه",
+      "steam under hood"
+    ],
+    "possible_causes_ar": [
+      "قد يدل على مشكلة تبريد أو تسرب سائل ساخن"
+    ],
+    "possible_causes_en": [
+      "May indicate cooling problems or a hot-fluid leak"
+    ],
+    "safe_next_step_ar": "توقف بأمان وأطفئ المحرك ولا تفتح غطاء الرديتر وهو ساخن",
+    "safe_next_step_en": "Stop safely, turn off engine, and never open a hot radiator cap",
+    "urgency_hint": "high",
+    "source_url": "https://ace.aaa.com/automotive/advocacy/recognize-symptoms-most-common-car-mechanical-problems.html",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T038",
+    "category": "cooling",
+    "symptom_ar": "تنقيط سائل تحت السيارة مع ارتفاع الحرارة",
+    "symptom_en": "Fluid leak with rising temperature",
+    "aliases": [
+      "موية تنقط مع حرارة",
+      "تهريب سائل تحت المكينه",
+      "fluid leak overheating"
+    ],
+    "possible_causes_ar": [
+      "قد يرتبط بتسرب من نظام التبريد"
+    ],
+    "possible_causes_en": [
+      "May be associated with a cooling-system leak"
+    ],
+    "safe_next_step_ar": "توقف بأمان واطلب مساعدة متخصصة",
+    "safe_next_step_en": "Stop safely and obtain professional assistance",
+    "urgency_hint": "high",
+    "source_url": "https://ace.aaa.com/automotive/advocacy/recognize-symptoms-most-common-car-mechanical-problems.html",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T039",
+    "category": "general",
+    "symptom_ar": "السيارة تستهلك بنزين أكثر من المعتاد",
+    "symptom_en": "Higher fuel consumption",
+    "aliases": [
+      "صرفية البنزين زادت",
+      "السيارة تصرف",
+      "poor fuel economy"
+    ],
+    "possible_causes_ar": [
+      "قد تكون علامة على مشكلة في أداء المحرك أو احتياج صيانة"
+    ],
+    "possible_causes_en": [
+      "May signal engine performance or maintenance needs"
+    ],
+    "safe_next_step_ar": "اطلب فحصًا إذا استمر التغير غير المعتاد",
+    "safe_next_step_en": "Arrange inspection if the unexpected change persists",
+    "urgency_hint": "low",
+    "source_url": "https://consumer.ftc.gov/articles/0211-auto-repair-basics",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  },
+  {
+    "id": "T040",
+    "category": "general",
+    "symptom_ar": "صوت غير معروف ولا أعرف مصدره",
+    "symptom_en": "Unidentified unusual sound",
+    "aliases": [
+      "اسمع صوت غريب",
+      "صوت غير معروف",
+      "شي يطق",
+      "weird sound",
+      "strange car noise"
+    ],
+    "possible_causes_ar": [
+      "لا يمكن تحديد سبب من وصف عام دون ظروف ظهور الصوت"
+    ],
+    "possible_causes_en": [
+      "Cannot identify the cause from a nonspecific description"
+    ],
+    "safe_next_step_ar": "اذكر وقت الصوت ومكانه وهل يظهر مع الفرملة أو المطبات أو الدعس",
+    "safe_next_step_en": "Describe when and where it occurs and whether it happens with braking, bumps, or acceleration",
+    "urgency_hint": "low",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "verification_status": "publisher_guidance_paraphrase_not_mechanic_confirmed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null
+  }
+]
