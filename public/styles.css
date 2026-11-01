@@ -6,3 +6,77 @@
 @media(max-width:760px){.mobile-only{display:inline-flex}.sidebar{position:fixed;inset-block:0;inset-inline-start:0;transform:translateX(110%);transition:transform .25s;width:min(310px,84vw);height:100dvh;box-shadow:0 12px 35px #0006}.sidebar.open{transform:translateX(0)}[dir="ltr"] .sidebar{transform:translateX(-110%)}[dir="ltr"] .sidebar.open{transform:translateX(0)}.topbar{height:70px;padding:0 18px}.main,.composer-area{width:92%}.intro{padding:38px 0 14px}.intro h1{font-size:38px}.feature-strip{gap:12px;margin-top:38px;flex-wrap:wrap}.live-dot{display:none}.message{max-width:95%}}
 @media(max-width:440px){.suggestions{flex-direction:column;max-width:310px;margin:0 auto}.subtitle{margin-bottom:28px}.intro h1{font-size:33px}.feature-strip{font-size:10px}.tool-btn{padding:8px}.submit-btn{padding:10px}.question-card,.results{padding:18px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
+
+
+/* V3 — aurora night palette + expressive but accessible motion */
+:root{
+ --bg:#080d1a;--panel:#10172a;--panel2:#171f35;--surface:#202b42;
+ --border:#2b3650;--text:#f4f5ff;--muted:#a4aec7;--subtle:#7485a5;
+ --accent:#aa91ff;--accentText:#160d32;--purple:#bc9eff;--shadow:#04071c8c;
+ --aura-cyan:#55dcd5;--aura-rose:#fa91bc;
+}
+:root[data-theme="light"]{
+ --aura-cyan:#087d87;--aura-rose:#d04b83;
+}
+body{
+ background:
+ radial-gradient(circle at 74% 10%,#5f3c9536 0%,transparent 32%),
+ radial-gradient(circle at 22% 78%,#166c8140 0%,transparent 34%),var(--bg);
+ background-attachment:fixed;
+ transition:background-color .35s,color .35s;
+}
+.sidebar{background:linear-gradient(175deg,var(--panel),var(--bg));box-shadow:8px 0 35px #04071a28}
+.topbar{background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:blur(22px);position:relative;z-index:2}
+.brand-icon{background:linear-gradient(140deg,#b1a0ff,#6fe5e0 60%,#ff9fc9);box-shadow:0 0 26px #9d78fa3b}
+.brand-name em{background:linear-gradient(90deg,var(--accent),var(--aura-cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+.primary-btn,.submit-btn{background:linear-gradient(120deg,#b69dff,#88d8ec);color:#17152e;box-shadow:0 8px 25px #8971f638}
+:root[data-theme="light"] .primary-btn,:root[data-theme="light"] .submit-btn{background:linear-gradient(120deg,#167a83,#4d57b5);color:#fff}
+.hero-glow{width:560px;height:440px;background:
+ radial-gradient(ellipse at 36% 40%,#8168ef3a 0%,transparent 58%),
+ radial-gradient(ellipse at 67% 55%,#49ddce2b 0%,transparent 55%);
+ filter:blur(16px);animation:auraBreathe 7s ease-in-out infinite alternate}
+.intro h1 span{background:linear-gradient(96deg,#bb9aff,#6fd9e8,#ef9cc3);-webkit-background-clip:text;background-clip:text}
+:root[data-theme="light"] .intro h1 span{background:linear-gradient(96deg,#7853d3,#158f91,#be5285);-webkit-background-clip:text;background-clip:text}
+.spark{filter:drop-shadow(0 0 9px var(--accent));animation:twinkle 3s ease-in-out infinite}
+.suggestion{position:relative;overflow:hidden}
+.suggestion::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 5%,#fff2 50%,transparent 95%);transform:translateX(-130%);transition:transform .65s}
+.suggestion:hover::before{transform:translateX(130%)}
+.suggestion:hover{box-shadow:0 16px 36px #9278e42b,0 0 0 1px var(--accent)}
+.suggest-icon{transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.suggestion:hover .suggest-icon{transform:rotate(-10deg) scale(1.16)}
+.car-row.active{border-color:color-mix(in srgb,var(--accent) 50%,var(--border));background:linear-gradient(100deg,#9378f020,var(--panel2))}
+.car-symbol{transition:transform .25s,color .25s}
+.car-row:hover .car-symbol{transform:rotate(-9deg) scale(1.08)}
+.pill-btn:hover,.tool-btn:hover{box-shadow:0 0 0 2px #aa91ff1e}
+.composer{background:color-mix(in srgb,var(--panel) 94%,var(--accent) 6%);box-shadow:0 18px 55px var(--shadow),0 1px 0 #ffffff09 inset}
+.composer:focus-within{box-shadow:0 18px 55px #7660c529,0 0 0 1px var(--accent)}
+.choice{animation:choiceAppear .32s ease both}
+.choice:nth-child(2){animation-delay:.04s}
+.choice:nth-child(3){animation-delay:.08s}
+.choice:nth-child(4){animation-delay:.12s}
+.choice:nth-child(5){animation-delay:.16s}
+.choice:nth-child(6){animation-delay:.2s}
+.choice:nth-child(7){animation-delay:.24s}
+.question-card{border-color:color-mix(in srgb,var(--accent) 30%,var(--border))}
+.results{animation:resultsReveal .55s cubic-bezier(.2,.8,.2,1) both}
+.results .reason{animation:choiceAppear .4s ease both}
+.results .reason:nth-of-type(2){animation-delay:.1s}
+.results .reason:nth-of-type(3){animation-delay:.2s}
+.results .reason:nth-of-type(4){animation-delay:.3s}
+.message{box-shadow:0 7px 20px #03071317}
+.message.assistant{border-inline-start:3px solid var(--accent)}
+.typing-status{display:flex;gap:13px;align-items:center;max-width:300px;width:fit-content;padding:13px 17px;border-radius:18px;border-inline-start:3px solid var(--accent);background:var(--panel);box-shadow:0 12px 30px var(--shadow);animation:bubbleIn .3s both}
+.typing-avatar{display:grid;place-items:center;flex-shrink:0;width:36px;height:36px;border-radius:13px;color:var(--accent);background:var(--surface);font-size:22px;animation:twinkle 2.5s infinite}
+.typing-body{display:flex;align-items:center;gap:14px}
+#typingLabel{font-size:12px;color:var(--muted);white-space:nowrap}
+.typing-dots{display:flex;gap:5px;align-items:center}
+.typing-dots i{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:typingBounce 1.15s ease-in-out infinite}
+.typing-dots i:nth-child(2){animation-delay:.15s}.typing-dots i:nth-child(3){animation-delay:.3s}
+@keyframes typingBounce{0%,65%,100%{transform:translateY(0);opacity:.3}35%{transform:translateY(-6px);opacity:1}}
+@keyframes choiceAppear{from{opacity:0;transform:translateY(9px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes resultsReveal{from{opacity:0;transform:translateY(16px);filter:blur(6px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
+@keyframes twinkle{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.16);opacity:1}}
+@keyframes auraBreathe{from{opacity:.6;transform:translateX(-50%) scale(.92)}to{opacity:1;transform:translateX(-50%) scale(1.12)}}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
