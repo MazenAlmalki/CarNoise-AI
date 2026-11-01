@@ -1,56 +1,64 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#0b1722">
-<meta name="description" content="CarNoise AI — مساعد ذكي لفهم أصوات السيارة الغريبة.">
-<title>CarNoise AI | وش صوت السيارة؟</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#101b30"><meta name="description" content="CarNoise AI — مساعدك الذكي لأصوات السيارات وسجل كل سيارة.">
+<title>CarNoise AI — Your car sound companion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/styles.css"><script defer src="/app.js"></script>
 </head>
 <body>
-<div class="shell">
-  <aside class="sidebar">
-    <a href="/" class="brand"><span class="logo">◉</span><span><strong>CarNoise<span class="accent">AI</span></strong><small>وش صوت السيارة؟</small></span></a>
-    <button id="sideReset" class="new-chat">＋ فحص جديد</button>
-    <div class="side-heading">ابدأ من هنا</div>
-    <div class="side-item active">▦ &nbsp; تحليل الأصوات</div>
-    
-    <div class="side-note"><strong>● &nbsp; سلامتك أولًا</strong><p>النتيجة احتمالية، مو تشخيص نهائي.</p></div>
-    <div class="side-footer">صنع للسائقين 🇸🇦<span>CarNoise AI · 2026</span></div>
-  </aside>
-  <div class="main-area">
-    <header class="topbar"><div class="topbar-brand"><span class="mobile-mark">◉</span>CarNoise <b>AI</b></div><div class="top-actions"><span class="status">● &nbsp; جاهز للمساعدة</span><button id="topReset" class="icon-btn" aria-label="بدء محادثة جديدة" title="محادثة جديدة">↻</button></div></header>
-    <main class="content">
-      <section id="welcome" class="welcome">
-        <div class="hero-icon" aria-hidden="true"><svg viewBox="0 0 64 64" width="64" height="64"><path d="M14 38l5-14c1-3 4-5 7-5h12c3 0 6 2 7 5l5 14M11 39h42v11H11V39Zm6 11v4m30-4v4M20 39l3 4m21-4-3 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M17 32h30" stroke="currentColor" stroke-width="3"/></svg></div>
-        <div class="eyebrow">مساعد أصوات سيارتك</div>
-        <h1>وش هالصوت <span>بسيارتك؟</span></h1>
-        <p class="hero-subtitle">اوصف الصوت، وجاوب كم سؤال.</p>
-        <div class="examples-label">ابدأ بمثال</div>
-        <div class="examples">
-          <button class="example" data-example="أسمع صرير عالي لما أضغط على الفرامل">فرامل <span>↗</span></button>
-          <button class="example" data-example="فيه طقطقة أول ما أشغل السيارة الصباح">تشغيل <span>↗</span></button>
-          <button class="example" data-example="أسمع ونة تزيد كل ما زادت سرعة السيارة">أثناء المشي <span>↗</span></button>
-        </div>
-      </section>
-      <section id="conversation" class="conversation hidden" aria-label="المحادثة" aria-live="polite">
-        <div id="messages" class="messages"></div>
-        <div id="questionBox" class="question-box hidden">
-          <div class="question-top"><span id="questionCount"></span><div class="thin-bar"><span id="questionProgress"></span></div></div>
-          <h2 id="questionText"></h2><div id="choices" class="choice-grid"></div>
-        </div>
-        <section id="resultBox" class="result-box hidden" aria-label="نتيجة التحليل"></section>
-      </section>
-      <div id="busy" class="busy hidden" role="status"><span class="spinner"></span> Llama يحلل الصوت...</div>
-      <div id="errorBox" class="error-box hidden" role="alert"></div>
-    </main>
-    <div class="composer-wrapper">
-      <form id="composer" class="composer"><label for="description" class="sr-only">اوصف صوت السيارة</label><textarea id="description" maxlength="600" rows="1" required placeholder="وش الصوت اللي تسمعه؟"></textarea><button id="sendBtn" type="submit" class="send-btn" aria-label="إرسال الوصف">➤</button></form>
-      <div class="composer-hint"><span>Enter للإرسال</span><span>نتائج احتمالية</span></div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-top">
+    <a href="/" class="brand"><span class="brand-icon">◈</span><span class="brand-name">CarNoise <em>AI</em><small data-i18n="brandSub">مساعد سيارتك الذكي</small></span></a>
+    <button id="closeSidebar" class="icon-button mobile-only" aria-label="Close menu">✕</button>
+  </div>
+  <button id="newCaseSide" class="primary-btn full"><span>＋</span><span data-i18n="newAnalysis">تحليل جديد</span></button>
+  <div class="side-label"><span data-i18n="myCars">سياراتي</span><button id="addCar" class="plus-button" aria-label="Add car">＋</button></div>
+  <div id="carList" class="car-list"></div>
+  <div class="side-label history-heading"><span data-i18n="history">سجل المشاكل</span><span id="historyCount" class="count">0</span></div>
+  <div id="historyList" class="history-list"></div>
+  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">بيانات سياراتك محفوظة على هذا الجهاز فقط.</span></div><div class="made">CarNoise AI <span>·</span> V2</div></div>
+</aside>
+<div id="overlay" class="overlay hidden"></div>
+<div class="workspace">
+  <header class="topbar">
+    <div class="head-start"><button id="menuButton" class="icon-button mobile-only" aria-label="Open menu">☰</button><div class="current-location"><span class="location-kicker" data-i18n="workspace">مساحة سيارتك</span><strong id="currentCarName">سيارتي</strong></div></div>
+    <div class="header-actions">
+      <span class="live-dot"><i></i><span data-i18n="aiAssistant">مساعد ذكي</span></span>
+      <button id="languageSwitch" class="pill-btn" aria-label="Change language">EN</button>
+      <button id="themeSwitch" class="pill-btn theme-btn" aria-label="Toggle theme">☀</button>
     </div>
+  </header>
+  <main class="main" id="main">
+    <div id="intro" class="intro">
+      <div class="hero-glow"></div>
+      <div class="eyebrow"><span class="spark">✦</span><span data-i18n="eyebrow">افهم سيارتك بشكل أفضل</span></div>
+      <h1 data-i18n-html="heroTitle">سيارتك تتكلم.<br><span>خلّنا نفهمها.</span></h1>
+      <p class="subtitle" data-i18n="heroDescription">وصف سريع للصوت، وأسئلة بسيطة، واحتمالات تساعدك تتصرف صح.</p>
+      <div class="prompt-label" data-i18n="tryExample">ابدأ بصوت تسمعه</div>
+      <div class="suggestions">
+        <button class="suggestion" data-example="brakes"><span class="suggest-icon orange">◉</span><span data-i18n="exampleBrakes">صرير الفرامل</span><b>↗</b></button>
+        <button class="suggestion" data-example="starting"><span class="suggest-icon purple">✳</span><span data-i18n="exampleStart">طقطقة التشغيل</span><b>↗</b></button>
+        <button class="suggestion" data-example="driving"><span class="suggest-icon blue">≈</span><span data-i18n="exampleDrive">ونة مع السرعة</span><b>↗</b></button>
+      </div>
+      <div class="feature-strip"><div><span>✧</span><span data-i18n="featureOne">سجل لكل سيارة</span></div><div><span>⌁</span><span data-i18n="featureTwo">ملفات صوت وفيديو</span></div><div><span>◇</span><span data-i18n="featureThree">عربي وإنجليزي</span></div></div>
+    </div>
+    <section id="conversation" class="conversation hidden" aria-live="polite"><div id="messages" class="messages"></div><div id="questionBox" class="question-card hidden"><div class="question-top"><span id="questionCount"></span><div class="progress"><span id="questionProgress"></span></div></div><h2 id="questionText"></h2><div id="choices" class="choices"></div></div><section id="resultBox" class="results hidden"></section></section>
+    <div id="busy" class="busy hidden" role="status"><span class="spinner"></span><span data-i18n="analyzing">جاري التحليل...</span></div>
+    <div id="errorBox" class="error-box hidden" role="alert"></div>
+  </main>
+  <div class="composer-area">
+    <div id="mediaPreview" class="media-preview hidden"></div>
+    <form id="composer" class="composer">
+      <div class="composer-main"><textarea id="description" rows="2" maxlength="600" data-i18n-placeholder="inputPlaceholder" placeholder="وش الصوت اللي تسمعه؟"></textarea></div>
+      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach audio/video" aria-label="Attach audio/video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">حلّل الصوت</span><span>↗</span></button></div>
+    </form>
+    <p class="footer-note" data-i18n="disclaimer">النتائج احتمالية وليست تشخيصًا. المقاطع تُحفظ محليًا ولا يحللها Llama النصي بعد.</p>
   </div>
 </div>
+</div>
+<dialog id="carDialog" class="car-dialog"><form id="carForm"><div class="dialog-heading"><h2 data-i18n="addVehicle">إضافة سيارة</h2><button type="button" id="cancelCar" class="icon-button">✕</button></div><label for="carName" data-i18n="vehicleName">اسم السيارة</label><input id="carName" maxlength="48" required data-i18n-placeholder="carPlaceholder" placeholder="مثال: كامري 2022"><div class="dialog-actions"><button type="button" id="cancelCarBottom" class="ghost-btn" data-i18n="cancel">إلغاء</button><button type="submit" class="primary-btn" data-i18n="save">حفظ</button></div></form></dialog>
 </body></html>
