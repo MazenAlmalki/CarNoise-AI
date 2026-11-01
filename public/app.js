@@ -5,7 +5,7 @@ ar:{
 brandSub:'مساعد سيارتك الذكي',newAnalysis:'تحليل جديد',myCars:'سياراتي',history:'سجل المشاكل',localPrivacy:'بيانات سياراتك محفوظة على هذا الجهاز فقط.',workspace:'مساحة سيارتك',aiAssistant:'مساعد ذكي',eyebrow:'افهم سيارتك بشكل أفضل',
 heroTitle:'سيارتك تتكلم.<br><span>خلّنا نفهمها.</span>',heroDescription:'اوصف الصوت، وجاوب كم سؤال، واعرف الأسباب المحتملة.',tryExample:'ابدأ بصوت تسمعه',exampleBrakes:'صرير الفرامل',exampleStart:'طقطقة التشغيل',exampleDrive:'ونة مع السرعة',featureOne:'سجل لكل سيارة',featureTwo:'صوت وفيديو',featureThree:'عربي وإنجليزي',
 inputPlaceholder:'وش الصوت اللي تسمعه؟',attach:'إرفاق',record:'تسجيل',stop:'إيقاف',analyze:'حلّل الصوت',analyzing:'جاري تجهيز الرد...',disclaimer:'النتائج احتمالية وليست تشخيصًا. المقاطع محفوظة محليًا، ولا يستطيع Llama النصي سماعها حاليًا.',
-addVehicle:'إضافة سيارة',vehicleName:'اسم السيارة',carPlaceholder:'مثال: كامري 2022',cancel:'إلغاء',save:'حفظ',defaultCar:'سيارتي',noHistory:'ما فيه تحليلات سابقة',question:'السؤال',of:'من',introMessage:'خلّنا نحدد الصوت بأربع أسئلة.',resultIntro:'هذه احتمالات حسب وصفك.',possibleReasons:'الأسباب المحتملة',nextSteps:'وش تسوي؟',urgentSigns:'علامات مهمة',resultLabel:'تحليل Llama',resultNotice:'التحليل احتمالي، مو تشخيص فني.',newCheck:'تحليل جديد',low:'للمتابعة',medium:'يستحسن الفحص',high:'اهتمام عاجل',required:'اوصف الصوت بثمانية أحرف على الأقل.',mediaInfo:'المقطع محفوظ للرجوع له فقط. Llama الحالي ما يسمع الصوت أو الفيديو.',fileTooLarge:'الحد الأقصى 25MB للمقطع.',fileType:'ارفع ملف صوت أو فيديو فقط.',mediaSaved:'مقطع محفوظ',mediaMissing:'المقطع غير متوفر على هذا الجهاز.',recordUnsupported:'المتصفح ما يدعم التسجيل.',recordError:'ما قدرنا نستخدم الميكروفون. تأكد من السماح له.',storageError:'تعذّر حفظ المقطع. جرّب ملف أصغر.',localOnly:'يتم الحفظ على هذا الجهاز فقط',remove:'إزالة',retry:'إعادة المحاولة',carNeeded:'أدخل اسم السيارة.',answerFailed:'تعذّر التحليل، حاول مرة ثانية.',startAgain:'ابدأ تحليلًا جديدًا',
+addVehicle:'إضافة سيارة',vehicleName:'اسم السيارة',carPlaceholder:'مثال: كامري 2022',cancel:'إلغاء',save:'حفظ',defaultCar:'سيارتي',noHistory:'ما فيه تحليلات سابقة',question:'السؤال',of:'من',introMessage:'خلّنا نحدد الصوت بأربع أسئلة.',resultIntro:'هذه احتمالات حسب وصفك.',possibleReasons:'الأسباب المحتملة',nextSteps:'وش تسوي؟',urgentSigns:'علامات مهمة',resultLabel:'تحليل Llama',resultNotice:'التحليل احتمالي، مو تشخيص فني.',newCheck:'تحليل جديد',low:'للمتابعة',medium:'يستحسن الفحص',high:'اهتمام عاجل',required:'اوصف الصوت بثمانية أحرف على الأقل.',mediaInfo:'المقطع محفوظ للرجوع له فقط. Llama الحالي ما يسمع الصوت أو الفيديو.',fileTooLarge:'الحد الأقصى 25MB للمقطع.',fileType:'ارفع ملف صوت أو فيديو فقط.',mediaSaved:'مقطع محفوظ',mediaMissing:'المقطع غير متوفر على هذا الجهاز.',recordUnsupported:'المتصفح ما يدعم التسجيل.',recordError:'ما قدرنا نستخدم الميكروفون. تأكد من السماح له.',storageError:'تعذّر حفظ المقطع. جرّب ملف أصغر.',localOnly:'يتم الحفظ على هذا الجهاز فقط',remove:'إزالة',deleteCase:'حذف السجل',deleteCar:'حذف السيارة',deleteMedia:'حذف المقطع',confirmCase:'هل تحذف السجل والمقطع المرتبط به نهائيًا؟',confirmCar:'هل تحذف السيارة وكل سجلاتها ومقاطعها نهائيًا؟',confirmMedia:'هل تحذف المقطع نهائيًا؟',retry:'إعادة المحاولة',carNeeded:'أدخل اسم السيارة.',answerFailed:'تعذّر التحليل، حاول مرة ثانية.',startAgain:'ابدأ تحليلًا جديدًا',
 questions:[['متى تسمعه؟',['عند التشغيل','أثناء القيادة','عند الفرامل','عند الالتفاف','على المطبات','عند التسارع','غير متأكد']],['وش نوع الصوت؟',['طقطقة','صرير','صفير','حكة / احتكاك','ونة','رجّة / اهتزاز','غير متأكد']],['من وين يجي؟',['أمام السيارة','خلف السيارة','من جهة الإطارات','من المحرك','غير متأكد']],['كم يتكرر؟',['كل مرة','أحيانًا','بدأ اليوم','غير متأكد']]],
 examples:{brakes:'أسمع صرير عالي لما أضغط على الفرامل',starting:'فيه طقطقة أول ما أشغل السيارة الصباح',driving:'أسمع ونة تزيد كل ما زادت سرعة السيارة'}
 },
@@ -13,7 +13,7 @@ en:{
 brandSub:'Your car companion',newAnalysis:'New analysis',myCars:'My vehicles',history:'Problem history',localPrivacy:'Vehicle history is saved on this device only.',workspace:'Your garage',aiAssistant:'AI assistant',eyebrow:'Understand your car better',
 heroTitle:'Your car is talking.<br><span>Let’s figure it out.</span>',heroDescription:'Describe the noise. Answer a few questions. Explore possible causes.',tryExample:'Try an example',exampleBrakes:'Brake squeal',exampleStart:'Startup clicking',exampleDrive:'Humming at speed',featureOne:'History for each car',featureTwo:'Audio & video',featureThree:'Arabic & English',
 inputPlaceholder:'Describe the sound you hear...',attach:'Attach',record:'Record',stop:'Stop',analyze:'Analyze sound',analyzing:'Preparing a response...',disclaimer:'Results are possibilities, not a diagnosis. Media stays on your device; text-only Llama cannot listen to it yet.',
-addVehicle:'Add a vehicle',vehicleName:'Vehicle name',carPlaceholder:'e.g. Camry 2022',cancel:'Cancel',save:'Save',defaultCar:'My car',noHistory:'No past analyses',question:'Question',of:'of',introMessage:'Four quick questions to narrow it down.',resultIntro:'Here are some possibilities based on your description.',possibleReasons:'Possible causes',nextSteps:'What to do next',urgentSigns:'Important warning signs',resultLabel:'Llama analysis',resultNotice:'Possibilities only. Not a mechanic’s diagnosis.',newCheck:'New analysis',low:'Monitor',medium:'Inspection advised',high:'Urgent attention',required:'Describe the noise using at least 8 characters.',mediaInfo:'Saved for review only. The current Llama model cannot hear audio or video.',fileTooLarge:'Maximum media file size is 25 MB.',fileType:'Please choose audio or video.',mediaSaved:'Saved media',mediaMissing:'Media unavailable on this device.',recordUnsupported:'Audio recording is not supported by this browser.',recordError:'Cannot access the microphone. Check permissions.',storageError:'Could not save media. Try a smaller file.',localOnly:'Stored on this device only',remove:'Remove',retry:'Try again',carNeeded:'Enter a vehicle name.',answerFailed:'Analysis failed. Please try again.',startAgain:'Start a new analysis',
+addVehicle:'Add a vehicle',vehicleName:'Vehicle name',carPlaceholder:'e.g. Camry 2022',cancel:'Cancel',save:'Save',defaultCar:'My car',noHistory:'No past analyses',question:'Question',of:'of',introMessage:'Four quick questions to narrow it down.',resultIntro:'Here are some possibilities based on your description.',possibleReasons:'Possible causes',nextSteps:'What to do next',urgentSigns:'Important warning signs',resultLabel:'Llama analysis',resultNotice:'Possibilities only. Not a mechanic’s diagnosis.',newCheck:'New analysis',low:'Monitor',medium:'Inspection advised',high:'Urgent attention',required:'Describe the noise using at least 8 characters.',mediaInfo:'Saved for review only. The current Llama model cannot hear audio or video.',fileTooLarge:'Maximum media file size is 25 MB.',fileType:'Please choose audio or video.',mediaSaved:'Saved media',mediaMissing:'Media unavailable on this device.',recordUnsupported:'Audio recording is not supported by this browser.',recordError:'Cannot access the microphone. Check permissions.',storageError:'Could not save media. Try a smaller file.',localOnly:'Stored on this device only',remove:'Remove',deleteCase:'Delete record',deleteCar:'Delete vehicle',deleteMedia:'Delete media',confirmCase:'Permanently delete this record and its media?',confirmCar:'Permanently delete this vehicle, its history and media?',confirmMedia:'Permanently delete this media?',retry:'Try again',carNeeded:'Enter a vehicle name.',answerFailed:'Analysis failed. Please try again.',startAgain:'Start a new analysis',
 questions:[['When do you hear it?',['When starting','While driving','When braking','When turning','Over bumps','When accelerating','Not sure']],['What does it sound like?',['Clicking','Squealing','Whistling','Scraping','Humming','Vibration','Not sure']],['Where does it come from?',['Front of car','Rear of car','Near wheels','Engine bay','Not sure']],['How often?',['Every time','Sometimes','Started today','Not sure']]],
 examples:{brakes:'I hear a high-pitched squeal when pressing the brakes.',starting:'There is a clicking noise when I start the car.',driving:'There is a humming noise that gets louder as I drive faster.'}
 }
@@ -38,7 +38,9 @@ function renderSidebar(){
   const button=document.createElement('button');button.className='car-row'+(state.carId===car.id?' active':'');button.type='button';
   button.append(textNode('span','◇','car-symbol'),textNode('span',carName(car),'car-name'),textNode('span',String(state.cases.filter(c=>c.carId===car.id).length),'car-count'));
   button.addEventListener('click',()=>{state.carId=car.id;persist();renderSidebar();newAnalysis();closeNav();});
-  $('carList').append(button);
+  const row=textNode('div','','folder-item');row.append(button);
+  const del=textNode('button','✕','delete-action');del.type='button';del.title=t('deleteCar');del.setAttribute('aria-label',t('deleteCar')+' '+carName(car));del.addEventListener('click',()=>deleteVehicle(car.id));row.append(del);
+  $('carList').append(row);
  }
  const history=state.cases.filter(c=>c.carId===state.carId).slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
  $('historyCount').textContent=String(history.length);
@@ -46,7 +48,9 @@ function renderSidebar(){
  for(const entry of history){
   const button=document.createElement('button');button.type='button';button.className='history-row'+(session?.id===entry.id?' active':'');
   button.append(textNode('span',entry.description.slice(0,45),'history-name'),textNode('span',dateLabel(entry.createdAt),'history-date'));
-  button.addEventListener('click',()=>{loadCase(entry);closeNav();});$('historyList').append(button);
+  button.addEventListener('click',()=>{loadCase(entry);closeNav();});
+  const row=textNode('div','','history-item');row.append(button);
+  const del=textNode('button','✕','delete-action');del.type='button';del.title=t('deleteCase');del.setAttribute('aria-label',t('deleteCase')+' '+entry.description.slice(0,30));del.addEventListener('click',()=>deleteCase(entry.id));row.append(del);$('historyList').append(row);
  }
 }
 function applySettings(){
@@ -54,6 +58,8 @@ function applySettings(){
  document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=t(n.dataset.i18n));
  document.querySelectorAll('[data-i18n-html]').forEach(n=>{const key=n.dataset.i18nHtml;if(key==='heroTitle')n.innerHTML=t(key);});
  document.querySelectorAll('[data-i18n-placeholder]').forEach(n=>n.placeholder=t(n.dataset.i18nPlaceholder));
+ document.querySelector('[data-brand="warshatak"]').innerHTML=state.lang==='ar'?'ورشتك <em>✦</em>':'Warshatak <em>✦</em>';
+ document.title=state.lang==='ar'?'ورشتك | مساعد سيارتك':'Warshatak | Your Car Companion';
  $('languageSwitch').textContent=state.lang==='ar'?'EN':'عربي';
  $('themeSwitch').textContent=state.theme==='dark'?'☀':'☾';
  $('recordButton').querySelector('span').textContent=recording?t('stop'):t('record');
@@ -123,6 +129,7 @@ function renderResult(r){
 }
 async function analyze(){
  if(!session||submitting)return;
+ const activeCase=session;
  submitting=true;showError('');$('busy').classList.remove('hidden');
  const previous=state.cases.filter(c=>c.carId===session.carId&&c.id!==session.id&&c.result).slice(-5).map(c=>({date:c.createdAt.slice(0,10),description:c.description.slice(0,250),suspectedSummary:String(c.result.summary||'').slice(0,250)}));
  const body={description:session.description,language:session.lang||'ar',history:previous};
@@ -132,12 +139,45 @@ async function analyze(){
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok)throw Error(data.error||t('answerFailed'));
   if(!data.result||!Array.isArray(data.result.reasons))throw Error(t('answerFailed'));
-  session.result=data.result;persist();
-  $('questionBox').classList.add('hidden');renderResult(data.result);
+  if(!state.cases.some(c=>c.id===activeCase.id))return;
+  activeCase.result=data.result;persist();
+  if(session?.id===activeCase.id){$('questionBox').classList.add('hidden');renderResult(data.result);}
  }catch(e){showError(e.message||t('answerFailed'));const retry=textNode('button',t('retry'),'retry');retry.type='button';retry.addEventListener('click',analyze);$('errorBox').append(document.createElement('br'),retry);}
  finally{submitting=false;$('busy').classList.add('hidden');}
 }
 function loadCase(entry){clearPendingMedia();session=entry;renderSidebar();showError('');renderSession();}
+async function deleteMediaBlob(id){
+ const db=await openDb();
+ try{await new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
+ finally{db.close();}
+}
+async function deleteCase(id){
+ const entry=state.cases.find(c=>c.id===id);
+ if(!entry||!window.confirm(t('confirmCase')))return;
+ if(entry.mediaId){try{await deleteMediaBlob(entry.mediaId);}catch{showError(t('storageError'));return;}}
+ state.cases=state.cases.filter(c=>c.id!==id);
+ persist();
+ if(session?.id===id)newAnalysis();else renderSidebar();
+}
+async function deleteVehicle(id){
+ const car=state.cars.find(c=>c.id===id);
+ if(!car||!window.confirm(t('confirmCar')))return;
+ const cases=state.cases.filter(c=>c.carId===id);
+ try{for(const entry of cases)if(entry.mediaId)await deleteMediaBlob(entry.mediaId);}
+ catch{showError(t('storageError'));return;}
+ state.cases=state.cases.filter(c=>c.carId!==id);
+ state.cars=state.cars.filter(c=>c.id!==id);
+ if(!state.cars.length)state.cars.push({id:makeId(),nameAr:'سيارتي',nameEn:'My car'});
+ state.carId=state.cars[0].id;
+ persist();newAnalysis();closeNav();
+}
+async function deleteSavedMedia(id){
+ const entry=state.cases.find(c=>c.id===id);
+ if(!entry?.mediaId||!window.confirm(t('confirmMedia')))return;
+ try{await deleteMediaBlob(entry.mediaId);}catch{showError(t('storageError'));return;}
+ entry.mediaId=null;entry.mediaName=null;entry.mediaType=null;
+ persist();if(session?.id===entry.id)renderSession();else renderSidebar();
+}
 function openNav(){$('sidebar').classList.add('open');$('overlay').classList.remove('hidden');}
 function closeNav(){$('sidebar').classList.remove('open');$('overlay').classList.add('hidden');}
 function openCarDialog(){$('carDialog').showModal();$('carName').focus();}
@@ -180,6 +220,7 @@ async function showSavedMedia(id,type,name){
   const box=$('resultBox');const attached=textNode('div','','reason');attached.append(textNode('strong',name||t('mediaSaved')));
   const url=URL.createObjectURL(f);const media=document.createElement(type?.startsWith('video/')?'video':'audio');media.controls=true;media.preload='metadata';media.src=url;media.style.maxWidth='100%';media.style.maxHeight='220px';
   attached.append(media,textNode('p',t('mediaInfo')));
+  const remove=textNode('button',t('deleteMedia'),'media-delete-btn');remove.type='button';remove.addEventListener('click',()=>deleteSavedMedia(id));attached.append(remove);
   if(!box.classList.contains('hidden'))box.append(attached);else {$('messages').append(attached);}
  }catch{showError(t('mediaMissing'));}
 }
