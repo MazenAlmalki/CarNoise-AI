@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b1722">
+<meta name="description" content="CarNoise AI — مساعد ذكي لفهم أصوات السيارة الغريبة.">
+<title>CarNoise AI | وش صوت السيارة؟</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css"><script defer src="/app.js"></script>
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <a href="/" class="brand"><span class="logo">◉</span><span><strong>CarNoise<span class="accent">AI</span></strong><small>وش صوت السيارة؟</small></span></a>
+    <button id="sideReset" class="new-chat">＋ فحص جديد</button>
+    <div class="side-heading">مساعدك على الطريق</div>
+    <div class="side-item active">▦ &nbsp; تحليل الأصوات</div>
+    <div class="side-item muted">◷ &nbsp; خطوات بسيطة وواضحة</div>
+    <div class="side-note"><strong>● &nbsp; سلامتك أولًا</strong><p>المساعد يعرض احتمالات عامة، ولا يغني عن فحص فني مختص.</p></div>
+    <div class="side-footer">صُمم للسائق السعودي 🇸🇦<span>CarNoise AI · 2026</span></div>
+  </aside>
+  <div class="main-area">
+    <header class="topbar"><div class="topbar-brand"><span class="mobile-mark">◉</span>CarNoise <b>AI</b></div><div class="top-actions"><span class="status">● &nbsp; مساعد السيارات الذكي</span><button id="topReset" class="icon-btn" aria-label="بدء محادثة جديدة" title="محادثة جديدة">↻</button></div></header>
+    <main class="content">
+      <section id="welcome" class="welcome">
+        <div class="hero-icon" aria-hidden="true"><svg viewBox="0 0 64 64" width="64" height="64"><path d="M14 38l5-14c1-3 4-5 7-5h12c3 0 6 2 7 5l5 14M11 39h42v11H11V39Zm6 11v4m30-4v4M20 39l3 4m21-4-3 4" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M17 32h30" stroke="currentColor" stroke-width="3"/></svg></div>
+        <div class="eyebrow">مساعدك الذكي لفهم أصوات السيارة</div>
+        <h1>سمعت صوت غريب <span>بسيارتك؟</span></h1>
+        <p class="hero-subtitle">وصف بسيط للصوت، وكم سؤال سريع، ونساعدك تفهم الأسباب المحتملة والخطوة المناسبة.</p>
+        <div class="examples-label">جرّب أحد الأمثلة</div>
+        <div class="examples">
+          <button class="example" data-example="أسمع صرير عالي لما أضغط على الفرامل">🚗 صوت مع الفرامل <span>↗</span></button>
+          <button class="example" data-example="فيه طقطقة أول ما أشغل السيارة الصباح">🔧 طقطقة عند التشغيل <span>↗</span></button>
+          <button class="example" data-example="أسمع ونة تزيد كل ما زادت سرعة السيارة">〰️ ونة أثناء المشي <span>↗</span></button>
+        </div>
+        <div class="steps"><div><span>01</span><strong>اوصف الصوت</strong><small>وش تسمع بالضبط؟</small></div><i>←</i><div><span>02</span><strong>جاوب أسئلة سريعة</strong><small>نحدد متى وأين</small></div><i>←</i><div><span>03</span><strong>اعرف الاحتمالات</strong><small>وتصرف بشكل آمن</small></div></div>
+      </section>
+      <section id="conversation" class="conversation hidden" aria-label="المحادثة" aria-live="polite">
+        <div id="messages" class="messages"></div>
+        <div id="questionBox" class="question-box hidden">
+          <div class="question-top"><span id="questionCount"></span><div class="thin-bar"><span id="questionProgress"></span></div></div>
+          <h2 id="questionText"></h2><div id="choices" class="choice-grid"></div>
+        </div>
+        <section id="resultBox" class="result-box hidden" aria-label="نتيجة التحليل"></section>
+      </section>
+      <div id="busy" class="busy hidden" role="status"><span class="spinner"></span> جاري تحليل الوصف بواسطة Llama...</div>
+      <div id="errorBox" class="error-box hidden" role="alert"></div>
+    </main>
+    <div class="composer-wrapper">
+      <form id="composer" class="composer"><label for="description" class="sr-only">اوصف صوت السيارة</label><textarea id="description" maxlength="600" rows="1" required placeholder="مثلاً: أسمع طقطقة لما ألف الدركسون..."></textarea><button id="sendBtn" type="submit" class="send-btn" aria-label="إرسال الوصف">➤</button></form>
+      <div class="composer-hint"><span>Enter للإرسال · Shift + Enter لسطر جديد</span><span>النتائج احتمالية وليست تشخيصًا نهائيًا</span></div>
+    </div>
+  </div>
+</div>
+</body></html>
