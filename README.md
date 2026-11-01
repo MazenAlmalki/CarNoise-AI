@@ -48,3 +48,12 @@ Vehicle names, issues, and AI result summaries are stored in **this browser's lo
 - [ ] Test all workflows against an installed Ollama model and different browsers
 - [ ] Implement specialist audio/video classification model
 - [ ] Deploy to a public host with accessible AI endpoint
+
+
+## Data collection starter (November 2026)
+- `data/knowledge_seed_v1.json`: 14 bilingual source-backed automotive symptom cards, including clickable original source URLs. Status: `source_reviewed`, **not mechanic confirmed**.
+- `data/training_candidates_unreviewed.jsonl`: 14 synthetic chat examples derived from those cards; **do not train without mechanic review** and an independent evaluation set.
+- `data/cases_template.csv`: blank template for collecting real cases with consent and outcome verification.
+- `DATA_COLLECTION_GUIDE.md`: field definitions, privacy, RAG and evaluation recommendations.
+
+These are starter educational reference records, not a diagnostic ground-truth dataset. The live app does not yet retrieve from these files automatically. A reliable next step is to add retrieval (RAG) using reviewed cards, then expand with actual independently verified service outcomes before QLoRA training.
