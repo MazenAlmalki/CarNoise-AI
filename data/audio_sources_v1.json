@@ -168,5 +168,39 @@
     "download_status": "source_link_only",
     "local_audio_file": null,
     "usage_recommendation": "Audio similarity development only. Do not treat clip title, tags or similarity as confirmed automotive fault."
+  },
+  {
+    "id": "S011",
+    "category": "engine_start_drive",
+    "title": "Starting a car and driving",
+    "provider": "Wikimedia Commons",
+    "author": "stephan",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Starting_a_car_and_driving.ogg",
+    "license": "public domain",
+    "duration_seconds": 45,
+    "recording_type": "field_recording",
+    "mechanic_verified": false,
+    "confirmed_fault": null,
+    "notes": "Real start/drive sequence with cabin actions. Not a fault recording.",
+    "download_status": "source_link_only",
+    "local_audio_file": null,
+    "usage_recommendation": "Audio similarity baseline; public-domain source."
+  },
+  {
+    "id": "S012",
+    "category": "engine_start",
+    "title": "Opel Corsa E 2014 engine startup",
+    "provider": "Wikimedia Commons",
+    "author": "MKFI",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Open_Corsa_E_model_2014_engine_startup_sound.ogg",
+    "license": "public domain",
+    "duration_seconds": 4,
+    "recording_type": "field_recording",
+    "mechanic_verified": false,
+    "confirmed_fault": null,
+    "notes": "Documented Opel Corsa start sound; not a fault label.",
+    "download_status": "source_link_only",
+    "local_audio_file": null,
+    "usage_recommendation": "Short normal startup reference."
   }
 ]
