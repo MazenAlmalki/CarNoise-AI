@@ -1,0 +1,338 @@
+[
+  {
+    "id": "W001",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "صرير مع الفرامل",
+    "symptom_en": "brake squeal",
+    "condition_ar": "عند الفرامل",
+    "possible_causes_ar": [
+      "تآكل فحمات الفرامل أو احتكاك مؤقت بسبب البلل"
+    ],
+    "possible_causes_en": [
+      "Brake pads may be worn; a wear indicator can squeal. Wet brakes may squeak temporarily."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "اطلب فحص الفرامل إذا استمر الصوت.",
+    "safe_next_step_en": "Arrange a brake inspection, especially if persistent.",
+    "source_url": "https://www.acg.aaa.com/connect/blogs/4c/auto/car-noises-you-shouldnt-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W002",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "طحن أو حكة حادة عند الفرامل",
+    "symptom_en": "brake grinding",
+    "condition_ar": "عند الفرامل",
+    "possible_causes_ar": [
+      "احتمال تآكل شديد في أجزاء الفرامل"
+    ],
+    "possible_causes_en": [
+      "Severely worn pads can cause grinding and may compromise braking."
+    ],
+    "urgency_hint": "high",
+    "safe_next_step_ar": "إذا تراجعت قوة الفرملة توقف بأمان واطلب المساعدة وفحصًا عاجلًا.",
+    "safe_next_step_en": "Stop driving safely if braking is impaired, and obtain prompt professional brake inspection.",
+    "source_url": "https://www.acg.aaa.com/connect/blogs/4c/auto/car-noises-you-shouldnt-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W003",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "طقطقة مع الالتفاف",
+    "symptom_en": "clicking while turning",
+    "condition_ar": "عند الالتفاف",
+    "possible_causes_ar": [
+      "احتمال تآكل مفصل العكس (CV joint)"
+    ],
+    "possible_causes_en": [
+      "Worn constant-velocity joints may click or pop while turning."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "افحص منظومة نقل الحركة والتوجيه عند فني.",
+    "safe_next_step_en": "Have the drivetrain and steering area checked by a qualified mechanic.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/vehicle-noises-you-should-never-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W004",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "نقر متكرر عند تشغيل السيارة",
+    "symptom_en": "rapid clicking on startup",
+    "condition_ar": "عند التشغيل",
+    "possible_causes_ar": [
+      "احتمال ضعف شحن البطارية أو مشكلة كهربائية"
+    ],
+    "possible_causes_en": [
+      "Repeated clicking during starting can accompany a weak or discharged battery."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "اطلب فحص البطارية ونظام التشغيل.",
+    "safe_next_step_en": "Request a battery and starting-system test.",
+    "source_url": "https://www.acg.aaa.com/connect/blogs/4c/auto/car-noises-you-shouldnt-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W005",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "صرير عند لف المقود",
+    "symptom_en": "steering squeal",
+    "condition_ar": "عند الالتفاف",
+    "possible_causes_ar": [
+      "احتمال مشكلة في سير أو نظام الباور في السيارات المجهزة به"
+    ],
+    "possible_causes_en": [
+      "Some steering systems may squeal due to belt or power-steering system issues; designs differ by vehicle."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "افحص التوجيه؛ وإذا صار المقود ثقيلًا بشكل غير طبيعي توقف بأمان.",
+    "safe_next_step_en": "Have the steering system inspected; if steering becomes difficult, stop safely and get assistance.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/what-does-that-strange-car-smell-or-weird-noise-mean",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W006",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "دق أو طق قوي تحت الكبوت",
+    "symptom_en": "loud knocking under hood",
+    "condition_ar": "أثناء القيادة",
+    "possible_causes_ar": [
+      "قد يرتبط الصوت بمشكلة خطيرة في المحرك"
+    ],
+    "possible_causes_en": [
+      "Engine knocking or clunking can indicate an internal engine problem."
+    ],
+    "urgency_hint": "high",
+    "safe_next_step_ar": "توقف في مكان آمن وأطفئ المحرك واستعن بفني.",
+    "safe_next_step_en": "Safely stop and shut off the engine, then seek professional help.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/vehicle-noises-you-should-never-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W007",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "خبط على المطبات",
+    "symptom_en": "clunking over bumps",
+    "condition_ar": "على المطبات",
+    "possible_causes_ar": [
+      "احتمال مشكلة في التعليق أو تثبيت العادم"
+    ],
+    "possible_causes_en": [
+      "Worn or loose suspension parts, and sometimes loose exhaust hardware, can clunk over bumps."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "افحص نظام التعليق وتثبيتات العادم.",
+    "safe_next_step_en": "Have suspension and exhaust mounts inspected soon.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/what-does-that-strange-car-smell-or-weird-noise-mean",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W008",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "ونة أو اهتزاز من الإطارات مع السرعة",
+    "symptom_en": "tire hum and vibration",
+    "condition_ar": "أثناء القيادة",
+    "possible_causes_ar": [
+      "احتمال تآكل غير منتظم للإطارات أو مشكلة ترصيص"
+    ],
+    "possible_causes_en": [
+      "Tire wear patterns or wheel balance issues can cause humming or vibrations."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "افحص الإطارات وترصيص العجلات وحالتها.",
+    "safe_next_step_en": "Have tires, wheel balance, and wheel condition checked.",
+    "source_url": "https://ace.aaa.com/automotive/advocacy/tire-safety.html",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W009",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "اهتزاز دواسة الفرامل",
+    "symptom_en": "brake pedal pulsation",
+    "condition_ar": "عند الفرامل",
+    "possible_causes_ar": [
+      "قد يرتبط الاهتزاز بأقراص الفرامل أو مكونات نظامها"
+    ],
+    "possible_causes_en": [
+      "Vibration under braking can indicate rotor-related issues, among other brake faults."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "اطلب فحصًا لنظام الفرامل.",
+    "safe_next_step_en": "Arrange a professional brake inspection.",
+    "source_url": "https://www.aaa.com/autorepair/articles/13-common-car-problems-explained",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W010",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "انحراف السيارة عند الفرملة",
+    "symptom_en": "pulling when braking",
+    "condition_ar": "عند الفرامل",
+    "possible_causes_ar": [
+      "احتمال تفاوت في الفرملة أو مشكلة بالكليبر"
+    ],
+    "possible_causes_en": [
+      "Pulling to one side when braking may indicate unequal braking or a caliper problem."
+    ],
+    "urgency_hint": "high",
+    "safe_next_step_ar": "إذا تأثر التحكم أو الفرملة توقف بأمان واطلب الفحص العاجل.",
+    "safe_next_step_en": "If control or braking is affected, stop safely and seek prompt inspection.",
+    "source_url": "https://www.aaa.com/autorepair/articles/13-common-car-problems-explained",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W011",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "صفير من أسفل الكبوت عند التشغيل",
+    "symptom_en": "belt squeal at startup",
+    "condition_ar": "عند التشغيل",
+    "possible_causes_ar": [
+      "احتمال مشكلة في سير الملحقات"
+    ],
+    "possible_causes_en": [
+      "Squeaking under the hood can be linked to worn or slipping accessory belts."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "اطلب فحص السيور خاصة مع ظهور لمبات تحذير أو ارتفاع حرارة.",
+    "safe_next_step_en": "Have the belt system inspected, particularly if warning lights or overheating occur.",
+    "source_url": "https://exchange.aaa.com/adulting-with-aaa/car-care/the-what-when-and-why-of-car-maintenance/",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W012",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "رنين أو طرق خفيف مع الدعس",
+    "symptom_en": "pinging on acceleration",
+    "condition_ar": "عند التسارع",
+    "possible_causes_ar": [
+      "قد يرتبط بالوقود غير المطابق لمواصفات المصنع أو توقيت الاشتعال"
+    ],
+    "possible_causes_en": [
+      "Engine pinging under acceleration may relate to inappropriate fuel octane or ignition-related issues."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "راجع توصية الوقود في دليل السيارة واطلب فحصًا إذا استمر الصوت.",
+    "safe_next_step_en": "Consult the owner's manual for recommended fuel and have a mechanic assess persistent sounds.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/what-does-that-strange-car-smell-or-weird-noise-mean",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W013",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "صفير أو ونة من المحرك",
+    "symptom_en": "engine whining",
+    "condition_ar": "أثناء القيادة",
+    "possible_causes_ar": [
+      "قد يكون مرتبطًا بالسيور أو أجزاء نقل الحركة"
+    ],
+    "possible_causes_en": [
+      "Whining may reflect belt-related problems or other drivetrain issues; location and circumstances matter."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "اطلب فحصًا يحدد المصدر ولا تعتبر السبب مؤكدًا.",
+    "safe_next_step_en": "Have a qualified mechanic identify the source; do not assume the affected part.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/vehicle-noises-you-should-never-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  },
+  {
+    "id": "W014",
+    "language": [
+      "ar",
+      "en"
+    ],
+    "symptom_ar": "اهتزاز مع السير بسرعات أعلى",
+    "symptom_en": "vibration at highway speed",
+    "condition_ar": "أثناء القيادة",
+    "possible_causes_ar": [
+      "قد يرتبط بترصيص الإطارات أو حالتها"
+    ],
+    "possible_causes_en": [
+      "Steering-wheel vibration at higher speeds is often associated with tire balance, among other causes."
+    ],
+    "urgency_hint": "medium",
+    "safe_next_step_ar": "افحص الإطارات والعجلات، وإذا تأثر التحكم اطلب المساعدة.",
+    "safe_next_step_en": "Have tires and wheels checked; seek help promptly if handling is affected.",
+    "source_url": "https://cluballiance.aaa.com/the-extra-mile/advice/car/car-warning-signs-you-should-never-ignore",
+    "verification_status": "source_reviewed",
+    "mechanic_confirmed": false,
+    "confirmed_issue": null,
+    "notes": "Source-grounded general information; not a patient/vehicle-specific confirmed diagnosis."
+  }
+]
