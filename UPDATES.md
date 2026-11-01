@@ -165,3 +165,13 @@ python scripts/import_kwerimoto.py
 - Updated `server/index.js` so `POST /api/analyze` retrieves up to three candidates based on typed descriptions and forwards their source URL, possible causes, and next steps to Llama. Response now includes `knowledgeMatches` as structured metadata.
 - Source material drawn from consumer automotive advice by the U.S. FTC, AAA, The AA, and RAC. Each card contains a URL, and none claims to be mechanic-confirmed ground truth.
 - **Remaining:** test retrieval quality, Arabic aliases, and live Ollama end-to-end; build a separate emergency-rules check; evaluate false matches and add source badges in UI; no audio classification yet.
+
+
+### Phase 8 — Conversational AI chat instead of mandatory MCQs (November 2026)
+- Removed the forced four multiple-choice questions for **new conversations**.
+- Added `POST /api/chat` in Express with a natural Saudi Arabic / English conversational system prompt; Llama should answer a user's initial description directly and request clarifying details conversationally if necessary.
+- Added multi-turn context: sends up to 12 recent chat messages alongside up to 3 retrieved text knowledge cards and unconfirmed previous vehicle history.
+- Updated `public/app.js` to retain per-case chat turns in browser-local history, submit follow-ups through the same composer, show animated response loading, and preserve optional initial media replay.
+- Updated the landing page and composer copy to invite chatting rather than starting a structured diagnosis form.
+- Preserved old `POST /api/analyze` and saved legacy MCQ cases; new chats no longer use the question wizard.
+- **Not yet verified on a running Ollama model**; the source commits need `npm.cmd run check` and real browser testing.
