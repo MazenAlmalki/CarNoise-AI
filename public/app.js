@@ -123,7 +123,8 @@ function renderResult(r){
 async function analyze(){
  if(!session||submitting)return;
  submitting=true;showError('');$('busy').classList.remove('hidden');
- const body={description:session.description,language:session.lang||'ar'};
+ const previous=state.cases.filter(c=>c.carId===session.carId&&c.id!==session.id&&c.result).slice(-5).map(c=>({date:c.createdAt.slice(0,10),description:c.description.slice(0,250),suspectedSummary:String(c.result.summary||'').slice(0,250)}));
+ const body={description:session.description,language:session.lang||'ar',history:previous};
  for(let i=0;i<4;i++)body[optionKeys[i]]=session.answers[i];
  try{
   const response=await fetch('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
