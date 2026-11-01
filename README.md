@@ -94,3 +94,17 @@ No 1,067 individual audio files or metadata rows have been imported into this Gi
 Example user descriptions: `السيارة ترج وهي واقفة`, `الدركسون يرج على الخط`, `الفرامل تحك`, `المكينة تحتر`, `car shakes at idle`.
 
 Run `npm.cmd run check`, then test `npm.cmd run dev` with an available Ollama model. The new retrieval code is committed but has not been tested end to end against the user's Ollama instance.
+
+
+## V4 — Natural AI chat (November 2026)
+
+**New sessions open with a conversation instead of immediate multiple-choice questions.** Write a car problem in Arabic or English and send it; the frontend calls `POST /api/chat`, which passes the latest message, up to 12 previous chat turns, limited relevant text knowledge cards, and tentative vehicle history to the configured Llama endpoint. The AI should respond naturally and ask at most one useful follow-up question if needed.
+
+- Chat messages are stored **locally per vehicle case** alongside previous analyses; older MCQ-based history entries remain viewable.
+- No required four-question wizard for **new chats**.
+- Initial audio/video attachments can still be saved and replayed locally; **Llama cannot hear them**. Additional attachments after a chat begins are disabled until multi-attachment storage is implemented.
+- The old `POST /api/analyze` route is retained for compatibility with older code, while new chats use `POST /api/chat`.
+- Requires a running local Ollama model or configured remote compatible model; **no live Ollama response was verified in this GitHub-only change**.
+- Retrieval uses a source-grounded keyword matcher, not vector-semantic RAG, and retrieved symptoms are not confirmed diagnoses.
+
+Test by running `npm.cmd run check`, `npm.cmd run dev`, then submit `السيارة ترج وهي واقفة` and follow with `وألاحظ إنها تزيد مع المكيف`. The AI should answer both without displaying the fixed multiple-choice questionnaire.
