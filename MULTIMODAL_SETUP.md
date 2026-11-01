@@ -77,3 +77,10 @@ The text chat route now inserts the **current Saudi date at request time** into 
 - CLAP model documentation: https://huggingface.co/docs/transformers/model_doc/clap
 - FFmpeg: https://ffmpeg.org/
 - PyTorch: https://pytorch.org/get-started/locally/
+
+
+## Check which local models are actually installed
+
+With the Node server running, open `http://localhost:3000/api/model-status`. It queries **local Ollama** and returns whether `CHAT_MODEL` and `VISION_MODEL` are installed. If `ollamaReachable:false`, start Ollama first. Remote text providers are not checked by this local-only endpoint.
+
+The visual model request uses `keep_alive:0` to unload after visual inference and reduce simultaneous memory pressure on low-RAM laptops. Running two models in sequence can still be slow. An attached photo/video/audio file can also be submitted without a written description.
