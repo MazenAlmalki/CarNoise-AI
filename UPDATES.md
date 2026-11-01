@@ -175,3 +175,17 @@ python scripts/import_kwerimoto.py
 - Updated the landing page and composer copy to invite chatting rather than starting a structured diagnosis form.
 - Preserved old `POST /api/analyze` and saved legacy MCQ cases; new chats no longer use the question wizard.
 - **Not yet verified on a running Ollama model**; the source commits need `npm.cmd run check` and real browser testing.
+
+
+### Phase 9 — Multimodal architecture, current-date grounding and model upgrades (November 1, 2026)
+
+- Investigated current compact models for low-memory hardware. Recommended `qwen3.5:2b` for chat and `qwen3-vl:2b` for photo/video frame observations; both use the local Ollama service.
+- Added `CHAT_MODEL`, `VISION_MODEL`, `OLLAMA_HOST`, `ENABLE_AUDIO_CLAP`, `AUDIO_PYTHON`, `FFMPEG_PATH`, `CLAP_MODEL` settings in `.env.example`. Existing user `.env` is **not automatically modified**.
+- Added `server/multimodal.js`: accepts bounded image/audio/video media, processes image with Qwen3-VL, samples video frames with FFmpeg, optionally runs a separate CLAP model on video soundtrack or audio.
+- Added `scripts/analyze_car_audio.py`: optional Python CLAP zero-shot sound-to-description similarity. Returns ranked *similarity scores*, NOT mechanic-verified fault diagnoses.
+- Updated `server/index.js` with `POST /api/media/analyze` using maintained Multer multipart parsing (25MB max), and feeds media observations into the main chat route as uncertain context.
+- The chat route now includes the current date calculated in the **Asia/Riyadh** time zone, specifically to reduce outdated-date responses (like “September 2023”). This is a prompt-based improvement, not guaranteed date accuracy if model fails to obey.
+- The frontend now accepts **photos plus video/audio**, uploads a selected attachment only upon the user pressing Send, and offers a visible warning rather than pretending analysis succeeded when media prerequisites are missing.
+- Privacy change: media retained in browser IndexedDB and **temporarily uploaded to the app backend upon Send**. Local temporary files are removed after inference. Real production deployment needs privacy/security review and user consent design.
+- Added `MULTIMODAL_SETUP.md` with Windows installation instructions and model limitations; updated UI labels, README, and model settings.
+- **Unverified:** required models installed on the user's laptop, end-to-end real inference, performance with 8 GB RAM, FFmpeg runtime, and optional Python CLAP dependencies. Audio matching is OFF by default until setup.
