@@ -78,7 +78,11 @@ function createCase(description){
  state.cases.push(entry);session=entry;questionIndex=0;persist();renderSidebar();return entry;
 }
 async function startAnalysis(description){
- if(description.trim().length<2){showError(state.lang==='ar'?'اكتب وصف بسيط عن المشكلة.':'Tell me a little about the problem.');$('description').focus();return;}
+ description=String(description||'').trim();
+ if(description.length<2&&pendingMedia){
+  description=state.lang==='ar'?'حلل المرفق واذكر ما تستطيع ملاحظته مع حدود التحليل.':'Analyze the attachment and explain only observations and limitations.';
+ }
+ if(description.length<2){showError(state.lang==='ar'?'اكتب وصف بسيط عن المشكلة أو أرفق ملف.':'Describe the issue or attach a media file.');$('description').focus();return;}
  if(session){await sendChat(description);return;}
  showError('');
  const entry=createCase(description.trim());
