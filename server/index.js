@@ -29,18 +29,23 @@ function validateResult(v) {
   if (!trim(v.title,120) || !trim(v.summary) || !reasons.length || !nextSteps.length) return null;
   return {title:trim(v.title,120),summary:trim(v.summary),severity:v.severity,reasons,nextSteps,urgentSigns:strings(v.urgentSigns)};
 }
-app.get('/api/health',(_req,res)=>res.json({ok:true,llamaConfigured:!!(process.env.LLAMA_API_URL&&process.env.LLAMA_API_KEY&&process.env.LLAMA_MODEL)}));
+app.get('/api/health',(_req,res)=>res.json({ok:true,llamaConfigured:true,llamaMode:process.env.LLAMA_API_URL?.trim()?'custom':'local-ollama'}));
 app.post('/api/analyze',async(req,res)=>{
   const data=req.body||{}, description=trim(data.description,600);
   if(description.length<8) return res.status(400).json({error:'اكتب وصفًا للصوت من 8 أحرف على الأقل.'});
   for(const [key,values] of Object.entries(choices)) if(!values.includes(data[key])) return res.status(400).json({error:'أكمل جميع أسئلة وصف الصوت أولًا.'});
-  const {LLAMA_API_URL,LLAMA_API_KEY,LLAMA_MODEL}=process.env;
-  if(!LLAMA_API_URL||!LLAMA_API_KEY||!LLAMA_MODEL) return res.status(503).json({error:'ربط Llama غير مفعّل بعد. أضف بيانات المزود إلى ملف .env.',code:'LLAMA_NOT_CONFIGURED'});
+  const LLAMA_API_URL=process.env.LLAMA_API_URL?.trim() || 'http://127.0.0.1:11434/v1/chat/completions';
+  const LLAMA_API_KEY=process.env.LLAMA_API_KEY?.trim();
+  const LLAMA_MODEL=process.env.LLAMA_MODEL?.trim() || 'llama3.2:3b';
   try {
     const endpoint=new URL(LLAMA_API_URL);
     if(endpoint.protocol!=='https:'&&!['localhost','127.0.0.1'].includes(endpoint.hostname)) return res.status(500).json({error:'رابط مزود Llama غير آمن.'});
-    const response=await fetch(endpoint,{method:'POST',headers:{Authorization:'Bearer '+LLAMA_API_KEY,'Content-Type':'application/json'},body:JSON.stringify({model:LLAMA_MODEL,temperature:0.25,max_tokens:1200,messages:[{role:'system',content:prompt},{role:'user',content:JSON.stringify({description,timing:data.timing,sound:data.sound,location:data.location,frequency:data.frequency})}]}),signal:AbortSignal.timeout(20000)});
-    if(!response.ok){console.error('Llama provider:',response.status);return res.status(502).json({error:'خدمة Llama غير متاحة حاليًا، جرّب لاحقًا.'});}
+    const isLocal=['localhost','127.0.0.1'].includes(endpoint.hostname);
+    if(!isLocal && !LLAMA_API_KEY) return res.status(503).json({error:'أضف مفتاح مزود Llama في .env.'});
+    const headers={'Content-Type':'application/json'};
+    if(LLAMA_API_KEY) headers.Authorization='Bearer '+LLAMA_API_KEY;
+    const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({model:LLAMA_MODEL,temperature:0.25,max_tokens:1200,response_format:{type:'json_object'},messages:[{role:'system',content:prompt},{role:'user',content:JSON.stringify({description,timing:data.timing,sound:data.sound,location:data.location,frequency:data.frequency})}]}),signal:AbortSignal.timeout(isLocal?120000:30000)});
+    if(!response.ok){console.error('Llama provider:',response.status);return res.status(502).json({error:isLocal?'تأكد أنك حمّلت نموذج llama3.2:3b باستخدام Ollama.':'خدمة Llama غير متاحة حاليًا، جرّب لاحقًا.'});}
     const json=await response.json();
     let raw=json?.choices?.[0]?.message?.content;
     if(typeof raw!=='string') return res.status(502).json({error:'وصل رد غير مفهوم من Llama.'});
@@ -49,7 +54,7 @@ app.post('/api/analyze',async(req,res)=>{
     const result=validateResult(parsed);
     if(!result) return res.status(502).json({error:'نتيجة الذكاء الاصطناعي ناقصة، حاول مرة ثانية.'});
     return res.json({result,poweredBy:'Llama'});
-  }catch(error){console.error('Llama request:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:'تعذّر الاتصال بـ Llama. تحقق من الخدمة وحاول مرة ثانية.'});}
+  }catch(error){console.error('Llama request:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:'تعذّر الاتصال بـ Llama. تأكد أن Ollama شغال والنموذج محمّل.'});}
 });
 app.use('/api',(_req,res)=>res.status(404).json({error:'مسار غير موجود.'}));
 app.get('*',(_req,res)=>res.sendFile(path.join(root,'public','index.html')));
