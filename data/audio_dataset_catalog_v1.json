@@ -1,0 +1,50 @@
+[
+  {
+    "id": "D001",
+    "name": "OtoMobile",
+    "url": "https://zenodo.org/records/3382945",
+    "publisher": "Northwestern University Interactive Audio Lab",
+    "reported_recordings": 65,
+    "description": "Vehicle sounds with mechanic-provided or mechanic-consulted fault labels; 12 issues.",
+    "access": "restricted",
+    "license": "access approval required",
+    "suitability": "high if permitted",
+    "action": "Request access and check reuse conditions before downloading or training."
+  },
+  {
+    "id": "D002",
+    "name": "KweriMoto Engine Sounds",
+    "url": "https://huggingface.co/datasets/rayyyyy007/kwerimoto-engine-sounds",
+    "publisher": "Independent academic project",
+    "reported_recordings": 1067,
+    "description": "Healthy, engine-knock and misfire audio; creator warns labels are not verified and some samples are synthetic or not known to be cars.",
+    "access": "public metadata",
+    "license": "other / mixed provenance",
+    "suitability": "exploratory only",
+    "action": "Audit each underlying source license and sample before reuse."
+  },
+  {
+    "id": "D003",
+    "name": "Procedural Engine Sounds",
+    "url": "https://huggingface.co/datasets/rdoerfler/procedural-engine-sounds",
+    "publisher": "Robin Doerfler",
+    "reported_recordings": 5935,
+    "description": "Synthetic engines with RPM/torque annotations, NOT diagnosed vehicle faults.",
+    "access": "public",
+    "license": "CC BY-NC 4.0",
+    "suitability": "engine sound representation, research",
+    "action": "Noncommercial only; not a fault-label dataset."
+  },
+  {
+    "id": "D004",
+    "name": "Sounds of Vehicle Internal Combustion Engines",
+    "url": "https://zenodo.org/records/18777405",
+    "publisher": "University of Nis / academic partners",
+    "reported_recordings": 475,
+    "description": "Garage recordings of petrol/diesel vehicles, mostly idle and some acceleration; no fault diagnoses.",
+    "access": "open",
+    "license": "not clearly displayed on inspected page; verify before redistribution",
+    "suitability": "healthy/operating baseline candidate",
+    "action": "Verify rights and metadata before inclusion."
+  }
+]
