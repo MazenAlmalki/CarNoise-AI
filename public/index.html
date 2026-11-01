@@ -20,7 +20,7 @@
   <div id="carList" class="car-list"></div>
   <div class="side-label history-heading"><span data-i18n="history">سجل المشاكل</span><span id="historyCount" class="count">0</span></div>
   <div id="historyList" class="history-list"></div>
-  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">بيانات سياراتك محفوظة على هذا الجهاز فقط.</span></div><div class="made">ورشتك <span>·</span> V4</div></div>
+  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">بيانات سياراتك محفوظة على هذا الجهاز فقط.</span></div><div class="made">ورشتك <span>·</span> V5</div></div>
 </aside>
 <div id="overlay" class="overlay hidden"></div>
 <div class="workspace">
@@ -54,9 +54,9 @@
     <div id="mediaPreview" class="media-preview hidden"></div>
     <form id="composer" class="composer">
       <div class="composer-main"><textarea id="description" rows="2" maxlength="600" data-i18n-placeholder="inputPlaceholder" placeholder="وش المشكلة اللي تواجهك في السيارة؟"></textarea></div>
-      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach audio/video" aria-label="Attach audio/video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">إرسال</span><span>↗</span></button></div>
+      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach image, audio or video" aria-label="Attach image, audio or video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="image/*,audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">إرسال</span><span>↗</span></button></div>
     </form>
-    <p class="footer-note" data-i18n="disclaimer">النتائج احتمالية وليست تشخيصًا. المقاطع تُحفظ محليًا ولا يحللها Llama النصي بعد.</p>
+    <p class="footer-note" data-i18n="disclaimer">النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛ تحليل الصوت يتطلب CLAP.</p>
   </div>
 </div>
 </div>
