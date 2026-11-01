@@ -67,3 +67,13 @@ These are starter educational reference records, not a diagnostic ground-truth d
 - `data/AUDIO_SOURCES_README.md`: licensing, reliability distinctions and the suggested CLAP+RAG evaluation workflow.
 
 These files are ready for review and future data ingestion; audio matching is **not yet integrated into the running app**.
+
+
+## Expanded 1,000+ sound reference research
+
+New in `data/`:
+- `large_audio_dataset_catalog.json` — original large audio datasets with counts, licensing, access, quality and suitability.
+- `LARGE_AUDIO_COLLECTION.md` — instructions, caveats and reproducibility.
+- `../scripts/import_kwerimoto.py` — imports upstream KweriMoto **1,067-row manifest** into `data/imported/kwerimoto_index.jsonl` with an audit report. Run it yourself on a network-enabled machine. Only metadata is downloaded.
+  
+No 1,067 individual audio files or metadata rows have been imported into this GitHub repository yet. Publisher-reported sample counts must not be confused with data already downloaded or rights-cleared. See `data/LARGE_AUDIO_COLLECTION.md`.
