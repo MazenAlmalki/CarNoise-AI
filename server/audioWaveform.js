@@ -27,7 +27,6 @@ async function decodePcm(filePath,{ffmpeg='ffmpeg',seconds=12}={}){
   });
  });
 }
-const cl=(n,min,max)=>Math.max(min,Math.min(max,n));
 export function describePcm(pcm,sampleRate=8000){
  if(!Buffer.isBuffer(pcm)||pcm.length<sampleRate*2/2)return {ok:false,reason:'Recording is too short.'};
  const len=Math.floor(pcm.length/2);

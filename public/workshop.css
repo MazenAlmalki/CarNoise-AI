@@ -422,12 +422,6 @@ body {
   color: var(--accent);
   font-family: Inter, sans-serif;
 }
-.feature-strip {
-  display: none;
-  padding-top: 20px;
-  font-size: 11px;
-  gap: 25px;
-}
 .composer-area {
   width: min(1040px, calc(100% - 90px));
   padding: 16px 0 16px;
@@ -825,10 +819,6 @@ body[data-assistant-state="recording"] .mechanic-hero {
   .workshop-edition {
     display: none;
   }
-  .feature-strip {
-    font-size: 10px;
-    gap: 12px;
-  }
   .section-heading {
     margin-top: 18px;
   }
@@ -978,9 +968,6 @@ body[data-assistant-state="recording"] .mechanic-hero {
   }
   .mechanic-tip strong {
     font-size: 11px;
-  }
-  .feature-strip {
-    display: none;
   }
   .composer-area {
     padding-top: 12px;

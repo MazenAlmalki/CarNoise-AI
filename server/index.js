@@ -20,7 +20,7 @@ import { chatProvider, publicChatConfiguration } from './chatProvider.js';
 import { buildContextEngine } from './contextEngine.js';
 import { planMinimalQuestions, enforceQuestionBudget } from './minimalQuestions.js';
 import { retrieveConditionalPatterns } from './conditionalNoiseRetrieval.js';
-import { visionConfiguration, DEFAULT_VISION_MODEL } from './llamaVision.js';
+import { DEFAULT_VISION_MODEL } from './llamaVision.js';
 import { publicAudioConfiguration, hasHostedAudioEvidence } from './geminiAudio.js';
 
 const app = express();

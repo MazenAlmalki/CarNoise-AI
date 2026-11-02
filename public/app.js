@@ -2,7 +2,6 @@ const $=id=>document.getElementById(id);
 // Shared product copy for the Arabic and English layouts.
 const translations={
   "ar": {
-    "brandSub": "مساعد سيارتك الذكي",
     "newAnalysis": "افتح موضوع جديد",
     "myCars": "سياراتي",
     "history": "محادثات السيارة",
@@ -16,9 +15,6 @@ const translations={
     "exampleBrakes": "الفرامل تصفّر",
     "exampleStart": "طقطقة عند التشغيل",
     "exampleDrive": "صوت يزيد مع السرعة",
-    "featureOne": "سجل مستقل لكل سيارة",
-    "featureTwo": "نص، صوت، صورة وفيديو",
-    "featureThree": "يفهم كلامك، بطريقتك",
     "inputPlaceholder": "خذ راحتك… وش اللي صاير مع سيارتك؟",
     "attach": "إرفاق",
     "record": "تسجيل",
@@ -150,7 +146,6 @@ const translations={
     "networkError": "ما قدرنا نوصل للسيرفر. تأكد أن التطبيق شغّال وافتحه من عنوانه الصحيح، ثم جرّب إرسال رسالتك مرة ثانية."
   },
   "en": {
-    "brandSub": "Your car companion",
     "newAnalysis": "Start a conversation",
     "myCars": "My vehicles",
     "history": "Conversations",
@@ -164,9 +159,6 @@ const translations={
     "exampleBrakes": "My brakes squeal",
     "exampleStart": "Clicking on startup",
     "exampleDrive": "A noise at speed",
-    "featureOne": "A history for every car",
-    "featureTwo": "Text, audio, photo & video",
-    "featureThree": "Your words. Your language.",
     "inputPlaceholder": "Take your time. What’s going on with your car?",
     "attach": "Attach",
     "record": "Record",

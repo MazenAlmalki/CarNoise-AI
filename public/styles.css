@@ -513,8 +513,7 @@ button:active:not(:disabled) {
   color: var(--muted);
   margin-inline-end: 16px;
 }
-.live-dot i,
-.companion-tag i {
+.live-dot i {
   width: 5px;
   height: 5px;
   background: var(--accent);
@@ -605,85 +604,6 @@ button:active:not(:disabled) {
   width: 14px;
   height: 14px;
 }
-.companion-scene {
-  height: 300px;
-  position: relative;
-  display: grid;
-  place-items: center;
-  isolation: isolate;
-}
-.companion-scene::before {
-  content: "";
-  position: absolute;
-  inset: 5%;
-  z-index: -1;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse,
-    color-mix(in srgb, var(--accent) 9%, transparent),
-    transparent 68%
-  );
-}
-.companion {
-  width: 110%;
-  max-width: 350px;
-  height: auto;
-  animation: float 6s ease-in-out infinite;
-  filter: drop-shadow(0 15px 22px #0002);
-}
-.orbit {
-  position: absolute;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 230px;
-  height: 230px;
-  z-index: -1;
-}
-.orbit-two {
-  width: 285px;
-  height: 285px;
-  border-style: dashed;
-  opacity: 0.6;
-  animation: orbit 120s linear infinite;
-}
-.orbit-one::before {
-  content: "";
-  width: 5px;
-  height: 5px;
-  background: var(--accent);
-  border-radius: 50%;
-  position: absolute;
-  top: 32px;
-  left: 32px;
-}
-.scene-cross {
-  position: absolute;
-  color: var(--subtle);
-  font:
-    16px Inter,
-    sans-serif;
-}
-.cross-one {
-  inset-inline-start: 10px;
-  top: 80px;
-}
-.cross-two {
-  inset-inline-end: 20px;
-  bottom: 60px;
-}
-.companion-tag {
-  position: absolute;
-  bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 30px;
-  padding: 7px 13px;
-  color: var(--muted);
-  font-size: 10px;
-}
 .section-heading {
   display: flex;
   align-items: center;
@@ -759,27 +679,6 @@ button:active:not(:disabled) {
 }
 [dir="rtl"] .suggestion-arrow {
   transform: rotate(-45deg);
-}
-.feature-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
-  padding: 25px 0 0;
-  color: var(--subtle);
-  font-size: 10px;
-}
-.feature-strip > div {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-.feature-strip .icon {
-  width: 14px;
-  height: 14px;
-}
-.language-glyph {
-  font-size: 15px;
 }
 .composer-area {
   width: min(930px, calc(100% - 100px));
@@ -955,12 +854,6 @@ button:active:not(:disabled) {
   border-radius: 14px;
   background: var(--panel);
   animation: enter 0.3s both;
-}
-.typing-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
-  animation: pulse 2s infinite;
 }
 .typing-body {
   display: flex;
@@ -1289,16 +1182,6 @@ button:active:not(:disabled) {
     transform: translateY(0);
   }
 }
-@keyframes float {
-  50% {
-    transform: translateY(-7px);
-  }
-}
-@keyframes orbit {
-  to {
-    transform: rotate(360deg);
-  }
-}
 @keyframes pulse {
   50% {
     opacity: 0.6;
@@ -1357,12 +1240,6 @@ button:active:not(:disabled) {
   .intro h1 {
     font-size: 51px;
   }
-  .companion-scene {
-    height: 330px;
-  }
-  .companion {
-    max-width: 370px;
-  }
   .section-heading {
     margin-top: 45px;
   }
@@ -1384,17 +1261,6 @@ button:active:not(:disabled) {
     grid-template-columns: 1.2fr 1fr;
     min-height: 300px;
   }
-  .companion-scene {
-    height: 260px;
-  }
-  .orbit-one {
-    width: 190px;
-    height: 190px;
-  }
-  .orbit-two {
-    width: 230px;
-    height: 230px;
-  }
   .intro h1 {
     font-size: 34px;
   }
@@ -1409,10 +1275,6 @@ button:active:not(:disabled) {
     display: none;
   }
   .suggest-copy strong {
-    font-size: 10px;
-  }
-  .feature-strip {
-    gap: 15px;
     font-size: 10px;
   }
 }
@@ -1436,9 +1298,6 @@ button:active:not(:disabled) {
   }
   .welcome-row {
     grid-template-columns: 1fr;
-  }
-  .companion-scene {
-    display: none;
   }
   .welcome-copy {
     padding-top: 20px;
@@ -1465,10 +1324,6 @@ button:active:not(:disabled) {
   .suggest-copy small {
     display: block;
     margin-top: 3px;
-  }
-  .feature-strip {
-    flex-wrap: wrap;
-    gap: 12px;
   }
   .composer-caption > span:last-child {
     display: none;
@@ -1559,18 +1414,6 @@ button:active:not(:disabled) {
   .section-detail {
     font-size: 10px;
   }
-  .feature-strip {
-    font-size: 10px;
-    gap: 11px;
-    padding-top: 23px;
-  }
-  .feature-strip > div {
-    gap: 4px;
-  }
-  .feature-strip .icon {
-    width: 12px;
-    height: 12px;
-  }
   .composer-area {
     padding-top: 20px;
   }
@@ -1595,12 +1438,6 @@ button:active:not(:disabled) {
 @media (max-width: 370px) {
   .intro h1 {
     font-size: 30px;
-  }
-  .feature-strip {
-    gap: 9px;
-  }
-  .feature-strip > div:last-child {
-    display: none;
   }
   .suggestion {
     padding: 12px 7px;
