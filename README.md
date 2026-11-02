@@ -229,3 +229,16 @@ The YouTube audio was inaccessible for inspection in this environment. The speci
 A new **step-by-step guided interview** helps when sound-event recognition cannot give a useful result. It asks about **where** the sound comes from, **when** it occurs, and **how** it sounds, collecting the user's own answers before the AI discusses possible explanations. If CLAP is disabled, it offers the user an optional manual-interview action rather than pretending that it listened. CLAP candidate similarities, when available, remain tentative. This is not a fixed diagnosis system.
 
 The project additionally indexes **28 public video-topic links from 8 real YouTube videos**, plus **536 synthetic sound-description phrasings**, to complement the existing 67 CLAP captions. Video metadata is for source-backed educational context, not labeled sound files or proof of which component is faulty. Source inventory: [SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md](SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md).
+
+
+## V5.11 — Hosted Meta Llama text API replaces local Qwen chat (November 2, 2026)
+
+The main free-form chat **and** legacy text analysis now use an external **Meta Llama 3.3 70B Instruct** model via an OpenAI-compatible API. OpenRouter is the default because its model listing currently offers `meta-llama/llama-3.3-70b-instruct`. The app no longer defaults text chat to local `qwen3.5:2b` or local `llama3.2:3b`.
+
+- Configuration: `CHAT_API_URL=https://openrouter.ai/api/v1/chat/completions`, `CHAT_API_KEY=<private key>`, `CHAT_MODEL=meta-llama/llama-3.3-70b-instruct`.
+- The frontend never receives the API key. Main chat keeps Saudi-dialect interpretations, vehicle data, RAG references, sound-clarification interview and conversation history.
+- `GET /api/model-status` now reports hosted text-provider configuration separately from **local Ollama vision**.
+- The separate `VISION_MODEL=qwen3-vl:2b` still handles local image/video still-frame analysis; CLAP and Whisper are also separate. **Text Llama 3.3 is text-only.**
+- Read [HOSTED_LLAMA_API_SETUP.md](HOSTED_LLAMA_API_SETUP.md) to migrate the actual private `.env` and test the API.
+
+A key is required and API calls may incur provider charges. ChatGPT plans do not include OpenRouter API credits. Hosted text processing sends user prompts and relevant derived context to the chosen provider; it does **not** magically make CLAP or vision faster.
