@@ -4,7 +4,9 @@ import {readFileSync} from 'node:fs';
 
 const library=JSON.parse(readFileSync(new URL('../data/car_audio_captions_v2.json',import.meta.url),'utf8'));
 const script=readFileSync(new URL('../scripts/analyze_car_audio.py',import.meta.url),'utf8');
-const server=readFileSync(new URL('../server/index.js',import.meta.url),'utf8');
+import http from 'node:http';
+import {spawn} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 
 test('extended sound catalog has independent candidates with source disclaimers',()=>{
  assert.equal(library.length,67);
@@ -28,9 +30,23 @@ test('classifier evaluates up to 20 seconds with separate windows',()=>{
  assert.match(script,/requires_confirmation": True/);
 });
 
-test('backend does not pretend to recognize sound based on waveform or silence',()=>{
- assert.ok(server.includes('audio-classifier-not-configured'));
- assert.ok(server.includes('audio-no-usable-sound'));
- assert.ok(server.includes('CLAP only ranks descriptions by similarity'));
- assert.ok(server.includes("if(!classified && wasAttempted)return res.json(mediaClarification(language,true))"));
+test('chat honestly distinguishes disabled recognition, no usable sound and provider failure',async t=>{
+ const probe=http.createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));
+ const port=probe.address().port;await new Promise(resolve=>probe.close(resolve));
+ const child=spawn(process.execPath,['server/index.js'],{cwd:fileURLToPath(new URL('..',import.meta.url)),env:{...process.env,PORT:String(port),CHAT_API_KEY:'',GEMINI_API_KEY:''},stdio:['ignore','ignore','pipe']});
+ t.after(()=>{child.kill();});
+ const base='http://127.0.0.1:'+port;
+ let ready=false;
+ for(let n=0;n<60;n++){try{if((await fetch(base+'/api/health')).ok){ready=true;break;}}catch{}await new Promise(resolve=>setTimeout(resolve,50));}
+ assert.ok(ready,'test server must become ready');
+ for(const [attempted,succeeded,status] of [[false,false,'classifier-not-configured'],[true,true,'no-candidates'],[true,false,'classifier-error']]){
+  const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the recording',language:'en',mediaInsight:{type:'audio',waveform:{ok:true,kind:'waveform_features_only'},audioEventAnalysis:{provider:'gemini',attempted,succeeded},audioObservation:null,transcription:{hasRecognizedSpeech:false,text:''},warnings:['Gemini audio analysis failed: quota reached.']}})});
+  assert.equal(response.status,200);const result=await response.json();
+  assert.equal(result.audioStatus,status);assert.equal(result.audioInterview.answers&&Object.keys(result.audioInterview.answers).length,0);
+  assert.match(result.reply,/not enabled|cannot identify|did not produce a reliable/i);
+  assert.doesNotMatch(result.reply,/your (?:engine|brakes|battery) (?:is|are|has|have)|I (?:heard|recognized|diagnosed)/i);
+  assert.ok(!result.knowledgeMatches?.length,'failed/no sound must not fabricate retrieved diagnoses');
+  if(!attempted){assert.equal(result.grounding,'sound-recognition-disabled');assert.equal(result.clarificationOptions[0].stage,'optin');}
+  if(status==='classifier-error')assert.match(result.audioError,/quota/);
+ }
 });

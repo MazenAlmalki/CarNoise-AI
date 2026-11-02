@@ -290,7 +290,7 @@ button:active:not(:disabled) {
   overflow: auto;
   min-height: 55px;
 }
-.folder-item,
+
 .history-item {
   position: relative;
   display: flex;
@@ -319,13 +319,6 @@ button:active:not(:disabled) {
   background: var(--panel2);
   color: var(--text);
 }
-.folder-item:has(.active) {
-  background: var(--panel2);
-  box-shadow: inset -2px 0 var(--accent);
-}
-[dir="ltr"] .folder-item:has(.active) {
-  box-shadow: inset 2px 0 var(--accent);
-}
 .car-row.active {
   color: var(--accent);
 }
@@ -351,7 +344,7 @@ button:active:not(:disabled) {
   font-size: 12px;
   font-weight: 500;
 }
-.car-count,
+
 .count {
   font:
     500 10px Inter,
@@ -361,9 +354,6 @@ button:active:not(:disabled) {
   color: var(--muted);
   padding: 3px 6px;
   border-radius: 5px;
-}
-.car-row.active .car-count {
-  color: var(--accent);
 }
 .delete-action {
   flex: 0 0 26px;
@@ -443,14 +433,6 @@ button:active:not(:disabled) {
   width: 16px;
   height: 16px;
   margin-top: 3px;
-}
-.made {
-  display: flex;
-  gap: 9px;
-  align-items: center;
-  font-size: 10px;
-  color: var(--subtle);
-  margin: 10px;
 }
 .brand-mini {
   font:
@@ -1157,21 +1139,6 @@ button:active:not(:disabled) {
   color: var(--muted);
   margin-top: 6px;
 }
-.splash-track {
-  width: 90px;
-  height: 2px;
-  background: var(--border);
-  overflow: hidden;
-  margin-top: 35px;
-  border-radius: 3px;
-}
-.splash-track::after {
-  content: "";
-  display: block;
-  height: 100%;
-  background: var(--accent);
-  animation: track 1.2s both;
-}
 @keyframes enter {
   from {
     opacity: 0;
@@ -1472,7 +1439,7 @@ body,
     color 0.25s,
     border-color 0.25s;
 }
-.folder-item,
+
 .history-item {
   animation: enter 0.22s both;
 }
@@ -1504,7 +1471,7 @@ body,
   .history-row {
     transition: none;
   }
-  .folder-item,
+
   .history-item {
     animation: none;
   }

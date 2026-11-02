@@ -15,7 +15,8 @@
     <script type="module" src="/app.js"></script>
   </head>
   <body>
-    <div id="splash" class="splash" aria-hidden="true">
+    <div id="splash" class="splash" role="region" aria-label="Welcome">
+      <button id="skipIntro" class="skip-intro">تخطي / Skip</button>
       <div class="splash-content">
         <img
           src="/assets/brand-mark.svg"
@@ -24,7 +25,9 @@
           alt=""
         /><strong data-i18n="brandName">ورشتك</strong
         ><span data-i18n="splashTagline">معك، في كل مشوار.</span>
-        <div class="splash-track"></div>
+        <svg class="intro-mechanic" viewBox="0 0 380 360" aria-hidden="true">
+          <use href="/assets/mechanic.svg#welcome" />
+        </svg>
       </div>
     </div>
     <a class="skip-link" href="#description" data-i18n="skipToChat"
@@ -60,25 +63,22 @@
         <div class="side-label">
           <span data-i18n="myCars">سياراتي</span
           ><button id="addCar" class="plus-button" aria-label="Add car">
-            ＋
+            <span data-i18n="addVehicle">إضافة سيارة</span> ＋
           </button>
         </div>
         <div id="carList" class="car-list"></div>
         <div class="side-label history-heading">
           <span data-i18n="history">سجل المشاكل</span
-          ><span id="historyCount" class="count">0</span>
+          ><span id="historyCount" class="count hidden">0</span>
         </div>
         <div id="historyList" class="history-list"></div>
         <div class="side-bottom">
+          <details id="voicePanel" class="voice-panel"></details>
           <div class="privacy-note">
             <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
             ><span data-i18n="localPrivacy"
               >سجل سيارتك محلي، والمرفقات تُرفع مؤقتًا عند الإرسال.</span
             >
-          </div>
-          <div class="made">
-            <span class="brand-mini">W.</span>
-            <span data-i18n="madeFor">معك، في كل مشوار.</span>
           </div>
         </div>
       </aside>
@@ -148,13 +148,7 @@
                 </div>
               </div>
               <div class="mechanic-stage" aria-hidden="true">
-                <div class="workshop-stamp">
-                  <svg class="icon"><use href="/assets/icons.svg#car" /></svg
-                  ><span data-i18n="workshopStamp">ورشتك الرقمية</span
-                  ><span class="stamp-line"></span>
-                </div>
                 <div class="stage-disc"></div>
-                <div class="stage-grid"></div>
                 <svg class="mechanic mechanic-hero" viewBox="0 0 380 360">
                   <use data-mechanic href="/assets/mechanic.svg#welcome" />
                 </svg>
@@ -162,7 +156,6 @@
                   <span class="caption-line"></span
                   ><span data-i18n="companionTag">معك، خطوة بخطوة</span>
                 </div>
-                <span class="stage-coordinate">W / 01</span>
               </div>
             </div>
             <div class="section-heading">
@@ -267,6 +260,9 @@
               <span id="typingLabel" data-i18n="analyzing"
                 >جاري تجهيز الرد...</span
               >
+              <button id="cancelRequest" type="button" class="cancel-request">
+                إلغاء / Cancel
+              </button>
               <div class="typing-dots" aria-hidden="true">
                 <i></i><i></i><i></i>
               </div>
@@ -352,9 +348,14 @@
               >Enter للإرسال · Shift + Enter لسطر جديد</span
             >
           </div>
+          <div class="assistant-dock" aria-hidden="true">
+            <svg viewBox="0 0 380 360">
+              <use data-mechanic href="/assets/mechanic.svg#welcome" /></svg
+            ><span id="dockLabel">معك، خطوة بخطوة</span>
+          </div>
           <p class="footer-note" data-i18n="disclaimer">
             النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛
-            تحليل الصوت يتطلب CLAP.
+            تحليل الصوت حسب إعدادات المزود.
           </p>
         </div>
       </div>
