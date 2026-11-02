@@ -132,7 +132,7 @@ async function sendChat(text){
    }
   }
   const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:active.lang||state.lang,messages:prior,vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null})});
+   body:JSON.stringify({message,language:active.lang||state.lang,messages:prior,vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(!state.cases.some(x=>x.id===active.id))return;
