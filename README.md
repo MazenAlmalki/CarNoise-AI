@@ -208,3 +208,10 @@ English availability on the user's own machine still depends on local Ollama wor
 ## V5.7 — Tap-to-clarify an unclear audio recording
 
 Audio clips that cannot be understood now offer clickable descriptions: spoken words, clicking, squealing, whistling, humming, vibration or other. The app explicitly says when it **did not** recognize the sound and treats selections as **user descriptions**, never as confirmed audio observations or vehicle faults. If the media decoder fails, the same choices are available. This complements optional Whisper speech transcription and CLAP sound similarity; it does not replace them.
+
+
+## V5.8 — Genuine sound analysis before clarification
+
+Previous audio quick-choice behavior was incorrect: sound-description suggestions appeared even when the real sound classifier had **not run**. Fixed by tracking whether CLAP classification was actually attempted. With CLAP disabled, Warshatak now clearly reports that only basic waveform measurements were taken; it does **not** pretend to recognize vehicle noises, nor present immediate sound choices. If CLAP is enabled and fails, clarification options can follow; if it returns candidate sounds, the AI interprets them as uncertain audio similarities.
+
+**Enabling actual sound-event similarity** requires the optional Python CLAP environment described in [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md). For speech like `السلام عليكم`, a separate Whisper speech-transcription model is required (`ENABLE_SPEECH_TRANSCRIPTION=1` and `faster-whisper`), which is not the same as recognizing car sounds. Both may run slowly on low-memory machines. These updates are source-level changes and require local validation.
