@@ -363,3 +363,14 @@ python scripts/import_kwerimoto.py
 - Added `tests/contextEngineVision.test.js` including no-Qwen active code, mock authenticated vision request, invalid media checks, corrections, context retention and unconfirmed prior case history.
 - Existing installations must edit **the private local .env** in the real cloned project: remove duplicate old Qwen/Ollama entries, add `CHAT_API_KEY`, set `VISION_MODEL=meta-llama/llama-4-scout`, and restart server. No private key or installed local model was modified remotely.
 - Live API success is **not confirmed** without the user's private API key. Provider costs and data processing apply.
+
+
+### Phase 24 — Stop repetitive interviews and retrieve richer noise context (November 2, 2026)
+
+- Root cause: chat previously had no enforced global question budget, and the audio interview required three questions regardless of information already known.
+- Added `server/minimalQuestions.js`, a deterministic context-aware planner that reads user-authored information about sound **timing, texture and location**, avoids asking already-known details, stops asking once two dimensions are available, and limits clarification to at most one question per response and two questions during an ongoing issue. Safety-critical symptoms bypass the interview. Final response filtering suppresses extra model-generated questions without discarding explanation text.
+- Updated the sound upload fallback to **two guided questions instead of three**; user answers are still user-supplied and not assumed to come from audio recognition.
+- Added `data/conditional_noise_patterns_v1.json` with **30 curated, cited conditional noise patterns from 9 educational source URLs** including The AA, RepairPal, Firestone, Cars.com and Budget Mechanic YouTube, with never-confirmed flags. Integrated `server/conditionalNoiseRetrieval.js` to require at least two matching user-described features before offering a relevant hypothesis to the model. Existing 40 symptom cards, 28 YouTube topic references and 536 synthetic language examples remain; none are verified acoustic training samples.
+- Added `tests/minimalQuestionsAndPatterns.test.js` and revised `tests/soundInterview.test.js` to guard against unnecessary repeated questions and test early completion.
+- Added `MINIMAL_QUESTIONS_AND_EVIDENCE.md` with source links, test situations and limitations.
+- Source-level JS syntax and isolated deterministic test cases were checked. Live Groq inference and comprehensive end-to-end tests on the user's laptop remain unverified; use `npm.cmd test` after pulling.
