@@ -5,7 +5,7 @@ ar:{
 brandSub:'مساعد سيارتك الذكي',newAnalysis:'تحليل جديد',myCars:'سياراتي',history:'سجل المشاكل',localPrivacy:'سجل سيارتك محلي، والمرفقات تُرفع مؤقتًا عند الإرسال.',workspace:'مساحة سيارتك',aiAssistant:'مساعد ذكي',eyebrow:'افهم سيارتك بشكل أفضل',
 heroTitle:'سيارتك تتكلم.<br><span>خلّنا نفهمها.</span>',heroDescription:'تكلم مع ورشتك عن مشكلة سيارتك، وخلّنا نفهمها سوا.',tryExample:'ابدأ بصوت تسمعه',exampleBrakes:'صرير الفرامل',exampleStart:'طقطقة التشغيل',exampleDrive:'ونة مع السرعة',featureOne:'سجل لكل سيارة',featureTwo:'صوت وفيديو',featureThree:'عربي وإنجليزي',
 inputPlaceholder:'وش المشكلة اللي تواجهك في السيارة؟ اكتب وخلّنا نسولف...',attach:'إرفاق',record:'تسجيل',stop:'إيقاف',analyze:'إرسال',analyzing:'جاري تجهيز الرد...',disclaimer:'النتائج احتمالات وليست تشخيصًا. عند الإرسال يُرفع المرفق لسيرفرك لتحليله مؤقتًا؛ الصوت يحتاج CLAP.',
-addVehicle:'إضافة سيارة',vehicleName:'اسم السيارة',carPlaceholder:'مثال: كامري 2022',cancel:'إلغاء',save:'حفظ',defaultCar:'سيارتي',noHistory:'ما فيه تحليلات سابقة',question:'السؤال',of:'من',introMessage:'خلّنا نحدد الصوت بأربع أسئلة.',resultIntro:'هذه احتمالات حسب وصفك.',possibleReasons:'الأسباب المحتملة',nextSteps:'وش تسوي؟',urgentSigns:'علامات مهمة',resultLabel:'تحليل Llama',resultNotice:'التحليل احتمالي، مو تشخيص فني.',newCheck:'تحليل جديد',low:'للمتابعة',medium:'يستحسن الفحص',high:'اهتمام عاجل',required:'اوصف الصوت بثمانية أحرف على الأقل.',mediaInfo:'المرفق يُرسل للتحليل عند الضغط على إرسال. تحليل الصوت يحتاج تفعيل CLAP.',fileTooLarge:'الحد الأقصى 25MB للمقطع.',fileType:'ارفع صورة أو ملف صوت أو فيديو.',mediaSaved:'مقطع محفوظ',mediaMissing:'المقطع غير متوفر على هذا الجهاز.',recordUnsupported:'المتصفح ما يدعم التسجيل.',recordError:'ما قدرنا نستخدم الميكروفون. تأكد من السماح له.',storageError:'تعذّر حفظ المقطع. جرّب ملف أصغر.',localOnly:'يتم الحفظ على هذا الجهاز فقط',remove:'إزالة',deleteCase:'حذف السجل',deleteCar:'حذف السيارة',deleteMedia:'حذف المقطع',confirmCase:'هل تحذف السجل والمقطع المرتبط به نهائيًا؟',confirmCar:'هل تحذف السيارة وكل سجلاتها ومقاطعها نهائيًا؟',confirmMedia:'هل تحذف المقطع نهائيًا؟',retry:'إعادة المحاولة',carNeeded:'أدخل اسم السيارة.',answerFailed:'تعذّر التحليل، حاول مرة ثانية.',startAgain:'ابدأ تحليلًا جديدًا',
+addVehicle:'إضافة سيارة',vehicleName:'اسم السيارة',carPlaceholder:'مثال: كامري 2022',cancel:'إلغاء',save:'حفظ',defaultCar:'سيارتي',noHistory:'ما فيه تحليلات سابقة',question:'السؤال',of:'من',introMessage:'خلّنا نحدد الصوت بأربع أسئلة.',resultIntro:'هذه احتمالات حسب وصفك.',possibleReasons:'الأسباب المحتملة',nextSteps:'وش تسوي؟',urgentSigns:'علامات مهمة',resultLabel:'تحليل Llama',resultNotice:'التحليل احتمالي، مو تشخيص فني.',newCheck:'تحليل جديد',low:'للمتابعة',medium:'يستحسن الفحص',high:'اهتمام عاجل',required:'اوصف الصوت بثمانية أحرف على الأقل.',mediaInfo:'المرفق يُرسل عند الضغط على إرسال. تحليل الإشارة لا يحدد نوع الصوت؛ تصنيف الأصوات يتطلب تشغيل CLAP بنجاح.',fileTooLarge:'الحد الأقصى 25MB للمقطع.',fileType:'ارفع صورة أو ملف صوت أو فيديو.',mediaSaved:'مقطع محفوظ',mediaMissing:'المقطع غير متوفر على هذا الجهاز.',recordUnsupported:'المتصفح ما يدعم التسجيل.',recordError:'ما قدرنا نستخدم الميكروفون. تأكد من السماح له.',storageError:'تعذّر حفظ المقطع. جرّب ملف أصغر.',localOnly:'يتم الحفظ على هذا الجهاز فقط',remove:'إزالة',deleteCase:'حذف السجل',deleteCar:'حذف السيارة',deleteMedia:'حذف المقطع',confirmCase:'هل تحذف السجل والمقطع المرتبط به نهائيًا؟',confirmCar:'هل تحذف السيارة وكل سجلاتها ومقاطعها نهائيًا؟',confirmMedia:'هل تحذف المقطع نهائيًا؟',retry:'إعادة المحاولة',carNeeded:'أدخل اسم السيارة.',answerFailed:'تعذّر التحليل، حاول مرة ثانية.',startAgain:'ابدأ تحليلًا جديدًا',
 questions:[['متى تسمعه؟',['عند التشغيل','أثناء القيادة','عند الفرامل','عند الالتفاف','على المطبات','عند التسارع','غير متأكد']],['وش نوع الصوت؟',['طقطقة','صرير','صفير','حكة / احتكاك','ونة','رجّة / اهتزاز','غير متأكد']],['من وين يجي؟',['أمام السيارة','خلف السيارة','من جهة الإطارات','من المحرك','غير متأكد']],['كم يتكرر؟',['كل مرة','أحيانًا','بدأ اليوم','غير متأكد']]],
 examples:{brakes:'أسمع صرير عالي لما أضغط على الفرامل',starting:'فيه طقطقة أول ما أشغل السيارة الصباح',driving:'أسمع ونة تزيد كل ما زادت سرعة السيارة'}
 },
@@ -24,6 +24,7 @@ const makeId=()=>globalThis.crypto?.randomUUID?.()||String(Date.now())+'-'+Math.
 function loadState(){try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');if(data&&Array.isArray(data.cars)&&data.cars.length)return {cars:data.cars,cases:Array.isArray(data.cases)?data.cases:[],carId:data.carId||data.cars[0].id,lang:data.lang==='en'?'en':'ar',theme:data.theme==='light'?'light':'dark'};}catch{}const car={id:makeId(),nameAr:'سيارتي',nameEn:'My car'};return {cars:[car],cases:[],carId:car.id,lang:'ar',theme:'dark'};}
 const state=loadState();
 let session=null,questionIndex=0,submitting=false,pendingMedia=null,pendingUrl=null,recording=null,mediaStream=null,mediaChunks=[],recorder=null;
+let mediaRenderVersion=0;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
 const textNode=(tag,text,cls)=>{const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;};
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{showError(t('storageError'));}}
@@ -152,6 +153,9 @@ async function sendChat(text){
    body:JSON.stringify({message,language:active.lang||state.lang,messages:prior,vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
+  if(data.audioStatus==='classifier-error'&&data.audioError){
+   showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));
+  }
   if(!state.cases.some(x=>x.id===active.id))return;
   active.messages.push({role:'assistant',content:data.reply.slice(0,1900),clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,8).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   persist();
@@ -201,6 +205,7 @@ function renderAudioClarifications(message,isLatest){
  $('messages').append(wrap);
 }
 function renderSession(){
+ ++mediaRenderVersion;
  if(!session)return;
  if(Array.isArray(session.messages)){
   $('intro').classList.add('hidden');$('conversation').classList.remove('hidden');
@@ -356,12 +361,36 @@ function showMedia(file,pending=true){
  if(!pending)node.addEventListener('emptied',()=>URL.revokeObjectURL(url),{once:true});
 }
 async function showSavedMedia(id,type,name){
- try{const f=await readBlob(id);if(!session||session.mediaId!==id||!f)return;
-  const box=$('resultBox');const attached=textNode('div','','reason');attached.append(textNode('strong',name||t('mediaSaved')));
-  const url=URL.createObjectURL(f);const media=document.createElement(type?.startsWith('image/')?'img':type?.startsWith('video/')?'video':'audio');media.controls=true;media.preload='metadata';media.src=url;media.style.maxWidth='100%';media.style.maxHeight='220px';
-  attached.append(media,textNode('p',t('mediaInfo')));
-  const remove=textNode('button',t('deleteMedia'),'media-delete-btn');remove.type='button';remove.addEventListener('click',()=>deleteSavedMedia(id));attached.append(remove);
-  if(!box.classList.contains('hidden'))box.append(attached);else {$('messages').append(attached);}
+ const requestVersion=mediaRenderVersion;
+ const caseId=session?.id;
+ try{
+  const f=await readBlob(id);
+  // Media loads asynchronously: never append a stale clip from an earlier
+  // render, especially when submitting a new chat message.
+  if(requestVersion!==mediaRenderVersion||session?.id!==caseId||session?.mediaId!==id||!f)return;
+  const box=$('resultBox');
+  const target=box.classList.contains('hidden')?$('messages'):box;
+  // Only one active preview per thread, even after multiple renders.
+  target.querySelectorAll('[data-saved-media-preview]').forEach(node=>node.remove());
+  const attached=textNode('div','','reason');
+  attached.dataset.savedMediaPreview=id;
+  attached.append(textNode('strong',name||t('mediaSaved')));
+  const url=URL.createObjectURL(f);
+  const media=document.createElement(type?.startsWith('image/')?'img':type?.startsWith('video/')?'video':'audio');
+  media.controls=true;media.preload='metadata';media.src=url;
+  media.style.maxWidth='100%';media.style.maxHeight='220px';
+  attached.append(media);
+  if(session?.mediaAnalysis){
+   attached.append(textNode('p',state.lang==='ar'?'تم استلام الملف. وصف الصوت يعتمد على نجاح مودل التعرف، وليس مجرد تسجيله.':'File received. Sound identification depends on successful model inference.','media-warning'));
+  }
+  const remove=textNode('button',t('deleteMedia'),'media-delete-btn');
+  remove.type='button';remove.addEventListener('click',()=>deleteSavedMedia(id));attached.append(remove);
+  target.append(attached);
+  // Release the blob URL after the preview leaves the document.
+  const observer=new MutationObserver(()=>{
+   if(!attached.isConnected){URL.revokeObjectURL(url);observer.disconnect();}
+  });
+  observer.observe(target,{childList:true});
  }catch{showError(t('mediaMissing'));}
 }
 function mediaFile(file){
