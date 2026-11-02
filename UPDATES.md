@@ -349,3 +349,17 @@ python scripts/import_kwerimoto.py
 - To activate, **the user must add their own secret** `CHAT_API_KEY` in the local `.env` and remove/replace old `CHAT_MODEL` Qwen setting. No user private credential was read, generated or changed in the repository.
 - **Scope:** the chat and legacy analysis model are switched. Vision still uses local `qwen3-vl:2b` and audio is handled separately; this is not a complete migration of every modality to Meta Llama.
 - Source-level tests/checks do not establish a successful authenticated API request; test locally with the user's valid API key. Cost, privacy and hosted provider rate limits apply.
+
+
+### Phase 23 — Remove Qwen from active runtime, add Context Engine and hosted Llama vision (November 2, 2026)
+
+- Replaced local Qwen image/video still-frame inference with **Meta Llama 4 Scout API** using OpenRouter. The same secret server-side `CHAT_API_KEY` now powers both Llama 3.3 chat and Llama 4 Scout vision.
+- Removed Qwen and Ollama from the active backend, `.env.example`, model-status checks, and current setup guides. Audio continues through FFmpeg with optional local CLAP/faster-whisper; these are not Qwen-dependent.
+- Added `server/llamaVision.js` to send one image or up to two extracted video JPEG frames via OpenRouter's OpenAI-compatible `image_url` request format. Limits image size and refuses unsupported MIME types; user-facing observations cannot assert a mechanical fault or pretend to hear audio.
+- Added `server/contextEngine.js`: builds bounded user-authored symptom history, a first complaint, latest corrections, optional vehicle case history explicitly unverified, media-analysis flags and a retrieval query that incorporates recent relevant user details. It never upgrades earlier LLM guesses into confirmed problems.
+- Integrated Context Engine into the main /api/chat source retrieval and Llama prompt; retained natural responses, Saudi terminology and stepwise sound questions.
+- Updated `/api/model-status` to report **hosted chat and vision configuration** without querying Ollama; `/api/media-status` reports vision API configuration and FFmpeg readiness.
+- Replaced obsolete setup instructions: `MULTIMODAL_SETUP.md`, `HOSTED_LLAMA_API_SETUP.md`, and added `LLAMA_CONTEXT_ENGINE_SETUP.md`.
+- Added `tests/contextEngineVision.test.js` including no-Qwen active code, mock authenticated vision request, invalid media checks, corrections, context retention and unconfirmed prior case history.
+- Existing installations must edit **the private local .env** in the real cloned project: remove duplicate old Qwen/Ollama entries, add `CHAT_API_KEY`, set `VISION_MODEL=meta-llama/llama-4-scout`, and restart server. No private key or installed local model was modified remotely.
+- Live API success is **not confirmed** without the user's private API key. Provider costs and data processing apply.
