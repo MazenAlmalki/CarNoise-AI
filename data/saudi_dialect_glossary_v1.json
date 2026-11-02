@@ -1,0 +1,1771 @@
+[
+  {
+    "id": "SL-001",
+    "domain": "السيارة",
+    "term": "ترج",
+    "meaning_ar": "تهتز أو ترتجف",
+    "meaning_en": "Vibration",
+    "example_ar": "ترج السيارة وهي واقفة",
+    "kind": "vehicle",
+    "aliases": [
+      "رجفه",
+      "رجفة",
+      "رجه",
+      "رجة",
+      "ترجف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-002",
+    "domain": "السيارة",
+    "term": "تنتع",
+    "meaning_ar": "تحصل نتعة أو حركة مفاجئة",
+    "meaning_en": "Jerking",
+    "example_ar": "القير ينتع إذا بدّل",
+    "kind": "vehicle",
+    "aliases": [
+      "نتعه",
+      "نتعة",
+      "ينتع",
+      "تنتفض"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-003",
+    "domain": "السيارة",
+    "term": "تعوم",
+    "meaning_ar": "إحساس بعدم ثبات السيارة",
+    "meaning_en": "Poor handling",
+    "example_ar": "السيارة تعوم عالخط",
+    "kind": "vehicle",
+    "aliases": [
+      "تعويم",
+      "تتمايل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-004",
+    "domain": "السيارة",
+    "term": "تحدف",
+    "meaning_ar": "تميل أو تنحرف إلى أحد الجانبين",
+    "meaning_en": "Pulling to a side",
+    "example_ar": "السيارة تحدف يمين",
+    "kind": "vehicle",
+    "aliases": [
+      "تسحب يمين",
+      "تسحب يسار"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-005",
+    "domain": "السيارة",
+    "term": "مكتومة",
+    "meaning_ar": "التسارع ضعيف",
+    "meaning_en": "Sluggish acceleration",
+    "example_ar": "المكينة مكتومة",
+    "kind": "vehicle",
+    "aliases": [
+      "ما تسحب",
+      "ما تعزم"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-006",
+    "domain": "السيارة",
+    "term": "تفصل",
+    "meaning_ar": "ينطفئ المحرك أو يتوقف عن العمل",
+    "meaning_en": "Stalls",
+    "example_ar": "تفصل عند الإشارة",
+    "kind": "vehicle",
+    "aliases": [
+      "تطفي",
+      "تموت"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-007",
+    "domain": "السيارة",
+    "term": "تثقل",
+    "meaning_ar": "يصبح تشغيلها أو استجابتها صعبًا",
+    "meaning_en": "Hard start or heavy response",
+    "example_ar": "تثقل أول الصباح",
+    "kind": "vehicle",
+    "aliases": [
+      "ثقيلة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-008",
+    "domain": "السيارة",
+    "term": "تدق سلف",
+    "meaning_ar": "المحرك يحاول بدء التشغيل",
+    "meaning_en": "Cranking",
+    "example_ar": "تدق سلف وما تشتغل",
+    "kind": "vehicle",
+    "aliases": [
+      "يدق سلف",
+      "تلف سلف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-009",
+    "domain": "السيارة",
+    "term": "ما تدق سلف",
+    "meaning_ar": "لا يحدث تدوير واضح عند محاولة التشغيل",
+    "meaning_en": "No cranking",
+    "example_ar": "السيارة ما تدق سلف",
+    "kind": "vehicle",
+    "aliases": [
+      "ما يدق سلف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-010",
+    "domain": "السيارة",
+    "term": "القير",
+    "meaning_ar": "ناقل الحركة",
+    "meaning_en": "Transmission",
+    "example_ar": "القير ينتع",
+    "kind": "part",
+    "aliases": [
+      "الجير",
+      "الفتيس"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-011",
+    "domain": "السيارة",
+    "term": "المكينة",
+    "meaning_ar": "محرك السيارة",
+    "meaning_en": "Engine",
+    "example_ar": "المكينة ترج",
+    "kind": "part",
+    "aliases": [
+      "المكينه",
+      "الماكينة",
+      "الماكينه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-012",
+    "domain": "السيارة",
+    "term": "الدركسون",
+    "meaning_ar": "عجلة القيادة",
+    "meaning_en": "Steering wheel",
+    "example_ar": "الدركسون يرج",
+    "kind": "part",
+    "aliases": [
+      "الطارة",
+      "الطاره"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-013",
+    "domain": "السيارة",
+    "term": "البريك",
+    "meaning_ar": "الفرامل",
+    "meaning_en": "Brakes",
+    "example_ar": "البريك يحك",
+    "kind": "part",
+    "aliases": [
+      "البريكات"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-014",
+    "domain": "السيارة",
+    "term": "الفحمات",
+    "meaning_ar": "بطانات الفرامل",
+    "meaning_en": "Brake pads",
+    "example_ar": "الفحمات تصفر",
+    "kind": "part",
+    "aliases": [
+      "فحمات"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-015",
+    "domain": "السيارة",
+    "term": "الكفر",
+    "meaning_ar": "إطار السيارة",
+    "meaning_en": "Tire",
+    "example_ar": "الكفر فيه ونة",
+    "kind": "part",
+    "aliases": [
+      "الكفرات",
+      "الكاوتش"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-016",
+    "domain": "السيارة",
+    "term": "الجنط",
+    "meaning_ar": "عجلة المعدن التي يركب عليها الإطار",
+    "meaning_en": "Wheel rim",
+    "example_ar": "الجنط متضرر",
+    "kind": "part",
+    "aliases": [
+      "جنوط"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-017",
+    "domain": "السيارة",
+    "term": "المساعدات",
+    "meaning_ar": "أجزاء امتصاص الصدمات بالتعليق",
+    "meaning_en": "Shock absorbers",
+    "example_ar": "المساعدات تطق",
+    "kind": "part",
+    "aliases": [
+      "مساعد"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-018",
+    "domain": "السيارة",
+    "term": "المقصات",
+    "meaning_ar": "أذرع التعليق",
+    "meaning_en": "Control arms",
+    "example_ar": "صوت في المقصات",
+    "kind": "part",
+    "aliases": [
+      "مقص"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-019",
+    "domain": "السيارة",
+    "term": "الأذرعة",
+    "meaning_ar": "أجزاء من نظام التوجيه أو التعليق حسب السياق",
+    "meaning_en": "Steering/suspension arms",
+    "example_ar": "الأذرعة فيها صوت",
+    "kind": "part",
+    "aliases": [
+      "اذرعة",
+      "الاذرعه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-020",
+    "domain": "السيارة",
+    "term": "الجلد",
+    "meaning_ar": "جلب أو قطع مطاطية في التعليق بحسب السياق",
+    "meaning_en": "Bushings",
+    "example_ar": "الجلد تطق",
+    "kind": "part",
+    "aliases": [
+      "الجلب"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-021",
+    "domain": "السيارة",
+    "term": "الشكمان",
+    "meaning_ar": "نظام العادم",
+    "meaning_en": "Exhaust",
+    "example_ar": "الشكمان يسوي صوت",
+    "kind": "part",
+    "aliases": [
+      "دبة العادم",
+      "دبه العادم"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-022",
+    "domain": "السيارة",
+    "term": "الرديتر",
+    "meaning_ar": "مبرد المحرك",
+    "meaning_en": "Radiator",
+    "example_ar": "موية الرديتر تنقص",
+    "kind": "part",
+    "aliases": [
+      "الراديتر",
+      "الراديتر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-023",
+    "domain": "السيارة",
+    "term": "موية الرديتر",
+    "meaning_ar": "سائل تبريد المحرك وليس بالضرورة ماء عادي",
+    "meaning_en": "Coolant",
+    "example_ar": "موية الرديتر تنقص",
+    "kind": "fluid",
+    "aliases": [
+      "مويه الرديتر",
+      "ماء الرديتر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-024",
+    "domain": "السيارة",
+    "term": "البواجي",
+    "meaning_ar": "شمعات الإشعال",
+    "meaning_en": "Spark plugs",
+    "example_ar": "البواجي قديمة",
+    "kind": "part",
+    "aliases": [
+      "بوجيهات",
+      "بوجيه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-025",
+    "domain": "السيارة",
+    "term": "الكويلات",
+    "meaning_ar": "ملفات الإشعال",
+    "meaning_en": "Ignition coils",
+    "example_ar": "مشكلة بالكويلات",
+    "kind": "part",
+    "aliases": [
+      "الكويل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-026",
+    "domain": "السيارة",
+    "term": "الثروتل",
+    "meaning_ar": "بوابة الهواء بالمحرك",
+    "meaning_en": "Throttle body",
+    "example_ar": "الثروتل يحتاج فحص",
+    "kind": "part",
+    "aliases": [
+      "بوابة الهواء"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-027",
+    "domain": "السيارة",
+    "term": "الآر بي ام",
+    "meaning_ar": "عدد دورات المحرك بالدقيقة",
+    "meaning_en": "RPM",
+    "example_ar": "الآر بي ام يرتفع",
+    "kind": "measurement",
+    "aliases": [
+      "ار بي ام",
+      "rpm"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-028",
+    "domain": "السيارة",
+    "term": "السلانسيه",
+    "meaning_ar": "دوران المحرك في وضع الخمول",
+    "meaning_en": "Idle",
+    "example_ar": "ترج على السلانسيه",
+    "kind": "condition",
+    "aliases": [
+      "سلانسيه",
+      "خمول المحرك"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-029",
+    "domain": "السيارة",
+    "term": "على الخط",
+    "meaning_ar": "أثناء القيادة على طريق سريع",
+    "meaning_en": "Highway driving",
+    "example_ar": "تطلع ونة على الخط",
+    "kind": "condition",
+    "aliases": [
+      "عالخط"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-030",
+    "domain": "السيارة",
+    "term": "الزحمة",
+    "meaning_ar": "الازدحام المروري",
+    "meaning_en": "Traffic",
+    "example_ar": "المكيف يضعف في الزحمة",
+    "kind": "condition",
+    "aliases": [
+      "زحمه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-031",
+    "domain": "السيارة",
+    "term": "على D",
+    "meaning_ar": "ناقل الحركة في وضع القيادة",
+    "meaning_en": "Drive gear",
+    "example_ar": "ترج وهي على D",
+    "kind": "condition",
+    "aliases": [
+      "على النمرة دي",
+      "نمره دي"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-032",
+    "domain": "السيارة",
+    "term": "على N",
+    "meaning_ar": "ناقل الحركة في الوضع المحايد",
+    "meaning_en": "Neutral gear",
+    "example_ar": "تخف على N",
+    "kind": "condition",
+    "aliases": [
+      "نمره ان"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-033",
+    "domain": "السيارة",
+    "term": "طقطقة",
+    "meaning_ar": "صوت نقرات متكررة",
+    "meaning_en": "Clicking",
+    "example_ar": "اسمع طقطقة وقت اللفة",
+    "kind": "sound",
+    "aliases": [
+      "طق طق",
+      "تكتكة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-034",
+    "domain": "السيارة",
+    "term": "ونة",
+    "meaning_ar": "صوت طنين أو همهمة مستمرة",
+    "meaning_en": "Humming",
+    "example_ar": "ونة مع السرعة",
+    "kind": "sound",
+    "aliases": [
+      "ونه",
+      "ونين"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-035",
+    "domain": "السيارة",
+    "term": "خشخشة",
+    "meaning_ar": "صوت اهتزاز أو رنين قطع",
+    "meaning_en": "Rattle",
+    "example_ar": "فيه خشخشة تحت السيارة",
+    "kind": "sound",
+    "aliases": [
+      "خشخشه",
+      "قرقعة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-036",
+    "domain": "السيارة",
+    "term": "حكة",
+    "meaning_ar": "صوت احتكاك",
+    "meaning_en": "Scraping",
+    "example_ar": "حكة عند البريك",
+    "kind": "sound",
+    "aliases": [
+      "حك"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-037",
+    "domain": "السيارة",
+    "term": "صفير",
+    "meaning_ar": "صوت حاد",
+    "meaning_en": "Whistling/squealing",
+    "example_ar": "صفير مع الدعسة",
+    "kind": "sound",
+    "aliases": [
+      "تصفر",
+      "يصفر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-038",
+    "domain": "السيارة",
+    "term": "صرير",
+    "meaning_ar": "صوت احتكاك حاد",
+    "meaning_en": "Squeaking",
+    "example_ar": "صرير مع الفرامل",
+    "kind": "sound",
+    "aliases": [
+      "يصر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-039",
+    "domain": "السيارة",
+    "term": "نتفة",
+    "meaning_ar": "اهتزاز أو انقطاع لحظي حسب السياق",
+    "meaning_en": "Hesitation",
+    "example_ar": "فيها نتفة مع الدعس",
+    "kind": "symptom",
+    "aliases": [
+      "نتف",
+      "تنتف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-040",
+    "domain": "السيارة",
+    "term": "رجة",
+    "meaning_ar": "اهتزاز ملحوظ",
+    "meaning_en": "Shaking",
+    "example_ar": "رجة في المقود",
+    "kind": "symptom",
+    "aliases": [
+      "رجه",
+      "رجفه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-041",
+    "domain": "السيارة",
+    "term": "دقّة",
+    "meaning_ar": "طرقة قصيرة أو صوت خبط",
+    "meaning_en": "Knock",
+    "example_ar": "دقة عند التعشيق",
+    "kind": "sound",
+    "aliases": [
+      "دقه",
+      "طقة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-042",
+    "domain": "السيارة",
+    "term": "تنسيم",
+    "meaning_ar": "تسريب هواء أو ضغط حسب السياق",
+    "meaning_en": "Air leak",
+    "example_ar": "فيه تنسيم",
+    "kind": "symptom",
+    "aliases": [
+      "تهريب هوا"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-043",
+    "domain": "السيارة",
+    "term": "تهريب",
+    "meaning_ar": "تسرب سائل أو غاز",
+    "meaning_en": "Leak",
+    "example_ar": "تهريب زيت",
+    "kind": "symptom",
+    "aliases": [
+      "تسريب"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-044",
+    "domain": "السيارة",
+    "term": "تولّع لمبة",
+    "meaning_ar": "إضاءة مصباح تحذير",
+    "meaning_en": "Warning lamp on",
+    "example_ar": "ولعت لمبة المكينة",
+    "kind": "symptom",
+    "aliases": [
+      "لمبة ولعت",
+      "اللمبه شغاله"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-045",
+    "domain": "السيارة",
+    "term": "التشيك",
+    "meaning_ar": "لمبة فحص المحرك بحسب السياق",
+    "meaning_en": "Check-engine light",
+    "example_ar": "التشيك ولع",
+    "kind": "part",
+    "aliases": [
+      "تشيك انجن",
+      "تشيك"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-046",
+    "domain": "السيارة",
+    "term": "مفصول",
+    "meaning_ar": "متوقف أو غير متصل حسب السياق",
+    "meaning_en": "Disconnected",
+    "example_ar": "المكيف مفصول",
+    "kind": "ambiguous",
+    "aliases": [
+      "فاصل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-047",
+    "domain": "السيارة",
+    "term": "ماسك خط",
+    "meaning_ar": "ثابت ومستقر على الطريق",
+    "meaning_en": "Stable handling",
+    "example_ar": "السيارة ما تمسك خط",
+    "kind": "condition",
+    "aliases": [
+      "تمسك خط"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-048",
+    "domain": "السيارة",
+    "term": "تعشيق",
+    "meaning_ar": "نقل وضع ناقل الحركة",
+    "meaning_en": "Gear engagement",
+    "example_ar": "فيه دقة بالتعشيق",
+    "kind": "condition",
+    "aliases": [
+      "يعشق"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-049",
+    "domain": "السيارة",
+    "term": "الدعسة",
+    "meaning_ar": "دواسة البنزين أو الفرامل بحسب السياق",
+    "meaning_en": "Pedal",
+    "example_ar": "الدعسة ما تستجيب",
+    "kind": "ambiguous",
+    "aliases": [
+      "ادعس",
+      "دعس"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-050",
+    "domain": "السيارة",
+    "term": "النكعة",
+    "meaning_ar": "نتعة أو حركة مفاجئة",
+    "meaning_en": "Jerk",
+    "example_ar": "فيه نكعة بالقير",
+    "kind": "symptom",
+    "aliases": [
+      "نكعه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-051",
+    "domain": "السيارة",
+    "term": "التفتفة",
+    "meaning_ar": "تقطّع أو عدم انتظام دوران المحرك",
+    "meaning_en": "Misfire-like stutter",
+    "example_ar": "المكينة تفتف",
+    "kind": "symptom",
+    "aliases": [
+      "تفتف",
+      "تفتفة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-052",
+    "domain": "السيارة",
+    "term": "الكتمة",
+    "meaning_ar": "ضعف استجابة أو عزم",
+    "meaning_en": "Sluggish response",
+    "example_ar": "السيارة فيها كتمة",
+    "kind": "symptom",
+    "aliases": [
+      "كتمه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-053",
+    "domain": "السيارة",
+    "term": "مع الدعس",
+    "meaning_ar": "أثناء الضغط على دواسة الوقود",
+    "meaning_en": "When accelerating",
+    "example_ar": "تطلع طقطقة مع الدعس",
+    "kind": "condition",
+    "aliases": [
+      "اذا دعست"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-054",
+    "domain": "السيارة",
+    "term": "على المطبات",
+    "meaning_ar": "عند تجاوز عائق أو حفرة في الطريق",
+    "meaning_en": "Over bumps",
+    "example_ar": "اسمع دقة على المطبات",
+    "kind": "condition",
+    "aliases": [
+      "عند الحفر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-055",
+    "domain": "السيارة",
+    "term": "تسحب",
+    "meaning_ar": "قد تعني تنحرف أو تتسارع بحسب السياق",
+    "meaning_en": "Pull / accelerate",
+    "example_ar": "السيارة ما تسحب",
+    "kind": "ambiguous",
+    "aliases": [
+      "سحب"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-056",
+    "domain": "السيارة",
+    "term": "تطبّل",
+    "meaning_ar": "صوت مكتوم أو رنّة غير معتادة",
+    "meaning_en": "Dull booming",
+    "example_ar": "المكينة تطبل",
+    "kind": "sound",
+    "aliases": [
+      "تطبيل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-057",
+    "domain": "السيارة",
+    "term": "تخشّن",
+    "meaning_ar": "تصير خشنة أو غير سلسة",
+    "meaning_en": "Roughness",
+    "example_ar": "صارت تخشّن",
+    "kind": "symptom",
+    "aliases": [
+      "خشونه",
+      "خشونة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-058",
+    "domain": "السيارة",
+    "term": "تثبّت",
+    "meaning_ar": "تبقى على سرعة أو وضع معين بحسب السياق",
+    "meaning_en": "Hold steady",
+    "example_ar": "السرعة تثبت",
+    "kind": "ambiguous",
+    "aliases": [
+      "تثبت"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-059",
+    "domain": "السيارة",
+    "term": "الدبة",
+    "meaning_ar": "قد يقصد دبة التلوث أو جزءًا من العادم حسب السياق",
+    "meaning_en": "Catalytic converter / exhaust part",
+    "example_ar": "الدبة فيها صوت",
+    "kind": "ambiguous",
+    "aliases": [
+      "دبه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-060",
+    "domain": "السيارة",
+    "term": "الطرمبة",
+    "meaning_ar": "مضخة وقد تكون للوقود أو الماء بحسب السياق",
+    "meaning_en": "Pump",
+    "example_ar": "الطرمبة تصفر",
+    "kind": "ambiguous",
+    "aliases": [
+      "طرمبه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-061",
+    "domain": "السيارة",
+    "term": "الهوبات",
+    "meaning_ar": "أقراص أو طبول الفرامل حسب السياق",
+    "meaning_en": "Brake rotors/drums",
+    "example_ar": "الهوبات ترج",
+    "kind": "part",
+    "aliases": [
+      "هوبات"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-062",
+    "domain": "السيارة",
+    "term": "السفايف",
+    "meaning_ar": "بطانات الفرامل في بعض اللهجات",
+    "meaning_en": "Brake pads",
+    "example_ar": "السفايف تصفر",
+    "kind": "part",
+    "aliases": [
+      "سفايف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-063",
+    "domain": "السيارة",
+    "term": "العكس",
+    "meaning_ar": "عمود أو مفصل نقل الحركة حسب السياق",
+    "meaning_en": "CV axle/joint",
+    "example_ar": "صوت من العكس",
+    "kind": "part",
+    "aliases": [
+      "العكوس"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-064",
+    "domain": "السيارة",
+    "term": "الدفرنس",
+    "meaning_ar": "مجموعة التروس التفاضلية",
+    "meaning_en": "Differential",
+    "example_ar": "الدفرنس يطن",
+    "kind": "part",
+    "aliases": [
+      "الديفرنس"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-065",
+    "domain": "السيارة",
+    "term": "القربة",
+    "meaning_ar": "خزان سائل وقد يتغير المقصود حسب السياق",
+    "meaning_en": "Reservoir",
+    "example_ar": "موية القربة تنقص",
+    "kind": "ambiguous",
+    "aliases": [
+      "قربه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-066",
+    "domain": "السيارة",
+    "term": "التيوبات",
+    "meaning_ar": "أنابيب أو خراطيم بحسب السياق",
+    "meaning_en": "Hoses / tubes",
+    "example_ar": "التيوبات فيها تهريب",
+    "kind": "ambiguous",
+    "aliases": [
+      "تيوبات"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-067",
+    "domain": "السيارة",
+    "term": "الكلتش",
+    "meaning_ar": "القابض في ناقل الحركة اليدوي",
+    "meaning_en": "Clutch",
+    "example_ar": "الكلتش يزحلق",
+    "kind": "part",
+    "aliases": [
+      "كلتش"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-068",
+    "domain": "السيارة",
+    "term": "الزيت ثقيل",
+    "meaning_ar": "لزوجة الزيت عالية بحسب الوصف",
+    "meaning_en": "High-viscosity oil",
+    "example_ar": "احس الزيت ثقيل",
+    "kind": "ambiguous",
+    "aliases": [
+      "زيت ثقيل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-069",
+    "domain": "السيارة",
+    "term": "حارّة",
+    "meaning_ar": "قد تعني حرارة الجو أو المحرك حسب السياق",
+    "meaning_en": "Hot",
+    "example_ar": "المكينة حارة",
+    "kind": "ambiguous",
+    "aliases": [
+      "حاره"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-070",
+    "domain": "السيارة",
+    "term": "التكييف يقطع",
+    "meaning_ar": "تبريد المكيف يتوقف بشكل متقطع",
+    "meaning_en": "Intermittent AC",
+    "example_ar": "المكيف يقطع",
+    "kind": "symptom",
+    "aliases": [
+      "مكيف يفصل"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-071",
+    "domain": "السيارة",
+    "term": "ما يبرد",
+    "meaning_ar": "ضعف التبريد",
+    "meaning_en": "Insufficient cooling",
+    "example_ar": "المكيف ما يبرد",
+    "kind": "symptom",
+    "aliases": [
+      "تبريده ضعيف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-072",
+    "domain": "السيارة",
+    "term": "فريون",
+    "meaning_ar": "مبرد نظام التكييف",
+    "meaning_en": "Refrigerant",
+    "example_ar": "الفريون ناقص؟",
+    "kind": "part",
+    "aliases": [
+      "غاز المكيف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-073",
+    "domain": "السيارة",
+    "term": "كمبروسر",
+    "meaning_ar": "ضاغط مكيف الهواء",
+    "meaning_en": "AC compressor",
+    "example_ar": "كمبروسر المكيف",
+    "kind": "part",
+    "aliases": [
+      "الكومبروسر"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-074",
+    "domain": "السيارة",
+    "term": "المروحة",
+    "meaning_ar": "مروحة التبريد أو المقصورة حسب السياق",
+    "meaning_en": "Fan",
+    "example_ar": "المروحة ما تشتغل",
+    "kind": "ambiguous",
+    "aliases": [
+      "مروحه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-075",
+    "domain": "عام",
+    "term": "وش",
+    "meaning_ar": "ماذا / أي شيء",
+    "meaning_en": "What",
+    "example_ar": "وش المشكلة؟",
+    "kind": "general",
+    "aliases": [
+      "ويش",
+      "اش"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-076",
+    "domain": "عام",
+    "term": "وشلون",
+    "meaning_ar": "كيف",
+    "meaning_en": "How",
+    "example_ar": "وشلون أعرف؟",
+    "kind": "general",
+    "aliases": [
+      "شلون"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-077",
+    "domain": "عام",
+    "term": "ليش",
+    "meaning_ar": "لماذا",
+    "meaning_en": "Why",
+    "example_ar": "ليش تسوي كذا؟",
+    "kind": "general",
+    "aliases": [
+      "ليه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-078",
+    "domain": "عام",
+    "term": "وشو",
+    "meaning_ar": "ما هو",
+    "meaning_en": "What is it",
+    "example_ar": "وشو هذا الصوت؟",
+    "kind": "general",
+    "aliases": [
+      "وش ذا"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-079",
+    "domain": "عام",
+    "term": "وش السالفة",
+    "meaning_ar": "ما الموضوع أو ما السبب؟",
+    "meaning_en": "What's happening",
+    "example_ar": "وش السالفة بالسيارة",
+    "kind": "general",
+    "aliases": [
+      "وش السالفه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-080",
+    "domain": "عام",
+    "term": "تكفى",
+    "meaning_ar": "أرجوك / للتأكيد الودي",
+    "meaning_en": "Please",
+    "example_ar": "تكفى افهمني",
+    "kind": "general",
+    "aliases": [
+      "تكفا"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-081",
+    "domain": "عام",
+    "term": "ياخي",
+    "meaning_ar": "أداة خطاب أو تذمّر غالبًا",
+    "meaning_en": "Hey / frustration",
+    "example_ar": "ياخي ما تفهمني",
+    "kind": "general",
+    "aliases": [
+      "يا أخي"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-082",
+    "domain": "عام",
+    "term": "افا",
+    "meaning_ar": "تعجب أو استياء",
+    "meaning_en": "Oh no",
+    "example_ar": "افا طلعت المشكلة كبيرة",
+    "kind": "general",
+    "aliases": [
+      "أفا"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-083",
+    "domain": "عام",
+    "term": "يعني",
+    "meaning_ar": "طلب توضيح أو إعادة صياغة",
+    "meaning_en": "Meaning / clarification",
+    "example_ar": "يعني وش السبب؟",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-084",
+    "domain": "عام",
+    "term": "مدري",
+    "meaning_ar": "لا أعرف",
+    "meaning_en": "I don't know",
+    "example_ar": "مدري من وين الصوت",
+    "kind": "general",
+    "aliases": [
+      "ما ادري",
+      "ماني عارف"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-085",
+    "domain": "عام",
+    "term": "مادري",
+    "meaning_ar": "لا أعرف",
+    "meaning_en": "I don't know",
+    "example_ar": "مادري وش في السيارة",
+    "kind": "general",
+    "aliases": [
+      "ما أدري"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-086",
+    "domain": "عام",
+    "term": "زين",
+    "meaning_ar": "جيد / حسن",
+    "meaning_en": "Good / fine",
+    "example_ar": "كان زين قبل",
+    "kind": "general",
+    "aliases": [
+      "تمام"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-087",
+    "domain": "عام",
+    "term": "مرّة",
+    "meaning_ar": "جدًا أو مرة واحدة حسب السياق",
+    "meaning_en": "Very / once",
+    "example_ar": "مره ترج",
+    "kind": "ambiguous",
+    "aliases": [
+      "مره",
+      "مرة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-088",
+    "domain": "عام",
+    "term": "واجد",
+    "meaning_ar": "كثير",
+    "meaning_en": "A lot",
+    "example_ar": "الرجفة واجد",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-089",
+    "domain": "عام",
+    "term": "حيل",
+    "meaning_ar": "جدًا",
+    "meaning_en": "Very",
+    "example_ar": "صوتها حيل عالي",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-090",
+    "domain": "عام",
+    "term": "على طول",
+    "meaning_ar": "باستمرار أو فورًا حسب السياق",
+    "meaning_en": "Constantly / immediately",
+    "example_ar": "على طول تطفى",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-091",
+    "domain": "عام",
+    "term": "الحين",
+    "meaning_ar": "الآن",
+    "meaning_en": "Now",
+    "example_ar": "الحين ما تشتغل",
+    "kind": "general",
+    "aliases": [
+      "دحين"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-092",
+    "domain": "عام",
+    "term": "توه",
+    "meaning_ar": "قبل قليل",
+    "meaning_en": "Just now",
+    "example_ar": "توه بدأ الصوت",
+    "kind": "general",
+    "aliases": [
+      "توني"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-093",
+    "domain": "عام",
+    "term": "توها",
+    "meaning_ar": "قبل قليل",
+    "meaning_en": "Just now",
+    "example_ar": "توها طلعت اللمبة",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-094",
+    "domain": "عام",
+    "term": "من جد",
+    "meaning_ar": "حقًا",
+    "meaning_en": "Really",
+    "example_ar": "من جد خطر؟",
+    "kind": "general",
+    "aliases": [
+      "صدق"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-095",
+    "domain": "عام",
+    "term": "ترى",
+    "meaning_ar": "للتأكيد أو التنبيه",
+    "meaning_en": "Just so you know",
+    "example_ar": "ترى تزيد مع الدعسة",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-096",
+    "domain": "عام",
+    "term": "أبي",
+    "meaning_ar": "أريد",
+    "meaning_en": "I want",
+    "example_ar": "أبي أفهم",
+    "kind": "general",
+    "aliases": [
+      "ابغى",
+      "أبغى"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-097",
+    "domain": "عام",
+    "term": "ما أبي",
+    "meaning_ar": "لا أريد",
+    "meaning_en": "I don't want",
+    "example_ar": "ما أبي تخمين",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-098",
+    "domain": "عام",
+    "term": "يا ليت",
+    "meaning_ar": "أتمنى / رجاء",
+    "meaning_en": "Please / wish",
+    "example_ar": "يا ليت توضح",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-099",
+    "domain": "عام",
+    "term": "هلا",
+    "meaning_ar": "تحية",
+    "meaning_en": "Hello",
+    "example_ar": "هلا ورشتك",
+    "kind": "general",
+    "aliases": [
+      "هلا والله",
+      "هلو"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-100",
+    "domain": "عام",
+    "term": "عساك بخير",
+    "meaning_ar": "تحية وسؤال عن الحال",
+    "meaning_en": "Hope you're well",
+    "example_ar": "عساك بخير",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-101",
+    "domain": "عام",
+    "term": "وش دعوة",
+    "meaning_ar": "تعجب أو اعتراض",
+    "meaning_en": "Come on / surprised",
+    "example_ar": "وش دعوة هالرد",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-102",
+    "domain": "عام",
+    "term": "كل شوي",
+    "meaning_ar": "بشكل متكرر",
+    "meaning_en": "Repeatedly",
+    "example_ar": "كل شوي تطفى",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-103",
+    "domain": "عام",
+    "term": "بالكثير",
+    "meaning_ar": "بحد أقصى أو غالبًا حسب السياق",
+    "meaning_en": "At most",
+    "example_ar": "بالكثير دقيقة",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-104",
+    "domain": "عام",
+    "term": "الظاهر",
+    "meaning_ar": "على الأغلب",
+    "meaning_en": "Apparently",
+    "example_ar": "الظاهر من المكيف",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-105",
+    "domain": "عام",
+    "term": "يمكن",
+    "meaning_ar": "احتمال",
+    "meaning_en": "Maybe",
+    "example_ar": "يمكن من الكفرات",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-106",
+    "domain": "عام",
+    "term": "تقريبًا",
+    "meaning_ar": "على نحو غير دقيق",
+    "meaning_en": "Approximately",
+    "example_ar": "تقريبا كل يوم",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-107",
+    "domain": "عام",
+    "term": "ما أدري أوصفه",
+    "meaning_ar": "يصعب علي وصف العرض",
+    "meaning_en": "Hard to describe",
+    "example_ar": "ما ادري اوصف الصوت",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-108",
+    "domain": "عام",
+    "term": "افهمني",
+    "meaning_ar": "طلب استيضاح وعدم افتراض",
+    "meaning_en": "Understand what I mean",
+    "example_ar": "افهمني عدل",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-109",
+    "domain": "عام",
+    "term": "مو كذا",
+    "meaning_ar": "تصحيح للفهم السابق",
+    "meaning_en": "Not like that",
+    "example_ar": "لا مو كذا",
+    "kind": "general",
+    "aliases": [
+      "مب كذا"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-110",
+    "domain": "عام",
+    "term": "عطني الزبدة",
+    "meaning_ar": "أعطني الخلاصة",
+    "meaning_en": "Give me the short answer",
+    "example_ar": "عطني الزبدة",
+    "kind": "general",
+    "aliases": [
+      "الزبدة"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-111",
+    "domain": "عام",
+    "term": "لا تطول",
+    "meaning_ar": "اختصر",
+    "meaning_en": "Be concise",
+    "example_ar": "لا تطول بالكلام",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-112",
+    "domain": "عام",
+    "term": "فصل لي",
+    "meaning_ar": "اشرح بالتفصيل",
+    "meaning_en": "Explain in detail",
+    "example_ar": "فصل لي السبب",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-113",
+    "domain": "عام",
+    "term": "بس",
+    "meaning_ar": "لكن أو فقط حسب السياق",
+    "meaning_en": "But / only",
+    "example_ar": "بس وقت الوقوف",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-114",
+    "domain": "عام",
+    "term": "مو",
+    "meaning_ar": "ليس",
+    "meaning_en": "Not",
+    "example_ar": "مو عند الفرامل",
+    "kind": "general",
+    "aliases": [
+      "مب"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-115",
+    "domain": "عام",
+    "term": "إيه",
+    "meaning_ar": "نعم",
+    "meaning_en": "Yes",
+    "example_ar": "ايه يزيد",
+    "kind": "general",
+    "aliases": [
+      "ايه",
+      "ايوه"
+    ],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-116",
+    "domain": "عام",
+    "term": "لا",
+    "meaning_ar": "نفي",
+    "meaning_en": "No",
+    "example_ar": "لا ما يزيد",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-117",
+    "domain": "عام",
+    "term": "الله يعافيك",
+    "meaning_ar": "صيغة رجاء أو شكر",
+    "meaning_en": "Please / thank you",
+    "example_ar": "وضح الله يعافيك",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-118",
+    "domain": "عام",
+    "term": "يالغالي",
+    "meaning_ar": "نداء ودي غير حرفي",
+    "meaning_en": "Friendly address",
+    "example_ar": "يالغالي وش السالفة",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-119",
+    "domain": "عام",
+    "term": "صامل",
+    "meaning_ar": "جاد أو مصرّ",
+    "meaning_en": "Serious / determined",
+    "example_ar": "صامل أجيبها الورشة",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-120",
+    "domain": "عام",
+    "term": "أبد",
+    "meaning_ar": "أحيانًا نفي أو تأكيد بحسب السياق",
+    "meaning_en": "At all / sure",
+    "example_ar": "ما صار ابد",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-121",
+    "domain": "عام",
+    "term": "علومك",
+    "meaning_ar": "كيف حالك؟",
+    "meaning_en": "How are you?",
+    "example_ar": "علومك يا ورشتك",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-122",
+    "domain": "عام",
+    "term": "ما فهمت",
+    "meaning_ar": "طلب إعادة شرح",
+    "meaning_en": "I didn't understand",
+    "example_ar": "ما فهمت عليك",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-123",
+    "domain": "عام",
+    "term": "وش تقصد",
+    "meaning_ar": "طلب شرح المقصود",
+    "meaning_en": "What do you mean",
+    "example_ar": "وش تقصد بالقير؟",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-124",
+    "domain": "عام",
+    "term": "أستهبل",
+    "meaning_ar": "أمزح أو لا أكون جادًا",
+    "meaning_en": "I'm kidding",
+    "example_ar": "لا تراه أستهبل",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-125",
+    "domain": "عام",
+    "term": "طقطقة",
+    "meaning_ar": "قد تعني صوت نقر أو مزاح بحسب السياق",
+    "meaning_en": "Clicking or joking",
+    "example_ar": "قاعد اطقطق عليك",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-126",
+    "domain": "عام",
+    "term": "خربانة",
+    "meaning_ar": "شيء لا يعمل كما ينبغي، لا يحدد العطل",
+    "meaning_en": "Broken",
+    "example_ar": "السيارة خربانه",
+    "kind": "ambiguous",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-127",
+    "domain": "عام",
+    "term": "تخرف",
+    "meaning_ar": "أنت تجيب كلامًا غير منطقي",
+    "meaning_en": "You're making things up",
+    "example_ar": "المودل يخرف",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "SL-128",
+    "domain": "عام",
+    "term": "تلخبطت",
+    "meaning_ar": "أصبحت مشوشًا",
+    "meaning_en": "I'm confused",
+    "example_ar": "تلخبطت من الرد",
+    "kind": "general",
+    "aliases": [],
+    "provenance": "curated_language_example_not_corpus_observation",
+    "mechanic_confirmed": false
+  }
+]
