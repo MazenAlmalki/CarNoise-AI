@@ -337,3 +337,15 @@ python scripts/import_kwerimoto.py
 - Added `tests/soundInterview.test.js` and updated older media clarification regressions, and included new server modules in the JS syntax check.
 - Source checks confirm 28 references, 536 synthetic descriptions, JS syntax validity and successful isolated 3-stage progression. Real CLAP accuracy and browser click-through require local on-device tests.
 - Details: `SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md`. **No YouTube audio was downloaded, used for fine-tuning or verified as a labeled recording.**
+
+
+### Phase 22 — Switch text assistant from local Qwen to hosted Llama API (November 2, 2026)
+
+- Replaced the default chat model with **Meta Llama 3.3 70B Instruct**, hosted through OpenRouter's OpenAI-compatible Chat Completions endpoint. Groq deprecated public access to its Llama 3.3 offering for standard accounts in August 2026, so OpenRouter was selected instead.
+- Created `server/chatProvider.js` for configurable HTTPS-only remote text inference, required backend-only API credentials and public non-secret provider status.
+- Updated **both** `POST /api/chat` and legacy `POST /api/analyze` to use the configured hosted chat endpoint and Meta Llama model. Preserved automotive RAG, Saudi dialect support, conversation history and prompt safety guidance.
+- Updated `/api/model-status` and `/api/health` to report hosted text provider separately from local Ollama video/image vision readiness, instead of incorrectly treating the hosted text model as a local Ollama tag.
+- Updated `.env.example`, added `HOSTED_LLAMA_API_SETUP.md`, created `tests/chatProvider.test.js`, and extended syntax check to cover provider code.
+- To activate, **the user must add their own secret** `CHAT_API_KEY` in the local `.env` and remove/replace old `CHAT_MODEL` Qwen setting. No user private credential was read, generated or changed in the repository.
+- **Scope:** the chat and legacy analysis model are switched. Vision still uses local `qwen3-vl:2b` and audio is handled separately; this is not a complete migration of every modality to Meta Llama.
+- Source-level tests/checks do not establish a successful authenticated API request; test locally with the user's valid API key. Cost, privacy and hosted provider rate limits apply.
