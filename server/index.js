@@ -18,6 +18,7 @@ import { beginSoundInterview, advanceSoundInterview } from './soundInterview.js'
 import { retrieveSoundReading } from './soundReferences.js';
 import { chatProvider, publicChatConfiguration } from './chatProvider.js';
 import { buildContextEngine } from './contextEngine.js';
+import { planMinimalQuestions, enforceQuestionBudget } from './minimalQuestions.js';
 import { visionConfiguration, DEFAULT_VISION_MODEL } from './llamaVision.js';
 
 const app = express();
@@ -110,6 +111,8 @@ app.post('/api/media/analyze',uploadMedia.single('media'),async(req,res)=>{
 
 const chatPrompt = `You are Warshatak (ورشتك), a helpful Saudi car assistant. Speak like a normal, thoughtful person, not like a call center, promotional chatbot or scripted questionnaire.
 
+QUESTION LIMIT: Give a useful tentative explanation with the evidence already provided. Ask at most ONE question per response, and at most TWO clarification questions for one ongoing car problem across the entire conversation. Never repeat a question previously answered (including answers given through question chips). When questionPlan.askQuestion=false, ask no questions at all, give up to 2-3 grounded possibilities or explain insufficiency and an appropriate next step. When it is true, use ONLY questionPlan.suggestedQuestion in Arabic or suggestedQuestionEnglish in English, rather than inventing more questions. If danger signs, prioritize immediate safety guidance, no interview.
+
 STYLE: NEVER address the user as "يا بطل", "يا غالي", "يا حبيبي", "يا صاحبي", "يا أسطورة", "champ", "buddy", or any other pet name. Do not start every reply with greetings or "أهلاً بك". Don't reintroduce yourself, apologize, congratulate or flatter the user unless appropriate to the current turn. Avoid repeated bold headings, numbered lists and stock explanations. Generally use 1-3 conversational sentences, with 1 targeted question if needed.
 
 MEMORY: The contextEngine contains a bounded summary of statements the USER actually made, including latest corrections and prior case information marked unverified. Treat it as conversation evidence, never as a diagnosis. Retrieve sources using the ongoing complaint rather than just the last short follow-up. MEMORY: You are having an ongoing conversation. Read ALL provided prior messages and conversationContext. The user's latest message usually ADDS to or CORRECTS the earlier complaint. For example if the user said the car shakes at idle and later says "زي صوت الصرير", first clarify whether they mean the same issue now includes a squeal; do NOT restart an unrelated list of faults, and do NOT ignore the earlier idling condition. If you already asked when something happens and the user answers, use the answer and do NOT ask the same thing again. Ask about the most useful missing detail, at most one question per reply.
@@ -187,6 +190,8 @@ app.post('/api/chat',async(req,res)=>{
   const chatContext=conversationContext(data.messages,effectiveMessage);
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
   const contextEngine=buildContextEngine({messages:speechIsMainMessage?[]:data.messages,current:effectiveMessage,vehicleHistory,mediaInsight:mediaObject});
+  const questionPlan=planMinimalQuestions({messages:data.messages,current:effectiveMessage,
+   hasAudioCandidates:Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0});
   const retrievalQuery=contextEngine.retrievalQuery;
   const understanding=assessText(retrievalQuery,speechIsMainMessage?[]:history);
   const dialect=interpretSaudiSpeech(effectiveMessage,{limit:5});
@@ -214,7 +219,7 @@ app.post('/api/chat',async(req,res)=>{
       {role:'system',content:'Today in Saudi Arabia is '+today+'. Do not volunteer an unrelated date. If asked about dates, use this date; do not claim it is 2023. Never mention an outdated training cutoff as the current date.'},
       {role:'system',content:chatPrompt+(language==='en'?' Respond ONLY in natural, clear English, including clarification questions; Saudi Arabic glossary terms are reference notes only.':' أجب بالعربية السعودية الواضحة وبطريقة طبيعية؛ أسماء القطع الإنجليزية للإيضاح فقط.')},
       ...(safetyWarning?[{role:'system',content:safetyWarning}]:[]),
-      {role:'system',content:JSON.stringify({responseLanguage:language,contextEngine,conversationContext:chatContext,normalizedSaudiDescription:language==='en'?undefined:understanding.normalized,saudiCarTerminology:carTerms,saudiDialectInterpretation:{terms:dialect.vocabulary,intent:dialect.intent,conversationGuidance:dialect.conversationGuidance,behaviorExample:dialect.behaviorExample},referenceKnowledge:knowledge,saudiOfficialGuidance:saudiSources,soundEducationalReferences:soundReading,conversationHints:hints,mediaFailure,referenceNote:'These are possible educational clues and official Saudi context only. Not diagnosed faults. If text and retrieved source conflict, do not invent a confirmed issue.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from hosted Llama image observations and separate local CLAP/waveform tools. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
+      {role:'system',content:JSON.stringify({responseLanguage:language,questionPlan,contextEngine,conversationContext:chatContext,normalizedSaudiDescription:language==='en'?undefined:understanding.normalized,saudiCarTerminology:carTerms,saudiDialectInterpretation:{terms:dialect.vocabulary,intent:dialect.intent,conversationGuidance:dialect.conversationGuidance,behaviorExample:dialect.behaviorExample},referenceKnowledge:knowledge,saudiOfficialGuidance:saudiSources,soundEducationalReferences:soundReading,conversationHints:hints,mediaFailure,referenceNote:'These are possible educational clues and official Saudi context only. Not diagnosed faults. If text and retrieved source conflict, do not invent a confirmed issue.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from hosted Llama image observations and separate local CLAP/waveform tools. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
       ...(speechIsMainMessage?[]:history),
       {role:'user',content:speechIsMainMessage?'The audio was automatically transcribed (may have errors). These are the recognized words, NOT a diagnosed car sound: '+spokenText:message}
     ];
@@ -231,7 +236,8 @@ app.post('/api/chat',async(req,res)=>{
       .trim();
     const safeReply=safetyWarning && !/stop|توقف|مكان آمن|professional|مختص|مساعدة/.test(naturalReply)
       ? safetyWarning+'\n'+naturalReply : naturalReply;
-    return res.json({reply:safeReply,grounding:'language-model-with-retrieval',knowledgeMatches:[...summary,...saudiSources.map(x=>({id:x.id,symptom_ar:x.topic,symptom_en:x.topic,source_url:x.source_url})),...soundReading.map(x=>({id:x.subject,symptom_ar:x.title,symptom_en:x.title,source_url:x.url}))]});
+    const conciseReply=enforceQuestionBudget(safeReply,questionPlan,{language});
+    return res.json({reply:conciseReply,grounding:'language-model-with-retrieval',knowledgeMatches:[...summary,...saudiSources.map(x=>({id:x.id,symptom_ar:x.topic,symptom_en:x.topic,source_url:x.source_url})),...soundReading.map(x=>({id:x.subject,symptom_ar:x.title,symptom_en:x.title,source_url:x.url}))]});
   }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
 });
 
