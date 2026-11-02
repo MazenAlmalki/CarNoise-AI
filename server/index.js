@@ -17,6 +17,8 @@ import { ffmpegAvailable } from './mediaStatus.js';
 import { beginSoundInterview, advanceSoundInterview } from './soundInterview.js';
 import { retrieveSoundReading } from './soundReferences.js';
 import { chatProvider, publicChatConfiguration } from './chatProvider.js';
+import { buildContextEngine } from './contextEngine.js';
+import { visionConfiguration, DEFAULT_VISION_MODEL } from './llamaVision.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -43,21 +45,22 @@ function validateResult(v) {
   return {title:trim(v.title,120),summary:trim(v.summary),severity:v.severity,reasons,nextSteps,urgentSigns:strings(v.urgentSigns)};
 }
 app.get('/api/health',(_req,res)=>res.json({ok:true,chat:publicChatConfiguration()}));
-app.get('/api/model-status',async(_req,res)=>{
+app.get('/api/model-status',(_req,res)=>{
  const chat=publicChatConfiguration();
- const vision=process.env.VISION_MODEL?.trim()||'qwen3-vl:2b';
- const configured={chat:chat.model,chatProvider:chat.provider,chatApiConfigured:chat.configured,vision,
-  audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',
-  audioModel:process.env.CLAP_MODEL?.trim()||'laion/clap-htsat-unfused'};
- try{
-  const response=await fetch('http://127.0.0.1:11434/api/tags',{signal:AbortSignal.timeout(4000)});
-  if(!response.ok)throw Error('Ollama vision listing unavailable');
-  const json=await response.json();
-  const installed=Array.isArray(json.models)?json.models.map(m=>m.name).filter(name=>typeof name==='string'):[];
-  res.json({chat,configured,ollamaReachable:true,installed,chatInstalled:chat.configured,visionInstalled:installed.includes(vision)});
- }catch{
-  res.json({chat,configured,ollamaReachable:false,installed:[],chatInstalled:chat.configured,visionInstalled:false});
- }
+ const visionModel=process.env.VISION_MODEL?.trim()||DEFAULT_VISION_MODEL;
+ const visionConfigured=chat.configured;
+ res.json({
+  chat,
+  vision:{provider:chat.provider,model:visionModel,configured:visionConfigured},
+  configured:{
+   chat:chat.model,chatProvider:chat.provider,chatApiConfigured:chat.configured,
+   vision:visionModel,visionApiConfigured:visionConfigured,
+   audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',
+   audioModel:process.env.CLAP_MODEL?.trim()||'laion/clap-htsat-unfused'
+  },
+  // Provider key presence does not verify key validity, credits or model availability.
+  statusNote:'API configured means credentials are present, NOT that a request succeeded.'
+ });
 });
 
 app.post('/api/analyze',async(req,res)=>{
@@ -93,9 +96,10 @@ app.get('/api/media-status',async(_req,res)=>{
   ffmpegReady:ffmpeg,
   waveformAnalysisReady:ffmpeg,
   videoFrameAnalysisReady:ffmpeg,
-  visionModelConfigured:process.env.VISION_MODEL?.trim()||'qwen3-vl:2b',
+  visionModelConfigured:process.env.VISION_MODEL?.trim()||DEFAULT_VISION_MODEL,
+  visionApiConfigured:publicChatConfiguration().configured,
   audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',
-  note:'Waveform signal features do not identify sound events or diagnose faults. Vision depends on Ollama and the vision model; CLAP requires Python dependencies.'
+  note:'Images and sampled video frames use hosted Meta Llama 4 Scout API; FFmpeg extracts video frames. CLAP is separate and optional. Waveform features cannot identify car defects.'
  });
 });
 app.post('/api/media/analyze',uploadMedia.single('media'),async(req,res)=>{
@@ -108,7 +112,7 @@ const chatPrompt = `You are Warshatak (ورشتك), a helpful Saudi car assistan
 
 STYLE: NEVER address the user as "يا بطل", "يا غالي", "يا حبيبي", "يا صاحبي", "يا أسطورة", "champ", "buddy", or any other pet name. Do not start every reply with greetings or "أهلاً بك". Don't reintroduce yourself, apologize, congratulate or flatter the user unless appropriate to the current turn. Avoid repeated bold headings, numbered lists and stock explanations. Generally use 1-3 conversational sentences, with 1 targeted question if needed.
 
-MEMORY: You are having an ongoing conversation. Read ALL provided prior messages and conversationContext. The user's latest message usually ADDS to or CORRECTS the earlier complaint. For example if the user said the car shakes at idle and later says "زي صوت الصرير", first clarify whether they mean the same issue now includes a squeal; do NOT restart an unrelated list of faults, and do NOT ignore the earlier idling condition. If you already asked when something happens and the user answers, use the answer and do NOT ask the same thing again. Ask about the most useful missing detail, at most one question per reply.
+MEMORY: The contextEngine contains a bounded summary of statements the USER actually made, including latest corrections and prior case information marked unverified. Treat it as conversation evidence, never as a diagnosis. Retrieve sources using the ongoing complaint rather than just the last short follow-up. MEMORY: You are having an ongoing conversation. Read ALL provided prior messages and conversationContext. The user's latest message usually ADDS to or CORRECTS the earlier complaint. For example if the user said the car shakes at idle and later says "زي صوت الصرير", first clarify whether they mean the same issue now includes a squeal; do NOT restart an unrelated list of faults, and do NOT ignore the earlier idling condition. If you already asked when something happens and the user answers, use the answer and do NOT ask the same thing again. Ask about the most useful missing detail, at most one question per reply.
 
 REASONING: Understand Saudi terms from saudiCarTerminology and saudiDialectInterpretation (بوري=horn, جلنط=parking brake, ترج=vibration in a vehicle context). These are linguistic hints, not diagnoses. If a term or sound is ambiguous, say what you think they meant and ask one short clarification. Do not overfit keyword matches or guess a specific defective part from sound alone. Use referenceKnowledge and saudiOfficialGuidance cautiously; they are general clues, NOT verified faults in the user's vehicle. The soundEducationalReferences are only author-described topics from public YouTube video metadata, not audio files analyzed or proof of the current sound. Do not claim a clip matches these videos merely because its description uses similar words. Do not invent repair costs, sources, sound observations or inspection results.
 
@@ -182,11 +186,13 @@ app.post('/api/chat',async(req,res)=>{
   const history=buildChatHistory(data.messages,{recent:10});
   const chatContext=conversationContext(data.messages,effectiveMessage);
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
-  const understanding=assessText(effectiveMessage,speechIsMainMessage?[]:history);
+  const contextEngine=buildContextEngine({messages:speechIsMainMessage?[]:data.messages,current:effectiveMessage,vehicleHistory,mediaInsight:mediaObject});
+  const retrievalQuery=contextEngine.retrievalQuery;
+  const understanding=assessText(retrievalQuery,speechIsMainMessage?[]:history);
   const dialect=interpretSaudiSpeech(effectiveMessage,{limit:5});
-  const carTerms=findSaudiCarTerms(effectiveMessage,{limit:4});
-  const saudiSources=retrieveSaudiGuidance(effectiveMessage,{limit:2});
-  const soundReading=retrieveSoundReading(effectiveMessage,{limit:2});
+  const carTerms=findSaudiCarTerms(retrievalQuery,{limit:4});
+  const saudiSources=retrieveSaudiGuidance(retrievalQuery,{limit:2});
+  const soundReading=retrieveSoundReading(retrievalQuery,{limit:2});
   const matches=understanding.matches.slice(0,2);
   const knowledge=matches.map(({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status})=>({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status}));
   const summary=matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}));
@@ -208,7 +214,7 @@ app.post('/api/chat',async(req,res)=>{
       {role:'system',content:'Today in Saudi Arabia is '+today+'. Do not volunteer an unrelated date. If asked about dates, use this date; do not claim it is 2023. Never mention an outdated training cutoff as the current date.'},
       {role:'system',content:chatPrompt+(language==='en'?' Respond ONLY in natural, clear English, including clarification questions; Saudi Arabic glossary terms are reference notes only.':' أجب بالعربية السعودية الواضحة وبطريقة طبيعية؛ أسماء القطع الإنجليزية للإيضاح فقط.')},
       ...(safetyWarning?[{role:'system',content:safetyWarning}]:[]),
-      {role:'system',content:JSON.stringify({responseLanguage:language,conversationContext:chatContext,normalizedSaudiDescription:language==='en'?undefined:understanding.normalized,saudiCarTerminology:carTerms,saudiDialectInterpretation:{terms:dialect.vocabulary,intent:dialect.intent,conversationGuidance:dialect.conversationGuidance,behaviorExample:dialect.behaviorExample},referenceKnowledge:knowledge,saudiOfficialGuidance:saudiSources,soundEducationalReferences:soundReading,conversationHints:hints,mediaFailure,referenceNote:'These are possible educational clues and official Saudi context only. Not diagnosed faults. If text and retrieved source conflict, do not invent a confirmed issue.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from separate vision/CLAP models. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
+      {role:'system',content:JSON.stringify({responseLanguage:language,contextEngine,conversationContext:chatContext,normalizedSaudiDescription:language==='en'?undefined:understanding.normalized,saudiCarTerminology:carTerms,saudiDialectInterpretation:{terms:dialect.vocabulary,intent:dialect.intent,conversationGuidance:dialect.conversationGuidance,behaviorExample:dialect.behaviorExample},referenceKnowledge:knowledge,saudiOfficialGuidance:saudiSources,soundEducationalReferences:soundReading,conversationHints:hints,mediaFailure,referenceNote:'These are possible educational clues and official Saudi context only. Not diagnosed faults. If text and retrieved source conflict, do not invent a confirmed issue.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from hosted Llama image observations and separate local CLAP/waveform tools. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
       ...(speechIsMainMessage?[]:history),
       {role:'user',content:speechIsMainMessage?'The audio was automatically transcribed (may have errors). These are the recognized words, NOT a diagnosed car sound: '+spokenText:message}
     ];
