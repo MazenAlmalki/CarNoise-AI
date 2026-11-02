@@ -6,10 +6,12 @@ export function chatProvider(env=process.env){
  const endpoint=(env.CHAT_API_URL||DEFAULT_CHAT_API_URL).trim();
  const model=(env.CHAT_MODEL||DEFAULT_CHAT_MODEL).trim();
  const key=(env.CHAT_API_KEY||env.OPENROUTER_API_KEY||env.LLAMA_API_KEY||'').trim();
+ // Require the key before attempting a remote API request.
+ const endpointIsLocal=/^https?:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?\//i.test(endpoint);
+ if(!endpointIsLocal&&!key)throw Error('CHAT_API_KEY_MISSING');
  const parsed=new URL(endpoint);
  const local=['localhost','127.0.0.1'].includes(parsed.hostname);
  if(parsed.protocol!=='https:'&&!local)throw Error('Remote chat API must use HTTPS');
- if(!local&&!key)throw Error('CHAT_API_KEY_MISSING');
  return {endpoint,model,key,local};
 }
 export function publicChatConfiguration(env=process.env){
