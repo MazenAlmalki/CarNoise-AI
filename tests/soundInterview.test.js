@@ -34,11 +34,17 @@ test('reject invalid client-selected answers and missing prior stages',()=>{
  assert.equal(advanceSoundInterview({stage:'timing',value:'braking',answers:{}},'ar'),null);
  assert.equal(advanceSoundInterview({stage:'texture',value:'click',answers:{location:'engine',timing:'invalid'}},'ar'),null);
 });
-test('English questions work without an Arabic diagnosis',()=>{
+test('disabled sound classifier offers optional guided interview rather than claiming analysis',()=>{
  const start=beginSoundInterview({language:'en',reason:'classifier-not-configured'});
- assert.match(start.reply,/Where do you hear/);
+ assert.match(start.reply,/not enabled/);
+ assert.equal(start.audioInterview.stage,'optin');
+ assert.equal(start.clarificationOptions.length,1);
+ const accepted=advanceSoundInterview({stage:'optin',value:'start',answers:{}},'en');
+ assert.match(accepted.reply,/Where do you hear/);
+ assert.equal(accepted.audioInterview.stage,'location');
  const step=advanceSoundInterview({stage:'location',value:'wheels',answers:{}},'en');
  assert.match(step.reply,/When does the noise/);
+ assert.equal(advanceSoundInterview({stage:'optin',value:'bad',answers:{}},'en'),null);
 });
 test('educational YouTube sound references are not verified vehicle sound labels',()=>{
  const library=JSON.parse(readFileSync(new URL('../data/youtube_car_sound_references_v1.json',import.meta.url),'utf8'));
