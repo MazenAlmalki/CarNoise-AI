@@ -68,7 +68,12 @@ function applySettings(){
  if(session)renderSession();
 }
 function addMessage(message,role){
- const wrap=textNode('div','','message '+role);wrap.append(textNode('div',role==='user'?(state.lang==='ar'?'أنت':'You'):'ورشتك | Warshatak','message-label'),textNode('div',message));$('messages').append(wrap);
+ const wrap=textNode('div','','message '+role);
+ const content=textNode('div',message);
+ content.setAttribute('dir','auto');
+ content.style.textAlign='start';
+ wrap.append(textNode('div',role==='user'?(state.lang==='ar'?'أنت':'You'):'ورشتك | Warshatak','message-label'),content);
+ $('messages').append(wrap);
 }
 function newAnalysis(){
  session=null;questionIndex=0;submitting=false;$('attachButton').disabled=false;$('recordButton').disabled=false;$('intro').classList.remove('hidden');$('conversation').classList.add('hidden');$('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');$('busy').classList.add('hidden');$('messages').replaceChildren();$('description').disabled=false;$('sendButton').disabled=false;$('description').value='';showError('');clearPendingMedia();renderSidebar();
