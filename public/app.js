@@ -136,7 +136,7 @@ async function sendChat(text){
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(!state.cases.some(x=>x.id===active.id))return;
-  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),sources:data.grounding==='publisher-knowledge-card'&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
+  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   persist();
   if(session?.id===active.id)renderSession();
  }catch(error){
