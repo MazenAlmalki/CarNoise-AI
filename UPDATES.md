@@ -211,3 +211,15 @@ python scripts/import_kwerimoto.py
 - Added compact publisher reference links to grounded responses in the chat UI.
 - Added 7 regression tests and `npm.cmd test`; all 7 passed in isolated logic checks; real end-to-end browser test with local Ollama still pending.
 - **No fine-tuning performed.** This uses deterministic normalization + existing source-grounded JSON, with the language model reserved for lower-confidence or broader conversation.
+
+
+### Phase 11 — Replace scripted answers with real contextual AI chat (November 2, 2026)
+
+- User feedback: earlier deterministic symptom-card replies appeared instant and scripted, even though they reduced poor-quality small-model guesses.
+- **Removed** the high-confidence `groundedResponse(...)` short-circuit from the live `POST /api/chat` route. All normal chat messages now go through the configured language model for response generation.
+- **Kept** Saudi Arabic phrase normalization, conversation context, source-backed symptom retrieval, and safety-critical signal detection as supporting context.
+- Reworked system instructions to have the model account for user intent, previous turns, and verified uncertainty; the assistant should ask one natural follow-up only when useful, rather than repeating fixed templates or MCQs.
+- Added a safety warning layer for clearly severe driving-related symptoms; it should not imply confirmed diagnosis.
+- Grounded source links are still surfaced beneath language-model replies when references were retrieved (note: retrieval matches can be imperfect).
+- Added `CHAT_THINK` (default `0`, optional `1`) and adjusted default `CHAT_MAX_TOKENS=320`, `CHAT_CONTEXT=3072`. Thinking enabled can be much slower on CPU-only inference.
+- **No locally running Ollama model was tested from this GitHub update**; validate speed and reply quality in the app. Source-only checks do not prove diagnostic quality.
