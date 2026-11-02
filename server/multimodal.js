@@ -3,6 +3,7 @@ import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
+import { analyzeWaveform } from './audioWaveform.js';
 
 const maxStdout=20_000;
 async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
@@ -35,7 +36,7 @@ async function visualDescription(images,language){
  const model=process.env.VISION_MODEL?.trim()||'qwen3-vl:2b';
  const instruction=language==='en'?'Describe only directly visible vehicle parts, lights and events in these still frames, briefly. Do not guess a mechanical fault or pretend you heard any audio.':'صف الأجزاء والعلامات والأحداث المرئية فقط في هذه الصور بإيجاز. لا تفترض عطلًا ميكانيكيًا ولا تدّع سماع الصوت.';
  const response=await fetch(host+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({model,stream:false,keep_alive:0,messages:[{role:'user',content:instruction,images}],options:{num_predict:200}}),
+  body:JSON.stringify({model,stream:false,think:false,keep_alive:'2m',messages:[{role:'user',content:instruction,images}],options:{num_predict:200,num_ctx:2048}}),
   signal:AbortSignal.timeout(120000)});
  if(!response.ok)throw new Error('Vision model unavailable. Install it with ollama pull '+model);
  const data=await response.json();
@@ -81,15 +82,22 @@ export async function analyzeUploadedMedia(file,language='ar'){
    let visual=null,audio=null;
    try{visual=await visualDescription(await videoFrames(source,temp),language);}
    catch(e){warnings.push('Video frames could not be analyzed: '+String(e.message).slice(0,180));}
-   // Audio model is optional because it requires a separate environment and substantial RAM.
+   // Always try inexpensive local signal characterization. Optional CLAP can
+   // contribute coarse similarity, but does not provide a verified diagnosis.
+   let waveform=null;
+   try{waveform=await analyzeWaveform(source);}catch(e){warnings.push('Video audio waveform unavailable: '+String(e.message).slice(0,140));}
    if(process.env.ENABLE_AUDIO_CLAP==='1'){
-    try{audio=await audioSimilarity(source);}catch(e){warnings.push('Audio: '+String(e.message).slice(0,180));}
-   }else warnings.push('Video audio not analyzed. Enable the optional CLAP model to process it.');
-   if(!visual&&!audio)throw Error(warnings.join(' | '));
-   return {type:'video',visual,audio,warnings,limitations:'Only sampled frames and optional coarse audio similarity; does not establish a confirmed mechanical fault.'};
+    try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP audio: '+String(e.message).slice(0,140));}
+   }else warnings.push('Audio event identification is not enabled; waveform metrics are not a sound diagnosis.');
+   if(!visual&&!audio&&!waveform)throw Error(warnings.join(' | '));
+   return {type:'video',visual,audio,waveform,warnings,limitations:'Only sampled frames plus waveform features or optional CLAP similarities. No speech transcription and no verified mechanical diagnosis.'};
   }
-  if(process.env.ENABLE_AUDIO_CLAP!=='1')throw Error(language==='en'?'Audio analysis is not configured. Follow MULTIMODAL_SETUP.md to enable CLAP.':'تحليل الصوت غير مفعّل. اتبع خطوات MULTIMODAL_SETUP.md لتفعيل CLAP.');
-  const audio=await audioSimilarity(source);
-  return {type:'audio',audio,limitations:'CLAP text-audio similarities are exploratory and NOT repair probabilities or verified diagnoses.'};
+  const waveform=await analyzeWaveform(source);
+  let audio=null;
+  const warnings=[];
+  if(process.env.ENABLE_AUDIO_CLAP==='1'){
+   try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP unavailable: '+String(e.message).slice(0,140));}
+  }else warnings.push('Sound-event classification is not enabled. Only basic waveform features were processed.');
+  return {type:'audio',waveform,audio,warnings,limitations:'Local waveform features describe loudness, rhythm and rough frequency texture only; they CANNOT identify the source of a noise or diagnose a car. Optional CLAP provides uncalibrated sound similarity, not a fault probability.'};
  }finally{await rm(temp,{recursive:true,force:true}).catch(()=>{});}
 }
