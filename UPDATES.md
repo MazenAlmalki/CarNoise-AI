@@ -237,3 +237,15 @@ python scripts/import_kwerimoto.py
 - Created `tests/saudiCorpus.test.js`, configured portable Node test discovery and expanded JS syntax checks; indexed phrase retrieval verified for **1,200 / 1,200 synthetic variants (top-3)** in isolated evaluation.
 - Created `SAUDI_KNOWLEDGE_REPORT.md` for dataset provenance, references and limitations.
 - **Not completed:** 1,000 verified diagnosis cases, real end-to-end auto sound recognition, technician label review, actual user validation, or a full performance benchmark on the user's local model.
+
+
+### Phase 13 — Saudi slang and unusual conversational requests (November 2, 2026)
+
+- Created `data/saudi_dialect_glossary_v1.json` with **128** contextual Saudi dialect expressions covering vehicle parts, noises, conditions, normal conversation, slang corrections, ambiguous terms and polite/short prompts.
+- Created `data/saudi_conversation_edge_cases_v1.jsonl` with **204** generated test utterances from 51 scenario seeds: silly/joking claims, unclear problems, non-car questions, follow-ups, corrections, unusual metaphors, safety-critical prompts and failed audio/video analysis. These examples are **synthetic** and do not establish verified diagnoses.
+- Added `server/saudiDialect.js` for context-scoped glossary matching and intent detection. Only up to 5 short definitions are passed to the actual LLM, which still creates responses.
+- Updated `server/saudiKnowledge.js` to avoid responding to greetings or jokes as if they were defective car components.
+- Updated `server/index.js` to supply Saudi-language interpretations and conversational behavior guidance to text chat while retaining the previous retrieved automotive references and uncertain media analysis status.
+- Added `tests/saudiDialect.test.js` and included the new module in `npm.cmd run check`.
+- Created `SAUDI_DIALECT_GUIDE.md` with provenance, examples, test instructions and limitations.
+- Isolated syntax/logic checks passed for key edge cases; final quality still requires **real conversation testing** on the user's locally installed Ollama model. Audio diagnosis has **not** become available automatically.
