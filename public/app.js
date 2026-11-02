@@ -114,7 +114,10 @@ async function sendChat(text){
   }catch(error){showError(t('storageError'));return;}
  }
  if(!Array.isArray(active.messages))active.messages=[];
- const prior=active.messages.map(({role,content})=>({role,content}));
+ const allPrior=active.messages.map(({role,content})=>({role,content}));
+ const prior=allPrior.length>10
+  ? [allPrior.find(x=>x.role==='user'),...allPrior.slice(-10)].filter(Boolean)
+  : allPrior;
  active.messages.push({role:'user',content:message});
  active.description=active.description||message;
  persist();
