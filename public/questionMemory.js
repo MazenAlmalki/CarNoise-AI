@@ -15,7 +15,7 @@ export function clarificationFields(text){
  return found;
 }
 export function isClarificationRequest(text){
- return /^(?:هل |متي |وين |كيف |وش (?:نوع|اقرب|الصوت)|ايش (?:نوع|الصوت)|قل لي|قول لي|وضح لي|حدد لي|when\b|where\b|what (?:does|kind|type)|does\b|is it\b|can you\b|could you\b|tell me\b|describe (?:the|your) (?:sound|noise))/i.test(normalize(text));
+ return /^(?:هل |متي |وين |كيف |وش (?:نوع|اقرب|الصوت)|ايش (?:نوع|الصوت)|قل لي|قول لي|وضح لي|حدد لي|when (?:does|do|is|are|did|will|can|should)\b|where (?:does|do|is|are|did|can)\b|what (?:does|kind|type)|does\b|is it\b|can you\b|could you\b|tell me\b|describe (?:the|your) (?:sound|noise))/i.test(normalize(text));
 }
 export function summarizeQuestionMemory(messages=[]){
  const turns=Array.isArray(messages)?messages:[];

@@ -1,4 +1,5 @@
-import {mergeQuestionMemory,isClarificationRequest} from '../public/questionMemory.js';
+import {classifyConversationTurn} from './conversationIntent.js';
+import {mergeQuestionMemory,isClarificationRequest,clarificationFields} from '../public/questionMemory.js';
 // Minimize repetitive questions while keeping a useful, cautious answer.
 // User-reported facts and successful-but-uncertain audio observations remain distinct.
 const timing=[
@@ -37,8 +38,9 @@ function lastAssistantQuestions(messages){
  .slice(-10).flatMap(m=>m.content.split(/[؟?]/).map(x=>normalize(x)).filter(x=>x.length>8)).slice(-10);
 }
 const insufficient=t=>/^(?:حلل(?: المقطع| الصوت| التسجيل| المرفق)?|اسمع(?: الصوت| المقطع)?|وش المشكلة|صوت غريب|مشكلة في سيارتي|help|analyze audio)[؟?!.\s]*$/i.test(String(t||'').trim());
-export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=false,questionMemory=null,audioObservation=null}={}){
+export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=false,questionMemory=null,audioObservation=null,mediaRequested=false}={}){
  const memory=mergeQuestionMemory(messages,questionMemory);
+ const conversation=classifyConversationTurn({current,messages,userDetails:memory.userDetails,mediaRequested});
  const texts=[...memory.userDetails,...(Array.isArray(messages)?messages:[]).filter(m=>m?.role==='user').map(m=>m.content).filter(x=>typeof x==='string').slice(-10),String(current||'')];
  const notes={timing:lastValue(texts,timing),texture:lastValue(texts,texture),location:lastValue(texts,location)};
  const total=memory.questionsAsked;
@@ -51,7 +53,7 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
  const isAmbiguous=insufficient(current)||(!notes.timing&&!notes.texture&&!notes.location&&!hasAudioCandidates);
  const critical=unsafe.test(texts.join(' '));
  // Once two distinct useful observations exist, answer with possibilities now.
- const canAsk=!critical&&(total<2)&&Object.values(notes).filter(Boolean).length<2&&(isAmbiguous||gaps.length>0);
+ const canAsk=conversation.clarificationAllowed&&!critical&&(total<2)&&Object.values(notes).filter(Boolean).length<2&&(isAmbiguous||gaps.length>0);
  const questionType=['timing','texture','location'].find(field=>gaps.includes(field)&&!memory.askedFields.includes(field))||null;
  const text=questionType==='timing'?'متى يظهر الصوت بالضبط: عند التشغيل، الفرامل، اللف، المطبات، أو المشي؟'
   :questionType==='texture'?'وش أقرب وصف للصوت: طقطقة، صرير، ونة، أو حك؟'
@@ -60,19 +62,39 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
   :questionType==='texture'?'Does it sound like clicking, squealing, humming, or grinding?'
   :questionType==='location'?'Does it come from the engine area, wheels, or cabin?':null;
  const repeated=Boolean(text&&asked.some(q=>normalize(text).includes(q)||q.includes(normalize(text))));
- return {known:notes,askedFields:memory.askedFields,answeredFields:Object.values(notes).filter(Boolean).length,
+ return {conversationMode:conversation.mode,clarificationAllowed:conversation.clarificationAllowed,conversationReason:conversation.reason,priorQuestions:memory.lastQuestions,known:notes,askedFields:memory.askedFields,answeredFields:Object.values(notes).filter(Boolean).length,
   questionBudget:Math.max(0,2-total),askQuestion:Boolean(canAsk&&questionType&&!repeated),
   questionType:canAsk&&!repeated?questionType:null,suggestedQuestion:canAsk&&!repeated?text:null,
   suggestedQuestionEnglish:canAsk&&!repeated?english:null,
-  stopAsking:total>=2||critical||!questionType||(!gaps.length)||Object.values(notes).filter(Boolean).length>=2,urgent:critical,
+  stopAsking:!conversation.clarificationAllowed||total>=2||critical||!questionType||(!gaps.length)||Object.values(notes).filter(Boolean).length>=2,urgent:critical,
   evidenceRule:'Describe ranked possibilities now if at least two details are known; do not require completing every field. Never diagnose a particular failed part from sound alone.'};
 }
 export function enforceQuestionBudget(reply,plan,{language='ar',fallbackReply=null}={}){
  const raw=String(reply||'').trim();
  if(!raw)return raw;
+ if(plan.clarificationAllowed===false){
+  // Keep natural greetings, direct answers and invitations such as "How can I
+  // help?"; remove only unsolicited timing/location/sound-type interrogation.
+  const links=[];
+  const masked=raw.replace(/https?:\/\/[^\s]+/g,url=>{links.push(url);return `CONVERSATIONURL${links.length-1}END`;});
+  const conversational=masked.replace(/(^|[.!؛\n]|(?<=[؟?]))([^.!؛\n؟?]*[؟?])/g,(whole,prefix,clause)=>clarificationFields(clause).length?prefix:whole)
+   .split(/(?<=[.!؛\n])\s*/u).filter(clause=>!(isClarificationRequest(clause)&&clarificationFields(clause).length)).join(' ').replace(/[،,؛]\s*$/,'').replace(/CONVERSATIONURL(\d+)END/g,(_,index)=>links[Number(index)]||'').trim();
+  return conversational||(language==='en'?"I'm here to help.":'أنا معك، تفضل.');
+ }
+
  // Treat '?' as question marks, not as turn-boundary markers in URLs.
  const urls=[];
  let without=raw.replace(/https?:\/\/[^\s]+/g,url=>{urls.push(url);return `URLPLACEHOLDER${urls.length-1}END`;});
+ const keptQuestions=[];
+ if(plan.askQuestion&&plan.questionBudget>0){
+  without=without.replace(/(^|[.!؛\n]|(?<=[؟?]))([^.!؛\n؟?]*[؟?])/g,(whole,prefix,clause)=>{
+   const fields=clarificationFields(clause);
+   const repeats=(plan.priorQuestions||[]).some(previous=>{const a=normalize(previous),b=normalize(clause);return a.length>8&&(a.includes(b)||b.includes(a));});
+   if(keptQuestions.length||repeats||fields.some(field=>plan.known?.[field]||plan.askedFields?.includes(field)))return whole;
+   keptQuestions.push(clause.trim());return prefix+'KEPTQUESTION0END\n';
+  });
+ }
+
  // Remove question clauses but preserve answer sentences before them.
  // Iterate because a response may contain several follow-up questions.
  if(/[؟?]/.test(without)){
@@ -85,9 +107,6 @@ export function enforceQuestionBudget(reply,plan,{language='ar',fallbackReply=nu
  }
  without=without.split(/(?<=[.!؛\n])\s*/u).filter(clause=>!isClarificationRequest(clause)).join(' ').trim();
  without=without.replace(/URLPLACEHOLDER(\d+)END/g,(_,index)=>urls[Number(index)]||'');
- if(plan.askQuestion&&plan.questionBudget>0){
-  const prompt=language==='en'?plan.suggestedQuestionEnglish:plan.suggestedQuestion;
-  return (without?without+'\n':'')+prompt;
- }
+ without=without.replace(/KEPTQUESTION0END/g,()=>keptQuestions[0]||'').trim();
  return without||fallbackReply|| (language==='en'?'The information is not enough to identify a specific fault; a mechanic can inspect it.':'المعلومات ما تكفي لتحديد قطعة معينة، والفحص عند مختص يقدر يحسم السبب.');
 }

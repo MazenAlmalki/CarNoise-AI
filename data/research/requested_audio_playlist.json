@@ -1,0 +1,14 @@
+{
+  "provided_url": "https://www.youtube.com/watch?v=ciVOqe7ji2Q&list=PLAfTiqc9y29huuPbBepZyvRS4OPpzkSLw",
+  "playlist_id": "PLAfTiqc9y29huuPbBepZyvRS4OPpzkSLw",
+  "seed_video_id": "ciVOqe7ji2Q",
+  "provenance": "user_provided_link_not_verified_playlist_membership",
+  "checked_at": "2026-11-02T19:36:07.842059+00:00",
+  "access_status": "cloud_proxy_http_403",
+  "inventory_fetched": false,
+  "clips_reviewed": 0,
+  "audio_reviewed": 0,
+  "model_trained": false,
+  "runtime_eligible": false,
+  "records": []
+}

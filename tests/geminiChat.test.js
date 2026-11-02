@@ -14,7 +14,8 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
   let raw='';for await(const chunk of req)raw+=chunk;
   requests.push(JSON.parse(raw));res.setHeader('Content-Type','application/json');
   const last=requests.at(-1).messages.at(-1).content;
-  res.end(JSON.stringify({choices:[{message:{content:last.includes('What should I do next')?'When does it happen?':'A squeal may have several causes. Its source is not confirmed.'}}]}));
+  const reply=last==='مرحبا'?'أهلًا بك!':/سلام عليكم/.test(last)?'وعليكم السلام! كيف أقدر أساعدك؟':last==='Hello'?'Hello! How can I help?':last==='What is a CV joint?'?'A CV joint transfers rotation while allowing an axle to change angle.':last.includes('What should I do next')?'When does it happen?':'A squeal may have several causes. Its source is not confirmed.';
+  res.end(JSON.stringify({choices:[{message:{content:reply}}]}));
  });
  const providerPort=await listen(provider);t.after(()=>new Promise(resolve=>provider.close(resolve)));
  const probe=http.createServer();const appPort=await listen(probe);await new Promise(resolve=>probe.close(resolve));
@@ -51,6 +52,14 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const context=JSON.parse(requests[3].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
  assert.equal(context.questionPlan.askQuestion,false);assert.equal(context.questionPlan.questionBudget,0);assert.equal(context.vehicle.modelId,'toyota-camry');assert.equal(context.vehicle.year,2018);
  assert.ok(context.contextEngine.userReportedDetails.some(x=>x.includes('brakes squeal')));assert.ok(JSON.stringify(context.vehicle).length<1000);
+ const greeting=await chat(null,{message:'سلام عليكم',language:'ar'});
+ assert.equal(greeting.reply,'وعليكم السلام! كيف أقدر أساعدك؟');assert.doesNotMatch(greeting.reply,/متى|الصوت|الفرامل/);
+ const greetingContext=JSON.parse(requests[4].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
+ assert.equal(greetingContext.questionPlan.conversationMode,'greeting');assert.equal(greetingContext.questionPlan.askQuestion,false);assert.deepEqual(greeting.knowledgeMatches,[]);
+ const englishGreeting=await chat(null,{message:'Hello',language:'en'});assert.equal(englishGreeting.reply,'Hello! How can I help?');
+ const information=await chat(null,{message:'What is a CV joint?',language:'en'});assert.match(information.reply,/transfers rotation/);assert.doesNotMatch(information.reply,/When does|Does it sound/);
+ const welcome=await chat(null,{message:'مرحبا',language:'ar'});assert.equal(welcome.reply,'أهلًا بك!','greeting cleanup must not delete a genuine welcome');
+
 
 
 });

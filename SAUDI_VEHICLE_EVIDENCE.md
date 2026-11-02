@@ -41,3 +41,9 @@ Independent Groq/local speech fallback can recover words when sound interpretati
 ## Validation
 
 New regressions cover long-case memory after prompt truncation, semantic question repetition, unknown answers, source-link preservation, Arabic normalization, vehicle aliases/years and explicit corrections, audio-plus-description evidence, and the real chat route using the exhausted budget. Browser checks verify module loading, transcript/correction UI, selected-vehicle payload and case-memory payload. Provider responses are fixtures; live inference needs the user's own provider access.
+
+## Natural conversation before symptom clarification
+
+A greeting, thanks or a general/educational question is no longer treated as a vague car-noise complaint. `conversationMode` separates greeting/closing, direct questions and real problem reports. The app preserves the model's natural welcome or direct answer and does not append a canned timing question. An old car complaint does not force a new greeting back into diagnosis.
+
+For example, `سلام عليكم` receives a natural greeting; `وش يعني بوري؟` receives an explanation. `السلام عليكم عندي صوت غريب بسيارتي` can acknowledge the greeting and clarify the actual issue. Once a real problem is stated, the model may ask one useful missing detail in its own words. It is no longer required to copy a fixed question, and a useful answer without a question stays that way. Existing case memory, two-question limit, known-detail filtering and safety behavior remain.

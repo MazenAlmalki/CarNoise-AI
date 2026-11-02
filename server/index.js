@@ -119,9 +119,11 @@ app.post('/api/media/analyze',uploadMedia.single('media'),async(req,res)=>{
 
 const chatPrompt = `You are Warshatak (ورشتك), a helpful Saudi car assistant. Speak like a normal, thoughtful person, not like a call center, promotional chatbot or scripted questionnaire.
 
-ANSWER FIRST: Lead with up to three ranked plausible causes supported by the actual description or successful audio observations. Explain briefly why each fits and give one concrete safe next step. State uncertainty concisely; do not replace the answer with a questionnaire or repeatedly say to visit a mechanic without useful context. Do not claim exact component certainty or numeric diagnosis probabilities. Vehicle context identifies only the user's model/year; never invent model-specific defect rates or failures.
+CONVERSATION FIRST: Follow questionPlan.conversationMode. If it is greeting or closing, respond warmly and naturally without assuming a car problem or beginning fault questions. For general or vehicle_question, answer the actual question directly; do not force it into a diagnosis interview. A selected car, old complaint or automotive term alone does not mean the current user is reporting a fault. Only start symptom clarification after the user reports a problem, continues that problem, or requests media analysis. Keep greeting-plus-problem messages useful: acknowledge the greeting briefly and address the stated problem in the same reply.
 
-QUESTION LIMIT: Give a useful tentative explanation with the evidence already provided. Ask at most ONE question per response, and at most TWO clarification questions for one ongoing car problem across the entire conversation. Never repeat a question previously answered (including answers given through question chips). When questionPlan.askQuestion=false, ask no questions at all, give up to 2-3 grounded possibilities or explain insufficiency and an appropriate next step. When it is true, use ONLY questionPlan.suggestedQuestion in Arabic or suggestedQuestionEnglish in English, rather than inventing more questions. If danger signs, prioritize immediate safety guidance, no interview.
+ANSWER FIRST (only for a reported problem): Lead with up to three ranked plausible causes supported by the actual description or successful audio observations. Explain briefly why each fits and give one concrete safe next step. State uncertainty concisely; do not replace the answer with a questionnaire or repeatedly say to visit a mechanic without useful context. Do not claim exact component certainty or numeric diagnosis probabilities. Vehicle context identifies only the user's model/year; never invent model-specific defect rates or failures.
+
+QUESTION LIMIT (only when questionPlan.clarificationAllowed=true): Give a useful tentative explanation with the evidence already provided. Ask at most ONE question per response, and at most TWO clarification questions for one ongoing car problem across the entire conversation. Never repeat a question previously answered (including answers given through question chips). When questionPlan.askQuestion=false, ask no questions at all, give up to 2-3 grounded possibilities or explain insufficiency and an appropriate next step. When it is true, you MAY ask one useful missing detail in natural wording; the suggested question is a hint, not a sentence to append automatically. Answer the actual symptom: do not ask about a sound when the reported problem is not sound-related. If the answer is already useful without another question, simply answer. If danger signs, prioritize immediate safety guidance, no interview.
 
 STYLE: NEVER address the user as "يا بطل", "يا غالي", "يا حبيبي", "يا صاحبي", "يا أسطورة", "champ", "buddy", or any other pet name. Do not start every reply with greetings or "أهلاً بك". Don't reintroduce yourself, apologize, congratulate or flatter the user unless appropriate to the current turn. Avoid repeated bold headings, numbered lists and stock explanations. Generally use 1-3 conversational sentences, with 1 targeted question if needed.
 
@@ -174,7 +176,8 @@ app.post('/api/chat',async(req,res)=>{
   const questionMemory=mergeQuestionMemory(data.messages,data.questionMemory);
   const hostedAudio=hasHostedAudioEvidence(mediaObject)?mediaObject.audioObservation:null;
   const questionPlan=planMinimalQuestions({messages:data.messages,current:effectiveMessage,questionMemory,
-   hasAudioCandidates:Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0,audioObservation:hostedAudio});
+   hasAudioCandidates:Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0,audioObservation:hostedAudio,
+   mediaRequested:asksAboutUploadedMedia&&Boolean(mediaType||data.mediaFailure)});
   const vehicle=selectedVehicleContext(data.vehicle,effectiveMessage);
   const mediaInsight=mediaObject?JSON.stringify(mediaObject,(key,value)=>typeof value==='string'?value.slice(0,['text','description'].includes(key)?700:300):Array.isArray(value)?value.slice(0,6):value):null;
   const mediaFailure=typeof data.mediaFailure==='string'?data.mediaFailure.slice(0,240):null;
@@ -184,7 +187,7 @@ app.post('/api/chat',async(req,res)=>{
   // A waveform is NOT a sound event classification. Do not show a list of
   // guesses before attempting an actual classifier. When it isn't installed,
   // explain exactly which capability is missing rather than feigning analysis.
-  if(!guided?.done&&(mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0){
+  if(!guided?.done&&(mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0){
     const classified=(Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0)||hasHostedAudioEvidence(mediaObject);
     const wasAttempted=mediaObject?.audioEventAnalysis?.attempted===true;
     if(!classified && !wasAttempted)return res.json(beginSoundInterview({language,reason:'classifier-not-configured'}));
@@ -199,20 +202,22 @@ app.post('/api/chat',async(req,res)=>{
     // among the candidate set, so discuss only tentative categories and
     // do not equate a close match with confirmed mechanical causes.
   }
-  if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0)
+  if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0)
     return res.json(beginSoundInterview({language,reason:'classifier-error',error:mediaFailure}));
   const history=buildChatHistory(data.messages,{recent:10});
   const chatContext=conversationContext(data.messages,effectiveMessage);
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
-  const rememberedTurns=questionMemory.userDetails.map(content=>({role:'user',content}));
+  const useVehicleEvidence=questionPlan.clarificationAllowed||questionPlan.conversationMode==='vehicle_question';
+  const rememberedTurns=useVehicleEvidence?questionMemory.userDetails.map(content=>({role:'user',content})):[];
   const contextEngine=buildContextEngine({messages:[...rememberedTurns,...(speechIsMainMessage?[]:Array.isArray(data.messages)?data.messages:[])],current:effectiveMessage,vehicleHistory,mediaInsight:mediaObject});
   const retrievalQuery=hostedAudio?[effectiveMessage,hostedAudio.description,...hostedAudio.sounds,contextEngine.retrievalQuery].join(' ؛ ').slice(0,1400):contextEngine.retrievalQuery;
-  const understanding=assessText(retrievalQuery,speechIsMainMessage?[]:history);
+  const activeQuery=useVehicleEvidence?retrievalQuery:effectiveMessage;
+  const understanding=assessText(activeQuery,useVehicleEvidence&&!speechIsMainMessage?history:[]);
   const dialect=interpretSaudiSpeech(effectiveMessage,{limit:5});
-  const carTerms=findSaudiCarTerms(retrievalQuery,{limit:4});
-  const saudiSources=retrieveSaudiGuidance(retrievalQuery,{limit:2});
-  const soundReading=retrieveSoundReading(retrievalQuery,{limit:2,language});
-  const conditionalPatterns=retrieveConditionalPatterns(retrievalQuery,{limit:3});
+  const carTerms=findSaudiCarTerms(activeQuery,{limit:4});
+  const saudiSources=retrieveSaudiGuidance(activeQuery,{limit:2});
+  const soundReading=retrieveSoundReading(activeQuery,{limit:2,language});
+  const conditionalPatterns=retrieveConditionalPatterns(activeQuery,{limit:3});
   const matches=understanding.matches.slice(0,2);
   const knowledge=matches.map(({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status})=>({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status}));
   const summary=matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}));
@@ -246,9 +251,11 @@ app.post('/api/chat',async(req,res)=>{
     const reply=chatString(payload?.choices?.[0]?.message?.content,1900);
     if(!reply)return res.status(502).json({error:language==='en'?'AI model returned an empty reply.':'المودل رجع رد فارغ، حاول مرة ثانية.'});
     // Strip stock forms of address sometimes injected by small local models.
-    const naturalReply=reply.replace(/(?:يا\s*(?:بطل|غالي|الغالي|حبيبي|صاحبي|أسطورة)|\b(?:champ|buddy)\b)/gi,'')
-      .replace(/^(?:أهلا?ً?\s+بك|أهلًا\s+بك|أهلاً\s+بك|مرحبًا\s+بك)[،,.!\s]*/i,'')
+    const withoutNicknames=reply.replace(/(?:يا\s*(?:بطل|غالي|الغالي|حبيبي|صاحبي|أسطورة)|\b(?:champ|buddy)\b)/gi,'')
       .trim();
+    const naturalReply=questionPlan.clarificationAllowed?withoutNicknames
+      .replace(/^(?:أهلا?ً?\s+بك|أهلًا\s+بك|أهلاً\s+بك|مرحبًا\s+بك)[،,.!\s]*/i,'')
+      .trim():withoutNicknames;
     const safeReply=safetyWarning && !/stop|توقف|مكان آمن|professional|مختص|مساعدة/.test(naturalReply)
       ? safetyWarning+'\n'+naturalReply : naturalReply;
     const fallbackCard=understanding.clearMatch?matches[0]:null;

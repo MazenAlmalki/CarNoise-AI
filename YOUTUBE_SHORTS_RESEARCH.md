@@ -60,3 +60,19 @@ The continuing request narrows research to a compact initial set of 18 models an
 ## Validation
 
 Run `npm.cmd run check` and `npm.cmd test`. New tests cover bilingual retrieval, source provenance, fixture-only Shorts discovery, blocked access, safe credential reuse, original-language transcripts, silence filtering, real audio normalization, Gemini-failure/Groq-speech recovery, and the chat route using recognized speech. The known baseline source-string assertion in `tests/carAudioCatalog.test.js:32` remains separate.
+
+## User-selected playlist
+
+The user later selected this exact source:
+
+https://www.youtube.com/watch?v=ciVOqe7ji2Q&list=PLAfTiqc9y29huuPbBepZyvRS4OPpzkSLw
+
+Access to that URL also returned HTTP 403. `data/research/requested_audio_playlist.json` records the user-provided playlist ID and seed video, with zero clips reviewed and no claim that playlist membership was verified. No title, audio label or diagnosis was fabricated from the link.
+
+A public initial-page metadata inventory can be prepared on a machine with authorized YouTube access:
+
+```powershell
+node scripts/collect_youtube_playlist.js --url "https://www.youtube.com/watch?v=ciVOqe7ji2Q&list=PLAfTiqc9y29huuPbBepZyvRS4OPpzkSLw" --output data/research/requested_playlist_candidates.json
+```
+
+This is **not** a complete playlist download or audio analysis. Pagination/continuation and unavailable clips can make an initial-page inventory partial; `inventory_complete` remains false. Each candidate keeps separate Arabic/English summary fields, audio-review flags and runtime eligibility pending. Before using the actual recordings for recognition/reference matching, each accessible clip must be listened to/analyzed, its audible features separated from uploader claims, and rights to store/use its audio checked. Merely cataloging URLs does not train the model or establish that it recognizes those recordings.

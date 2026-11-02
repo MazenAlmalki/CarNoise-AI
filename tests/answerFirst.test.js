@@ -15,7 +15,7 @@ test('case question budget survives truncation of the visible model history',()=
 });
 
 test('unknown answers and reworded prompts do not repeat the same topic',()=>{
- const messages=[{role:'assistant',content:'When do you notice the noise?'},{role:'user',content:'I am not sure'}];
+ const messages=[{role:'user',content:'My car makes a strange noise'},{role:'assistant',content:'When do you notice the noise?'},{role:'user',content:'I am not sure'}];
  const plan=planMinimalQuestions({messages,current:'I cannot tell'});
  assert.ok(plan.askedFields.includes('timing'));assert.notEqual(plan.questionType,'timing');
  assert.equal(plan.questionType,'texture');

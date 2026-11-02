@@ -43,7 +43,8 @@ export function shortCandidate(player,id,{queries=[],checkedAt=new Date().toISOS
 }
 export async function youtubePage(url,{fetchImpl=fetch}={}){
  const parsed=new URL(url);
- if(parsed.origin!=='https://www.youtube.com'||!['/results'].includes(parsed.pathname)&&!/^\/shorts\/[a-zA-Z0-9_-]{11}$/.test(parsed.pathname))throw Error('Only public YouTube search and Shorts pages are supported.');
+ const allowedPath=parsed.pathname==='/results'||/^\/shorts\/[a-zA-Z0-9_-]{11}$/.test(parsed.pathname)||(parsed.pathname==='/playlist'&&/^[a-zA-Z0-9_-]{10,100}$/.test(parsed.searchParams.get('list')||''));
+ if(parsed.origin!=='https://www.youtube.com'||!allowedPath)throw Error('Only public YouTube search, Shorts and playlist pages are supported.');
  const response=await fetchImpl(url,{headers:{'User-Agent':'Mozilla/5.0','Accept-Language':'en,ar;q=0.9'},signal:AbortSignal.timeout(25000)});
  if(!response.ok)throw Error(`YouTube HTTP ${response.status}. Check authorized network access; this collector does not bypass blocks.`);
  const reader=response.body.getReader();let total=0;const chunks=[];

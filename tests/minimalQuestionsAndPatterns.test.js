@@ -16,7 +16,8 @@ test('one highly relevant clarification only for vague complaint',()=>{
  assert.equal(p.questionType,'timing');
  const answer=enforceQuestionBudget('أحتاج تفاصيل. وش الصوت؟ ومتى؟',p);
  assert.equal((answer.match(/؟/g)||[]).length,1);
- assert.match(answer,/متى يظهر الصوت/);
+ assert.match(answer,/وش الصوت|متى/);
+ assert.ok(answer.includes('وش الصوت؟')||answer.includes('ومتى؟'),'keep a naturally worded relevant model question, not a forced template');
 });
 test('do not repeat questions already asked in chat',()=>{
  const messages=[
