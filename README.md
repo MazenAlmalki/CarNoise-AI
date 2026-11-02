@@ -215,3 +215,10 @@ Audio clips that cannot be understood now offer clickable descriptions: spoken w
 Previous audio quick-choice behavior was incorrect: sound-description suggestions appeared even when the real sound classifier had **not run**. Fixed by tracking whether CLAP classification was actually attempted. With CLAP disabled, Warshatak now clearly reports that only basic waveform measurements were taken; it does **not** pretend to recognize vehicle noises, nor present immediate sound choices. If CLAP is enabled and fails, clarification options can follow; if it returns candidate sounds, the AI interprets them as uncertain audio similarities.
 
 **Enabling actual sound-event similarity** requires the optional Python CLAP environment described in [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md). For speech like `السلام عليكم`, a separate Whisper speech-transcription model is required (`ENABLE_SPEECH_TRANSCRIPTION=1` and `faster-whisper`), which is not the same as recognizing car sounds. Both may run slowly on low-memory machines. These updates are source-level changes and require local validation.
+
+
+## V5.9 — Richer sound-event candidates for CLAP (November 2, 2026)
+
+The optional local sound analysis now uses **67 audio-event descriptions** (previously 16) and compares up to **20 seconds** in 10-second windows. Categories include engine, starting/electrical, brake/wheel, belt/cooling/AC, suspension/drivetrain/exhaust, and background/speech. Candidate sound labels are newly curated, **not extracted from the user's YouTube Short** and **not verified faults**. Results are similarity rankings, not diagnoses; near-silent clips produce no forced label.
+
+The YouTube audio was inaccessible for inspection in this environment. The specific examples in that Short still need testing with uploaded audio samples. CLAP must be enabled in `.env`, Python dependencies present, and FFmpeg installed to run the real classifier. See [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md) and [UPDATES.md](UPDATES.md).
