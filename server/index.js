@@ -178,7 +178,17 @@ app.post('/api/chat',async(req,res)=>{
         grounding:'audio-no-usable-sound',knowledgeMatches:[],audioStatus:'no-candidates'
       });
     }
-    if(!classified && wasAttempted)return res.json(mediaClarification(language,true));
+    if(!classified && wasAttempted){
+      const failure=Array.isArray(mediaObject?.warnings)
+        ? mediaObject.warnings.find(x=>typeof x==='string' && /CLAP/i.test(x)):null;
+      return res.json({
+        reply:language==='en'
+          ? 'I received the recording, but the CLAP sound classifier failed to run, so I cannot identify the sound yet. Check the audio model installation and server error logs.'
+          : 'وصل التسجيل، لكن مودل CLAP فشل أثناء التحليل، لذلك ما قدرت أحدد نوع الصوت. تأكد من تثبيت مكتبات Python وشوف رسالة الخطأ في السيرفر.',
+        grounding:'audio-classifier-error',knowledgeMatches:[],audioStatus:'classifier-error',
+        audioError:typeof failure==='string'?failure.slice(0,180):null
+      });
+    }
     // CLAP only ranks descriptions by similarity. The true sound may not be
     // among the candidate set, so discuss only tentative categories and
     // do not equate a close match with confirmed mechanical causes.
