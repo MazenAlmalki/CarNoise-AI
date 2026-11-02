@@ -79,7 +79,7 @@ function newAnalysis(){
  session=null;questionIndex=0;submitting=false;$('attachButton').disabled=false;$('recordButton').disabled=false;$('intro').classList.remove('hidden');$('conversation').classList.add('hidden');$('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');$('busy').classList.add('hidden');$('messages').replaceChildren();$('description').disabled=false;$('sendButton').disabled=false;$('description').value='';showError('');clearPendingMedia();renderSidebar();
 }
 function createCase(description){
- const entry={id:makeId(),carId:state.carId,createdAt:new Date().toISOString(),description,lang:state.lang,answers:[],messages:[],result:null,mediaId:null,mediaType:null,mediaName:null};
+ const entry={id:makeId(),carId:state.carId,createdAt:new Date().toISOString(),description,lang:state.lang,answers:[],messages:[],result:null,mediaId:null,mediaType:null,mediaName:null,mediaAttempted:false};
  state.cases.push(entry);session=entry;questionIndex=0;persist();renderSidebar();return entry;
 }
 async function startAnalysis(description){
@@ -104,8 +104,17 @@ async function sendChat(text){
  const message=String(text||'').trim();
  if(message.length<2){showError(state.lang==='ar'?'اكتب رسالة أطول شوي.':'Please write a longer message.');return;}
  const active=session;
+ if(pendingMedia){
+  try{
+   const id=makeId();
+   await saveBlob(id,pendingMedia);
+   active.mediaId=id;active.mediaType=pendingMedia.type;active.mediaName=pendingMedia.name;
+   active.mediaAttempted=false;active.mediaAnalysis=null;active.mediaAnalysisError=null;
+   persist();clearPendingMedia();
+  }catch(error){showError(t('storageError'));return;}
+ }
  if(!Array.isArray(active.messages))active.messages=[];
- const prior=active.messages.slice(-12).map(({role,content})=>({role,content}));
+ const prior=active.messages.map(({role,content})=>({role,content}));
  active.messages.push({role:'user',content:message});
  active.description=active.description||message;
  persist();
@@ -115,7 +124,7 @@ async function sendChat(text){
   .map(x=>({date:x.createdAt.slice(0,10),description:x.description.slice(0,200),suspectedSummary:String(x.result.summary||'').slice(0,200)}));
  try{
   let mediaInsight=null;
-  if(active.mediaId && !active.mediaAttempted && prior.length===0){
+  if(active.mediaId && !active.mediaAttempted){
    active.mediaAttempted=true;
    try{
     const mediaFile=await readBlob(active.mediaId);
@@ -183,9 +192,9 @@ function renderSession(){
   }
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
-  if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'تمت معالجة المرفق بمودل منفصل؛ النتائج استرشادية وليست تشخيصًا.':'Media processed by a separate model; observations are not a diagnosis.','media-warning'));
+  if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'تم فحص عناصر مرئية أو خصائص أولية للإشارة الصوتية، وهذا ليس تشخيصًا للعطل.':'Basic image or audio-signal features were processed; this is not a fault diagnosis.','media-warning'));
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
-  $('attachButton').disabled=true;$('recordButton').disabled=true;
+  $('attachButton').disabled=Boolean(submitting);$('recordButton').disabled=Boolean(submitting);
   $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
   return;
  }
