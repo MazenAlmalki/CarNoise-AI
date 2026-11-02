@@ -249,3 +249,15 @@ python scripts/import_kwerimoto.py
 - Added `tests/saudiDialect.test.js` and included the new module in `npm.cmd run check`.
 - Created `SAUDI_DIALECT_GUIDE.md` with provenance, examples, test instructions and limitations.
 - Isolated syntax/logic checks passed for key edge cases; final quality still requires **real conversation testing** on the user's locally installed Ollama model. Audio diagnosis has **not** become available automatically.
+
+
+### Phase 14 — Saudi car terms + English text support (November 2, 2026)
+
+- Fixed the backend selecting the reply language solely from the UI session: `server/chatLanguage.js` now detects English or Arabic from the typed text; ambiguous short messages fall back to UI language. The AI prompt explicitly prioritizes the detected language.
+- Added `data/saudi_car_terms_v1.json`: **89** car-part and symptom definitions with **317** aliases, including `بوري` (horn), `جلنط` (parking brake), `سلف` (starter), `دينمو` (alternator), and context-dependent terms (e.g. `شمعات`).
+- Added `data/saudi_car_dialogue_examples_v1.jsonl`: **1,068** synthetic Arabic/English dialogue examples (12 per term), covering explaining terminology, unclear wording, noise complaints, warning lights, translation, and asking focused clarification questions. These are NOT 1,068 verified faults or fine-tuning examples used by the model at runtime.
+- Added `server/saudiCarTerms.js` to retrieve just a few relevant meanings and clarification cues per message without bloating the CPU-bound Ollama prompt.
+- Updated `POST /api/chat` to include the new terms and answer in the detected user-text language. The actual language model still writes the reply.
+- Updated `public/app.js` to show English/Arabic chat content with automatic per-message text direction.
+- Added `tests/saudiCarTerms.test.js`, added new JS modules to `npm.cmd run check`, and created `SAUDI_CAR_TERMS_AND_ENGLISH.md`.
+- Source-level checks passed in code evaluation for bilingual routing and horn/parking-brake matching. Final English end-to-end test on the user’s Windows/Ollama installation is still required.
