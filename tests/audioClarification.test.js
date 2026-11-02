@@ -17,14 +17,15 @@ test('unrecognized audio provides user-selectable descriptions without diagnoses
  assert.ok(source.includes("ما قدرت أتعرف على الكلام أو نوع الصوت"));
 });
 
-test('audio without transcription never implies waveform-based fault recognition',()=>{
+test('sound choices require a real sound classifier attempt',()=>{
  const start=server.indexOf("app.post('/api/chat'");
  const end=server.indexOf('const history=buildChatHistory(',start);
  const route=server.slice(start,end);
  assert.ok(route.includes("!spokenText"));
- assert.ok(route.includes("res.json(mediaClarification(language))"));
- assert.ok(route.includes("res.json(mediaClarification(language,true))"));
- assert.ok(route.includes("mediaObject?.audio?.matches?.length"));
+ assert.ok(route.includes("mediaObject?.audioEventAnalysis?.attempted===true"));
+ assert.ok(route.includes("audio-classifier-not-configured"));
+ assert.ok(route.includes("if(!classified && wasAttempted)return res.json(mediaClarification(language,true))"));
+ assert.ok(!route.includes("return res.json(mediaClarification(language));"));
 });
 
 test('user can select a sound from assistant response and send it to chat',()=>{
