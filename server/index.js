@@ -155,11 +155,27 @@ app.post('/api/chat',async(req,res)=>{
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
   // No model has decoded speech in this media: a signal chart cannot justify
   // saying the user said anything, nor inventing an automotive noise.
-  if((mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&!mediaObject?.audio?.matches?.length){
-    return res.json(mediaClarification(language));
+  // A waveform is NOT a sound event classification. Do not show a list of
+  // guesses before attempting an actual classifier. When it isn't installed,
+  // explain exactly which capability is missing rather than feigning analysis.
+  if((mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText){
+    const classified=Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0;
+    const wasAttempted=mediaObject?.audioEventAnalysis?.attempted===true;
+    if(!classified && !wasAttempted){
+      return res.json({
+        reply:language==='en'
+          ? 'I received the recording and checked its basic audio signal, but sound recognition is not enabled yet. I cannot tell which sound it contains from waveform measurements alone. To identify sounds, enable the optional audio model (CLAP) in the setup.'
+          : 'استلمت التسجيل وفحصت الإشارة الصوتية، لكن مودل التعرف على نوع الصوت مو مفعّل للحين. ما أقدر أحدد وش الصوت من القياسات وحدها؛ لازم تفعيل مودل الصوت CLAP.',
+        grounding:'audio-classifier-not-configured',knowledgeMatches:[],
+        audioStatus:'classifier-not-configured'
+      });
+    }
+    if(!classified && wasAttempted)return res.json(mediaClarification(language,true));
+    // A real classifier returned candidate similarities; discuss them
+    // cautiously in the model below, not as a verified mechanical fault.
   }
   if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia){
-    return res.json(mediaClarification(language,true));
+    return res.json({reply:language==='en'?'The recording could not be processed, so I cannot identify what is in it. Check the audio setup and retry.':'فشل تحليل المقطع، فما أقدر أعرف وش فيه. تحقق من إعدادات الصوت وأعد المحاولة.',grounding:'media-processing-error',knowledgeMatches:[]});
   }
   const history=buildChatHistory(data.messages,{recent:10});
   const chatContext=conversationContext(data.messages,effectiveMessage);
