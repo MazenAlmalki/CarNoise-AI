@@ -14,6 +14,7 @@ import { findSaudiCarTerms } from './saudiCarTerms.js';
 import { detectReplyLanguage } from './chatLanguage.js';
 import { buildChatHistory, conversationContext } from './conversationContext.js';
 import { ffmpegAvailable } from './mediaStatus.js';
+import { beginSoundInterview, advanceSoundInterview } from './soundInterview.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -140,6 +141,8 @@ function mediaClarification(language='ar',failed=false){
 app.post('/api/chat',async(req,res)=>{
   const data=req.body||{};
   const message=chatString(data.message,700);
+  const guided=data.audioInterviewAnswer?advanceSoundInterview(data.audioInterviewAnswer,data.language):null;
+  if(guided&&!guided.done)return res.json({...guided,knowledgeMatches:[]});
   const mediaObject=data.mediaInsight&&typeof data.mediaInsight==='object'?data.mediaInsight:null;
   const mediaType=['audio','video','image'].includes(mediaObject?.type)?mediaObject.type:null;
   // A raw waveform contains NO speech words or sound identity.
@@ -147,7 +150,8 @@ app.post('/api/chat',async(req,res)=>{
     ? chatString(mediaObject.transcription.text,700):'';
   const asksAboutUploadedMedia=/^(?:حلل (?:المرفق|المقطع|الصوت|التسجيل)|وش (?:سمعت|في المقطع|تلاحظ)|اسمع (?:المقطع|الصوت)|analy[sz]e (?:the )?(?:attachment|clip|recording|audio)|what (?:do you hear|is in this recording))/i.test(message.trim());
   const speechIsMainMessage=Boolean(spokenText&&asksAboutUploadedMedia&&mediaType==='audio');
-  const effectiveMessage=speechIsMainMessage?spokenText:message;
+  // Explicit user-supplied interview details override weak audio similarity.
+  const effectiveMessage=guided?.done?guided.description:(speechIsMainMessage?spokenText:message);
   // Detect language from spoken text when a recording was transcribed.
   const language=detectReplyLanguage(effectiveMessage,data.language);
   const mediaInsight=mediaObject?JSON.stringify(mediaObject).slice(0,2600):null;
@@ -158,44 +162,23 @@ app.post('/api/chat',async(req,res)=>{
   // A waveform is NOT a sound event classification. Do not show a list of
   // guesses before attempting an actual classifier. When it isn't installed,
   // explain exactly which capability is missing rather than feigning analysis.
-  if((mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText){
+  if(!guided?.done&&(mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText){
     const classified=Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0;
     const wasAttempted=mediaObject?.audioEventAnalysis?.attempted===true;
-    if(!classified && !wasAttempted){
-      return res.json({
-        reply:language==='en'
-          ? 'I received the recording and checked its basic audio signal, but sound recognition is not enabled yet. I cannot tell which sound it contains from waveform measurements alone. To identify sounds, enable the optional audio model (CLAP) in the setup.'
-          : 'استلمت التسجيل وفحصت الإشارة الصوتية، لكن مودل التعرف على نوع الصوت مو مفعّل للحين. ما أقدر أحدد وش الصوت من القياسات وحدها؛ لازم تفعيل مودل الصوت CLAP.',
-        grounding:'audio-classifier-not-configured',knowledgeMatches:[],
-        audioStatus:'classifier-not-configured'
-      });
-    }
-    if(!classified && wasAttempted && mediaObject?.audioEventAnalysis?.succeeded===true){
-      return res.json({
-        reply:language==='en'
-          ? 'The sound classifier processed the recording but found no usable sound candidates. The clip may be too quiet; try another short clear recording with minimal background noise.'
-          : 'مودل الصوت عالج التسجيل، لكن ما طلع بنتيجة صوتية مفيدة. ممكن التسجيل هادي جدًا؛ جرّب مقطع قصير أوضح وبعيد عن الضوضاء.',
-        grounding:'audio-no-usable-sound',knowledgeMatches:[],audioStatus:'no-candidates'
-      });
-    }
+    if(!classified && !wasAttempted)return res.json(beginSoundInterview({language,reason:'classifier-not-configured'}));
+    if(!classified && wasAttempted && mediaObject?.audioEventAnalysis?.succeeded===true)
+      return res.json(beginSoundInterview({language,reason:'no-candidates'}));
     if(!classified && wasAttempted){
       const failure=Array.isArray(mediaObject?.warnings)
         ? mediaObject.warnings.find(x=>typeof x==='string' && /CLAP/i.test(x)):null;
-      return res.json({
-        reply:language==='en'
-          ? 'I received the recording, but the CLAP sound classifier failed to run, so I cannot identify the sound yet. Check the audio model installation and server error logs.'
-          : 'وصل التسجيل، لكن مودل CLAP فشل أثناء التحليل، لذلك ما قدرت أحدد نوع الصوت. تأكد من تثبيت مكتبات Python وشوف رسالة الخطأ في السيرفر.',
-        grounding:'audio-classifier-error',knowledgeMatches:[],audioStatus:'classifier-error',
-        audioError:typeof failure==='string'?failure.slice(0,180):null
-      });
+      return res.json(beginSoundInterview({language,reason:'classifier-error',error:failure}));
     }
     // CLAP only ranks descriptions by similarity. The true sound may not be
     // among the candidate set, so discuss only tentative categories and
     // do not equate a close match with confirmed mechanical causes.
   }
-  if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia){
-    return res.json({reply:language==='en'?'The recording could not be processed, so I cannot identify what is in it. Check the audio setup and retry.':'فشل تحليل المقطع، فما أقدر أعرف وش فيه. تحقق من إعدادات الصوت وأعد المحاولة.',grounding:'media-processing-error',knowledgeMatches:[]});
-  }
+  if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia)
+    return res.json(beginSoundInterview({language,reason:'classifier-error',error:mediaFailure}));
   const history=buildChatHistory(data.messages,{recent:10});
   const chatContext=conversationContext(data.messages,effectiveMessage);
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
