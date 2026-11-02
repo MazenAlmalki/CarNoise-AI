@@ -192,3 +192,15 @@ Added **89** Saudi-used automotive terms with **317** variants and **1,068** syn
 - [Detailed data, limitations and test examples](SAUDI_CAR_TERMS_AND_ENGLISH.md).
 
 English availability on the user's own machine still depends on local Ollama working and on the model being able to answer; server-side language routing was changed, but no remote test of their running LLM is claimed.
+
+
+## V5.6 — Natural conversation, first-message memory, audio/video attachment improvements (November 2, 2026)
+
+- **Natural responses:** The chat prompt now strictly avoids repetitive greetings and nicknames such as `يا بطل`, `يا غالي` or `buddy`. A minimal reply cleanup also removes those phrases when an underpowered model emits them despite instructions.
+- **Multi-turn context:** `server/conversationContext.js` preserves the original user complaint and the 10 most recent turns. Follow-ups like `زي صوت الصرير` are interpreted in the context of the earlier problem, and the model is told not to ask answered questions again. Existing chat messages remain saved in the local client state.
+- **Audio recording/attachment:** audio uploads no longer fail solely because `ENABLE_AUDIO_CLAP=0`. With **FFmpeg** available on the PC, `server/audioWaveform.js` extracts basic waveform features (level, temporal variation and rough frequency texture) from up to 12 seconds of audio. **This is not audio event recognition, speech transcription or car fault diagnosis.** Optional heavyweight CLAP remains disabled by default.
+- **Video:** samples two video frames for the configured Ollama vision model and attempts the same waveform-level audio characterization. Video/audio may still fail or be very slow without FFmpeg, model support or sufficient RAM.
+- **Attach during chat:** users can now attach new audio/video/image files and record audio in a continuing conversation instead of only at the start. The current media findings are passed to the chat with limitations.
+- **Readiness:** `GET /api/media-status` indicates whether FFmpeg is found for audio and video. See [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md).
+- **Regression tests:** `tests/conversationMedia.test.js` covers original-question memory, safe transcript handling, and basic waveform characteristics.
+- **Important:** Ollama chat still runs locally on CPU for the tested laptop and can be slow/inaccurate. Source checks are not substitutes for a real audio/video end-to-end test on that laptop.
