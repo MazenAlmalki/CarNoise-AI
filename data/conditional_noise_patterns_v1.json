@@ -1,0 +1,542 @@
+[
+  {
+    "id": "brake_squeal",
+    "symptom_ar": "صرير أو صفير مع الفرامل",
+    "timing": "braking",
+    "texture": "squeal",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "تآكل الفحمات أو مؤشر التآكل",
+      "أتربة أو احتكاك مؤقت"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/brake-pads",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "brake_grind",
+    "symptom_ar": "حك أو طحن معدني وقت الفرملة",
+    "timing": "braking",
+    "texture": "grind",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "تآكل أجزاء الفرامل",
+      "جسم عالق قرب قرص الفرامل"
+    ],
+    "urgency": "high",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "brake_click",
+    "symptom_ar": "طقطقة تتكرر مع الفرامل",
+    "timing": "braking",
+    "texture": "click",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "مكوّن فرامل يحتاج فحصًا",
+      "جسم صغير قرب القرص"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "brake_shudder",
+    "symptom_ar": "رجفة أو اهتزاز أثناء الفرملة",
+    "timing": "braking",
+    "texture": "vibration",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "تفاوت احتكاك أو حالة أقراص الفرامل",
+      "مشكلة بإحدى مكونات التعليق"
+    ],
+    "urgency": "high",
+    "source_url": "https://repairpal.com/brake-pads",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "wheel_hum",
+    "symptom_ar": "ونة تزيد مع السرعة",
+    "timing": "driving",
+    "texture": "hum",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "رمان بلي العجل",
+      "الإطار أو سطح الطريق"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/wheel-bearing",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "wheel_growl",
+    "symptom_ar": "هدير من العجلات مع السرعة",
+    "timing": "driving",
+    "texture": "rattle",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "تآكل رمان بلي محتمل",
+      "ضوضاء الإطارات"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/wheel-bearing",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "wheel_chirp",
+    "symptom_ar": "صفير أو زقزقة من العجل مع الحركة",
+    "timing": "driving",
+    "texture": "squeal",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "رمان بلي أو جزء دوار",
+      "احتكاك قريب من العجل"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/symptoms/hearing-noises-from-car",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "cv_click",
+    "symptom_ar": "طقطقة مع لف الدركسون والمشي",
+    "timing": "turning",
+    "texture": "click",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "مفصل CV أو العكس",
+      "مكوّن قريب من العجل"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/bad-cv-axle-symptoms/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "steering_whine",
+    "symptom_ar": "ونة أو أنين عند اللف",
+    "timing": "turning",
+    "texture": "hum",
+    "location": "engine",
+    "possible_causes_ar": [
+      "نظام الباور أو الحمل على السير",
+      "نظام التوجيه حسب نوع السيارة"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.cars.com/articles/why-does-my-car-make-a-squealing-noise-486037/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "steering_squeal",
+    "symptom_ar": "صفير عند لف الدركسون",
+    "timing": "turning",
+    "texture": "squeal",
+    "location": "engine",
+    "possible_causes_ar": [
+      "سير ملحقات المحرك",
+      "نظام التوجيه"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.cars.com/articles/why-does-my-car-make-a-squealing-noise-486037/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "suspension_clunk",
+    "symptom_ar": "طقه على المطبات",
+    "timing": "bumps",
+    "texture": "click",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "وصلات الميزان أو جلود التعليق",
+      "قطع التعليق أو التوجيه"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "suspension_rattle",
+    "symptom_ar": "خشخشة عند الحفر والمطبات",
+    "timing": "bumps",
+    "texture": "rattle",
+    "location": "under",
+    "possible_causes_ar": [
+      "التعليق أو وصلاته",
+      "غطاء أو قطعة مرتخية تحت السيارة"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "exhaust_heatshield",
+    "symptom_ar": "خشخشة من تحت السيارة مع رجفة المكينة",
+    "timing": "idle",
+    "texture": "rattle",
+    "location": "under",
+    "possible_causes_ar": [
+      "درع حرارة العادم",
+      "قواعد أو مثبتات العادم"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "exhaust_roar",
+    "symptom_ar": "صوت عادم مرتفع مع الدعس",
+    "timing": "acceleration",
+    "texture": "hum",
+    "location": "under",
+    "possible_causes_ar": [
+      "تهريب من نظام العادم",
+      "مشكلة في وصلات العادم"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "exhaust_pop",
+    "symptom_ar": "فرقعة من العادم",
+    "timing": "acceleration",
+    "texture": "click",
+    "location": "under",
+    "possible_causes_ar": [
+      "تغيرات في الاحتراق أو العادم",
+      "مشكلة تحتاج فحصًا في العادم أو التشغيل"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/symptoms/hearing-noises-from-car",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "belt_squeal",
+    "symptom_ar": "صفير سير مع التسارع",
+    "timing": "acceleration",
+    "texture": "squeal",
+    "location": "engine",
+    "possible_causes_ar": [
+      "سير المحرك أو شداده",
+      "بكرة أو أحد ملحقات المحرك"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "belt_start",
+    "symptom_ar": "صفير عند بداية تشغيل المكينة",
+    "timing": "startup",
+    "texture": "squeal",
+    "location": "engine",
+    "possible_causes_ar": [
+      "انزلاق سير الملحقات",
+      "بكرة أو شداد السير"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.cars.com/articles/why-does-my-car-make-a-squealing-noise-486037/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "engine_idle_tick",
+    "symptom_ar": "تكتكة المكينة وهي واقفة",
+    "timing": "idle",
+    "texture": "click",
+    "location": "engine",
+    "possible_causes_ar": [
+      "صوت بخاخات أو صمامات قد يكون طبيعيًا",
+      "مشكلة تزييت أو صوت ميكانيكي يحتاج فحصًا"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/symptoms/engine-ticking-noise-causes",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "engine_rev_knock",
+    "symptom_ar": "دق مكينة مع الدعس",
+    "timing": "acceleration",
+    "texture": "click",
+    "location": "engine",
+    "possible_causes_ar": [
+      "احتراق غير منتظم تحت الحمل",
+      "مشكلة ميكانيكية محتملة"
+    ],
+    "urgency": "high",
+    "source_url": "https://repairpal.com/symptoms/hearing-noises-from-car",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "engine_idle_rattle",
+    "symptom_ar": "خشخشة من المكينة وهي واقفة",
+    "timing": "idle",
+    "texture": "rattle",
+    "location": "engine",
+    "possible_causes_ar": [
+      "شداد السير أو ملحقات المحرك",
+      "قطعة مرتخية أو غطاء حرارة"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "engine_hiss",
+    "symptom_ar": "هسهسة من المحرك",
+    "timing": "idle",
+    "texture": "hum",
+    "location": "engine",
+    "possible_causes_ar": [
+      "تسرب هواء أو تفريغ",
+      "مشكلة في دائرة التبريد بحسب العلامات الأخرى"
+    ],
+    "urgency": "medium",
+    "source_url": "https://repairpal.com/symptoms/hearing-noises-from-car",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "engine_hot_hiss",
+    "symptom_ar": "هسهسة مع حرارة مرتفعة",
+    "timing": "idle",
+    "texture": "hum",
+    "location": "engine",
+    "possible_causes_ar": [
+      "مشكلة في التبريد أو تسرب",
+      "حرارة زائدة تحتاج تدخل مختص"
+    ],
+    "urgency": "high",
+    "source_url": "https://repairpal.com/symptoms/hearing-noises-from-car",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "cabin_rattle",
+    "symptom_ar": "خشخشة داخل السيارة مع المشي",
+    "timing": "driving",
+    "texture": "rattle",
+    "location": "cabin",
+    "possible_causes_ar": [
+      "قطعة أو غرض غير مثبت",
+      "ديكورات أو زجاج داخلي"
+    ],
+    "urgency": "low",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "ac_idle_rattle",
+    "symptom_ar": "خشخشة مع تشغيل المكيف والسيارة واقفة",
+    "timing": "idle",
+    "texture": "rattle",
+    "location": "engine",
+    "possible_causes_ar": [
+      "كلتش الكمبروسر أو أحد ملحقات التكييف",
+      "اهتزاز غطاء أو جزء قريب"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.firestonecompleteautocare.com/blog/maintenance/car-making-rattling-noise/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "ac_squeal",
+    "symptom_ar": "صرير مع تشغيل المكيف",
+    "timing": "idle",
+    "texture": "squeal",
+    "location": "engine",
+    "possible_causes_ar": [
+      "سير الملحقات تحت حمل التكييف",
+      "بكرة أو كمبروسر المكيف"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.cars.com/articles/why-does-my-car-make-a-squealing-noise-486037/",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "gear_grind",
+    "symptom_ar": "حكة عند تغيير القير اليدوي",
+    "timing": "driving",
+    "texture": "grind",
+    "location": "under",
+    "possible_causes_ar": [
+      "كلتش أو وصلات القير",
+      "تروس أو مكونات نقل الحركة"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "starting_click",
+    "symptom_ar": "طقطقة عند محاولة تشغيل السيارة",
+    "timing": "startup",
+    "texture": "click",
+    "location": "engine",
+    "possible_causes_ar": [
+      "كهرباء التشغيل أو البطارية",
+      "السلف أو وصلاته"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.youtube.com/watch?v=rZGpjvjaoJA",
+    "source_type": "youtube_publisher_description",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "starting_grind",
+    "symptom_ar": "حك معدني وقت التشغيل",
+    "timing": "startup",
+    "texture": "grind",
+    "location": "engine",
+    "possible_causes_ar": [
+      "السلف أو تروس التعشيق",
+      "جزء دوار في منظومة التشغيل"
+    ],
+    "urgency": "medium",
+    "source_url": "https://www.youtube.com/watch?v=rZGpjvjaoJA",
+    "source_type": "youtube_publisher_description",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "wheel_road_variation",
+    "symptom_ar": "ونة تتغير مع نوع الأسفلت",
+    "timing": "driving",
+    "texture": "hum",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "صوت الإطارات ونقشة الطريق",
+      "رمان بلي إن استمر الصوت بغض النظر عن الطريق"
+    ],
+    "urgency": "low",
+    "source_url": "https://repairpal.com/wheel-bearing",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  },
+  {
+    "id": "reverse_click",
+    "symptom_ar": "طقه عند الرجوع للخلف",
+    "timing": "driving",
+    "texture": "click",
+    "location": "wheel",
+    "possible_causes_ar": [
+      "تحرك فحمات الفرامل في مكانها",
+      "مكونات الفرامل أو العجلات"
+    ],
+    "urgency": "low",
+    "source_url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+    "source_type": "automotive_publisher_guidance",
+    "record_type": "curated_conditional_pattern",
+    "recording_verified": false,
+    "diagnosis_confirmed": false,
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+  }
+]
