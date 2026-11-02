@@ -57,6 +57,15 @@ async function videoFrames(input,temp){
  }
  return results;
 }
+async function speechTranscription(input,language){
+ if(process.env.ENABLE_SPEECH_TRANSCRIPTION!=='1')return null;
+ const python=process.env.AUDIO_PYTHON?.trim()||(process.platform==='win32'?'python':'python3');
+ const script=path.resolve('scripts','transcribe_audio.py');
+ const output=await runProcess(python,[script,input,language],{timeout:180000,limit:12000});
+ const parsed=JSON.parse(output.trim());
+ if(typeof parsed.text!=='string'||typeof parsed.hasRecognizedSpeech!=='boolean')throw Error('Invalid transcription response');
+ return parsed;
+}
 async function audioSimilarity(input){
  const python=process.env.AUDIO_PYTHON?.trim()||(process.platform==='win32'?'python':'python3');
  const script=path.resolve('scripts','analyze_car_audio.py');
@@ -82,6 +91,10 @@ export async function analyzeUploadedMedia(file,language='ar'){
    let visual=null,audio=null;
    try{visual=await visualDescription(await videoFrames(source,temp),language);}
    catch(e){warnings.push('Video frames could not be analyzed: '+String(e.message).slice(0,180));}
+   let transcription=null;
+   if(process.env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
+    try{transcription=await speechTranscription(source,language);}catch(e){warnings.push('Speech transcription unavailable: '+String(e.message).slice(0,140));}
+   }else warnings.push('Speech was not transcribed. ENABLE_SPEECH_TRANSCRIPTION=1 and faster-whisper are needed to recognize words.');
    // Always try inexpensive local signal characterization. Optional CLAP can
    // contribute coarse similarity, but does not provide a verified diagnosis.
    let waveform=null;
@@ -89,15 +102,19 @@ export async function analyzeUploadedMedia(file,language='ar'){
    if(process.env.ENABLE_AUDIO_CLAP==='1'){
     try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP audio: '+String(e.message).slice(0,140));}
    }else warnings.push('Audio event identification is not enabled; waveform metrics are not a sound diagnosis.');
-   if(!visual&&!audio&&!waveform)throw Error(warnings.join(' | '));
-   return {type:'video',visual,audio,waveform,warnings,limitations:'Only sampled frames plus waveform features or optional CLAP similarities. No speech transcription and no verified mechanical diagnosis.'};
+   if(!visual&&!audio&&!waveform&&!transcription?.hasRecognizedSpeech)throw Error(warnings.join(' | '));
+   return {type:'video',visual,audio,waveform,transcription,warnings,limitations:'Only sampled frames, basic waveform features and optional automated speech transcript/CLAP. None confirms a mechanical fault.'};
   }
   const waveform=await analyzeWaveform(source);
-  let audio=null;
+  let audio=null,transcription=null;
   const warnings=[];
+  if(process.env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
+   try{transcription=await speechTranscription(source,language);}
+   catch(e){warnings.push('Speech transcription unavailable: '+String(e.message).slice(0,140));}
+  }else warnings.push('Speech was not transcribed. Install faster-whisper and set ENABLE_SPEECH_TRANSCRIPTION=1 to interpret spoken words.');
   if(process.env.ENABLE_AUDIO_CLAP==='1'){
    try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP unavailable: '+String(e.message).slice(0,140));}
   }else warnings.push('Sound-event classification is not enabled. Only basic waveform features were processed.');
-  return {type:'audio',waveform,audio,warnings,limitations:'Local waveform features describe loudness, rhythm and rough frequency texture only; they CANNOT identify the source of a noise or diagnose a car. Optional CLAP provides uncalibrated sound similarity, not a fault probability.'};
+  return {type:'audio',waveform,audio,transcription,warnings,limitations:'Waveform features cannot identify speech, engine components or faults. Optional Whisper may transcribe speech with errors and optional CLAP provides uncalibrated sound similarity, neither verifies a mechanical diagnosis.'};
  }finally{await rm(temp,{recursive:true,force:true}).catch(()=>{});}
 }
