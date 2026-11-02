@@ -1,0 +1,348 @@
+[
+  {
+    "knowledge_id": "T008",
+    "aliases": [
+      "سيارتي تهتز على السلانسيه",
+      "ترج الماكينة على الوقوف",
+      "الرجفه وهي في p",
+      "رجفه على الاشارة",
+      "السيارة ترج على النمرة D",
+      "فيه رجة بالمكينة وهي واقفة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T009",
+    "aliases": [
+      "المكينة تطفى عند الاشاره",
+      "السياره تموت وهي واقفه",
+      "المحرك يفصل بالوقوف",
+      "تفصل اذا وقفت عند اشارة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T010",
+    "aliases": [
+      "الدعسة ما تستجيب",
+      "قوة السيارة راحت",
+      "ضعف سحب بالمكينة",
+      "السياره ما تعطي عزم"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T011",
+    "aliases": [
+      "نور التشيك شغال",
+      "اشارة المكينة مولعة",
+      "لمبة المحرك ولعت",
+      "علامة تشيك انجن"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T012",
+    "aliases": [
+      "لمبة الزيت ولعت باللون الاحمر",
+      "علامة الزيت حمراء",
+      "ضغط الزيت نزل فجأة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T013",
+    "aliases": [
+      "الحرارة مرتفعه بالزحمه",
+      "مؤشر الحراره احمر",
+      "المكينة تسخن في الصيف",
+      "الحرارة تزيد مع الزحمة",
+      "الحرارة ترتفع لما اشغل المكيف"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T014",
+    "aliases": [
+      "صوت تك تك بالماكينة",
+      "طقطقة في راس المكينة",
+      "تكتكة وانا واقف",
+      "صوت نقر بالمحرك"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T015",
+    "aliases": [
+      "طراق بالمكينة",
+      "المحرك يدق بقوة",
+      "دق معدني تحت الكبوت"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T016",
+    "aliases": [
+      "سير المكينة يصفر",
+      "صفير مع دعسة البنزين",
+      "صوت حاد مع الrpm"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T018",
+    "aliases": [
+      "هسهسة تحت الكبوت",
+      "صوت تنسيم من المكينه",
+      "صوت هوا من حجرة المحرك"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T019",
+    "aliases": [
+      "أسمع تك تك وما تشتغل",
+      "السلف يطقطق",
+      "السيارة تكتك وما تدق",
+      "ما تشتغل البطارية"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T020",
+    "aliases": [
+      "تدق سلف بس ما تشب",
+      "تلف المكينة ولا تشتغل",
+      "السلف يلف بس السيارة ما تشتغل"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T021",
+    "aliases": [
+      "السياره تثقل تشغيل الصباح",
+      "تتاخر وهي بارده",
+      "صعبة التشغيل اول النهار"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T022",
+    "aliases": [
+      "الكشافات تخفت على الوقوف",
+      "انوار السيارة تضعف عند الاشارة",
+      "النور يضعف والمكينة واقفة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T023",
+    "aliases": [
+      "البطاريه كل شوي تفضى",
+      "السيارة ما تصحى بعد الوقوف",
+      "الشحن يخلص بسرعة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T001",
+    "aliases": [
+      "الفحمات تصفر مع الوقوف",
+      "صوت صرير من البريك",
+      "صفارة الفرامل عند التهدئة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T002",
+    "aliases": [
+      "احتكاك حديد وقت البريك",
+      "حك قوي عند الفرمله",
+      "صوت طحن من الفحمات"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T003",
+    "aliases": [
+      "دعسة الفرامل طرية",
+      "البريك اسفنجي",
+      "الدعسة تنزل زيادة لما افرمل"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T005",
+    "aliases": [
+      "تحدف يمين مع البريك",
+      "تلف يسار لما افرمل",
+      "تميل السيارة على الفرملة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T006",
+    "aliases": [
+      "رجفه الدركسون عند الفرامل",
+      "المقود يرتج وقت البريك",
+      "هزة بالمقود عند التهدئة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T024",
+    "aliases": [
+      "الدركسون يهتز فوق 100",
+      "السيارة ترج عالخط",
+      "هزة على السرعات العالية",
+      "رجفه في الطاره مع السرعة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T025",
+    "aliases": [
+      "ونه من الكفرات عالخط",
+      "طقطقة صوت ونة مع السرعه",
+      "ازعاج طنين على الطريق السريع"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T026",
+    "aliases": [
+      "الكفر يطق طق",
+      "صوت ضرب متكرر من الاطار",
+      "صوت جلد من الكفر"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T027",
+    "aliases": [
+      "المساعدات تطق على المطبات",
+      "صوت جلنط مطبات",
+      "طقه مع الحفر",
+      "خبط تحت السيارة بالمطبات"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T028",
+    "aliases": [
+      "السياره تعوم في اللفات",
+      "السيارة تتمايل",
+      "فيها عدم ثبات عالخط"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T029",
+    "aliases": [
+      "طقطقة مع لف الدركسون",
+      "صرير اذا لفيت يمين",
+      "صوت خشخشة في الطاره"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T030",
+    "aliases": [
+      "الدركسون ثقل فجأة",
+      "فصل الباور وصار المقود ثقيل",
+      "ما اقدر الف الطارة بسهولة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T031",
+    "aliases": [
+      "القير ينتع بين الاول والثاني",
+      "تعشيق القير يضرب",
+      "نتعه اذا بدل القير",
+      "فيه دقة مع النقلة"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T032",
+    "aliases": [
+      "الآر بي ام يرتفع والسياره ما تمشي",
+      "عداد الدورات يعلى بدون تسارع",
+      "القير ينزلق"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T033",
+    "aliases": [
+      "حك من القير في التعشيق",
+      "صوت تكسير عند تغيير النمر",
+      "صوت طحن مع الغيار"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T034",
+    "aliases": [
+      "الشكمان صار مزعج",
+      "صوت دبة العادم عالي",
+      "هدير عالي من الخلف"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T035",
+    "aliases": [
+      "قرقعة تحت السيارة",
+      "صوت صفيح من تحت",
+      "خشخشة الشكمان"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T036",
+    "aliases": [
+      "ريحة شكمان داخله",
+      "ادخنة العادم داخل السيارة",
+      "ريحة عادم في المكيف"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T037",
+    "aliases": [
+      "البخار طالع من الكبوت",
+      "فيه بخار ابيض تحت الكبوت",
+      "دخان من عند الرديتر"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T038",
+    "aliases": [
+      "موية الرديتر تنقص مع الحرارة",
+      "تهريب سائل والحرارة تطلع",
+      "تنقيط مع سخونة المكينه"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T039",
+    "aliases": [
+      "صرفية البنزين عاليه فجأه",
+      "البنزين يخلص اسرع",
+      "صرف البنزين زاد"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  },
+  {
+    "knowledge_id": "T040",
+    "aliases": [
+      "اسمع طقة مدري من وين",
+      "صوت ما اعرف من وين",
+      "فيه صوت غريب بالمكينة ما اقدر اوصفه"
+    ],
+    "provenance": "handwritten_Saudi_language_variants_not_mechanic_verified"
+  }
+]
