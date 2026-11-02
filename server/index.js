@@ -110,7 +110,7 @@ app.post('/api/chat',async(req,res)=>{
   const matches=understanding.matches.slice(0,2);
   const knowledge=matches.map(({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status})=>({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status}));
   const summary=matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}));
-  const hints=conversationHints({message,history,hasMedia:Boolean(mediaInsight),mediaFailed:Boolean(mediaFailure),hasMatches:matches.length>0||saudiSources.length>0,language});
+  const hints=conversationHints({message,history,hasMedia:Boolean(mediaInsight),mediaFailed:Boolean(mediaFailure),hasMatches:matches.length>0||saudiSources.length>0,language,intent:dialect.intent});
   // Always let the language model compose a contextual answer; retrieval and
   // dialect normalization provide evidence, not a prewritten chat message.
   // Safety is reinforced in the prompt and also in the returned warning. 
