@@ -222,3 +222,10 @@ Previous audio quick-choice behavior was incorrect: sound-description suggestion
 The optional local sound analysis now uses **67 audio-event descriptions** (previously 16) and compares up to **20 seconds** in 10-second windows. Categories include engine, starting/electrical, brake/wheel, belt/cooling/AC, suspension/drivetrain/exhaust, and background/speech. Candidate sound labels are newly curated, **not extracted from the user's YouTube Short** and **not verified faults**. Results are similarity rankings, not diagnoses; near-silent clips produce no forced label.
 
 The YouTube audio was inaccessible for inspection in this environment. The specific examples in that Short still need testing with uploaded audio samples. CLAP must be enabled in `.env`, Python dependencies present, and FFmpeg installed to run the real classifier. See [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md) and [UPDATES.md](UPDATES.md).
+
+
+## V5.10 — Guided audio clarification + public YouTube learning links (November 2, 2026)
+
+A new **step-by-step guided interview** helps when sound-event recognition cannot give a useful result. It asks about **where** the sound comes from, **when** it occurs, and **how** it sounds, collecting the user's own answers before the AI discusses possible explanations. If CLAP is disabled, it offers the user an optional manual-interview action rather than pretending that it listened. CLAP candidate similarities, when available, remain tentative. This is not a fixed diagnosis system.
+
+The project additionally indexes **28 public video-topic links from 8 real YouTube videos**, plus **536 synthetic sound-description phrasings**, to complement the existing 67 CLAP captions. Video metadata is for source-backed educational context, not labeled sound files or proof of which component is faulty. Source inventory: [SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md](SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md).
