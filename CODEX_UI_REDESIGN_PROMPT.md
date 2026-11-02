@@ -1,0 +1,22 @@
+Act as a senior product designer, frontend engineer and motion designer. Implement a substantial redesign directly in this repository: Warshatak / ورشتك, an Arabic/Saudi car assistant. Inspect AGENTS.md, the actual app, scripts and existing changes first. Work from the current branch and preserve unrelated work. Show a working result, not just a plan.
+
+Design direction
+Create a calm, distinctive workshop identity: deep charcoal/green, warm amber accents, readable Arabic typography, generous spacing and restrained motion. Keep the mechanic character human, friendly and professional. Make the conversation the primary focus. Keep Arabic RTL and English LTR equally polished. Use the existing stack unless there is a concrete need to change it.
+
+Simplify the car sidebar
+Redesign the car folders/list on the right in Arabic as a compact, useful vehicle switcher. Show one row per car: small icon, name, optional year, selected indicator and a subtle overflow menu. One clear Add car action. Expand conversation history only for the selected car; keep other cars collapsed. Put rename/delete actions in the overflow menu. Support long names, many cars and an empty garage. On mobile, use a drawer opened by a clear button. Preserve vehicle IDs, saved cars, per-car chat history and switching behavior. Require an intentional confirmation for destructive deletion. Remove duplicate titles, counters and panels only where they add no useful information.
+
+Speaking mechanic character
+Build a cohesive SVG mechanic mascot with idle, listening, thinking and speaking states. Give it subtle blinking and expressive posture; avoid constant bouncing. Add opt-in read-aloud for assistant replies using browser speechSynthesis where available, with Arabic and English voice selection. Provide clear play, pause/resume, stop and mute controls. Keep automatic read-aloud off by default and persist the preference. Synchronize mouth animation with real speech start/pause/resume/end/error events, and stop speech when changing conversations or starting a microphone recording. Handle voiceschanged, missing Arabic voices and unsupported browsers gracefully. Do not pretend to provide phoneme-accurate lip sync. Keep all replies readable as text.
+
+Intro and loading experience
+Add a branded, skippable intro lasting at most two seconds, shown once per session, with logo and mechanic reveal. Never delay an existing conversation or require replay after navigation. Honor prefers-reduced-motion and support keyboard skipping. Add a compact loading scene within the conversation: mechanic thinking/working, restrained waveform or tool animation, and readable status text. Show only states supported by the real app lifecycle: recording, uploading, analyzing or preparing a reply. Do not invent progress percentages, sound matches, transcripts or provider success. Handle timeouts, errors and retry without trapping the user in an overlay. Use an accessible live region and avoid repeated screen-reader announcements.
+
+Polish and cleanup
+Improve chat bubbles, composer, attachments, recording controls, transcript correction, empty states and responsive spacing. Add tasteful transitions, hover feedback and message entrance motion. Support keyboard focus, reduced motion, contrast, zoom and small screens. Remove unused assets/CSS and duplicate UI only after checking references. Keep file organization understandable without unnecessary abstractions or a framework migration.
+
+Preserve functionality
+Keep Gemini audio/reference comparison, all 15 bundled WAV references and provenance, speech transcription, media uploads, vehicle context, the question budget, greetings and the new vocal-imitation joke behavior. Preserve API contracts, privacy disclosures and local saved data. Never expose .env values or keys in frontend code. Do not rewrite diagnosis logic or weaken tests to make a redesign pass.
+
+Verify and deliver
+Run appropriate existing checks and browser smoke tests for Arabic/English, desktop/mobile, car switching, history, microphone/upload, intro skipping, loading/error recovery and TTS controls. Use mocks for unavailable providers and label them. Report any pre-existing failures separately. Summarize changed files and give exact Windows PowerShell commands using npm.cmd to run the app. Supply before/after screenshots if browser tooling is available. Keep the result locally reviewable; do not push, merge or deploy unless instructed.

@@ -21,7 +21,7 @@ import { buildContextEngine } from './contextEngine.js';
 import { planMinimalQuestions, enforceQuestionBudget } from './minimalQuestions.js';
 import { retrieveConditionalPatterns } from './conditionalNoiseRetrieval.js';
 import { DEFAULT_VISION_MODEL } from './llamaVision.js';
-import { publicAudioConfiguration, hasHostedAudioEvidence } from './geminiAudio.js';
+import { publicAudioConfiguration, hasHostedAudioEvidence, hasHumanVocalImitation, vocalImitationReply } from './geminiAudio.js';
 import { publicSpeechFallback } from './speechFallback.js';
 import {mergeQuestionMemory} from '../public/questionMemory.js';
 import {selectedVehicleContext} from './vehicleContext.js';
@@ -182,6 +182,10 @@ app.post('/api/chat',async(req,res)=>{
   const mediaInsight=mediaObject?JSON.stringify(mediaObject,(key,value)=>typeof value==='string'?value.slice(0,['text','description'].includes(key)?700:300):Array.isArray(value)?value.slice(0,6):value):null;
   const mediaFailure=typeof data.mediaFailure==='string'?data.mediaFailure.slice(0,240):null;
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
+  // Joke only about a positively identified vocal imitation, never ordinary
+  // speech, an uncertain sound, a failed provider or an urgent fault report.
+  if(!guided&&asksAboutUploadedMedia&&!questionPlan.urgent&&hasHumanVocalImitation(mediaObject))
+    return res.json(vocalImitationReply(language));
   // No model has decoded speech in this media: a signal chart cannot justify
   // saying the user said anything, nor inventing an automotive noise.
   // A waveform is NOT a sound event classification. Do not show a list of

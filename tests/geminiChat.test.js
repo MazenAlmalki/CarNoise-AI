@@ -68,6 +68,14 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  await chat({...insight,audioObservation:{...insight.audioObservation,referenceComparison:{...clearReference,result:'partial',needsClarification:true}}});
  const partialContext=JSON.parse(requests[beforeReference+1].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
  assert.equal(partialContext.questionPlan.askQuestion,true);
+ const imitation={...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[],soundOrigin:'human_vocal_imitation',originReason:'Audible vocal articulation and breath.'}};
+ const providerCount=requests.length;
+ const joke=await chat(imitation,{language:'ar'});assert.equal(joke.grounding,'human-vocal-imitation');assert.match(joke.reply,/V8/);assert.equal(requests.length,providerCount);assert.deepEqual(joke.knowledgeMatches,[]);
+ const jokeEnglish=await chat(imitation,{language:'en'});assert.match(jokeEnglish.reply,/fuel economy/);
+ const uncertainImitation=await chat({...imitation,audioObservation:{...imitation.audioObservation,soundOrigin:'uncertain'}});assert.notEqual(uncertainImitation.grounding,'human-vocal-imitation');
+ const emergency=await chat(imitation,{messages:[{role:'user',content:'brake failure, the car will not stop'}]});assert.notEqual(emergency.grounding,'human-vocal-imitation');
+ const humanSpeech=await chat({...imitation,transcription:{hasRecognizedSpeech:true,text:'السلام عليكم'}},{language:'ar'});assert.notEqual(humanSpeech.grounding,'human-vocal-imitation');assert.match(humanSpeech.reply,/وعليكم/);
+
 
 
 
