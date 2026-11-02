@@ -79,3 +79,9 @@ The API needs HTTPS access to `generativelanguage.googleapis.com` and a server-s
 Nine new tests cover configuration, secret isolation, requests with real WAV bytes, Arabic transcripts, silence, quota/access/model failures, real FFmpeg audio/video extraction, waveform fallback, and the real chat route consuming Gemini observations. Google responses were mocked: **no live Gemini inference, account entitlement or free quota was verified** because no Gemini key was supplied.
 
 Run `npm.cmd run check` and `npm.cmd test`. Optional FFmpeg integration tests explicitly skip if FFmpeg is absent; they ran and passed in the prepared environment. The existing unrelated source-string failure in `tests/carAudioCatalog.test.js:32` remains and was not weakened.
+
+## Temporary provider errors
+
+Gemini HTTP 500/502/503/504 responses receive up to two additional attempts using the same model and audio excerpt, within one 60-second request deadline. Short `Retry-After` instructions are honored; longer delays are reported for a later manual retry. API keys, model-not-found responses, and quota errors are not automatically retried. This cannot repair an outage or grant access to a model.
+
+If it still fails, share the displayed **HTTP status** and your selected **model name**, without keys. Run `node scripts/list_gemini_models.js` to check model metadata access for your project. Listing a model does not prove audio input support or available inference quota.

@@ -66,7 +66,7 @@ test('missing keys and invalid inputs never invoke the provider',async()=>{
 
 test('quota, denied access, missing models, timeouts and blocked/malformed responses fail clearly without echoing secrets',async()=>{
  for(const [status,pattern] of [[429,/quota/],[403,/denied/],[404,/model unavailable/],[503,/temporarily/]]){
-  await assert.rejects(()=>describeAudioWav(wav(),'en',{env,fetchImpl:async()=>({ok:false,status,json:async()=>({error:{message:env.GEMINI_API_KEY}})})}),error=>pattern.test(error.message)&&!error.message.includes(env.GEMINI_API_KEY));
+  await assert.rejects(()=>describeAudioWav(wav(),'en',{env,sleepImpl:async()=>{},fetchImpl:async()=>({ok:false,status,json:async()=>({error:{message:env.GEMINI_API_KEY}})})}),error=>pattern.test(error.message)&&!error.message.includes(env.GEMINI_API_KEY));
  }
  await assert.rejects(()=>describeAudioWav(wav(),'en',{env,fetchImpl:async()=>{throw new DOMException('secret diagnostic','TimeoutError');}}),/timed out/);
  await assert.rejects(()=>describeAudioWav(wav(),'en',{env,fetchImpl:async()=>({ok:true,json:async()=>({promptFeedback:{blockReason:'SAFETY'}})})}),/did not return/);
@@ -103,4 +103,36 @@ test('extracts video audio for Gemini even if the separate vision provider is un
   assert.equal(result.type,'video');assert.equal(result.audioEventAnalysis.succeeded,true);assert.equal(result.waveform.ok,true);
   assert.equal(result.visual,null);assert.match(result.warnings.join(' '),/frames could not be analyzed/);
  }finally{await rm(temp,{recursive:true,force:true});}
+});
+
+
+test('retries a transient Gemini failure with the same payload and succeeds without switching models',async()=>{
+ let calls=0;const waits=[],requests=[];
+ const result=await describeAudioWav(wav(),'en',{env,sleepImpl:async ms=>waits.push(ms),fetchImpl:async(url,request)=>{
+  calls++;requests.push({url,request});return calls<3?{ok:false,status:503}:response(observation);
+ }});
+ assert.equal(calls,3);assert.deepEqual(waits,[750,1500]);assert.equal(result.observation.provider,'gemini');
+ assert.equal(new Set(requests.map(x=>x.url)).size,1);assert.equal(new Set(requests.map(x=>x.request.body)).size,1);
+ assert.equal(new Set(requests.map(x=>x.request.signal)).size,1,'all attempts share one deadline');
+});
+
+test('exhausted transient failures expose the HTTP status without provider bodies or credentials',async()=>{
+ let calls=0;
+ await assert.rejects(()=>describeAudioWav(wav(),'en',{env,sleepImpl:async()=>{},fetchImpl:async()=>{calls++;return {ok:false,status:502,json:async()=>({error:env.GEMINI_API_KEY})};}}),error=>{
+  assert.equal(error.httpStatus,502);assert.equal(error.attempts,3);assert.match(error.message,/HTTP 502/);assert.match(error.message,/3 attempts/);assert.ok(!error.message.includes(env.GEMINI_API_KEY));return true;
+ });
+ assert.equal(calls,3);
+});
+
+test('does not retry credentials, model or quota errors, and respects bounded Retry-After',async()=>{
+ for(const status of [400,401,403,404,429]){
+  let calls=0;await assert.rejects(()=>describeAudioWav(wav(),'en',{env,sleepImpl:async()=>{throw Error('must not sleep');},fetchImpl:async()=>{calls++;return {ok:false,status};}}),error=>error.httpStatus===status);
+  assert.equal(calls,1);
+ }
+ const waits=[];let calls=0;
+ await describeAudioWav(wav(),'en',{env,sleepImpl:async ms=>waits.push(ms),fetchImpl:async()=>++calls===1?{ok:false,status:503,headers:{get:()=> '2'}}:response(observation)});
+ assert.deepEqual(waits,[2000]);
+ calls=0;
+ await assert.rejects(()=>describeAudioWav(wav(),'en',{env,sleepImpl:async()=>{throw Error('too long');},fetchImpl:async()=>{calls++;return {ok:false,status:503,headers:{get:()=> '120'}};}}),/HTTP 503/);
+ assert.equal(calls,1);
 });

@@ -78,7 +78,10 @@ async function analyzeAudioTrack(source,temp,language,options){
    const result=await describeAudioWav(await readFile(output),language,options);
    audioObservation=result.observation;transcription=result.transcription;audioEventAnalysis.succeeded=true;
    warnings.push('Only the first '+config.excerptLimitSeconds+' seconds at most were sent to Gemini. Hosted observations and transcripts may be wrong; no mechanical fault is confirmed.');
-  }catch(error){warnings.push('Gemini audio analysis failed: '+String(error.message).slice(0,240));}
+  }catch(error){
+   if(Number.isInteger(error.httpStatus))audioEventAnalysis.httpStatus=error.httpStatus;
+   warnings.push('Gemini audio analysis failed: '+String(error.message).slice(0,240));
+  }
  }else{
   if(env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
    try{transcription=await speechTranscription(source,language);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
