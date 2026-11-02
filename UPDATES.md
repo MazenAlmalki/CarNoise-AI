@@ -293,3 +293,13 @@ python scripts/import_kwerimoto.py
 - Short video clips with no successfully analyzed visual frames can also use the clarification flow. Video with actual visual observations still gets the normal vision-limited response.
 - Added `tests/audioClarification.test.js` covering available choices, fallback routes and frontend click behavior.
 - **No new sound-recognition capability is claimed**: clicking "صرير" is the user's own description, not acoustic classification.
+
+
+### Phase 18 — Fix premature audio clarification (November 2, 2026)
+
+- User correctly reported that an actual vehicle sound was followed immediately by sound-description choices. Root cause: the backend treated `!transcription` and no `CLAP` matches as failed sound recognition even when a sound classifier **had not run at all**. A successful waveform analysis is not sound identification.
+- `server/multimodal.js` now reports `audioEventAnalysis: { attempted, model, succeeded }`, so the chat can distinguish classifier disabled, classifier failed, and a classifier returning candidate sounds.
+- `server/index.js` now **does not** show sound-choice suggestions when CLAP is disabled. Instead it explicitly says sound-event recognition is not configured. Only after a **real CLAP attempt fails** may it offer user-provided sound descriptions. If the classifier returns candidate similarities, the LLM discusses them cautiously without claiming a confirmed fault.
+- Missing speech transcription is separate: Whisper is optional and needed to process recorded words such as `السلام عليكم`; sound-event similarity cannot reliably transcribe speech.
+- Updated `tests/audioClarification.test.js` to ensure choices require an actual classifier attempt.
+- On the user's Windows 8GB system, optional CLAP and Whisper may require significant downloads and RAM. Do not claim sound event recognition is working until dependencies are installed and an actual test succeeds.
