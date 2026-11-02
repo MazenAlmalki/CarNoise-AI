@@ -5,6 +5,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { analyzeWaveform } from './audioWaveform.js';
 import { describeVehicleImages } from './llamaVision.js';
+import { audioProviderConfiguration, describeAudioWav } from './geminiAudio.js';
 
 const maxStdout=20_000;
 async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
@@ -56,7 +57,41 @@ async function audioSimilarity(input){
  if(!Array.isArray(result.matches))throw new Error('Audio model response malformed.');
  return result;
 }
-export async function analyzeUploadedMedia(file,language='ar'){
+// Normalize a bounded excerpt locally; only the extracted audio reaches Gemini.
+async function analyzeAudioTrack(source,temp,language,options){
+ const env=options.env||process.env;
+ const warnings=[];
+ let waveform=null,audio=null,transcription=null,audioObservation=null;
+ try{waveform=await analyzeWaveform(source);}catch(error){warnings.push('Audio waveform unavailable: '+String(error.message).slice(0,140));}
+ let config;
+ try{config=audioProviderConfiguration(env);}catch(error){warnings.push(error.message);}
+ const audioEventAnalysis={attempted:false,provider:config?.provider||'invalid',model:config?.provider==='gemini'?config.model:'CLAP',succeeded:false};
+ if(config?.provider==='gemini'){
+  audioEventAnalysis.attempted=true;
+  try{
+   if(!config.configured)throw Error('Gemini audio: set GEMINI_API_KEY in your server .env and restart the server.');
+   const output=path.join(temp,'audio-excerpt.wav');
+   await runProcess(env.FFMPEG_PATH?.trim()||'ffmpeg',[
+    '-hide_banner','-loglevel','error','-i',source,'-map','0:a:0','-vn','-t',String(config.excerptLimitSeconds),
+    '-ac','1','-ar','16000','-c:a','pcm_s16le','-f','wav','-y',output
+   ],{timeout:40000});
+   const result=await describeAudioWav(await readFile(output),language,options);
+   audioObservation=result.observation;transcription=result.transcription;audioEventAnalysis.succeeded=true;
+   warnings.push('Only the first '+config.excerptLimitSeconds+' seconds at most were sent to Gemini. Hosted observations and transcripts may be wrong; no mechanical fault is confirmed.');
+  }catch(error){warnings.push('Gemini audio analysis failed: '+String(error.message).slice(0,240));}
+ }else{
+  if(env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
+   try{transcription=await speechTranscription(source,language);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
+  }else warnings.push('Speech was not transcribed. Optional Whisper is disabled.');
+  if(config?.provider==='local'&&env.ENABLE_AUDIO_CLAP==='1'){
+   audioEventAnalysis.attempted=true;
+   try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
+   catch(error){warnings.push('Optional CLAP unavailable: '+String(error.message).slice(0,140));}
+  }else warnings.push('Sound-event classification is not configured; waveform metrics alone cannot identify sounds.');
+ }
+ return {audioObservation,transcription,audio,audioEventAnalysis,waveform,warnings};
+}
+export async function analyzeUploadedMedia(file,language='ar',options={}){
  const extension=fileExtension(file.mimetype);
  if(!extension)throw new Error(language==='en'?'Unsupported media type.':'نوع الملف غير مدعوم.');
  if(!file.buffer?.length||file.size>25*1024*1024)throw new Error(language==='en'?'File must be below 25 MB.':'الملف يجب أن يكون أقل من 25 ميجابايت.');
@@ -65,42 +100,19 @@ export async function analyzeUploadedMedia(file,language='ar'){
  try{
   await writeFile(source,file.buffer);
   if(file.mimetype.startsWith('image/')){
-   const observed=await describeVehicleImages([{mimeType:file.mimetype,base64:file.buffer.toString('base64')}],language);
+   const observed=await describeVehicleImages([{mimeType:file.mimetype,base64:file.buffer.toString('base64')}],language,options);
    return {type:'image',visual:observed,summary:observed.description,limitations:'Image is a visual observation, NOT a mechanical diagnosis.'};
   }
   if(file.mimetype.startsWith('video/')){
-   const warnings=[];
-   let visual=null,audio=null;
-   try{visual=await describeVehicleImages((await videoFrames(source,temp)).map(base64=>({mimeType:'image/jpeg',base64})),language);}
-   catch(e){warnings.push('Video frames could not be analyzed: '+String(e.message).slice(0,180));}
-   let transcription=null;
-   if(process.env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
-    try{transcription=await speechTranscription(source,language);}catch(e){warnings.push('Speech transcription unavailable: '+String(e.message).slice(0,140));}
-   }else warnings.push('Speech was not transcribed. ENABLE_SPEECH_TRANSCRIPTION=1 and faster-whisper are needed to recognize words.');
-   // Always try inexpensive local signal characterization. Optional CLAP can
-   // contribute coarse similarity, but does not provide a verified diagnosis.
-   let waveform=null;
-   try{waveform=await analyzeWaveform(source);}catch(e){warnings.push('Video audio waveform unavailable: '+String(e.message).slice(0,140));}
-   const audioEventAnalysis={attempted:process.env.ENABLE_AUDIO_CLAP==='1',model:'CLAP',succeeded:false};
-   if(audioEventAnalysis.attempted){
-    try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
-    catch(e){warnings.push('Optional CLAP audio: '+String(e.message).slice(0,140));}
-   }else warnings.push('Audio event classification is not configured; waveform metrics alone cannot identify sounds.');
-   if(!visual&&!audio&&!waveform&&!transcription?.hasRecognizedSpeech)throw Error(warnings.join(' | '));
-   return {type:'video',visual,audio,audioEventAnalysis,waveform,transcription,warnings,limitations:'Only sampled frames, basic waveform features and optional automated speech transcript/CLAP. None confirms a mechanical fault.'};
+   const track=await analyzeAudioTrack(source,temp,language,options);
+   let visual=null;
+   try{visual=await describeVehicleImages((await videoFrames(source,temp)).map(base64=>({mimeType:'image/jpeg',base64})),language,options);}
+   catch(error){track.warnings.push('Video frames could not be analyzed: '+String(error.message).slice(0,180));}
+   if(!visual&&!track.audio&&!track.audioObservation&&!track.waveform&&!track.transcription?.hasRecognizedSpeech)throw Error(track.warnings.join(' | '));
+   return {type:'video',...track,visual,limitations:'Audio observations/transcripts can be incorrect, sampled frames describe only visible pixels, and waveform features identify no sound source. None confirms a mechanical fault.'};
   }
-  const waveform=await analyzeWaveform(source);
-  let audio=null,transcription=null;
-  const warnings=[];
-  if(process.env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
-   try{transcription=await speechTranscription(source,language);}
-   catch(e){warnings.push('Speech transcription unavailable: '+String(e.message).slice(0,140));}
-  }else warnings.push('Speech was not transcribed. Install faster-whisper and set ENABLE_SPEECH_TRANSCRIPTION=1 to interpret spoken words.');
-  const audioEventAnalysis={attempted:process.env.ENABLE_AUDIO_CLAP==='1',model:'CLAP',succeeded:false};
-  if(audioEventAnalysis.attempted){
-   try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
-   catch(e){warnings.push('Optional CLAP unavailable: '+String(e.message).slice(0,140));}
-  }else warnings.push('Sound-event classification is not configured; only basic waveform features were processed.');
-  return {type:'audio',waveform,audio,audioEventAnalysis,transcription,warnings,limitations:'Waveform features cannot identify speech, engine components or faults. Optional Whisper may transcribe speech with errors and optional CLAP provides uncalibrated sound similarity, neither verifies a mechanical diagnosis.'};
+  const track=await analyzeAudioTrack(source,temp,language,options);
+  if(!track.waveform&&!track.audioObservation&&!track.audio&&!track.transcription?.hasRecognizedSpeech)throw Error(track.warnings.join(' | '));
+  return {type:'audio',...track,limitations:'Hosted audio observations and transcripts may be wrong. Waveform metrics identify no sound source. CLAP, if enabled locally, returns uncalibrated similarities. No mechanical fault is confirmed.'};
  }finally{await rm(temp,{recursive:true,force:true}).catch(()=>{});}
 }

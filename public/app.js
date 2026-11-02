@@ -47,7 +47,7 @@ const translations={
     "medium": "يستحسن الفحص",
     "high": "اهتمام عاجل",
     "required": "اوصف الصوت بثمانية أحرف على الأقل.",
-    "mediaInfo": "حتى 25 MB. يُرفع المرفق فقط عند الإرسال؛ قدرات التحليل تعتمد على الإعدادات المتاحة.",
+    "mediaInfo": "حتى 25 MB. يُرفع المرفق عند الإرسال، وقد يُرسل الصوت إلى Google عند تفعيل Gemini. قدرات التحليل تعتمد على الإعدادات.",
     "fileTooLarge": "الحد الأقصى 25MB للمقطع.",
     "fileType": "ارفع صورة أو ملف صوت أو فيديو.",
     "mediaSaved": "مقطع محفوظ",
@@ -195,7 +195,7 @@ const translations={
     "medium": "Inspection advised",
     "high": "Urgent attention",
     "required": "Describe the noise using at least 8 characters.",
-    "mediaInfo": "Up to 25 MB. Uploads only on Send; analysis depends on available capabilities.",
+    "mediaInfo": "Up to 25 MB. Uploads on Send; audio may be sent to Google when Gemini is enabled. Analysis depends on available capabilities.",
     "fileTooLarge": "Maximum media file size is 25 MB.",
     "fileType": "Choose an image, audio, or video file.",
     "mediaSaved": "Saved media",
@@ -458,7 +458,8 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(data.audioStatus==='classifier-error'&&data.audioError){
-   showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));
+   if(active.mediaAnalysis?.audioEventAnalysis?.provider==='gemini')showError((state.lang==='ar'?'تعذر تحليل الصوت عبر Gemini: ':'Gemini audio analysis failed: ')+String(data.audioError).slice(0,240));
+   else showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));
   }
   if(!state.cases.some(x=>x.id===active.id))return;
   active.messages.push({role:'assistant',content:data.reply.slice(0,1900),clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
@@ -543,7 +544,7 @@ function renderSession(){
   visibleThreadId=session.id;visibleMessageCount=session.messages.length;
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
-  if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'تم فحص عناصر مرئية أو خصائص أولية للإشارة الصوتية، وهذا ليس تشخيصًا للعطل.':'Basic image or audio-signal features were processed; this is not a fault diagnosis.','media-warning'));
+  if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'المرفق محفوظ. ملاحظات النماذج قد تخطئ، وقياسات الصوت الأولية لا تحدد نوعه أو العطل.':'Attachment saved. Model observations may be wrong; waveform metrics alone identify neither the sound nor a fault.','media-warning'));
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
   $('attachButton').disabled=Boolean(submitting);$('recordButton').disabled=Boolean(submitting);
   $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
@@ -714,7 +715,7 @@ async function showSavedMedia(id,type,name){
   media.style.maxWidth='100%';media.style.maxHeight='220px';
   attached.append(media);
   if(session?.mediaAnalysis){
-   attached.append(textNode('p',state.lang==='ar'?'تم استلام الملف. وصف الصوت يعتمد على نجاح مودل التعرف، وليس مجرد تسجيله.':'File received. Sound identification depends on successful model inference.','media-warning'));
+   attached.append(textNode('p',state.lang==='ar'?'الملف محفوظ. قد يُرسل الصوت إلى مزود التحليل المختار؛ الملاحظات ليست تشخيصًا.':'File saved. Audio may be sent to your selected analysis provider; observations are not diagnoses.','media-warning'));
   }
   const remove=textNode('button',t('deleteMedia'),'media-delete-btn');
   remove.type='button';remove.addEventListener('click',()=>deleteSavedMedia(id));attached.append(remove);

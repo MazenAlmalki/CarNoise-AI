@@ -48,7 +48,9 @@ export function buildContextEngine({messages=[],current='',vehicleHistory=[],med
    soundClassifierRan:mediaInsight.audioEventAnalysis?.attempted===true,
    soundClassifierSucceeded:mediaInsight.audioEventAnalysis?.succeeded===true,
    visualObserved:Boolean(mediaInsight.visual?.description),
-   limitation:'Waveform only is NOT a recognized car sound. CLAP candidates are uncalibrated similarities. Image observations cannot establish a mechanical fault.'
+   hostedAudioObserved:mediaInsight.audioEventAnalysis?.provider==='gemini'&&mediaInsight.audioEventAnalysis?.succeeded===true,
+   audioObservationSource:mediaInsight.audioObservation?.provider==='gemini'?'gemini_model_generated_not_diagnosis':null,
+   limitation:'Waveform only is NOT a recognized car sound. CLAP candidates are uncalibrated similarities. Gemini descriptions/transcripts may be wrong. Image observations cannot establish a mechanical fault.'
   }:null;
  const existingVehicles=Array.isArray(vehicleHistory)?vehicleHistory.slice(0,3).map(x=>({
   date:cleanText(x?.date,16),userDescription:cleanText(x?.description,180),

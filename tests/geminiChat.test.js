@@ -1,0 +1,42 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import http from 'node:http';
+import {spawn} from 'node:child_process';
+import {once} from 'node:events';
+import {fileURLToPath} from 'node:url';
+
+const root=fileURLToPath(new URL('../',import.meta.url));
+async function listen(server){server.listen(0,'127.0.0.1');await once(server,'listening');return server.address().port;}
+
+test('chat consumes Gemini audio evidence, preserves speech, and falls back honestly on failure/silence',async t=>{
+ const requests=[];
+ const provider=http.createServer(async(req,res)=>{
+  let raw='';for await(const chunk of req)raw+=chunk;
+  requests.push(JSON.parse(raw));res.setHeader('Content-Type','application/json');
+  res.end(JSON.stringify({choices:[{message:{content:'A squeal may have several causes. Its source is not confirmed.'}}]}));
+ });
+ const providerPort=await listen(provider);t.after(()=>new Promise(resolve=>provider.close(resolve)));
+ const probe=http.createServer();const appPort=await listen(probe);await new Promise(resolve=>probe.close(resolve));
+ const child=spawn(process.execPath,['server/index.js'],{cwd:root,env:{...process.env,PORT:String(appPort),CHAT_API_URL:`http://127.0.0.1:${providerPort}/v1/chat/completions`,CHAT_API_KEY:'local-test-key',CHAT_MODEL:'test-model',AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'',GEMINI_AUDIO_MODEL:'gemini-test-audio'},stdio:['ignore','pipe','pipe']});
+ t.after(async()=>{if(child.exitCode===null){const closed=once(child,'close');child.kill();await closed;}});
+ await new Promise((resolve,reject)=>{
+  const timeout=setTimeout(()=>reject(Error('Test server did not start')),7000);
+  child.stdout.on('data',chunk=>{if(String(chunk).includes('server running')){clearTimeout(timeout);resolve();}});
+  child.once('error',error=>{clearTimeout(timeout);reject(error);});
+  child.once('exit',code=>{clearTimeout(timeout);reject(Error('Test server exited '+code));});
+ });
+ const base=`http://127.0.0.1:${appPort}`;
+ const insight={type:'audio',audioEventAnalysis:{provider:'gemini',model:'gemini-test-audio',attempted:true,succeeded:true},audioObservation:{provider:'gemini',description:'Repeated high-pitched squealing is audible.',sounds:['squeal'],hasClearSound:true,uncertainty:'Source unknown.',diagnosisConfirmed:false},transcription:{hasRecognizedSpeech:false,text:''}};
+ async function chat(mediaInsight){const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the attachment',language:'en',mediaInsight})});assert.equal(response.status,200);return response.json();}
+ const status=await (await fetch(base+'/api/model-status')).json();assert.equal(status.audio.provider,'gemini');assert.equal(status.audio.configured,false);
+ const reply=await chat(insight);assert.equal(reply.grounding,'language-model-with-retrieval');assert.equal(requests.length,1);
+ assert.match(JSON.stringify(requests[0]),/Repeated high-pitched squealing/);
+ assert.match(JSON.stringify(requests[0]),/NOT a diagnosed fault/);
+ const failed=await chat({...insight,audioEventAnalysis:{...insight.audioEventAnalysis,succeeded:false},audioObservation:null,warnings:['Gemini audio analysis failed: quota reached.']});
+ assert.equal(failed.audioStatus,'classifier-error');assert.match(failed.audioError,/Gemini.*quota/);assert.equal(requests.length,1);
+ const silent=await chat({...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[]}});
+ assert.equal(silent.audioStatus,'no-candidates');assert.equal(requests.length,1);
+ const speech=await chat({...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[]},transcription:{hasRecognizedSpeech:true,text:'السلام عليكم'}});
+ assert.equal(speech.grounding,'language-model-with-retrieval');assert.equal(requests.length,2);
+ assert.match(requests[1].messages.at(-1).content,/السلام عليكم/);
+});

@@ -1,6 +1,8 @@
 # ورشتك | Warshatak
 
-> **Current stack (November 2026):** Main chat = Meta Llama 3.3 70B API; image/video frames = Meta Llama 4 Scout API; **Context Engine** = local structured user-history and RAG assembly; audio = local FFmpeg and optional CLAP/Whisper. **No active Qwen model required.** The same private `CHAT_API_KEY` from OpenRouter is used for both hosted Meta models. See [LLAMA_CONTEXT_ENGINE_SETUP.md](LLAMA_CONTEXT_ENGINE_SETUP.md). Older sections below may describe historical versions; use the linked current setup guide to run this version.
+**Optional Gemini audio:** To replace CLAP with hosted sound descriptions and speech transcription while keeping your current chat provider, see [GEMINI_AUDIO_SETUP.md](GEMINI_AUDIO_SETUP.md).
+
+> **Current stack (November 2026):** Main chat = Meta Llama 3.3 70B API; image/video frames = Meta Llama 4 Scout API; **Context Engine** = local structured user-history and RAG assembly; audio = local FFmpeg with optional Gemini API or local CLAP/Whisper. **No active Qwen model required.** The same private `CHAT_API_KEY` from OpenRouter is used for both hosted Meta models. See [LLAMA_CONTEXT_ENGINE_SETUP.md](LLAMA_CONTEXT_ENGINE_SETUP.md). Older sections below may describe historical versions; use the linked current setup guide to run this version.
 
 
 Warshatak (ورشتك) is an Arabic/English vehicle-noise assistant with a responsive dashboard, light/dark themes, vehicle folders and history, and optional local audio/video attachments.
