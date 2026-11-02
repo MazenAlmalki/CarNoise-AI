@@ -223,3 +223,17 @@ python scripts/import_kwerimoto.py
 - Grounded source links are still surfaced beneath language-model replies when references were retrieved (note: retrieval matches can be imperfect).
 - Added `CHAT_THINK` (default `0`, optional `1`) and adjusted default `CHAT_MAX_TOKENS=320`, `CHAT_CONTEXT=3072`. Thinking enabled can be much slower on CPU-only inference.
 - **No locally running Ollama model was tested from this GitHub update**; validate speed and reply quality in the app. Source-only checks do not prove diagnostic quality.
+
+
+### Phase 12 — Saudi automotive data expansion + better unclear-input behavior (November 2, 2026)
+
+- Added **1,200** transparent **synthetic** Arabic user-utterance variants (30 per existing 40 source-linked symptom cards). They represent language variations, **not** 1,200 real repairs, independently proven problems, or sound clips.
+- Added **124** manually authored colloquial aliases across 37 symptom cards. The backend now includes these in runtime text retrieval.
+- Added **7** Saudi official-reference notes: Ministry of Commerce recall lookup and selected 2025–2026 limited recall notices, Civil Defense summer safety, and tire-labeling conformity context; avoid claiming any make/model is recalled without official VIN verification.
+- Added `server/saudiKnowledge.js` with relevant source retrieval and conversation hints for incomplete descriptions, failed audio interpretation, user corrections and uncertain matches.
+- Added `data/conversation_fallback_examples_v1.json` with **15** bilingual desired behaviors for natural follow-up and error-handling dialogues; these are not fixed customer-response templates used verbatim.
+- Updated `POST /api/chat` to pass original user text, normalized Saudi wording, publisher-linked symptom matches, targeted official Saudi context, and uncertainty guidance to the **actual language model**, which composes its own reply.
+- Frontend now tells chat when media analysis fails instead of letting the model presume it heard or saw an uploaded file.
+- Created `tests/saudiCorpus.test.js`, configured portable Node test discovery and expanded JS syntax checks; indexed phrase retrieval verified for **1,200 / 1,200 synthetic variants (top-3)** in isolated evaluation.
+- Created `SAUDI_KNOWLEDGE_REPORT.md` for dataset provenance, references and limitations.
+- **Not completed:** 1,000 verified diagnosis cases, real end-to-end auto sound recognition, technician label review, actual user validation, or a full performance benchmark on the user's local model.
