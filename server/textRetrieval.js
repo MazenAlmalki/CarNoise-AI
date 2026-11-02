@@ -4,6 +4,8 @@ import { fileURLToPath } from 'node:url';
 
 const filePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../data/typed_symptoms_v1.json');
 const cards = JSON.parse(readFileSync(filePath, 'utf8'));
+const slangFile=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../data/saudi_dialect_aliases_v1.json');
+const slang=new Map(JSON.parse(readFileSync(slangFile,'utf8')).map(x=>[x.knowledge_id,x.aliases]));
 const stop = new Set([
   'السيارة','سيارتي','سياره','عندي','عند','في','من','على','مع','اذا','لما','كل','شوي','مرة',
   'صوت','فيه','صار','صارت','طلع','تطلع','يطلع','تجي','جاي','ابي','وش','ايش','مشكلة','المشكلة',
@@ -23,7 +25,7 @@ function hasPhrase(input, phrase) {
   return p.length >= 5 && (' ' + input + ' ').includes(' ' + p + ' ');
 }
 const prepared = cards.map(card => {
-  const names=[card.symptom_ar,card.symptom_en,...card.aliases];
+  const names=[card.symptom_ar,card.symptom_en,...card.aliases,...(slang.get(card.id)||[])];
   return {...card, _names:names.map(normalized), _tokens:[...new Set(names.flatMap(tokens))]};
 });
 export function retrieveTypedSymptoms(description, opts={}) {
