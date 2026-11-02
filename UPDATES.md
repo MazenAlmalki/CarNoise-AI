@@ -303,3 +303,14 @@ python scripts/import_kwerimoto.py
 - Missing speech transcription is separate: Whisper is optional and needed to process recorded words such as `السلام عليكم`; sound-event similarity cannot reliably transcribe speech.
 - Updated `tests/audioClarification.test.js` to ensure choices require an actual classifier attempt.
 - On the user's Windows 8GB system, optional CLAP and Whisper may require significant downloads and RAM. Do not claim sound event recognition is working until dependencies are installed and an actual test succeeds.
+
+
+### Phase 19 — Broaden CLAP automotive sound matching (November 2, 2026)
+
+- Investigated the user-reported mismatch with sounds from a supplied YouTube Short (`Mb-7s4JxFP4`). The actual YouTube audio was **not accessible for inspection or end-to-end testing** here; **no sound labels were taken from or asserted about that video**.
+- Found an actionable limitation: the previous CLAP script compared each recording against only **16 text descriptions**, including unrelated background classes; any real sound absent from these candidates was forced toward another description.
+- Added `data/car_audio_captions_v2.json` with **67 author-curated** English sound captions covering engine idle/knock/rattle, starting and electrical sounds, belts/AC/fans, brakes/tires/steering, suspension/transmission/exhaust and ambient human sounds. These are **candidate descriptions**, not samples, labels, actual Youtube soundtrack analysis or confirmed faults.
+- Updated `scripts/analyze_car_audio.py` to analyze **up to 20 seconds in two 10-second windows** (where enough audio exists), compare against 67 candidates and return the **top five** descriptions and a relative margin. CLAP is still a similarity ranker, not a validated fault-diagnosis classifier; its raw similarity values are **not real-world diagnosis probabilities**. A nearly silent clip returns **no candidate**, not a forced noise label.
+- Updated the chat to avoid asserting sound identities or faulty components based on a near match. A processed-but-silent clip leads to a re-recording suggestion; an unconfigured classifier is reported as such, and classifier errors can trigger user-supplied clarification.
+- Added `tests/carAudioCatalog.test.js` for sound-category coverage, provenance and two-window processing contract.
+- **Not completed:** listening to the user's YouTube Short or benchmarking against its individual sounds, verified per-class accuracy, or running CLAP on the user's Windows laptop. Real audio clips are required for reliable evaluation. Increasing candidate captions is not training the model weights.
