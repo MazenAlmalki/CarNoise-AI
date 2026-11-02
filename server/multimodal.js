@@ -5,7 +5,7 @@ import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { analyzeWaveform } from './audioWaveform.js';
 import { describeVehicleImages } from './llamaVision.js';
-import { audioProviderConfiguration, describeAudioWav } from './geminiAudio.js';
+import { audioProviderConfiguration, describeAudioWithReferences } from './geminiAudio.js';
 import { speechFallbackConfiguration, transcribeWithGroq } from './speechFallback.js';
 
 const maxStdout=20_000;
@@ -81,8 +81,9 @@ async function analyzeAudioTrack(source,temp,language,options){
   try{
    if(!config.configured)throw Error('Gemini audio: set GEMINI_API_KEY in your server .env and restart the server.');
    excerpt=await audioExcerpt(source,temp,config.excerptLimitSeconds,env);
-   const result=await describeAudioWav(excerpt,language,options);
+   const result=await describeAudioWithReferences(excerpt,language,options);
    audioObservation=result.observation;transcription=result.transcription;audioEventAnalysis.succeeded=true;
+   if(config.referenceAudioEnabled)warnings.push('Bundled user-supplied reference audio excerpts were also sent to Gemini for comparison; resemblance is not a confirmed mechanical fault.');
    warnings.push('Only the first '+config.excerptLimitSeconds+' seconds at most were sent to Gemini. Hosted observations and transcripts may be wrong; no mechanical fault is confirmed.');
   }catch(error){
    if(Number.isInteger(error.httpStatus))audioEventAnalysis.httpStatus=error.httpStatus;

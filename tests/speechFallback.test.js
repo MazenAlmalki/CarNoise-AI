@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {speechFallbackConfiguration,acceptedSpeechSegments,transcribeWithGroq} from '../server/speechFallback.js';
 import {analyzeUploadedMedia} from '../server/multimodal.js';
 import {execFileSync} from 'node:child_process';
-const env={AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'gemini-fixture-key',GEMINI_AUDIO_MODEL:'gemini-fixture',GEMINI_AUDIO_MAX_SECONDS:'2',CHAT_API_URL:'https://api.groq.com/openai/v1/chat/completions',CHAT_API_KEY:'groq-fixture-key',ENABLE_AUDIO_CLAP:'0',ENABLE_SPEECH_TRANSCRIPTION:'0'};
+const env={GEMINI_REFERENCE_AUDIO:'0',AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'gemini-fixture-key',GEMINI_AUDIO_MODEL:'gemini-fixture',GEMINI_AUDIO_MAX_SECONDS:'2',CHAT_API_URL:'https://api.groq.com/openai/v1/chat/completions',CHAT_API_KEY:'groq-fixture-key',ENABLE_AUDIO_CLAP:'0',ENABLE_SPEECH_TRANSCRIPTION:'0'};
 function wav(){const b=Buffer.alloc(32044);b.write('RIFF');b.writeUInt32LE(b.length-8,4);b.write('WAVEfmt ',8);b.writeUInt32LE(16,16);b.writeUInt16LE(1,20);b.writeUInt16LE(1,22);b.writeUInt32LE(16000,24);b.writeUInt32LE(32000,28);b.writeUInt16LE(2,32);b.writeUInt16LE(16,34);b.write('data',36);b.writeUInt32LE(32000,40);for(let i=0;i<16000;i++)b.writeInt16LE(Math.round(Math.sin(i*2*Math.PI*400/16000)*4000),44+i*2);return b;}
 const segment=text=>({text,no_speech_prob:0.02,avg_logprob:-0.15});
 const speech=(text='السلام عليكم')=>({ok:true,json:async()=>({language:'arabic',segments:[segment(text)]})});

@@ -89,3 +89,9 @@ If it still fails, share the displayed **HTTP status** and your selected **model
 ## Independent speech fallback
 
 If Gemini cannot supply intelligible speech or a clear sound event, `SPEECH_FALLBACK=auto` can reuse an existing Groq chat configuration for Whisper speech-to-text, or local Whisper when explicitly enabled. This uses a separate status from sound recognition, preserves Arabic/English words, and displays a correctable transcript. Provider audio disclosure and configuration are detailed in [YOUTUBE_SHORTS_RESEARCH.md](YOUTUBE_SHORTS_RESEARCH.md). Set `SPEECH_FALLBACK=none` to disable it.
+
+## Compare against the two uploaded compilations
+
+The repository now bundles 15 actual short WAV excerpts with bilingual **uploader labels**, provenance and hashes in [data/uploaded_audio_references/README.md](data/uploaded_audio_references/README.md). With Gemini enabled, direct target/reference audio comparison is on by default (`GEMINI_REFERENCE_AUDIO=1`). It adds approximately 33 seconds of reference audio input per request. Set the flag to `0` for ordinary target-only audio analysis. No model is trained, and no live Gemini comparisons were run during this change because a usable key was not supplied in the cloud environment.
+
+A single clear reference resemblance gives a tentative explanation without a reflexive question. Partial/no/unclear matches describe the sound and permit one useful missing-context question within the existing case question budget. Reference titles cannot verify faulty parts. Original-language target transcription remains separate from reference speech. To use locally, keep your private Gemini key and working audio model in `.env`, update the branch, then restart `npm.cmd run dev`.

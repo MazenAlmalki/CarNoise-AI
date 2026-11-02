@@ -59,6 +59,16 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const englishGreeting=await chat(null,{message:'Hello',language:'en'});assert.equal(englishGreeting.reply,'Hello! How can I help?');
  const information=await chat(null,{message:'What is a CV joint?',language:'en'});assert.match(information.reply,/transfers rotation/);assert.doesNotMatch(information.reply,/When does|Does it sound/);
  const welcome=await chat(null,{message:'مرحبا',language:'ar'});assert.equal(welcome.reply,'أهلًا بك!','greeting cleanup must not delete a genuine welcome');
+ const clearReference={result:'clear',needsClarification:false,matches:[{id:'upload1-02',label_ar:'القماشات',label_en:'Brake pads',faultVerified:false}],reason:'Similar sound, uncertain mechanical source.',diagnosisConfirmed:false};
+ const beforeReference=requests.length;
+ const matched=await chat({...insight,audioObservation:{...insight.audioObservation,referenceComparison:clearReference}});
+ assert.doesNotMatch(matched.reply,/\?/);
+ const matchedContext=JSON.parse(requests[beforeReference].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
+ assert.equal(matchedContext.questionPlan.askQuestion,false);assert.match(matchedContext.mediaInsight,/upload1-02/);
+ await chat({...insight,audioObservation:{...insight.audioObservation,referenceComparison:{...clearReference,result:'partial',needsClarification:true}}});
+ const partialContext=JSON.parse(requests[beforeReference+1].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
+ assert.equal(partialContext.questionPlan.askQuestion,true);
+
 
 
 

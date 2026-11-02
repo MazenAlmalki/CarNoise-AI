@@ -11,7 +11,7 @@ let ffmpegReady=false;
 try{execFileSync(process.env.FFMPEG_PATH||'ffmpeg',['-version'],{stdio:'ignore'});ffmpegReady=true;}catch{}
 const ffmpegTest={skip:ffmpegReady?false:'FFmpeg is not installed; only optional media integration checks are skipped.'};
 
-const env={AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'unit-test-key',GEMINI_AUDIO_MODEL:'gemini-test-audio',GEMINI_AUDIO_MAX_SECONDS:'2',ENABLE_AUDIO_CLAP:'1',AUDIO_PYTHON:'must-not-run-python'};
+const env={GEMINI_REFERENCE_AUDIO:'0',AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'unit-test-key',GEMINI_AUDIO_MODEL:'gemini-test-audio',GEMINI_AUDIO_MAX_SECONDS:'2',ENABLE_AUDIO_CLAP:'1',AUDIO_PYTHON:'must-not-run-python'};
 const observation={hasSpeech:false,transcript:'',hasClearSound:true,description:'A repeated high-pitched squeal is audible.',sounds:['high-pitched squeal'],uncertainty:'The source cannot be identified from this recording.'};
 const response=value=>({ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(value)}]}}]})});
 function wav(seconds=1){

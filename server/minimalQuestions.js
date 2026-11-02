@@ -53,7 +53,8 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
  const isAmbiguous=insufficient(current)||(!notes.timing&&!notes.texture&&!notes.location&&!hasAudioCandidates);
  const critical=unsafe.test(texts.join(' '));
  // Once two distinct useful observations exist, answer with possibilities now.
- const canAsk=conversation.clarificationAllowed&&!critical&&(total<2)&&Object.values(notes).filter(Boolean).length<2&&(isAmbiguous||gaps.length>0);
+ const clearReference=audioObservation?.referenceComparison?.needsClarification===false&&audioObservation?.referenceComparison?.result==='clear';
+ const canAsk=!clearReference&&conversation.clarificationAllowed&&!critical&&(total<2)&&Object.values(notes).filter(Boolean).length<2&&(isAmbiguous||gaps.length>0);
  const questionType=['timing','texture','location'].find(field=>gaps.includes(field)&&!memory.askedFields.includes(field))||null;
  const text=questionType==='timing'?'متى يظهر الصوت بالضبط: عند التشغيل، الفرامل، اللف، المطبات، أو المشي؟'
   :questionType==='texture'?'وش أقرب وصف للصوت: طقطقة، صرير، ونة، أو حك؟'
@@ -66,7 +67,7 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
   questionBudget:Math.max(0,2-total),askQuestion:Boolean(canAsk&&questionType&&!repeated),
   questionType:canAsk&&!repeated?questionType:null,suggestedQuestion:canAsk&&!repeated?text:null,
   suggestedQuestionEnglish:canAsk&&!repeated?english:null,
-  stopAsking:!conversation.clarificationAllowed||total>=2||critical||!questionType||(!gaps.length)||Object.values(notes).filter(Boolean).length>=2,urgent:critical,
+  stopAsking:clearReference||!conversation.clarificationAllowed||total>=2||critical||!questionType||(!gaps.length)||Object.values(notes).filter(Boolean).length>=2,urgent:critical,
   evidenceRule:'Describe ranked possibilities now if at least two details are known; do not require completing every field. Never diagnose a particular failed part from sound alone.'};
 }
 export function enforceQuestionBudget(reply,plan,{language='ar',fallbackReply=null}={}){
