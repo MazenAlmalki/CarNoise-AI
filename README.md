@@ -204,3 +204,7 @@ English availability on the user's own machine still depends on local Ollama wor
 - **Readiness:** `GET /api/media-status` indicates whether FFmpeg is found for audio and video. See [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md).
 - **Regression tests:** `tests/conversationMedia.test.js` covers original-question memory, safe transcript handling, and basic waveform characteristics.
 - **Important:** Ollama chat still runs locally on CPU for the tested laptop and can be slow/inaccurate. Source checks are not substitutes for a real audio/video end-to-end test on that laptop.
+
+## V5.7 — Tap-to-clarify an unclear audio recording
+
+Audio clips that cannot be understood now offer clickable descriptions: spoken words, clicking, squealing, whistling, humming, vibration or other. The app explicitly says when it **did not** recognize the sound and treats selections as **user descriptions**, never as confirmed audio observations or vehicle faults. If the media decoder fails, the same choices are available. This complements optional Whisper speech transcription and CLAP sound similarity; it does not replace them.
