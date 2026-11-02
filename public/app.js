@@ -172,6 +172,10 @@ async function sendChat(text){
   submitting=false;$('busy').classList.add('hidden');
   $('sendButton').disabled=false;
   $('description').disabled=false;
+  // renderSession() ran while submitting=true and disabled these controls.
+  // Always restore them when the chat request completes, including errors.
+  $('attachButton').disabled=false;
+  $('recordButton').disabled=false;
  }
 }
 
@@ -344,6 +348,7 @@ function mediaFile(file){
 }
 async function recordToggle(){
  if(recorder?.state==='recording'){recorder.stop();return;}
+ if(submitting)return;
  if(!navigator.mediaDevices?.getUserMedia||!globalThis.MediaRecorder){showError(t('recordUnsupported'));return;}
  try{
   mediaStream=await navigator.mediaDevices.getUserMedia({audio:true});
