@@ -314,3 +314,13 @@ python scripts/import_kwerimoto.py
 - Updated the chat to avoid asserting sound identities or faulty components based on a near match. A processed-but-silent clip leads to a re-recording suggestion; an unconfigured classifier is reported as such, and classifier errors can trigger user-supplied clarification.
 - Added `tests/carAudioCatalog.test.js` for sound-category coverage, provenance and two-window processing contract.
 - **Not completed:** listening to the user's YouTube Short or benchmarking against its individual sounds, verified per-class accuracy, or running CLAP on the user's Windows laptop. Real audio clips are required for reliable evaluation. Increasing candidate captions is not training the model weights.
+
+
+### Phase 20 — Fix misleading audio fallback and duplicate clip previews (November 2, 2026)
+
+- User screenshot showed sound-description chips after a 4-second recording along with the same recording rendered more than once.
+- Root cause 1: a genuine CLAP runtime failure was handled as if sound-event classification had merely been inconclusive, immediately displaying guesses/choices. Backend now returns `audio-classifier-error` with a bounded relevant warning from the CLAP process rather than proposing sound labels. `public/app.js` surfaces the actual error, so model installation/runtime problems can be fixed instead of masked.
+- Root cause 2: `showSavedMedia()` loaded files from IndexedDB asynchronously during multiple successive `renderSession()` calls, allowing an older media preview to be appended after a newer one. It now guards against stale render generations and removes any previous preview in its target before attaching the current one. Object URLs are released when the preview is detached.
+- Updated frontend wording to distinguish successful audio upload/waveform processing from real sound recognition.
+- Added `tests/mediaRenderFailure.test.js` and corrected prior `tests/audioClarification.test.js` expectations.
+- This is a source-code fix; run `npm.cmd test`, confirm the CLAP error shown in the UI, and verify with a fresh short recording on the target laptop. Failed CLAP may still require installing Python dependencies, additional RAM or changing the inference model.
