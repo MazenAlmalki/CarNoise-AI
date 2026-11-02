@@ -176,6 +176,9 @@ async function sendChat(text){
   // Always restore them when the chat request completes, including errors.
   $('attachButton').disabled=false;
   $('recordButton').disabled=false;
+  // Choices rendered during the request were initially disabled. Refresh once
+  // the response completes so only the latest choices become interactive.
+  if(session?.id===active.id && active.messages.at(-1)?.clarificationOptions?.length)renderSession();
  }
 }
 
