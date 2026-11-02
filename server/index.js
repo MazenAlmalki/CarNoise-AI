@@ -11,6 +11,7 @@ import { assessText } from './saudiUnderstanding.js';
 import { retrieveSaudiGuidance, conversationHints } from './saudiKnowledge.js';
 import { interpretSaudiSpeech } from './saudiDialect.js';
 import { findSaudiCarTerms } from './saudiCarTerms.js';
+import { detectReplyLanguage } from './chatLanguage.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -102,9 +103,7 @@ app.post('/api/chat',async(req,res)=>{
   const message=chatString(data.message,700);
   // Infer reply language from the current message, not only the UI setting.
   // Preserve the selected language for short mixed or numeric follow-ups.
-  const latinWords=(message.match(/[A-Za-z]{2,}/g)||[]).length;
-  const arabicWords=(message.match(/[\u0621-\u064A]{2,}/g)||[]).length;
-  const language=latinWords>0 && latinWords>=arabicWords?'en':arabicWords>0?'ar':data.language==='en'?'en':'ar';
+  const language=detectReplyLanguage(message,data.language);
   const mediaInsight=data.mediaInsight&&typeof data.mediaInsight==='object'?JSON.stringify(data.mediaInsight).slice(0,2600):null;
   const mediaFailure=typeof data.mediaFailure==='string'?data.mediaFailure.slice(0,240):null;
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
