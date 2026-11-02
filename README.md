@@ -165,3 +165,17 @@ Warshatak's text retrieval now recognizes many more Saudi vehicle-problem descri
 - [Detailed inventory and collection limits](SAUDI_KNOWLEDGE_REPORT.md).
 
 **Checks so far:** All 1,200 synthetic sentence variants mapped to their expected original source card within the top 3 retrieval matches in an isolated code test. These are **synthetic in-sample lookup tests**, not a measurement of accuracy on real Saudi users or mechanic-confirmed faults. Real conversation quality, model performance and audio analysis still require independent testing.
+
+
+## V5.4 — Saudi dialect glossary and intelligent handling of unusual questions (November 2, 2026)
+
+**Added a runtime-understanding layer, not a scripted response engine.**
+
+- `data/saudi_dialect_glossary_v1.json`: **128** curated Saudi colloquial expressions, their contextual meanings, domain and ambiguity flags (not independent automotive faults).
+- `data/saudi_conversation_edge_cases_v1.jsonl`: **204** generated **test phrases** from 51 distinct scenarios: greetings, jokes, odd/nonsensical prompts, corrections, unclear issues, media-analysis failures, unrelated questions, safety, recalls, and preference requests. These **are not copied answers** the AI sends verbatim.
+- `server/saudiDialect.js`: identifies relevant slang meaning and an optional conversation intent from the user's message. Supplies a **small** amount of context to LLM rather than inflating the entire prompt.
+- Updated `server/saudiKnowledge.js` and `server/index.js` to let the model chat naturally rather than force every message into an automotive diagnosis. If an uploaded file wasn't actually analyzed, it must acknowledge that.
+- `tests/saudiDialect.test.js`: regression tests for vocabulary, joking, misunderstandings, vague sounds, unrelated questions and failed audio.
+- [Read the full dictionary and conversational behavior guide](SAUDI_DIALECT_GUIDE.md).
+
+This is additional to the existing **1,200 synthetic Saudi complaint descriptions**, **124 symptom aliases**, **40 publisher-linked automotive symptom cards**, and **7 Saudi official informational records**. Generated phrases are not ground truth or mechanic-confirmed cases; real-world correctness remains to be evaluated.
