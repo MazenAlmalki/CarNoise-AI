@@ -132,3 +132,19 @@ Warshatak now uses an explicit, testable **Saudi dialect normalization and inten
 - Verified in isolated code checks: 7 test cases passed. **Real browser integration on the user's PC is not yet verified.**
 
 **Limitations:** Rule-based matching covers frequent expressions, not all Saudi dialects or every car. Publisher summaries are not mechanic-confirmed individual vehicle diagnoses. Low-confidence cases can still receive imperfect model-generated answers; always validate against actual inspection for safety-critical issues.
+
+
+## V5.2 — AI-generated conversation instead of fixed symptom scripts
+
+All normal new chat messages call the configured AI model. Saudi dialect normalization (`ترج` = vibration), prior turns, and up to two candidate source-backed automotive cards are passed **as context**, rather than returned directly as hardcoded replies. The model then generates an explanation in its own words, can ask one relevant follow-up, and must express uncertainty. Severe safety signals receive explicit protective advice. The system may still be inaccurate, particularly with small CPU-friendly models.
+
+Optional `.env` settings:
+```dotenv
+CHAT_MODEL=qwen3.5:2b
+CHAT_THINK=0
+CHAT_MAX_TOKENS=320
+CHAT_CONTEXT=3072
+```
+Set `CHAT_THINK=1` only if you prefer to experiment with longer reasoning and can tolerate slower local responses. This is not guaranteed to improve factual accuracy. Restart Node after changing `.env`.
+
+After `git pull origin main`, test the example `سيارتي ترج وهي واقفة` then `إيه تزيد مع المكيف`, and compare answers with earlier behavior. Avoid claiming fault confirmation based only on language-model output.
