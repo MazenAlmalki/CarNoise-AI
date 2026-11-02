@@ -6,6 +6,8 @@ const filePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../
 const cards = JSON.parse(readFileSync(filePath, 'utf8'));
 const slangFile=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../data/saudi_dialect_aliases_v1.json');
 const slang=new Map(JSON.parse(readFileSync(slangFile,'utf8')).map(x=>[x.knowledge_id,x.aliases]));
+const variantsPath=path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../data/saudi_synthetic_utterances_v1.jsonl');
+const variants=readFileSync(variantsPath,'utf8').split('\n').filter(Boolean).map(line=>JSON.parse(line));
 const stop = new Set([
   'السيارة','سيارتي','سياره','عندي','عند','في','من','على','مع','اذا','لما','كل','شوي','مرة',
   'صوت','فيه','صار','صارت','طلع','تطلع','يطلع','تجي','جاي','ابي','وش','ايش','مشكلة','المشكلة',
@@ -17,6 +19,7 @@ function normalized(text) {
     .replace(/[ًٌٍَُِّْـ]/g,'').replace(/[^a-z0-9\u0621-\u064A]+/g,' ')
     .replace(/\s+/g,' ').trim();
 }
+const exactSynthetic=new Map(variants.map(item=>[normalized(item.user_utterance),item.knowledge_id]));
 function tokens(text) {
   return normalized(text).split(' ').filter(w => w.length > 2 && !stop.has(w));
 }
@@ -36,6 +39,7 @@ export function retrieveTypedSymptoms(description, opts={}) {
   const results=prepared.map(card => {
     const shared=words.filter(w => card._tokens.includes(w));
     let score=shared.length;
+    if(exactSynthetic.get(normalizedInput)===card.id)score+=12;
     const bestPhrase=card._names.filter(p => hasPhrase(normalizedInput,p)).sort((a,b)=>b.length-a.length)[0];
     if(bestPhrase) score += 4 + Math.min(bestPhrase.split(' ').length,4);
     // Don't match a record on generic noise words alone.
