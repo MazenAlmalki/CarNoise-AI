@@ -1,3 +1,9 @@
+// Infer the spoken language from the reply, independently of the UI language.
+export function speechLanguage(text,preferred='ar'){
+ const ar=String(text).match(/\p{Script=Arabic}/gu)?.length||0;
+ const en=String(text).match(/[A-Za-z]/g)?.length||0;
+ return ar>en?'ar':en>ar?'en':preferred==='en'?'en':'ar';
+}
 // Browser-only, opt-in speech. Preference storage is independent of garage data.
 export function createVoice({
   container,
@@ -9,7 +15,7 @@ export function createVoice({
 }) {
   const synth = globalThis.speechSynthesis,
     supported = !!synth && !!globalThis.SpeechSynthesisUtterance;
-  let prefs = { auto: false, muted: false, voice: "" },
+  let prefs = { auto: false, muted: false, voice: "", pace:"calm" },
     utterance = null,
     generation = 0;
   try {
@@ -56,10 +62,10 @@ export function createVoice({
       test: "تجربة الصوت",
       default: "صوت الجهاز",
       unsupported: "القراءة الصوتية غير متاحة في هذا المتصفح.",
-      missing: "صوت عربي غير ظاهر؛ سنحاول صوت الجهاز باللغة العربية.",
+      missing: "ما ظهر صوت عربي مناسب في المتصفح. القراءة تنتظر صوتًا مطابقًا للغة النص.",
       loading: "جاري تشغيل صوت الجهاز…",
       unavailable:
-        "تعذّر تشغيل العربية. أضف صوتًا عربيًا من إعدادات الكلام في الجهاز، ثم أعد فتح المتصفح.",
+        "ما فيه صوت متاح يطابق لغة الرد. حدّث أصوات الجهاز أو جرّب خيار صوت آخر مطابق للغة.",
       blocked: "المتصفح منع الصوت. اضغط «اقرأ الرد» للسماح بالتشغيل.",
       timeout:
         "محرك الصوت لم يستجب. جرّب صوتًا آخر من القائمة أو أعد فتح المتصفح.",
@@ -82,7 +88,7 @@ export function createVoice({
       default: "Device voice",
       unsupported: "Read-aloud is unavailable in this browser.",
       missing:
-        "No English voice is listed; trying the device voice in English.",
+        "No matching English voice is listed. Playback requires a voice matching the reply language.",
       loading: "Starting device speech…",
       unavailable:
         "The requested language is unavailable. Install a matching speech voice in your device settings, then reopen the browser.",
@@ -168,10 +174,12 @@ export function createVoice({
       onNotice(w().recording);
       return;
     }
-    const language = getLanguage() === "ar" ? "ar" : "en",
+    const language = speechLanguage(text,getLanguage()),
       voices = synth
         .getVoices()
         .filter((v) => v.lang.toLowerCase().startsWith(language));
+    if(!voices.length){fail('unavailable');return;}
+    voices.sort((a,b)=>Number(b.lang.toLowerCase()===(language==='ar'?'ar-sa':'en-us'))-Number(a.lang.toLowerCase()===(language==='ar'?'ar-sa':'en-us')));
     const chosen = voices.find((v) => v.voiceURI === prefs.voice) || voices[0];
     const chunks = segments(String(text).slice(0, 4000)),
       id = generation;
@@ -186,7 +194,9 @@ export function createVoice({
       }
       const current = new SpeechSynthesisUtterance(chunks[index]);
       utterance = current;
-      current.lang = language === "ar" ? "ar-SA" : "en-US";
+      current.lang = chosen.lang;
+      current.rate = prefs.pace==='normal'?1:0.94;
+      current.pitch = 0.98;
       // An empty getVoices() list can be transient; leave voice unset so the
       // engine can resolve its default using the requested language.
       if (chosen) current.voice = chosen;
@@ -314,6 +324,7 @@ export function createVoice({
     };
     label.append(select);
     body.append(label);
+    const paceLabel=document.createElement('label');paceLabel.textContent=getLanguage()==='ar'?'أسلوب القراءة':'Reading pace';const pace=document.createElement('select');pace.add(new Option(getLanguage()==='ar'?'هادئ وطبيعي':'Calm','calm'));pace.add(new Option(getLanguage()==='ar'?'عادي':'Normal','normal'));pace.value=prefs.pace==='normal'?'normal':'calm';pace.onchange=()=>{prefs.pace=pace.value;save();stop();};paceLabel.append(pace);body.append(paceLabel);
     const controls = document.createElement("div");
     controls.className = "voice-controls";
     controls.append(

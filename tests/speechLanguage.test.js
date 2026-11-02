@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {speechLanguage} from '../public/voice.js';
+test('read-aloud follows the actual response script even when the UI is in the other language',()=>{assert.equal(speechLanguage('السلام عليكم، خلنا نفهم صوت السيارة.','en'),'ar');assert.equal(speechLanguage('Hello, let us understand your car.','ar'),'en');assert.equal(speechLanguage('المكينة مثل V8 لكن الصوت يحتاج فحص.','en'),'ar');assert.equal(speechLanguage('123','ar'),'ar');assert.equal(speechLanguage('123','en'),'en');});
