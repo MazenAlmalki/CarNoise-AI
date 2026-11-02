@@ -348,11 +348,14 @@
               >Enter للإرسال · Shift + Enter لسطر جديد</span
             >
           </div>
-          <div class="assistant-dock" aria-hidden="true">
-            <svg viewBox="0 0 380 360">
+          <div class="assistant-dock" role="group" aria-label="Mechanic speech">
+            <svg viewBox="0 0 380 360" aria-hidden="true">
               <use data-mechanic href="/assets/mechanic.svg#welcome" /></svg
-            ><span id="dockLabel">معك، خطوة بخطوة</span>
+            ><span id="dockLabel">معك، خطوة بخطوة</span
+            ><button id="pauseSpeech" type="button">إيقاف مؤقت</button
+            ><button id="stopSpeech" type="button">إيقاف</button>
           </div>
+          <p id="speechNotice" class="speech-notice hidden" role="status"></p>
           <p class="footer-note" data-i18n="disclaimer">
             النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛
             تحليل الصوت حسب إعدادات المزود.

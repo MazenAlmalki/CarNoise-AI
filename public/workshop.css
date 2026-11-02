@@ -1816,3 +1816,68 @@ body:has(#intro:not(.hidden)) .assistant-dock {
 .vehicle-item:has(.vehicle-menu[open]) .car-row { margin-inline-end:26px; }
 .vehicle-actions { position:static; display:flex; gap:4px; flex-wrap:wrap; min-width:0; box-shadow:none; }
 .vehicle-actions button { width:auto; flex:1; font-size:11px; }
+/* Keep the speaker visible beside the conversation on phones and desktop. */
+.assistant-dock {
+  display: none;
+  pointer-events: auto;
+  z-index: 5;
+}
+body:is(
+    [data-speech-state="speaking"],
+    [data-speech-state="paused"],
+    [data-speech-state="loading"]
+  )
+  .assistant-dock {
+  display: flex !important;
+  position: absolute;
+  top: auto;
+  bottom: calc(100% + 8px);
+  inset-inline-end: 18px;
+  max-width: calc(100% - 36px);
+  padding: 5px 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 8px 24px #0002;
+  gap: 8px;
+}
+.assistant-dock svg {
+  width: 84px;
+  height: 80px;
+  flex-shrink: 0;
+}
+.assistant-dock button {
+  border: 1px solid var(--border);
+  color: var(--text);
+  background: var(--panel2);
+  padding: 7px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+@media (max-width: 680px) {
+  .assistant-dock svg {
+    width: 66px;
+    height: 65px;
+  }
+  .assistant-dock {
+    font-size: 10px;
+    gap: 5px;
+  }
+  body:is(
+      [data-speech-state="speaking"],
+      [data-speech-state="paused"],
+      [data-speech-state="loading"]
+    )
+    .main {
+    padding-bottom: 100px;
+  }
+}
+.speech-notice {
+  color: var(--text);
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 9px 12px;
+  font-size: 12px;
+  margin: 8px 0;
+}

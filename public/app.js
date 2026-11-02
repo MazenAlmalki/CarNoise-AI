@@ -309,7 +309,7 @@ let visibleThreadId=null,visibleMessageCount=0;
 let recordingStartedAt=0,recordingClock=null;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
 let speechState='idle',editingCarId=null,requestController=null,recordingGeneration=0;
-const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onState:value=>{speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
+const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onNotice:message=>{$('speechNotice').textContent=message;$('speechNotice').classList.toggle('hidden',!message);},onMouth:value=>document.body.style.setProperty('--mouth-open',String(value)),onState:value=>{speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
 
 const textNode=(tag,text,cls)=>{const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;};
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{showError(t('storageError'));}}
@@ -839,10 +839,13 @@ syncNavigation();
 
 // The mechanic reflects actual interface state; no inferred audio or diagnostic state.
 function syncMechanicState(){
- const pose=recording?'recording':speechState==='speaking'?'speaking':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':'welcome';
+ const pose=recording?'recording':speechState==='speaking'?'speaking':speechState==='loading'?'thinking':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':'welcome';
  document.body.dataset.assistantState=pose;
  const labels=state.lang==='ar'?{welcome:'معك، خطوة بخطوة',speaking:'الميكانيكي يتحدث',thinking:'جاري تجهيز الرد',recording:'أسمعك…',error:'جاهز للمساعدة'}:{welcome:'Here for your next mile',speaking:'Mechanic speaking',thinking:'Preparing your reply',recording:'Listening…',error:'Here to help'};
- $('dockLabel').textContent=labels[pose];
+ $('dockLabel').textContent=speechState==='paused'?(state.lang==='ar'?'القراءة متوقفة مؤقتًا':'Speech paused'):labels[pose];
+ $('pauseSpeech').textContent=speechState==='paused'?(state.lang==='ar'?'متابعة':'Resume'):(state.lang==='ar'?'إيقاف مؤقت':'Pause');
+ $('stopSpeech').textContent=state.lang==='ar'?'إيقاف':'Stop';
+ $('pauseSpeech').disabled=speechState==='loading';
  if(recording){$('sendButton').disabled=true;$('attachButton').disabled=true;}
  document.querySelectorAll('[data-mechanic]').forEach(use=>use.setAttribute('href','/assets/mechanic.svg#'+pose));
 }
@@ -877,3 +880,6 @@ $('confirmDialog').querySelector('form').addEventListener('submit',event=>{
 function setLoading(phase){$('typingLabel').textContent=phase==='media'?(state.lang==='ar'?'رفع المرفق وتحليله…':'Uploading and analyzing attachment…'):t('analyzing');}
 $('cancelRequest').onclick=()=>requestController?.abort();
 document.addEventListener('click',event=>{document.querySelectorAll('.vehicle-menu[open]').forEach(menu=>{if(!menu.contains(event.target))menu.open=false;});});
+
+$('pauseSpeech').onclick=()=>voice.togglePause();
+$('stopSpeech').onclick=()=>voice.stop();
