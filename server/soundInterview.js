@@ -66,6 +66,18 @@ export function advanceSoundInterview(input,lang='ar'){
   answers[previous]=existing[previous];
  }
  answers[stage]=input.value;
+ // Two focused clarifications are sufficient: stop after location and timing.
+ // A third mandatory texture question used to prolong every sound discussion.
+ if(stage==='timing'){
+  const selectedLocation=questions.location.choices.find(([id])=>id===answers.location);
+  const selectedTiming=questions.timing.choices.find(([id])=>id===answers.timing);
+  const locationText=language(lang)==='en'?selectedLocation[2]:selectedLocation[1];
+  const timingText=language(lang)==='en'?selectedTiming[2]:selectedTiming[1];
+  return {done:true,answers,
+   description:language(lang)==='en'
+    ? 'The user reported where and when a sound occurs (not automatic sound recognition): location: '+locationText+'; timing: '+timingText+'. Give plausible possibilities now; do NOT require a further question about sound type.'
+    : 'وصف المستخدم بنفسه مكان الصوت ووقته (ليس تعرفًا آليًا): المكان: '+locationText+'؛ الوقت: '+timingText+'. اعرض الاحتمالات الآن، لا تشترط سؤالًا ثالثًا عن نوع الصوت.'};
+ }
  if(index<order.length-1){
   const next=order[index+1];return {
    done:false,reply:language(lang)==='en'?questions[next].en:questions[next].ar,
