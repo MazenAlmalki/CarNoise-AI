@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { spawn } from 'node:child_process';
 import { analyzeWaveform } from './audioWaveform.js';
+import { describeVehicleImages } from './llamaVision.js';
 
 const maxStdout=20_000;
 async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
@@ -24,25 +25,6 @@ function fileExtension(type){
   'video/mp4':'.mp4','video/webm':'.webm','video/quicktime':'.mov'
  };
  return supported[type]||null;
-}
-function parseOllamaURL(){
- const raw=process.env.OLLAMA_HOST?.trim()||'http://127.0.0.1:11434';
- const url=new URL(raw);
- if(!['127.0.0.1','localhost','::1'].includes(url.hostname)||url.protocol!=='http:')throw Error('OLLAMA_HOST must be local.');
- return url.origin;
-}
-async function visualDescription(images,language){
- const host=parseOllamaURL();
- const model=process.env.VISION_MODEL?.trim()||'qwen3-vl:2b';
- const instruction=language==='en'?'Describe only directly visible vehicle parts, lights and events in these still frames, briefly. Do not guess a mechanical fault or pretend you heard any audio.':'صف الأجزاء والعلامات والأحداث المرئية فقط في هذه الصور بإيجاز. لا تفترض عطلًا ميكانيكيًا ولا تدّع سماع الصوت.';
- const response=await fetch(host+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-  body:JSON.stringify({model,stream:false,think:false,keep_alive:'2m',messages:[{role:'user',content:instruction,images}],options:{num_predict:200,num_ctx:2048}}),
-  signal:AbortSignal.timeout(120000)});
- if(!response.ok)throw new Error('Vision model unavailable. Install it with ollama pull '+model);
- const data=await response.json();
- const content=String(data.message?.content||'').trim().slice(0,1200);
- if(!content)throw new Error('Vision model returned no observations.');
- return {model,description:content};
 }
 async function videoFrames(input,temp){
  const ffmpeg=process.env.FFMPEG_PATH?.trim()||'ffmpeg';
@@ -83,13 +65,13 @@ export async function analyzeUploadedMedia(file,language='ar'){
  try{
   await writeFile(source,file.buffer);
   if(file.mimetype.startsWith('image/')){
-   const observed=await visualDescription([file.buffer.toString('base64')],language);
+   const observed=await describeVehicleImages([{mimeType:file.mimetype,base64:file.buffer.toString('base64')}],language);
    return {type:'image',visual:observed,summary:observed.description,limitations:'Image is a visual observation, NOT a mechanical diagnosis.'};
   }
   if(file.mimetype.startsWith('video/')){
    const warnings=[];
    let visual=null,audio=null;
-   try{visual=await visualDescription(await videoFrames(source,temp),language);}
+   try{visual=await describeVehicleImages((await videoFrames(source,temp)).map(base64=>({mimeType:'image/jpeg',base64})),language);}
    catch(e){warnings.push('Video frames could not be analyzed: '+String(e.message).slice(0,180));}
    let transcription=null;
    if(process.env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
