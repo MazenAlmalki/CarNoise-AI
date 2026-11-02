@@ -153,7 +153,7 @@ async function sendChat(text){
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(!state.cases.some(x=>x.id===active.id))return;
-  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
+  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,8).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   persist();
   if(session?.id===active.id)renderSession();
  }catch(error){
@@ -179,14 +179,35 @@ async function sendChat(text){
  }
 }
 
+function renderAudioClarifications(message,isLatest){
+ if(!Array.isArray(message.clarificationOptions)||!message.clarificationOptions.length)return;
+ const wrap=textNode('div','','audio-clarification-choices');
+ const title=textNode('div',state.lang==='ar'?'اختر الأقرب لوصفك، مو تشخيص:':'Choose the closest description (not a diagnosis):','audio-clarification-title');
+ wrap.append(title);
+ for(const choice of message.clarificationOptions.slice(0,8)){
+  if(typeof choice.label!=='string'||typeof choice.text!=='string'||choice.text.length>250)continue;
+  const button=textNode('button',choice.label,'audio-clarification-choice');
+  button.type='button';button.disabled=!isLatest||submitting;
+  button.addEventListener('click',()=>{
+   if(!session||submitting)return;
+   $('description').value=choice.text;
+   $('composer').requestSubmit();
+  });
+  wrap.append(button);
+ }
+ $('messages').append(wrap);
+}
 function renderSession(){
  if(!session)return;
  if(Array.isArray(session.messages)){
   $('intro').classList.add('hidden');$('conversation').classList.remove('hidden');
   $('messages').replaceChildren();$('resultBox').replaceChildren();
   $('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');
-  for(const msg of session.messages){
+  for(const [index,msg] of session.messages.entries()){
    addMessage(msg.content,msg.role);
+   if(msg.role==='assistant'&&Array.isArray(msg.clarificationOptions)){
+    renderAudioClarifications(msg,index===session.messages.length-1);
+   }
    if(msg.role==='assistant'&&Array.isArray(msg.sources)&&msg.sources.length){
     const cited=textNode('div',state.lang==='ar'?'مصادر إرشادية: ':'Reference sources: ','message-sources');
     for(const s of msg.sources){
