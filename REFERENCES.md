@@ -158,3 +158,12 @@ These authored linguistic examples have **no external source URL** because they 
 - RAC general dashboard warning-light guidance — https://www.rac.co.uk/drive/advice/know-how/car-dashboard-warning-lights-meaning/
 
 The 89 entries and 317 variants in `data/saudi_car_terms_v1.json` contain **author-created translations and examples**; these publications inform selected entries but do not independently verify all synonyms. The 1,068 paired dialogue examples are generated and are **not** real user logs, diagnosed repairs, or model fine-tuning. Source and limitations: `SAUDI_CAR_TERMS_AND_ENGLISH.md`.
+
+
+## 12. Public YouTube sound-research index (November 2, 2026)
+
+Public video links were checked at the publisher-description/metadata level and indexed in `data/youtube_car_sound_references_v1.json` (**28 topic entries from 8 unique videos**). The collection includes Budget Mechanic's two car-noise videos, bearing audio from The Joy of Wrenching, starter noise discussion by Despair Repair, CV joint clicks by Barbour's Auto Help, engine knock explained by Engineering Explained, a catalytic-converter explainer by The Car Care Nut, and a turbo whistle uploader report. Direct links, publication context and provenance flags are saved per row. No actual soundtracks were downloaded or independently auditioned; therefore `actual_audio_verified:false` is retained for every row.
+
+The **536 generated sound-description samples** in `data/sound_description_examples_v1.jsonl` are user-question language variations based on the existing 67 authored CLAP captions; they are not videos, real-user fault logs, sound files or supervised model training. The separate `server/soundReferences.js` module returns public video links only as reading recommendations when text relates to a topic, never as an acoustic classifier result. Video descriptions may reflect uploader claims or diagnostic uncertainty rather than confirmed mechanical causation.
+
+See `SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md` for exact sources and methodology. Other explanation sources: FTC Auto Repair Basics and Christian Brothers Automotive's published car-noise vocabulary.
