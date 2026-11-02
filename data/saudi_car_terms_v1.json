@@ -1,0 +1,1476 @@
+[
+  {
+    "id": "CAR-001",
+    "term": "بوري",
+    "meaning_ar": "بوق السيارة (المنبّه الصوتي)",
+    "english": "horn",
+    "category": "electrical",
+    "aliases": [
+      "بوري",
+      "البوري",
+      "البوري يعلق",
+      "بوق"
+    ],
+    "explanation": "صوت البوري لا يعمل أو يعلق",
+    "clarifying_question_ar": "هل البوري ما يطلع صوت، أو يعلق ويستمر؟",
+    "source_type": "automotive_publisher_context",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-002",
+    "term": "جلنط",
+    "meaning_ar": "فرامل التوقف / فرامل اليد، وقد تكون إلكترونية",
+    "english": "parking brake",
+    "category": "brakes",
+    "aliases": [
+      "جلنط",
+      "الجلنط",
+      "هاند بريك",
+      "فرامل اليد",
+      "فرامل التوقف",
+      "epb"
+    ],
+    "explanation": "فرامل تثبيت السيارة أثناء الوقوف وليست دعسة الفرامل الرئيسية",
+    "clarifying_question_ar": "هل الجلنط ما يمسك السيارة، أو لمبته شغالة؟",
+    "source_type": "automotive_publisher_context",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-003",
+    "term": "سلف",
+    "meaning_ar": "بادئ تشغيل المحرك",
+    "english": "starter motor",
+    "category": "starting",
+    "aliases": [
+      "سلف",
+      "السلف",
+      "السيلف",
+      "starter"
+    ],
+    "explanation": "قد يقصد به دوران السلف عند تشغيل المحرك",
+    "clarifying_question_ar": "لما تحاول تشغل، هل تسمع نقر أو يدور المحرك؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-004",
+    "term": "دينمو",
+    "meaning_ar": "مولد شحن البطارية",
+    "english": "alternator",
+    "category": "electrical",
+    "aliases": [
+      "الدينمو",
+      "دينمو",
+      "alternator"
+    ],
+    "explanation": "مولد شحن البطارية أثناء عمل المحرك",
+    "clarifying_question_ar": "هل المشكلة لمبة بطارية، أو ضعف كهرباء، أو عدم شحن؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-005",
+    "term": "كتاوت",
+    "meaning_ar": "مرحل كهربائي (ريليه)",
+    "english": "relay",
+    "category": "electrical",
+    "aliases": [
+      "كتاوت",
+      "الكتاوت",
+      "ريليه",
+      "ريلي"
+    ],
+    "explanation": "مفتاح كهربائي يتحكم بدائرة معينة",
+    "clarifying_question_ar": "أي نظام ما يشتغل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-006",
+    "term": "فيوز",
+    "meaning_ar": "مصهر كهربائي",
+    "english": "fuse",
+    "category": "electrical",
+    "aliases": [
+      "الفيوز",
+      "فيوز",
+      "فيوزات"
+    ],
+    "explanation": "يحمي دائرة كهربائية",
+    "clarifying_question_ar": "وش الجهاز الكهربائي اللي توقف؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-007",
+    "term": "قزاز",
+    "meaning_ar": "زجاج النوافذ أو السيارة",
+    "english": "car glass",
+    "category": "body",
+    "aliases": [
+      "قزاز",
+      "القزاز",
+      "جام",
+      "زجاج"
+    ],
+    "explanation": "قد يقصد زجاج الباب أو الزجاج الأمامي",
+    "clarifying_question_ar": "أي قزاز تقصد، وهل ما يفتح أو انكسر؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-008",
+    "term": "قزاز كهرب",
+    "meaning_ar": "زجاج نافذة كهربائي",
+    "english": "power window",
+    "category": "electrical",
+    "aliases": [
+      "قزاز كهرب",
+      "القزاز ما يطلع",
+      "ازرار القزاز"
+    ],
+    "explanation": "نوافذ تعمل بمفتاح كهربائي",
+    "clarifying_question_ar": "هل القزاز عالق فوق أو تحت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-009",
+    "term": "مساحات",
+    "meaning_ar": "مسّاحات الزجاج",
+    "english": "windshield wipers",
+    "category": "body",
+    "aliases": [
+      "المساحات",
+      "مساحات",
+      "مساحه",
+      "المساحة"
+    ],
+    "explanation": "تمسح الماء عن الزجاج الأمامي والخلفي",
+    "clarifying_question_ar": "هل المساحات ما تتحرك أو تصدر صوتًا؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-010",
+    "term": "فلشر",
+    "meaning_ar": "إشارات التحذير الوامضة",
+    "english": "hazard flashers",
+    "category": "electrical",
+    "aliases": [
+      "فلشر",
+      "فلشرات",
+      "الفلشر",
+      "اشارات"
+    ],
+    "explanation": "قد يعني إشارة انعطاف أو إشارات طوارئ حسب الكلام",
+    "clarifying_question_ar": "تقصد إشارة اليمين واليسار، أو فلشر الطوارئ؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-011",
+    "term": "كشافات",
+    "meaning_ar": "مصابيح السيارة",
+    "english": "headlights",
+    "category": "electrical",
+    "aliases": [
+      "الكشافات",
+      "الكشاف",
+      "الشمعات",
+      "انوار"
+    ],
+    "explanation": "قد يقصد المصابيح الأمامية",
+    "clarifying_question_ar": "هل الضعف في النور العالي أو الواطي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-012",
+    "term": "شمعات",
+    "meaning_ar": "قد تعني المصابيح الأمامية أو شمعات الاشتعال بحسب المنطقة والسياق",
+    "english": "headlamps or spark plugs",
+    "category": "ambiguous",
+    "aliases": [
+      "شمعات",
+      "الشمعات"
+    ],
+    "explanation": "مصطلح متعدد المعاني؛ لا تفترض أيهما",
+    "clarifying_question_ar": "تقصد شمعات النور ولا بواجي المكينة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-013",
+    "term": "بواجي",
+    "meaning_ar": "شمعات إشعال محرك البنزين",
+    "english": "spark plugs",
+    "category": "engine",
+    "aliases": [
+      "بواجي",
+      "البواجي",
+      "بوجيهات"
+    ],
+    "explanation": "أجزاء مرتبطة بالإشعال في محركات البنزين",
+    "clarifying_question_ar": "هل توجد رجفة بالمحرك أو صعوبة تشغيل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-014",
+    "term": "كويل",
+    "meaning_ar": "ملف إشعال",
+    "english": "ignition coil",
+    "category": "engine",
+    "aliases": [
+      "كويل",
+      "الكويل",
+      "الكويلات"
+    ],
+    "explanation": "جزء من نظام إشعال البنزين",
+    "clarifying_question_ar": "هل لمبة المحرك شغالة مع الرجفة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-015",
+    "term": "بخاخات",
+    "meaning_ar": "حاقنات الوقود",
+    "english": "fuel injectors",
+    "category": "engine",
+    "aliases": [
+      "بخاخ",
+      "بخاخات",
+      "انجكترات",
+      "انجيكتور"
+    ],
+    "explanation": "تعمل على حقن الوقود",
+    "clarifying_question_ar": "هل المشكلة استهلاك أو صعوبة تشغيل أو تقطيع؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-016",
+    "term": "طرمبة البنزين",
+    "meaning_ar": "مضخة الوقود",
+    "english": "fuel pump",
+    "category": "fuel",
+    "aliases": [
+      "طرمبة بنزين",
+      "طرمبة البنزين",
+      "مضخة البنزين",
+      "طرمبه البنزين"
+    ],
+    "explanation": "المضخة التي تزود المحرك بالوقود",
+    "clarifying_question_ar": "هل السلف يدور لكن المحرك ما يشتغل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-017",
+    "term": "طرمبة الماء",
+    "meaning_ar": "مضخة سائل التبريد",
+    "english": "water pump",
+    "category": "cooling",
+    "aliases": [
+      "طرمبة الموية",
+      "طرمبة الماء",
+      "مضخة المياه"
+    ],
+    "explanation": "تدوّر سائل التبريد في النظام",
+    "clarifying_question_ar": "هل تظهر حرارة مرتفعة أو تسريب؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-018",
+    "term": "رديتر",
+    "meaning_ar": "مبرد المحرك",
+    "english": "radiator",
+    "category": "cooling",
+    "aliases": [
+      "رديتر",
+      "رديتر ماء",
+      "راديتر",
+      "الراديتر",
+      "الرديتر"
+    ],
+    "explanation": "جزء من نظام تبريد المحرك",
+    "clarifying_question_ar": "هل الحرارة ترتفع، أو مستوى سائل التبريد ينقص؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-019",
+    "term": "قربة",
+    "meaning_ar": "خزان سائل؛ غالبًا خزان التبريد لكن يعتمد على السياق",
+    "english": "reservoir",
+    "category": "ambiguous",
+    "aliases": [
+      "قربة",
+      "القربة",
+      "قربه"
+    ],
+    "explanation": "قد يقصد خزان تمدد سائل التبريد",
+    "clarifying_question_ar": "تقصد قربة ماء الرديتر ولا خزان سائل ثاني؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-020",
+    "term": "بلف الحرارة",
+    "meaning_ar": "منظم الحرارة (ثرموستات)",
+    "english": "thermostat",
+    "category": "cooling",
+    "aliases": [
+      "بلف الحرارة",
+      "بلف حراره",
+      "ثرموستات",
+      "الثرموستات"
+    ],
+    "explanation": "ينظم تدفق سائل التبريد بحسب الحرارة",
+    "clarifying_question_ar": "هل مؤشر الحرارة يرتفع أو يتأخر؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-021",
+    "term": "مروحة الرديتر",
+    "meaning_ar": "مروحة تبريد المبرد",
+    "english": "radiator fan",
+    "category": "cooling",
+    "aliases": [
+      "مروحة رديتر",
+      "مروحة الرديتر",
+      "مراوح الرديتر"
+    ],
+    "explanation": "تساعد على تبريد النظام",
+    "clarifying_question_ar": "هل ترتفع الحرارة خصوصًا في الزحمة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-022",
+    "term": "كمبروسر",
+    "meaning_ar": "ضاغط مكيف الهواء",
+    "english": "AC compressor",
+    "category": "aircon",
+    "aliases": [
+      "كمبروسر",
+      "الكمبروسر",
+      "كومبروسر",
+      "compressor"
+    ],
+    "explanation": "يضغط وسيط التبريد في المكيف",
+    "clarifying_question_ar": "هل المكيف ما يبرد، أم يصدر صوتًا؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-023",
+    "term": "ثلاجة المكيف",
+    "meaning_ar": "المبخر الداخلي للتكييف",
+    "english": "AC evaporator",
+    "category": "aircon",
+    "aliases": [
+      "ثلاجة",
+      "ثلاجة المكيف",
+      "الثلاجة"
+    ],
+    "explanation": "جزء من منظومة المكيف داخل المقصورة",
+    "clarifying_question_ar": "هل المكيف ضعيف أو يوجد رائحة أو تسريب؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-024",
+    "term": "فريون",
+    "meaning_ar": "وسيط تبريد نظام التكييف",
+    "english": "refrigerant",
+    "category": "aircon",
+    "aliases": [
+      "فريون",
+      "فريون مكيف",
+      "غاز المكيف"
+    ],
+    "explanation": "اسم دارج لغاز/وسيط التبريد",
+    "clarifying_question_ar": "هل التبريد ضعيف دائمًا أو وقت الوقوف فقط؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-025",
+    "term": "فلتر المكيف",
+    "meaning_ar": "مرشح هواء المقصورة",
+    "english": "cabin air filter",
+    "category": "aircon",
+    "aliases": [
+      "فلتر المكيف",
+      "فلتر كبينة",
+      "فلتر مكيف"
+    ],
+    "explanation": "ينقي الهواء الداخل للمقصورة",
+    "clarifying_question_ar": "هل الهواء ضعيف ولا التبريد ضعيف فقط؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-026",
+    "term": "سير المكينة",
+    "meaning_ar": "سير تشغيل الملحقات أو التوقيت بحسب السياق",
+    "english": "engine belt",
+    "category": "ambiguous",
+    "aliases": [
+      "سير المكينة",
+      "السير",
+      "سير",
+      "سير دينمو"
+    ],
+    "explanation": "قد يكون سير الملحقات أو توقيت المحرك، لا تجزم",
+    "clarifying_question_ar": "تقصد السير الخارجي ولا سير التوقيت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-027",
+    "term": "سير التايمن",
+    "meaning_ar": "حزام توقيت المحرك",
+    "english": "timing belt",
+    "category": "engine",
+    "aliases": [
+      "سير تايمن",
+      "سير التايمن",
+      "سير التوقيت",
+      "timing belt"
+    ],
+    "explanation": "قد يوجد سير أو سلسلة توقيت حسب الطراز",
+    "clarifying_question_ar": "وش نوع السيارة والموديل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-028",
+    "term": "جنزير",
+    "meaning_ar": "سلسلة؛ قد يعني سلسلة توقيت المحرك في سياق الصيانة",
+    "english": "timing chain",
+    "category": "ambiguous",
+    "aliases": [
+      "جنزير",
+      "جنزير المكينة",
+      "سلسلة التايمن"
+    ],
+    "explanation": "المعنى يعتمد على الاستخدام",
+    "clarifying_question_ar": "تقصد جنزير التوقيت ولا جزء ثاني؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-029",
+    "term": "صوفة",
+    "meaning_ar": "مانع تسرب زيت (ختم/جلدة) حسب الموقع",
+    "english": "oil seal",
+    "category": "engine",
+    "aliases": [
+      "صوفة",
+      "الصوفة",
+      "صوفه",
+      "صوفة زيت"
+    ],
+    "explanation": "قد يقصد ختمًا في موقع مختلف",
+    "clarifying_question_ar": "من وين يطلع الزيت بالتحديد؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-030",
+    "term": "وجه رأس",
+    "meaning_ar": "حشية رأس الأسطوانات",
+    "english": "head gasket",
+    "category": "engine",
+    "aliases": [
+      "وجه راس",
+      "وجه رأس",
+      "وجه راس المكينة",
+      "head gasket"
+    ],
+    "explanation": "الحشية بين رأس المحرك والكتلة",
+    "clarifying_question_ar": "هل يوجد ارتفاع حرارة أو نقص سائل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-031",
+    "term": "رأس المكينة",
+    "meaning_ar": "رأس الأسطوانات",
+    "english": "cylinder head",
+    "category": "engine",
+    "aliases": [
+      "راس المكينة",
+      "رأس المكينة",
+      "الهيد"
+    ],
+    "explanation": "جزء من المحرك",
+    "clarifying_question_ar": "وش الأعراض اللي ظهرت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-032",
+    "term": "توضيب",
+    "meaning_ar": "إصلاح داخلي شامل أو جزئي للمحرك أو القير حسب السياق",
+    "english": "overhaul/rebuild",
+    "category": "ambiguous",
+    "aliases": [
+      "توضيب",
+      "توضيب مكينة",
+      "توضيب قير"
+    ],
+    "explanation": "يعني إعادة بناء أو إصلاح داخلي حسب السياق",
+    "clarifying_question_ar": "تقصد توضيب المكينة ولا القير؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-033",
+    "term": "شاصي",
+    "meaning_ar": "هيكل السيارة الأساسي",
+    "english": "chassis/frame",
+    "category": "body",
+    "aliases": [
+      "شاصي",
+      "الشاصي",
+      "هيكل"
+    ],
+    "explanation": "الهيكل الإنشائي للسيارة",
+    "clarifying_question_ar": "تقصد ضرر هيكل ولا صوت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-034",
+    "term": "بودي",
+    "meaning_ar": "ألواح جسم السيارة الخارجي",
+    "english": "body panels",
+    "category": "body",
+    "aliases": [
+      "بودي",
+      "البودي",
+      "جسم السيارة"
+    ],
+    "explanation": "أجزاء الهيكل الخارجي والسمكرة",
+    "clarifying_question_ar": "وش الجزء المتضرر من البودي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-035",
+    "term": "رفرف",
+    "meaning_ar": "الجزء الخارجي فوق العجلة",
+    "english": "fender",
+    "category": "body",
+    "aliases": [
+      "رفرف",
+      "الرفرف",
+      "رفارف"
+    ],
+    "explanation": "لوح جسم فوق العجلة",
+    "clarifying_question_ar": "هل يوجد احتكاك أو ضرر ظاهر؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-036",
+    "term": "صدام",
+    "meaning_ar": "المصد الأمامي أو الخلفي",
+    "english": "bumper",
+    "category": "body",
+    "aliases": [
+      "صدام",
+      "صدامات",
+      "الصدام"
+    ],
+    "explanation": "مصد في مقدمة أو مؤخرة السيارة",
+    "clarifying_question_ar": "تقصد الأمامي أو الخلفي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-037",
+    "term": "كبوت",
+    "meaning_ar": "غطاء حجرة المحرك",
+    "english": "hood/bonnet",
+    "category": "body",
+    "aliases": [
+      "كبوت",
+      "الكبوت",
+      "غطاء المكينة"
+    ],
+    "explanation": "الغطاء الأمامي فوق المحرك",
+    "clarifying_question_ar": "هل ما يفتح أو فيه صوت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-038",
+    "term": "شنطة",
+    "meaning_ar": "صندوق الأمتعة الخلفي",
+    "english": "trunk/boot",
+    "category": "body",
+    "aliases": [
+      "شنطة",
+      "الشنطة",
+      "باب الشنطة"
+    ],
+    "explanation": "مساحة تخزين خلفية",
+    "clarifying_question_ar": "هل مشكلة القفل ولا صوت أثناء الحركة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-039",
+    "term": "تنجيد",
+    "meaning_ar": "قماش/جلد وتجهيزات داخلية",
+    "english": "upholstery",
+    "category": "interior",
+    "aliases": [
+      "تنجيد",
+      "تنجيد السيارة",
+      "جلد المقاعد"
+    ],
+    "explanation": "أغطية المقاعد الداخلية",
+    "clarifying_question_ar": "هل السؤال عن تلف أم صوت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-040",
+    "term": "طبلون",
+    "meaning_ar": "لوحة القيادة الأمامية",
+    "english": "dashboard",
+    "category": "interior",
+    "aliases": [
+      "طبلون",
+      "الطبلون",
+      "تابلوه"
+    ],
+    "explanation": "لوحة العدادات والمقصورة الأمامية",
+    "clarifying_question_ar": "هل فيه لمبة أو صوت من الطبلون؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-041",
+    "term": "عداد RPM",
+    "meaning_ar": "عداد دورات المحرك",
+    "english": "tachometer",
+    "category": "instruments",
+    "aliases": [
+      "ار بي ام",
+      "الار بي ام",
+      "rpm",
+      "عداد rpm"
+    ],
+    "explanation": "يعرض دورات المحرك بالدقيقة",
+    "clarifying_question_ar": "هل الـRPM يرتفع والسيارة ما تتسارع؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-042",
+    "term": "عداد الحرارة",
+    "meaning_ar": "مؤشر درجة حرارة المحرك",
+    "english": "temperature gauge",
+    "category": "instruments",
+    "aliases": [
+      "عداد الحرارة",
+      "مؤشر الحرارة",
+      "الحراره"
+    ],
+    "explanation": "يعرض الحرارة أو تحذيرها",
+    "clarifying_question_ar": "هل المؤشر مرتفع أو ظهرت لمبة حمراء؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-043",
+    "term": "عداد البنزين",
+    "meaning_ar": "مقياس الوقود",
+    "english": "fuel gauge",
+    "category": "instruments",
+    "aliases": [
+      "عداد البنزين",
+      "مؤشر البنزين",
+      "العداد"
+    ],
+    "explanation": "يعرض مستوى الوقود",
+    "clarifying_question_ar": "هل القراءة غير ثابتة أو يظهر نقص مفاجئ؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-044",
+    "term": "تنسيم",
+    "meaning_ar": "تسرب هواء أو ضغط من مكان ما حسب السياق",
+    "english": "air leak",
+    "category": "ambiguous",
+    "aliases": [
+      "تنسيم",
+      "ينسم",
+      "تنسيم هوا"
+    ],
+    "explanation": "قد يشير لضغط الإطار أو تسرب هواء في نظام آخر",
+    "clarifying_question_ar": "تقصد تنسيم الكفر ولا صوت هواء من المكينة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-045",
+    "term": "تنسيم كفر",
+    "meaning_ar": "فقدان ضغط هواء الإطار",
+    "english": "tire air leak",
+    "category": "wheels",
+    "aliases": [
+      "كفر ينسم",
+      "تنسيم كفر",
+      "الكفر ينسم"
+    ],
+    "explanation": "نقص هواء الإطار",
+    "clarifying_question_ar": "هل ينقص الضغط أثناء الوقوف؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-046",
+    "term": "ترصيص",
+    "meaning_ar": "موازنة كتلة العجلة والإطار",
+    "english": "wheel balancing",
+    "category": "wheels",
+    "aliases": [
+      "ترصيص",
+      "ترصيص كفرات",
+      "وزن كفر"
+    ],
+    "explanation": "موازنة الإطار لتقليل الاهتزاز",
+    "clarifying_question_ar": "هل الرجفة تظهر على سرعة محددة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-047",
+    "term": "وزنية",
+    "meaning_ar": "ضبط زوايا العجلات أو المقصود ضبط نظام آخر حسب السياق",
+    "english": "alignment/adjustment",
+    "category": "ambiguous",
+    "aliases": [
+      "وزنية",
+      "وزنيه",
+      "ميزان الكفرات"
+    ],
+    "explanation": "قد تعني ميزان الأذرعة أو ضبطًا آخر",
+    "clarifying_question_ar": "تقصد ميزان الأذرعة ولا ترصيص الكفرات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-048",
+    "term": "ميزان أذرعة",
+    "meaning_ar": "ضبط محاذاة العجلات",
+    "english": "wheel alignment",
+    "category": "wheels",
+    "aliases": [
+      "ميزان اذرعة",
+      "ميزان أذرعة",
+      "وزنية اذرعة"
+    ],
+    "explanation": "ضبط زوايا الإطارات",
+    "clarifying_question_ar": "هل السيارة تحدف أو الكفرات تتآكل بشكل غير متساوٍ؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-049",
+    "term": "كراسي المكينة",
+    "meaning_ar": "قواعد تثبيت المحرك",
+    "english": "engine mounts",
+    "category": "engine",
+    "aliases": [
+      "كراسي المكينة",
+      "كرسي مكينة",
+      "قواعد المكينة"
+    ],
+    "explanation": "تثبت المحرك وتمتص الاهتزازات",
+    "clarifying_question_ar": "الرجفة موجودة وهي واقفة أو وهي تمشي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-050",
+    "term": "كرسي قير",
+    "meaning_ar": "قاعدة ناقل الحركة",
+    "english": "transmission mount",
+    "category": "transmission",
+    "aliases": [
+      "كرسي قير",
+      "كرسي القير",
+      "قواعد القير"
+    ],
+    "explanation": "يثبت القير ويقلل الاهتزاز",
+    "clarifying_question_ar": "هل تظهر نتعة عند تغيير وضع القير؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-051",
+    "term": "مقصات",
+    "meaning_ar": "أذرع التعليق",
+    "english": "control arms",
+    "category": "suspension",
+    "aliases": [
+      "مقصات",
+      "المقصات",
+      "مقص",
+      "مقص امامي"
+    ],
+    "explanation": "جزء من التعليق",
+    "clarifying_question_ar": "هل تسمع الطقة على المطبات أو عند اللفة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-052",
+    "term": "مساعدات",
+    "meaning_ar": "ممتصات الصدمات",
+    "english": "shock absorbers",
+    "category": "suspension",
+    "aliases": [
+      "مساعدات",
+      "المساعدات",
+      "مساعد"
+    ],
+    "explanation": "تقلل تمايل المركبة وتتعامل مع المطبات",
+    "clarifying_question_ar": "هل السيارة تتمايل أو يوجد خبط بالمطبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-053",
+    "term": "يايات",
+    "meaning_ar": "نوابض التعليق",
+    "english": "coil springs",
+    "category": "suspension",
+    "aliases": [
+      "يايات",
+      "اليايات",
+      "سست"
+    ],
+    "explanation": "نوابض تحمل جزءًا من وزن السيارة",
+    "clarifying_question_ar": "هل السيارة مائلة أو تسمع صوتًا مع المطبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-054",
+    "term": "جلد مقصات",
+    "meaning_ar": "جلب مطاطية لأذرع التعليق",
+    "english": "control arm bushings",
+    "category": "suspension",
+    "aliases": [
+      "جلد المقصات",
+      "جلدة مقص",
+      "جلد مقصات",
+      "جلب مقصات"
+    ],
+    "explanation": "عوازل مطاطية على وصلات التعليق",
+    "clarifying_question_ar": "هل تسمع خبطًا أو صريرًا مع المطبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-055",
+    "term": "عكوس",
+    "meaning_ar": "أعمدة/مفاصل نقل الحركة إلى العجلات",
+    "english": "CV axles/joints",
+    "category": "drivetrain",
+    "aliases": [
+      "عكوس",
+      "عكس",
+      "العكوس",
+      "CV joint"
+    ],
+    "explanation": "تنقل الحركة للعجلات",
+    "clarifying_question_ar": "هل الطقطقة تظهر وقت اللفة مع الحركة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-056",
+    "term": "دفرنس",
+    "meaning_ar": "مجموعة التروس التفاضلية",
+    "english": "differential",
+    "category": "drivetrain",
+    "aliases": [
+      "دفرنس",
+      "الدفرنس",
+      "ديفرنش",
+      "الديفرنس"
+    ],
+    "explanation": "يوزع عزم الدوران حسب التصميم",
+    "clarifying_question_ar": "هل الصوت يزيد مع سرعة السيارة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-057",
+    "term": "عمود كردان",
+    "meaning_ar": "عمود نقل الحركة",
+    "english": "driveshaft",
+    "category": "drivetrain",
+    "aliases": [
+      "عمود كردان",
+      "كردان",
+      "عمود الدوران"
+    ],
+    "explanation": "يوصل نقل الحركة بحسب نوع الدفع",
+    "clarifying_question_ar": "هل توجد رجفة خلال التسارع؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-058",
+    "term": "كلتش",
+    "meaning_ar": "القابض لناقل الحركة اليدوي",
+    "english": "clutch",
+    "category": "transmission",
+    "aliases": [
+      "كلتش",
+      "الكلتش",
+      "دبرياج",
+      "clutch"
+    ],
+    "explanation": "يفصل ويوصل الحركة لناقل الحركة اليدوي",
+    "clarifying_question_ar": "هل السيارة قير عادي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-059",
+    "term": "قير CVT",
+    "meaning_ar": "ناقل حركة متغير باستمرار",
+    "english": "CVT transmission",
+    "category": "transmission",
+    "aliases": [
+      "قير cvt",
+      "سي في تي",
+      "cvt",
+      "قير سي في تي"
+    ],
+    "explanation": "نوع من ناقلات الحركة",
+    "clarifying_question_ar": "هل تحس نتعة أو ارتفاع RPM بدون تسارع؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-060",
+    "term": "قير أوتوماتيك",
+    "meaning_ar": "ناقل حركة آلي",
+    "english": "automatic transmission",
+    "category": "transmission",
+    "aliases": [
+      "قير اوتوماتيك",
+      "قير اتوماتيك",
+      "اوتوماتيك",
+      "automatic gear"
+    ],
+    "explanation": "ناقل حركة يغير النسب آليًا",
+    "clarifying_question_ar": "هل المشكلة عند النقلة أو عند التعشيق من P إلى D؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-061",
+    "term": "نمر القير",
+    "meaning_ar": "أوضاع أو نسب التروس",
+    "english": "gear positions",
+    "category": "transmission",
+    "aliases": [
+      "نمر",
+      "النمر",
+      "النمرة",
+      "تعشيق"
+    ],
+    "explanation": "قد تعني أوضاع القير أو الغيارات",
+    "clarifying_question_ar": "تقصد N/D/P أو النقلات أثناء المشي؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-062",
+    "term": "فحمة",
+    "meaning_ar": "بطانة احتكاك الفرامل",
+    "english": "brake pad",
+    "category": "brakes",
+    "aliases": [
+      "فحمة",
+      "الفحمات",
+      "قماشات",
+      "تيل الفرامل",
+      "سفايف"
+    ],
+    "explanation": "جزء يحتك بالقرص لتخفيف السرعة",
+    "clarifying_question_ar": "هل يوجد صرير عند الفرملة؟",
+    "source_type": "automotive_publisher_context",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-063",
+    "term": "هوب",
+    "meaning_ar": "قرص أو طبلة فرامل حسب نوع النظام",
+    "english": "brake disc/drum",
+    "category": "brakes",
+    "aliases": [
+      "هوب",
+      "هوبات",
+      "الهوبات",
+      "دسك الفرامل"
+    ],
+    "explanation": "سطح احتكاك الفرامل",
+    "clarifying_question_ar": "هل فيه رجفة وقت الضغط على الفرامل؟",
+    "source_type": "automotive_publisher_context",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-064",
+    "term": "ABS",
+    "meaning_ar": "مانع انغلاق الفرامل",
+    "english": "anti-lock braking system",
+    "category": "brakes",
+    "aliases": [
+      "abs",
+      "الاي بي اس",
+      "مانع الانغلاق",
+      "نظام ABS"
+    ],
+    "explanation": "نظام يساعد على منع انغلاق العجلات عند الفرملة",
+    "clarifying_question_ar": "هل ظهرت لمبة ABS؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-065",
+    "term": "EPB",
+    "meaning_ar": "فرامل توقف إلكترونية",
+    "english": "electronic parking brake",
+    "category": "brakes",
+    "aliases": [
+      "epb",
+      "جلنط كهربائي",
+      "جلنط الكتروني",
+      "جلنط زر"
+    ],
+    "explanation": "نظام فرامل توقف يعمل كهربائيًا",
+    "clarifying_question_ar": "هل يطلع تنبيه على الشاشة أو ما يثبت السيارة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-066",
+    "term": "حساس",
+    "meaning_ar": "مستشعر؛ النوع غير معروف من الكلمة وحدها",
+    "english": "sensor",
+    "category": "ambiguous",
+    "aliases": [
+      "حساس",
+      "حساسات",
+      "السنسر",
+      "سنسر"
+    ],
+    "explanation": "مصطلح عام لكل حساس",
+    "clarifying_question_ar": "أي حساس تقصد؟ ظهر كود أو لمبة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-067",
+    "term": "حساس أكسجين",
+    "meaning_ar": "حساس الأكسجين بالعادم",
+    "english": "oxygen sensor",
+    "category": "engine",
+    "aliases": [
+      "حساس اكسجين",
+      "حساس الاكسجين",
+      "حساس شكمان",
+      "oxygen sensor"
+    ],
+    "explanation": "يقيس الأكسجين بالعادم",
+    "clarifying_question_ar": "هل هناك لمبة مكينة أو كود عطل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-068",
+    "term": "حساس كرنك",
+    "meaning_ar": "مستشعر موضع عمود المرفق",
+    "english": "crankshaft position sensor",
+    "category": "engine",
+    "aliases": [
+      "حساس كرنك",
+      "حساس الكرنك",
+      "كرنك سنسر"
+    ],
+    "explanation": "يراقب موضع عمود المرفق",
+    "clarifying_question_ar": "هل السلف يدور والمحرك ما يشتغل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-069",
+    "term": "حساس كام",
+    "meaning_ar": "مستشعر موضع عمود الحدبات",
+    "english": "camshaft position sensor",
+    "category": "engine",
+    "aliases": [
+      "حساس كام",
+      "حساس الكام"
+    ],
+    "explanation": "يراقب موضع عمود الكامات",
+    "clarifying_question_ar": "هل ظهرت لمبة مكينة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-070",
+    "term": "دبة التلوث",
+    "meaning_ar": "المحول الحفاز بالعادم",
+    "english": "catalytic converter",
+    "category": "exhaust",
+    "aliases": [
+      "دبة التلوث",
+      "دبة البيئة",
+      "دبة الرصاص",
+      "كتلايزر"
+    ],
+    "explanation": "جزء يعالج غازات العادم",
+    "clarifying_question_ar": "هل المشكلة رائحة أو ضعف عزم أو صوت؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-071",
+    "term": "شكمان",
+    "meaning_ar": "نظام العادم",
+    "english": "exhaust",
+    "category": "exhaust",
+    "aliases": [
+      "شكمان",
+      "الشكمان",
+      "الاكزوز",
+      "اكسوز"
+    ],
+    "explanation": "أنبوب ومنظومة تصريف غازات العادم",
+    "clarifying_question_ar": "هل صار الصوت أعلى من المعتاد؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-072",
+    "term": "صوت ونة",
+    "meaning_ar": "طنين مستمر",
+    "english": "hum/whine",
+    "category": "sound",
+    "aliases": [
+      "ونة",
+      "ونه",
+      "ونين",
+      "صوت ونة"
+    ],
+    "explanation": "وصف للصوت وليس تشخيصًا",
+    "clarifying_question_ar": "هل الونة تزيد مع السرعة أو RPM؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-073",
+    "term": "طقطقة",
+    "meaning_ar": "صوت نقر متكرر",
+    "english": "clicking",
+    "category": "sound",
+    "aliases": [
+      "طقطقة",
+      "طقطقه",
+      "طق طق",
+      "تكتكة"
+    ],
+    "explanation": "وصف للصوت وليس تحديدًا للقطعة",
+    "clarifying_question_ar": "هل الطقطقة تظهر عند التشغيل أو اللف أو المطبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-074",
+    "term": "صرير",
+    "meaning_ar": "صوت احتكاك حاد",
+    "english": "squeal",
+    "category": "sound",
+    "aliases": [
+      "صرير",
+      "صريف",
+      "يصر",
+      "صوت صرير"
+    ],
+    "explanation": "وصف صوت",
+    "clarifying_question_ar": "هل يحدث مع البريك أو بشكل مستمر؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-075",
+    "term": "خشخشة",
+    "meaning_ar": "رنين أو اهتزاز معدني",
+    "english": "rattle",
+    "category": "sound",
+    "aliases": [
+      "خشخشة",
+      "خشخشه",
+      "قرقعة"
+    ],
+    "explanation": "قد يكون من أجزاء كثيرة",
+    "clarifying_question_ar": "هل يظهر وقت الدعس أو المطبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-076",
+    "term": "تفتفة",
+    "meaning_ar": "تقطّع أو عدم انتظام استجابة المحرك",
+    "english": "engine hesitation",
+    "category": "engine",
+    "aliases": [
+      "تفتفة",
+      "تفتف",
+      "تقطيع",
+      "تنتف"
+    ],
+    "explanation": "تقطّع في أداء المحرك",
+    "clarifying_question_ar": "هل التفتفة وهي واقفة أو أثناء الدعس؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-077",
+    "term": "تنسيم مكينة",
+    "meaning_ar": "صوت أو تسرب هواء في حجرة المحرك",
+    "english": "engine hissing",
+    "category": "engine",
+    "aliases": [
+      "تنسيم مكينة",
+      "تنسيم المكينه",
+      "فحيح تحت الكبوت"
+    ],
+    "explanation": "وصف عام غير محدد",
+    "clarifying_question_ar": "هل يوجد صوت فحيح أو ارتفاع حرارة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-078",
+    "term": "تبخير",
+    "meaning_ar": "بخار أو دخان؛ يحتاج وصفًا دقيقًا",
+    "english": "steam/smoke",
+    "category": "ambiguous",
+    "aliases": [
+      "تبخير",
+      "يبخر",
+      "بخار من المكينة"
+    ],
+    "explanation": "اللون والمكان مهمان",
+    "clarifying_question_ar": "هل تقصد بخار من الكبوت أو دخان من الشكمان؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-079",
+    "term": "دعسة",
+    "meaning_ar": "دواسة؛ قد تكون بنزين أو فرامل",
+    "english": "pedal",
+    "category": "ambiguous",
+    "aliases": [
+      "دعسة",
+      "الدعسة",
+      "ادعس"
+    ],
+    "explanation": "لا يُعرف نوعها دون السياق",
+    "clarifying_question_ar": "تقصد دعسة البنزين ولا الفرامل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-080",
+    "term": "سحب",
+    "meaning_ar": "قد يشير للتسارع أو الانحراف حسب السياق",
+    "english": "pull/acceleration",
+    "category": "ambiguous",
+    "aliases": [
+      "سحب",
+      "سحبة",
+      "تسحب"
+    ],
+    "explanation": "كلمة متعددة المعاني",
+    "clarifying_question_ar": "تقصد ضعف التسارع أو انحراف السيارة لجهة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-081",
+    "term": "تكييف",
+    "meaning_ar": "نظام تبريد المقصورة",
+    "english": "air conditioning",
+    "category": "aircon",
+    "aliases": [
+      "المكيف",
+      "مكيف",
+      "تكييف",
+      "ac",
+      "A/C"
+    ],
+    "explanation": "نظام الهواء البارد في المقصورة",
+    "clarifying_question_ar": "هل التبريد يضعف أثناء الوقوف أو دائمًا؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-082",
+    "term": "دبل",
+    "meaning_ar": "نظام الدفع الرباعي أو ناقل نسب منخفضة حسب السيارة",
+    "english": "4WD/transfer case",
+    "category": "drivetrain",
+    "aliases": [
+      "دبل",
+      "الدبل",
+      "دبل خفيف",
+      "دبل ثقيل",
+      "4wd"
+    ],
+    "explanation": "قد يشير إلى وضع الدفع الرباعي",
+    "clarifying_question_ar": "تقصد وضع 4H أو 4L؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-083",
+    "term": "تراكشن",
+    "meaning_ar": "نظام التحكم في الجر",
+    "english": "traction control",
+    "category": "safety",
+    "aliases": [
+      "تراكشن",
+      "تراكشن كنترول",
+      "traction",
+      "TCS"
+    ],
+    "explanation": "يحد من انزلاق العجلات حسب النظام",
+    "clarifying_question_ar": "هل لمبة التراكشن تظهر أو تومض؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-084",
+    "term": "ESP",
+    "meaning_ar": "التحكم الإلكتروني بالثبات",
+    "english": "stability control",
+    "category": "safety",
+    "aliases": [
+      "esp",
+      "نظام الثبات",
+      "ثبات الكتروني"
+    ],
+    "explanation": "يساعد على الثبات بحسب المركبة",
+    "clarifying_question_ar": "هل ظهرت لمبة الثبات؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-085",
+    "term": "ايرباق",
+    "meaning_ar": "الوسادة الهوائية",
+    "english": "airbag",
+    "category": "safety",
+    "aliases": [
+      "ايرباق",
+      "ايرباغ",
+      "وسادة هوائية",
+      "SRS"
+    ],
+    "explanation": "أحد أنظمة الحماية في الاصطدام",
+    "clarifying_question_ar": "هل لمبة الوسادة الهوائية مضاءة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-086",
+    "term": "حساس بارك",
+    "meaning_ar": "حساسات مساعدة الركن",
+    "english": "parking sensor",
+    "category": "electronics",
+    "aliases": [
+      "حساس بارك",
+      "حساسات خلفية",
+      "حساسات اصطفاف",
+      "parking sensor"
+    ],
+    "explanation": "تكتشف عوائق أثناء الركن",
+    "clarifying_question_ar": "هل التنبيه يصدر بدون عائق أو ما يشتغل؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-087",
+    "term": "كاميرا ريوس",
+    "meaning_ar": "كاميرا الرؤية الخلفية",
+    "english": "reverse camera",
+    "category": "electronics",
+    "aliases": [
+      "كاميرا ريوس",
+      "كاميرا الرجوع",
+      "كاميرا خلفية",
+      "rear camera"
+    ],
+    "explanation": "تساعد على رؤية ما خلف السيارة",
+    "clarifying_question_ar": "هل الشاشة سوداء أو الصورة متقطعة؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-088",
+    "term": "ريوس",
+    "meaning_ar": "وضع الرجوع للخلف",
+    "english": "reverse gear",
+    "category": "transmission",
+    "aliases": [
+      "ريوس",
+      "R",
+      "رجوع خلفي",
+      "النمرة R"
+    ],
+    "explanation": "وضع حركة للخلف",
+    "clarifying_question_ar": "هل المشكلة عدم التعشيق أو الصوت أثناء الرجوع؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  },
+  {
+    "id": "CAR-089",
+    "term": "عالي وواطي",
+    "meaning_ar": "النور العالي والمنخفض",
+    "english": "high/low beam",
+    "category": "electrical",
+    "aliases": [
+      "عالي",
+      "واطي",
+      "نور عالي",
+      "نور واطي"
+    ],
+    "explanation": "درجات إضاءة المصابيح",
+    "clarifying_question_ar": "هل العالي وحده ما يشتغل أو الاثنين؟",
+    "source_type": "curated_automotive_translation",
+    "mechanic_confirmed": false
+  }
+]
