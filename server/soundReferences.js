@@ -9,7 +9,7 @@ const keywords=[
  ['brake_grind',/(?:حك.*فرامل|طحن.*فرامل|brake.*grind)/i],
  ['belt_squeal',/(?:صفير.*سير|سير.*يصفر|belt.*squeal)/i],
  ['wheel_bearing_hum',/(?:ونه.*(?:كفر|عجل|سرعه)|طنين.*سرعه|wheel.*hum|bearing.*noise)/i],
- ['cv_joint_click',/(?:طقطقه.*(?:لف|دركسون)|طق.*عكس|cv.*click)/i],
+ ['cv_joint_click',/(?:طقطق[هة].*(?:لف|دركسون)|طق.*عكس|cv.*click)/i],
  ['suspension_clunk',/(?:طق.*مطب|طقه.*مطب|suspension.*clunk)/i],
  ['exhaust_rattle',/(?:خشخش.*شكمان|شكمان.*صوت|exhaust.*rattl)/i],
  ['engine_ticking',/(?:تكتك.*مكين|طقطقه.*مكين|engine.*tick)/i],
