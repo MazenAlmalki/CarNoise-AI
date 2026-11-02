@@ -35,12 +35,12 @@ export function retrieveSaudiGuidance(message,{limit=2}={}){
  }));
 }
 
-export function conversationHints({message,history=[],hasMedia=false,mediaFailed=false,hasMatches=false,language='ar'}){
+export function conversationHints({message,history=[],hasMedia=false,mediaFailed=false,hasMatches=false,language='ar',intent='ordinary'}){
  const txt=n(message);
  const v=[];
  const justGreeting=/^(?:هلا|هلو|مرحبا|السلام عليكم|صباح الخير|مساء الخير|hi|hello|hey)[\s!؟?]*$/i.test(txt);
  if(justGreeting)v.push('GREETING: Reply naturally and invite the user to describe their car issue; do not suggest any fault.');
- if(!hasMatches&&!justGreeting)v.push('LOW-EVIDENCE: Do not guess components or assert causes. Acknowledge what the user said and ask ONE specific question about when the issue happens, where it comes from, or whether it is a sound, warning light or vibration. Make it tailored to the actual message; avoid generic canned replies.');
+ if(!hasMatches&&!justGreeting&&!['joke','greeting','not_vehicle','preferences','correction'].includes(intent))v.push('LOW-EVIDENCE: Do not guess components or assert causes. Acknowledge what the user said and ask ONE specific question about when the issue happens, where it comes from, or whether it is a sound, warning light or vibration. Make it tailored to the actual message; avoid generic canned replies.');
  if(mediaFailed)v.push('MEDIA UNAVAILABLE: The media model DID NOT analyze the attachment. Explicitly state this and ask for a text description of sound type (clicking/squeal/hum), when it happens, and/or a shorter clearer recording. Never hallucinate what a recording contains.');
  if(hasMedia&&!mediaFailed)v.push('MEDIA: Discuss only observations explicitly present in mediaInsight. A similar audio class is not a confirmed vehicle defect.');
  if(/ما فهمت|وش تقصد|لا مو كذا|غلط|you misunderstood|not what i mean/i.test(txt))v.push('CORRECTION: Acknowledge misunderstanding briefly, restate the updated interpretation and ask only the most useful clarification; never double down.');
