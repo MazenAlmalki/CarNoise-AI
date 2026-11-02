@@ -200,3 +200,14 @@ python scripts/import_kwerimoto.py
 - Set `CHAT_MAX_TOKENS=220` and `CHAT_CONTEXT=2048` as tunable defaults, reduced passed chat history to 6 turns, and retrieved keyword reference cards to 2.
 - Kept the vision and optional CLAP paths unchanged. This is a source-level update, not a verified performance benchmark on the user's 8GB Windows machine.
 - Check speed and response quality locally; lower token limits can produce truncated responses.
+
+
+### Phase 10 — Fix poor Saudi Arabic replies (November 2, 2026)
+- Added `server/saudiUnderstanding.js` to normalize colloquial phrases including `ترج` (shaking), `المكينة` (engine), `القير` (transmission), `دركسون` (steering wheel), `البريك` (brakes), and other frequent expressions.
+- Added composite intent rules that require symptom **and** context, preventing isolated ambiguous words from becoming definite diagnoses.
+- Known high-confidence symptoms now respond directly using the corresponding existing, source-linked publisher-guidance card. For example, idling vibration returns cautious engine-performance explanations and follows up about AC rather than making up tire/road causes.
+- Recent turns such as `إيه تزيد مع المكيف` reuse the earlier symptom context.
+- Added first-priority safety guidance for explicit severe brake/steering/fire/overheating warnings.
+- Added compact publisher reference links to grounded responses in the chat UI.
+- Added 7 regression tests and `npm.cmd test`; all 7 passed in isolated logic checks; real end-to-end browser test with local Ollama still pending.
+- **No fine-tuning performed.** This uses deterministic normalization + existing source-grounded JSON, with the language model reserved for lower-confidence or broader conversation.
