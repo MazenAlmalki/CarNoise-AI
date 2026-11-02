@@ -109,3 +109,12 @@ Check readiness in browser: `http://localhost:3000/api/media-status` returns `ff
 **How to use:** Click Attach, choose audio/video/image (up to 25 MB), enter a message if you like, and Send. You can now attach or record a new clip **in an existing conversation** too. The clip is temporarily uploaded to the backend for local analysis, then the chat receives explicit observations with limits. A video uses at most two still frames and any audio waveform it can decode; frame observations may be slow or fail with low RAM. On errors, the UI should tell you the recording was **not analyzed**. Only the most recent attachment is shown with the conversation; older attachments may remain stored locally until that case is deleted.
 
 **Testing:** send a short recorded audio clip and ask what was observed. A waveform-only result must not claim it recognized the noise. Then send a short car video with audible sound; verify visual/frame limitations and/or waveform description. Never record while driving or in a dangerous position.
+
+
+## V5.9 — Audio candidate coverage and testing
+
+CLAP sound-event matching now uses `data/car_audio_captions_v2.json` (**67** audio descriptions). It evaluates the **first 20 seconds** of a recording, dividing recordings longer than 10 seconds into 10-second segments, returning up to five closest descriptions. This is **zero-shot text-audio retrieval**, *not* mechanic-labeled training or a confirmed diagnosis. All captions in the catalog are author-created descriptions, **not extracted from the YouTube test link**. Increasing candidate count can also introduce ambiguity; it does not prove accuracy.
+
+To compare against a clip, upload the actual permitted recording or record an equivalent sound in a stationary, safe setting. The server cannot use a YouTube URL as an upload and the referenced Short was not accessible for independent listening here. Do not assume the right answer is in the candidate list.
+
+If CLAP is enabled but the model fails to load, there will be an `Optional CLAP unavailable` warning. If it returns a candidate list, the words are acoustic similarities; possible faults must be evaluated through further context and professional inspection. To evaluate improvements properly, build a dataset of consented, labeled examples and a separate held-out test set with validated sound categories.
