@@ -121,3 +121,20 @@ Actual implementation: `server/textRetrieval.js` performs keyword and phrase loo
 | Multer | https://github.com/expressjs/multer | Multipart request upload to Node backend | Dependency added to package.json |
 
 **Sources are official vendor/project documentation.** Model capabilities vary by available build and hardware. Upgrading the app's model configuration is not equivalent to proving higher-quality diagnosis, and video/audio similarity is not a professional automotive inspection.
+
+
+## 9. Saudi official context and large dialect corpus (November 2, 2026)
+
+| Source | Original link | Relevant research use |
+|---|---|---|
+| Saudi Ministry of Commerce — defective products/vehicle recalls lookup | https://mc.gov.sa/ar/eservices/Pages/ServiceDetails.aspx?sid=30 | Official recall lookup; **verify by VIN rather than model name alone** |
+| Saudi Civil Defense — fire safety inside cars during hot weather (June 2026) | https://998.gov.sa/Main/Page/News/2751/ | Official heat-related vehicle safety precautions, not fault-diagnosis data |
+| Saudi Ministry of Commerce — tire labeling and conformity checks | https://mc.gov.sa/en/mediacenter/News/Pages/18-04-23-01.aspx | National tire labeling/manufacturing-date and product safety context |
+| Saudi Ministry of Commerce — specific Toyota/Lexus parking assistance recall (April 2026) | https://mc.gov.sa/ar/mediacenter/News/Pages/13-04-26-01.aspx | A limited recall example, **not a blanket Toyota or Lexus failure claim** |
+| Saudi Ministry of Commerce — selected Nissan Altima / Infiniti engine recall (September 2025) | https://mc.gov.sa/en/mediacenter/News/Pages/03-09-25-01.aspx | Official campaign details; VIN verification required |
+| Saudi Press Agency — Nissan Magnite brake recall (September 2025) | https://www.spa.gov.sa/en/N2395778 | Selected official recall report |
+| Saudi Press Agency — Nissan Patrol transmission control recall (September 2025) | https://www.spa.gov.sa/en/N2389233 | Selected official recall report |
+
+See `data/saudi_official_context_v1.json` for paraphrases and per-record source URLs. The 1,200 Saudi user-utterance examples are **synthetically generated** from existing source card titles and aliases; they have no claim of independent external collection, real owner experiences, or mechanic confirmation. The 124 additional colloquial aliases are author-created language examples. The underlying 40 card references are in `data/typed_symptoms_v1.json`.
+
+**Data licensing and verification:** Original publishers retain their own rights. Descriptions are newly authored paraphrases, not copied user reviews. The system does not store or expose real users' VIN, names, plates or personal information in this research corpus.
