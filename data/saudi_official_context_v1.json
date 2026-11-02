@@ -1,0 +1,135 @@
+[
+  {
+    "id": "SAU001",
+    "topic": "vehicle_recall",
+    "triggers": [
+      "استدعاء",
+      "استدعاءات",
+      "recall",
+      "وكالة",
+      "الوكيل",
+      "عيب مصنعي",
+      "رقم الهيكل"
+    ],
+    "fact_ar": "وزارة التجارة توفر خدمة مجانية للاستعلام عن حملات استدعاء المركبات عبر منصة استدعاء المنتجات المعيبة باستخدام رقم الهيكل (VIN) أو بيانات المنتج. لا يمكن تحديد شمول سيارة بعينها دون التحقق من الرقم عبر المنصة.",
+    "fact_en": "Saudi Ministry of Commerce provides a free vehicle recall lookup service using VIN or vehicle information. Do not state that a specific vehicle is recalled unless its VIN is checked on the official service.",
+    "ask_ar": "إذا تبي تتحقق من الاستدعاءات، افتح الخدمة الرسمية وتأكد من رقم الهيكل بنفسك. لا ترسله في المحادثة.",
+    "action_ar": "تحقق من الاستدعاء عبر المنصة الرسمية أو تواصل مع الوكيل.",
+    "source_url": "https://mc.gov.sa/ar/eservices/Pages/ServiceDetails.aspx?sid=30",
+    "source_type": "Saudi_government",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU002",
+    "topic": "saudi_heat",
+    "triggers": [
+      "حر الصيف",
+      "شمس",
+      "صيف",
+      "حراره الجو",
+      "حرارة الجو",
+      "واقف بالشمس",
+      "heat",
+      "summer"
+    ],
+    "fact_ar": "الحرارة العالية في الصيف قد تخلق مخاطر مرتبطة بترك مواد قابلة للاشتعال داخل السيارة، بحسب تحذيرات الدفاع المدني السعودي. هذا لا يحدد سبب ارتفاع حرارة المحرك أو عطل المكيف.",
+    "fact_en": "Saudi Civil Defense warns about fire hazards from leaving flammable items in vehicles during high summer temperatures. This is not evidence of a mechanical fault.",
+    "ask_ar": "هل المقصود ارتفاع حرارة المحرك أم حرارة داخل المقصورة؟",
+    "action_ar": "اتبع إرشادات السلامة الرسمية، وإذا يوجد دخان أو حريق ابتعد واطلب مساعدة الطوارئ.",
+    "source_url": "https://998.gov.sa/Main/Page/News/2751/",
+    "source_type": "Saudi_government",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU003",
+    "topic": "saudi_tire_standards",
+    "triggers": [
+      "كفر",
+      "كفرات",
+      "إطارات",
+      "اطارات",
+      "تاريخ تصنيع",
+      "تاريخ الكفر",
+      "تاريخ الاطار",
+      "tire",
+      "tyre"
+    ],
+    "fact_ar": "وزارة التجارة تؤكد أهمية مطابقة الإطارات للمواصفات والبيانات التجارية، ومنها تاريخ التصنيع وملصقات الكفاءة. لا يمكن استنتاج جودة الإطار من شكل الصورة أو الصوت وحده.",
+    "fact_en": "Saudi Ministry of Commerce has emphasized tire conformity and accurate manufacturing-date and efficiency labeling. Tire sound alone does not establish safety or a particular defect.",
+    "ask_ar": "هل المشكلة صوت أو اهتزاز أو نقص ضغط أو تلف ظاهر بالإطار؟",
+    "action_ar": "افحص حالة الإطار ومطابقته للمواصفات عند جهة مختصة.",
+    "source_url": "https://mc.gov.sa/en/mediacenter/News/Pages/18-04-23-01.aspx",
+    "source_type": "Saudi_government",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU004",
+    "topic": "toyota_lexus_parking_recall",
+    "triggers": [
+      "كاميرا خلفية",
+      "كاميرا الرجوع",
+      "كاميرا الريوس",
+      "تويوتا",
+      "لكزس",
+      "مساعدة الاصطفاف"
+    ],
+    "fact_ar": "أعلنت وزارة التجارة في 13 أبريل 2026 استدعاء 33,250 مركبة من بعض طرازات تويوتا ولكزس بسبب خلل في نظام مساعدة الاصطفاف قد يؤثر على ظهور صورة الكاميرا الخلفية. ليس كل سيارة من هاتين العلامتين مشمولة؛ التحقق يكون برقم الهيكل.",
+    "fact_en": "On 13 April 2026 Saudi Ministry of Commerce recalled some Toyota/Lexus vehicles for a parking-assistance control issue that can affect the rear camera. Check VIN; do not generalize to all vehicles.",
+    "ask_ar": "إذا المشكلة في الكاميرا الخلفية، هل عندك تحذير على الشاشة؟ وتأكد من رقم الهيكل بالمنصة الرسمية.",
+    "action_ar": "تحقق من VIN عبر Recalls.sa وتواصل مع الوكيل إن كانت السيارة ضمن الحملة.",
+    "source_url": "https://mc.gov.sa/ar/mediacenter/News/Pages/13-04-26-01.aspx",
+    "source_type": "Saudi_government",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU005",
+    "topic": "nissan_infiniti_engine_recall",
+    "triggers": [
+      "انفينيتي",
+      "إنفينيتي",
+      "التيما",
+      "ألتيما",
+      "altima",
+      "infiniti"
+    ],
+    "fact_ar": "ذكرت وزارة التجارة بتاريخ 3 سبتمبر 2025 استدعاء عدد محدد من إنفينيتي QX50/QX55 ونيسان ألتيما موديلات 2018–2022 بسبب خلل محتمل في محامل المحرك. ذكر الطراز أو الموديل وحده لا يثبت شمول المركبة؛ تحقق من VIN.",
+    "fact_en": "On 3 September 2025 Saudi Ministry of Commerce announced a limited Infiniti QX50/QX55 and Nissan Altima 2018–2022 recall involving engine bearings. A model name alone cannot establish recall coverage; check VIN.",
+    "ask_ar": "هل عندك لمبة تحذير أو فقدان قوة؟ تحقق من استدعاء سيارتك برقم الهيكل رسميًا.",
+    "action_ar": "افحص رقم الهيكل في المنصة وتواصل مع الوكيل إذا ظهرت ضمن الاستدعاء.",
+    "source_url": "https://mc.gov.sa/en/mediacenter/News/Pages/03-09-25-01.aspx",
+    "source_type": "Saudi_government",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU006",
+    "topic": "nissan_magnite_brake_recall",
+    "triggers": [
+      "ماغنايت",
+      "ماجنايت",
+      "magnite"
+    ],
+    "fact_ar": "أُعلن في سبتمبر 2025 عن استدعاء عدد محدد من نيسان ماغنايت موديل 2025 لخلل في أنبوب الفرامل قد يقلل كفاءة التوقف. تحقق من رقم الهيكل، ولا تستنتج ان كل ماغنايت فيها الخلل.",
+    "fact_en": "Saudi authorities announced a limited Nissan Magnite 2025 recall in September 2025 related to brake pipe issues. Coverage must be checked by VIN.",
+    "ask_ar": "إذا لاحظت ضعف الفرامل توقف بأمان، وبعدها تحقق من الاستدعاء مع الوكيل.",
+    "action_ar": "توقف بأمان إذا تأثرت الفرملة، وتواصل مع الوكيل للتحقق من VIN.",
+    "source_url": "https://www.spa.gov.sa/en/N2395778",
+    "source_type": "Saudi_official_news",
+    "mechanic_verified": false
+  },
+  {
+    "id": "SAU007",
+    "topic": "nissan_patrol_transmission_recall",
+    "triggers": [
+      "باترول",
+      "نيسان باترول",
+      "patrol"
+    ],
+    "fact_ar": "في سبتمبر 2025 أُعلن عن استدعاء محدود لنيسان باترول موديل 2025 بخصوص برمجة وحدة تحكم ناقل الحركة وقد يرتبط بفقدان القوة. التحقق من شمول أي سيارة يحتاج رقم هيكلها.",
+    "fact_en": "In September 2025 Saudi authorities reported a limited 2025 Nissan Patrol transmission control recall; VIN lookup is needed for any individual vehicle.",
+    "ask_ar": "إذا عندك فقدان قوة أثناء القيادة، اذكر متى يظهر وتحقق من VIN بالمنصة الرسمية.",
+    "action_ar": "اطلب فحصًا مختصًا في حال فقدان القدرة على التسارع وتحقق من حملة الاستدعاء.",
+    "source_url": "https://www.spa.gov.sa/en/N2389233",
+    "source_type": "Saudi_official_news",
+    "mechanic_verified": false
+  }
+]
