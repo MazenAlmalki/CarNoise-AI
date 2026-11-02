@@ -148,3 +148,20 @@ CHAT_CONTEXT=3072
 Set `CHAT_THINK=1` only if you prefer to experiment with longer reasoning and can tolerate slower local responses. This is not guaranteed to improve factual accuracy. Restart Node after changing `.env`.
 
 After `git pull origin main`, test the example `سيارتي ترج وهي واقفة` then `إيه تزيد مع المكيف`, and compare answers with earlier behavior. Avoid claiming fault confirmation based only on language-model output.
+
+
+## V5.3 — Saudi car problems language corpus & intelligent clarification (November 2, 2026)
+
+Warshatak's text retrieval now recognizes many more Saudi vehicle-problem descriptions. It uses **language-data expansion**, **official Saudi context**, and **natural LLM clarification**, not a scripted answer for each question.
+
+- `data/saudi_synthetic_utterances_v1.jsonl`: **1,200** unique, explicitly **synthetic** Saudi Arabic ways of describing the 40 underlying symptom cards. These are **not** independent or mechanic-confirmed repair cases. The phrases are indexed for exact matching.
+- `data/saudi_dialect_aliases_v1.json`: **124** extra regional colloquial phrases indexed for keyword/phrase matching.
+- `data/saudi_official_context_v1.json`: **7** references to Saudi government/official guidance including recall lookup, tire standards and summer safety; relevant evidence is supplied to chat when applicable. A named vehicle is **not assumed recalled** without an official VIN lookup.
+- `data/conversation_fallback_examples_v1.json`: **15** bilingual behavioral examples for unclear sound descriptions, misunderstood language, missing media analysis and multi-turn follow-ups. These are behavior-design data, not repair facts.
+- `server/saudiKnowledge.js`: retrieves targeted Saudi context and gives the language model guidance for low-confidence messages or missing audio/visual analysis.
+- `server/textRetrieval.js`: uses the added aliases and the 1,200 synthetic phrases alongside existing 40 publisher-linked automotive cards.
+- `POST /api/chat` **still uses the language model to write every normal reply**. It receives source clues and guidance, and should ask **one relevant clarification** when information is insufficient; it must not claim it listened to an audio clip if sound analysis failed.
+- `tests/saudiCorpus.test.js`: verifies synthetic data labels, slang mappings, official source filtering, and missing-media warnings.
+- [Detailed inventory and collection limits](SAUDI_KNOWLEDGE_REPORT.md).
+
+**Checks so far:** All 1,200 synthetic sentence variants mapped to their expected original source card within the top 3 retrieval matches in an isolated code test. These are **synthetic in-sample lookup tests**, not a measurement of accuracy on real Saudi users or mechanic-confirmed faults. Real conversation quality, model performance and audio analysis still require independent testing.
