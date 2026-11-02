@@ -13,22 +13,19 @@ test('unrecognized media opens with a location question, not a diagnosis',()=>{
  assert.ok(first.clarificationOptions.some(x=>x.value==='engine'));
  assert.ok(!first.reply.includes('سبب العطل هو'));
 });
-test('location -> timing -> texture, preserving only user choices',()=>{
+test('guided sound interview stops after two questions',()=>{
  const first=beginSoundInterview({language:'ar'});
  const second=advanceSoundInterview({stage:'location',value:'engine',answers:first.audioInterview.answers},'ar');
- assert.equal(second.done,false);assert.equal(second.audioInterview.stage,'timing');
- assert.equal(second.audioInterview.answers.location,'engine');
- const third=advanceSoundInterview({stage:'timing',value:'idle',answers:second.audioInterview.answers},'ar');
- assert.equal(third.audioInterview.stage,'texture');
- assert.equal(third.audioInterview.answers.timing,'idle');
- const final=advanceSoundInterview({stage:'texture',value:'click',answers:third.audioInterview.answers},'ar');
+ assert.equal(second.done,false);
+ assert.equal(second.audioInterview.stage,'timing');
+ const final=advanceSoundInterview({stage:'timing',value:'idle',answers:second.audioInterview.answers},'ar');
  assert.equal(final.done,true);
- assert.deepEqual(final.answers,{location:'engine',timing:'idle',texture:'click'});
+ assert.deepEqual(final.answers,{location:'engine',timing:'idle'});
  assert.match(final.description,/المكان: من جهة المكينة/);
- assert.match(final.description,/وقت الصوت: وهي واقفة والمكينة شغالة/);
- assert.match(final.description,/نوعه: طقطقة/);
- assert.match(final.description,/ليس تعرفًا من المودل/);
+ assert.match(final.description,/الوقت: وهي واقفة والمكينة شغالة/);
+ assert.match(final.description,/اعرض الاحتمالات الآن/);
 });
+
 test('reject invalid client-selected answers and missing prior stages',()=>{
  assert.equal(advanceSoundInterview({stage:'location',value:'forced-toyota-diagnosis',answers:{}},'ar'),null);
  assert.equal(advanceSoundInterview({stage:'timing',value:'braking',answers:{}},'ar'),null);
@@ -60,6 +57,6 @@ test('source lookup requires descriptive text and never asserts an audio match',
  assert.ok(matching.some(x=>x.subject==='cv_joint_click'));
  assert.ok(matching.every(x=>x.audio_verified===false));
 });
-test('three stages have usable answer options',()=>{
+test('guided question options are available for two stages',()=>{
  assert.deepEqual(interviewStats(),{location:6,timing:8,texture:10});
 });
