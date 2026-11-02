@@ -194,3 +194,9 @@ python scripts/import_kwerimoto.py
 - Added `GET /api/model-status` to report local Ollama reachability, configured text/vision models and installed tags (not a full inference test).
 - Improved low-memory behavior by unloading the vision model after its request, and enabled file-only media submissions without mandatory text.
 - Updated sidebar privacy notice to distinguish local vehicle history from temporary upload of user-submitted attachments.
+
+### V5 local chat speed optimization (November 2, 2026)
+- Switched **local** chat requests to Ollama native `/api/chat` so `think:false` disables extended thinking in models supporting that option.
+- Set `CHAT_MAX_TOKENS=220` and `CHAT_CONTEXT=2048` as tunable defaults, reduced passed chat history to 6 turns, and retrieved keyword reference cards to 2.
+- Kept the vision and optional CLAP paths unchanged. This is a source-level update, not a verified performance benchmark on the user's 8GB Windows machine.
+- Check speed and response quality locally; lower token limits can produce truncated responses.
