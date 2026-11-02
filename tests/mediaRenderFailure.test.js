@@ -13,8 +13,8 @@ test('stale asynchronous media renders cannot attach duplicate players',()=>{
 });
 
 test('CLAP runtime errors are reported rather than hidden behind guesses',()=>{
- assert.match(server,/audioStatus:'classifier-error'/);
- assert.match(server,/audioError:typeof failure/);
+ assert.match(server,/beginSoundInterview\(\{language,reason:'classifier-error',error:failure\}\)/);
+ assert.match(server,/audioInterviewAnswer/);
  assert.match(app,/data\.audioStatus==='classifier-error'/);
  assert.match(app,/showError\(\(state\.lang==='ar'\?'فشل مودل CLAP/);
 });
