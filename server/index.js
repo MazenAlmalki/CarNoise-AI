@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { retrieveTypedSymptoms, knowledgeCount } from './textRetrieval.js';
 import multer from 'multer';
 import { analyzeUploadedMedia } from './multimodal.js';
+import { assessText, groundedResponse } from './saudiUnderstanding.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -94,8 +95,20 @@ app.post('/api/chat',async(req,res)=>{
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
   const history=Array.isArray(data.messages)?data.messages.slice(-6).filter(x=>x&&['user','assistant'].includes(x.role)&&typeof x.content==='string').map(x=>({role:x.role,content:chatString(x.content,900)})).filter(x=>x.content):[];
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
-  const matches=retrieveTypedSymptoms(message,{limit:2});
+  const understanding=assessText(message,history);
+  const matches=understanding.matches.slice(0,2);
   const knowledge=matches.map(({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status})=>({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status}));
+  const summary=matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}));
+  // Reliable path for recognized colloquial automotive symptoms. Do not let an
+  // untested small text model invent repair instructions when vetted card matches.
+  if(!mediaInsight){
+    if(understanding.isDanger){
+      const safety=language==='en'?'If braking, steering, fire, heavy smoke or overheating is affecting safety, stop in a safe place and seek professional help. I cannot identify the cause remotely.':'إذا المشكلة فيها ضعف فرامل أو توجيه أو حريق أو دخان كثيف أو ارتفاع حرارة خطير، توقف في مكان آمن ولا تكمل القيادة، واطلب مساعدة مختص. ما أقدر أحدد السبب عن بُعد.';
+      return res.json({reply:safety,grounding:'safety-guidance',knowledgeMatches:summary});
+    }
+    const reliable=groundedResponse(understanding,language,history);
+    if(reliable)return res.json({reply:reliable,grounding:'reviewed-knowledge-card',knowledgeMatches:summary});
+  }
   const endpointValue=process.env.LLAMA_API_URL?.trim()||'http://127.0.0.1:11434/v1/chat/completions';
   const key=process.env.LLAMA_API_KEY?.trim();
   const model=process.env.CHAT_MODEL?.trim()||process.env.LLAMA_MODEL?.trim()||'qwen3.5:2b';
@@ -110,7 +123,7 @@ app.post('/api/chat',async(req,res)=>{
     const messages=[
       {role:'system',content:'Today in Saudi Arabia is '+today+'. Do not volunteer an unrelated date. If asked about dates, use this date; do not claim it is 2023. Never mention an outdated training cutoff as the current date.'},
       {role:'system',content:chatPrompt+(language==='en'?' Always respond in English.':' أجب باللهجة السعودية الواضحة قدر الإمكان.')},
-      {role:'system',content:JSON.stringify({referenceKnowledge:knowledge,referenceNote:'Possible educational context only, NOT diagnosed faults. Do not overfit to matched text.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from separate vision/CLAP models. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
+      {role:'system',content:JSON.stringify({normalizedSaudiDescription:understanding.normalized,referenceKnowledge:knowledge,referenceNote:'Possible educational context only, NOT diagnosed faults. Do not overfit to matched text.',mediaInsight,mediaNote:'If mediaInsight is supplied, it comes from separate vision/CLAP models. Visual describes frames only and CLAP scores are uncalibrated audio similarities, NOT mechanical fault probabilities; never invent media analysis when absent.',vehicleHistory,historyNote:'Previous cases are unverified.'})},
       ...history,
       {role:'user',content:message}
     ];
@@ -126,7 +139,7 @@ app.post('/api/chat',async(req,res)=>{
     const payload=await response.json();
     const reply=chatString(local?payload?.message?.content:payload?.choices?.[0]?.message?.content,1900);
     if(!reply)return res.status(502).json({error:language==='en'?'AI model returned an empty reply.':'المودل رجع رد فارغ، حاول مرة ثانية.'});
-    return res.json({reply,knowledgeMatches:matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}))});
+    return res.json({reply,grounding:'language-model',knowledgeMatches:summary});
   }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
 });
 
