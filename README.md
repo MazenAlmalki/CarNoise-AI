@@ -179,3 +179,16 @@ Warshatak's text retrieval now recognizes many more Saudi vehicle-problem descri
 - [Read the full dictionary and conversational behavior guide](SAUDI_DIALECT_GUIDE.md).
 
 This is additional to the existing **1,200 synthetic Saudi complaint descriptions**, **124 symptom aliases**, **40 publisher-linked automotive symptom cards**, and **7 Saudi official informational records**. Generated phrases are not ground truth or mechanic-confirmed cases; real-world correctness remains to be evaluated.
+
+
+## V5.5 — Saudi car-part terminology + English typing reliability (November 2, 2026)
+
+Added **89** Saudi-used automotive terms with **317** variants and **1,068** synthetic Arabic/English dialogue samples (12 per term), covering meanings, common user questions, uncertainty-aware responses and safer clarification. New key distinctions include **بوري = horn**, **جلنط = parking brake**, and ambiguous `شمعات` (headlights or spark plugs depending on context). This is linguistic data, not mechanic-confirmed training labels or fine-tuning.
+
+- `server/saudiCarTerms.js` loads matching terms at runtime and passes only a few short definitions/clarification cues to the AI model, which composes the actual reply.
+- `server/chatLanguage.js` determines the reply language from **the actual typed message**, irrespective of Arabic/English UI mode. Short/numeric messages fall back to the UI selection.
+- `public/app.js` now uses per-message automatic text direction, so English replies and Arabic replies are displayed legibly in the same chat.
+- `tests/saudiCarTerms.test.js` tests bilingual requests, horn, parking brake, ambiguity, and corpus provenance.
+- [Detailed data, limitations and test examples](SAUDI_CAR_TERMS_AND_ENGLISH.md).
+
+English availability on the user's own machine still depends on local Ollama working and on the model being able to answer; server-side language routing was changed, but no remote test of their running LLM is claimed.
