@@ -12,7 +12,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة خبط نظام التعليق والتوجيه.",
+    "summary_en": "Clunking suspension and steering discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-2",
@@ -27,7 +31,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة الصرير أو الونة المرتبطة بالسيور أو التوجيه أو الفرامل أو ناقل الحركة.",
+    "summary_en": "Belts, steering, brakes or transmission squealing / whining discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-3",
@@ -42,7 +50,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة أصوات طحن أو احتكاك قرب الفرامل أو العجلات.",
+    "summary_en": "Brake or wheel grinding discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-4",
@@ -57,7 +69,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة الصرير والطقطقة الخفيفة مع المطبات.",
+    "summary_en": "Creaks and squeaks on bumps discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-5",
@@ -72,7 +88,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة مصادر محتملة لأصوات التكتكة والطقطقة.",
+    "summary_en": "Clicking or ticking source discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-6",
@@ -87,7 +107,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة الدمدمة أو الهدير عند السير بسرعة.",
+    "summary_en": "Rumbling and roaring at road speed discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-7",
@@ -102,7 +126,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة خشخشة صاج الحماية قرب العادم.",
+    "summary_en": "Exhaust shielding rattle discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-8",
@@ -117,7 +145,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة الهسيس واحتمالات تهريب الهواء أو دائرة التبريد.",
+    "summary_en": "Hissing and potential air/cooling leaks discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2026-9",
@@ -132,7 +164,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة أصوات الطرق أو الصفع في المحرك.",
+    "summary_en": "Engine knock and ping discussion",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-1",
@@ -147,7 +183,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة صرير أو احتكاك الفرامل.",
+    "summary_en": "Brake screech / grinding discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-2",
@@ -162,7 +202,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة زقزقة أو صرير السير.",
+    "summary_en": "Belt chirping / squealing discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-3",
@@ -177,7 +221,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة ونة أو أنين أثناء التوجيه.",
+    "summary_en": "Steering groaning or whining discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-4",
@@ -192,7 +240,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة دمدمة مرتبطة برمان العجل في وصف الناشر.",
+    "summary_en": "Wheel bearing rumbling discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-5",
@@ -207,7 +259,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة طقطقة مفصل العكس في وصف الناشر.",
+    "summary_en": "CV joint clicking discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-6",
@@ -222,7 +278,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة خبط وصلة عمود التوازن في وصف الناشر.",
+    "summary_en": "Sway bar link clunk discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-7",
@@ -237,7 +297,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة طنين أو خشخشة صاج حماية العادم.",
+    "summary_en": "Exhaust heat shield buzzing / rattling discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-budget-2021-8",
@@ -252,7 +316,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة تهريب العادم وارتفاع صوته.",
+    "summary_en": "Exhaust leak and loud running discussed",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-golf-whistle-1",
@@ -267,7 +335,11 @@
     "provenance": "uploader_title_and_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "المالك يذكر صفيرًا، لكن الوصف لا يثبت وجود عطل مؤكد في التيربو.",
+    "summary_en": "Owner reports a whistle but does not establish a confirmed turbo failure",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-catalytic-2021-1",
@@ -282,7 +354,11 @@
     "provenance": "youtube_description_educational_context_not_audio_sample",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "مناقشة احتمال تأثير تهريب العادم على تفسير رموز الأعطال؛ ليس تسجيلًا صوتيًا ذا تصنيف موثوق.",
+    "summary_en": "Video discusses exhaust leaks potentially contributing to misleading diagnostic codes; not a labeled recording",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "source_id": "yt-bearing-2025",
@@ -297,7 +373,11 @@
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
     "usage": "educational_reference_not_training_audio",
-    "id": "yt-bearing-2025-1"
+    "id": "yt-bearing-2025-1",
+    "summary_ar": "الناشر يصف مثالًا لصوت رمان عجل؛ لا يمكن استنتاج تشخيص سيارة أخرى منه.",
+    "summary_en": "Publisher describes a wheel bearing audio example. Diagnosis of another vehicle cannot be inferred.",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-1",
@@ -312,7 +392,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن صوت الطقطقة عند التشغيل وفق عنوان الناشر.",
+    "summary_en": "The clicking sound",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-2",
@@ -327,7 +411,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن صوت تشغيل ثقيل وفق عنوان الناشر.",
+    "summary_en": "Heavy cranking sound",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-3",
@@ -342,7 +430,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن عدم دوران السلف أو غياب صوت التشغيل وفق عنوان الناشر.",
+    "summary_en": "No cranking or no sounds",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-4",
@@ -357,7 +449,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن طقطقة سريعة عند التشغيل وفق عنوان الناشر.",
+    "summary_en": "Rapid clicking sound",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-5",
@@ -372,7 +468,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن صوت طحن وفق عنوان الناشر.",
+    "summary_en": "Grinding sound",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-starter-2026-6",
@@ -387,7 +487,11 @@
     "provenance": "youtube_description_timestamps_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "قسم عن أزيز أو صفير سريع وفق عنوان الناشر.",
+    "summary_en": "Whizzing sound",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-cv-2022-1",
@@ -402,7 +506,11 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "الناشر يذكر أمثلة من خارج السيارة وداخلها وأسفلها؛ لا تمثل تصنيفًا لتسجيل المستخدم.",
+    "summary_en": "Publisher reports examples recorded from outside, inside, and underneath a vehicle; this does not label the user's recording.",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   },
   {
     "id": "yt-knock-2014-1",
@@ -417,6 +525,10 @@
     "provenance": "youtube_publisher_description_only",
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
-    "usage": "educational_reference_not_training_audio"
+    "usage": "educational_reference_not_training_audio",
+    "summary_ar": "شرح تعليمي لطرق الاحتراق؛ ليست كل طقة في المحرك دليلًا على هذه الظاهرة.",
+    "summary_en": "Educational explanation of combustion knock; do not conflate all engine clunks with detonation.",
+    "translation_provenance": "ai_authored_paraphrase_of_existing_catalog_metadata_not_audio_review",
+    "metadata_rechecked_this_task": false
   }
 ]

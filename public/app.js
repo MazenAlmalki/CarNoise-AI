@@ -1,3 +1,4 @@
+import {summarizeQuestionMemory} from './questionMemory.js';
 const $=id=>document.getElementById(id);
 // Shared product copy for the Arabic and English layouts.
 const translations={
@@ -43,7 +44,7 @@ const translations={
     "medium": "يستحسن الفحص",
     "high": "اهتمام عاجل",
     "required": "اوصف الصوت بثمانية أحرف على الأقل.",
-    "mediaInfo": "حتى 25 MB. يُرفع المرفق عند الإرسال، وقد يُرسل الصوت إلى Google عند تفعيل Gemini. قدرات التحليل تعتمد على الإعدادات.",
+    "mediaInfo": "حتى 25 MB. يُرفع المرفق عند الإرسال، وقد يُرسل الصوت إلى Google أو Groq حسب إعدادات التحليل والتفريغ. قدرات التحليل تعتمد على الإعدادات.",
     "fileTooLarge": "الحد الأقصى 25MB للمقطع.",
     "fileType": "ارفع صورة أو ملف صوت أو فيديو.",
     "mediaSaved": "مقطع محفوظ",
@@ -187,7 +188,7 @@ const translations={
     "medium": "Inspection advised",
     "high": "Urgent attention",
     "required": "Describe the noise using at least 8 characters.",
-    "mediaInfo": "Up to 25 MB. Uploads on Send; audio may be sent to Google when Gemini is enabled. Analysis depends on available capabilities.",
+    "mediaInfo": "Up to 25 MB. Uploads on Send; audio may be sent to Google or Groq depending on analysis/transcription settings. Analysis depends on available capabilities.",
     "fileTooLarge": "Maximum media file size is 25 MB.",
     "fileType": "Choose an image, audio, or video file.",
     "mediaSaved": "Saved media",
@@ -415,6 +416,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
  const prior=allPrior.length>10
   ? [allPrior.find(x=>x.role==='user'),...allPrior.slice(-10)].filter(Boolean)
   : allPrior;
+ const boundedPrior=prior.map(({role,content})=>({role,content:String(content||'').slice(0,650)}));
  active.messages.push({role:'user',content:message});
  active.description=active.description||message;
  persist();
@@ -446,7 +448,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
    }
   }
   const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:active.lang||state.lang,messages:prior,vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer})});
+   body:JSON.stringify({message,language:active.lang||state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(data.audioStatus==='classifier-error'&&data.audioError){
@@ -706,6 +708,15 @@ async function showSavedMedia(id,type,name){
   media.controls=true;media.preload='metadata';media.src=url;
   media.style.maxWidth='100%';media.style.maxHeight='220px';
   attached.append(media);
+  const transcript=session?.mediaAnalysis?.transcription;
+  if(transcript?.hasRecognizedSpeech===true&&typeof transcript.text==='string'&&transcript.text.trim()){
+   const card=textNode('details','','transcript-card');card.open=true;
+   card.append(textNode('summary',state.lang==='ar'?'الكلام المفرّغ — قد يحتوي أخطاء':'Recognized speech — may contain errors'));
+   const words=textNode('p',transcript.text.slice(0,1000));words.dir='auto';card.append(words);
+   const edit=textNode('button',state.lang==='ar'?'صحّح الكلام أو أضف توضيح':'Correct or clarify','ghost-btn transcript-edit');edit.type='button';
+   edit.addEventListener('click',()=>{if(session?.id!==caseId||submitting)return;$('description').value=transcript.text.slice(0,600);$('description').focus();});
+   card.append(edit);attached.append(card);
+  }
   if(session?.mediaAnalysis){
    attached.append(textNode('p',state.lang==='ar'?'الملف محفوظ. قد يُرسل الصوت إلى مزود التحليل المختار؛ الملاحظات ليست تشخيصًا.':'File saved. Audio may be sent to your selected analysis provider; observations are not diagnoses.','media-warning'));
   }

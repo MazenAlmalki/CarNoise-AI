@@ -40,6 +40,10 @@ The default template uses hosted Meta Llama text/vision. Gemini is optional and 
 node scripts/list_gemini_models.js
 ```
 
+For bilingual YouTube reference metadata, pending Shorts research and independent speech-to-text fallback, see [YouTube and speech research](YOUTUBE_SHORTS_RESEARCH.md). Public YouTube collection was blocked in this cloud instance; no new Shorts have been reviewed.
+
+For the bounded 18-model Saudi-market focus and answer-first conversation policy, see [Saudi vehicle evidence](SAUDI_VEHICLE_EVIDENCE.md).
+
 ## What the app does
 
 - Arabic/RTL and English/LTR, light/dark themes, responsive navigation and reduced-motion support.

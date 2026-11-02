@@ -1,0 +1,44 @@
+{
+  "checked_at": "2026-11-02T18:55:49.447465+00:00",
+  "requested_query_ar": "اصوات مشاكل سيارات",
+  "planned_query_en": "car problem sounds shorts",
+  "attempted_url": "https://www.youtube.com/results?search_query=اصوات+مشاكل+سيارات+shorts",
+  "access_status": "blocked_by_cloud_network_proxy",
+  "http_status": 403,
+  "new_shorts_collected": 0,
+  "new_shorts_video_reviewed": 0,
+  "new_shorts_audio_reviewed": 0,
+  "existing_metadata_entries_made_bilingual": 28,
+  "existing_metadata_rechecked": false,
+  "network_draft_saved": true,
+  "network_update_applied": false,
+  "runtime_eligible": false,
+  "note": "Research status only; this is not a corpus of reviewed YouTube clips.",
+  "additional_sources_attempted": [
+    {
+      "url": "https://www.toyota.com.sa/",
+      "http_status": 403,
+      "content_reviewed": false
+    },
+    {
+      "url": "https://www.hyundai.com/",
+      "http_status": 403,
+      "content_reviewed": false
+    },
+    {
+      "url": "https://en.nissan-saudiarabia.com/",
+      "http_status": 403,
+      "content_reviewed": false
+    },
+    {
+      "url": "https://www.theaa.com/car-care/advice/servicing/guide-to-unusual-car-noises",
+      "http_status": 403,
+      "content_reviewed": false
+    },
+    {
+      "url": "https://repairpal.com/wheel-bearing",
+      "http_status": 403,
+      "content_reviewed": false
+    }
+  ]
+}

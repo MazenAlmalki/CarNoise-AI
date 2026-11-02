@@ -1,0 +1,425 @@
+[
+  {
+    "id": "brake_squeal",
+    "label": {
+      "ar": "صفير أو صرير الفرامل",
+      "en": "Brake squeal"
+    },
+    "search_terms": {
+      "ar": [
+        "الفرامل تصفر",
+        "صرير الفرامل",
+        "البريك يصفر"
+      ],
+      "en": [
+        "brakes squeal",
+        "brake squealing",
+        "brake screech"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "brake_grind",
+    "label": {
+      "ar": "حك أو طحن مع الفرامل",
+      "en": "Grinding when braking"
+    },
+    "search_terms": {
+      "ar": [
+        "حك الفرامل",
+        "الفرامل تحك",
+        "طحن الفرامل"
+      ],
+      "en": [
+        "brake grinding",
+        "brakes grinding",
+        "brakes scrape"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "belt_squeal",
+    "label": {
+      "ar": "صفير السير",
+      "en": "Belt squeal"
+    },
+    "search_terms": {
+      "ar": [
+        "صفير السير",
+        "السير يصفر",
+        "صوت السير"
+      ],
+      "en": [
+        "belt squeal",
+        "belt squealing",
+        "serpentine squeal"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "belt_chirp",
+    "label": {
+      "ar": "زقزقة أو صرير السير",
+      "en": "Belt chirp"
+    },
+    "search_terms": {
+      "ar": [
+        "زقزقة السير",
+        "السير يزقزق"
+      ],
+      "en": [
+        "belt chirp",
+        "belt chirping"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "wheel_bearing_hum",
+    "label": {
+      "ar": "ونة أو طنين عند العجلات",
+      "en": "Wheel-area hum"
+    },
+    "search_terms": {
+      "ar": [
+        "ونة الكفر",
+        "ونه مع السرعة",
+        "رمان بلي",
+        "رمان الكفر"
+      ],
+      "en": [
+        "wheel bearing noise",
+        "bearing hum",
+        "wheel humming",
+        "rumbling at speed"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "cv_joint_click",
+    "label": {
+      "ar": "طقطقة مع اللف",
+      "en": "Clicking when turning"
+    },
+    "search_terms": {
+      "ar": [
+        "طقطقة مع اللف",
+        "طقطقة العكس",
+        "صوت العكس",
+        "طقطقة الدركسون"
+      ],
+      "en": [
+        "cv joint clicking",
+        "cv axle clicking",
+        "clicking when turning"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "suspension_clunk",
+    "label": {
+      "ar": "طقطقة أو خبط مع المطبات",
+      "en": "Clunking over bumps"
+    },
+    "search_terms": {
+      "ar": [
+        "طقه مع المطب",
+        "طقطقة المطبات",
+        "صوت المساعد",
+        "خبط المطبات"
+      ],
+      "en": [
+        "suspension clunk",
+        "clunk over bumps",
+        "clunking over bumps",
+        "sway bar clunk"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "suspension_squeak",
+    "label": {
+      "ar": "صرير مع المطبات",
+      "en": "Squeaking over bumps"
+    },
+    "search_terms": {
+      "ar": [
+        "صرير المطبات",
+        "صرير المساعد",
+        "المساعد يصفر"
+      ],
+      "en": [
+        "suspension squeak",
+        "squeaking over bumps"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "exhaust_rattle",
+    "label": {
+      "ar": "خشخشة الشكمان",
+      "en": "Exhaust-area rattle"
+    },
+    "search_terms": {
+      "ar": [
+        "خشخشة الشكمان",
+        "الشكمان يرج",
+        "صاج الشكمان"
+      ],
+      "en": [
+        "exhaust rattle",
+        "heat shield rattle",
+        "exhaust buzzing"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "exhaust_leak",
+    "label": {
+      "ar": "صوت شكمان مرتفع أو تهريب",
+      "en": "Loud exhaust or suspected leak"
+    },
+    "search_terms": {
+      "ar": [
+        "تهريب الشكمان",
+        "صوت الشكمان عالي",
+        "الشكمان يهدر"
+      ],
+      "en": [
+        "exhaust leak",
+        "loud exhaust",
+        "exhaust leaking"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "engine_ticking",
+    "label": {
+      "ar": "تكتكة أو طقطقة المحرك",
+      "en": "Engine ticking"
+    },
+    "search_terms": {
+      "ar": [
+        "تكتكة المكينة",
+        "طقطقة المكينة",
+        "تكتكة المحرك"
+      ],
+      "en": [
+        "engine ticking",
+        "engine tick",
+        "engine clicking"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "engine_knock",
+    "label": {
+      "ar": "دق أو طرق المحرك",
+      "en": "Engine knocking"
+    },
+    "search_terms": {
+      "ar": [
+        "دق المكينة",
+        "طرقات المكينة",
+        "دق المحرك",
+        "طقطقة قوية بالمكينة"
+      ],
+      "en": [
+        "engine knock",
+        "engine knocking",
+        "engine pinging"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "engine_hiss",
+    "label": {
+      "ar": "هسيس في منطقة المحرك",
+      "en": "Hissing near the engine"
+    },
+    "search_terms": {
+      "ar": [
+        "هسيس المكينة",
+        "هسهسة المحرك",
+        "تهريب هواء"
+      ],
+      "en": [
+        "engine hiss",
+        "engine hissing",
+        "hissing under hood"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "engine_whistle",
+    "label": {
+      "ar": "صفير في منطقة المحرك",
+      "en": "Whistling near the engine"
+    },
+    "search_terms": {
+      "ar": [
+        "صفير المكينة",
+        "صفير التيربو",
+        "صفير المحرك"
+      ],
+      "en": [
+        "engine whistle",
+        "turbo whistle",
+        "engine whistling"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "power_steering_whine",
+    "label": {
+      "ar": "ونة مع تحريك الدركسون",
+      "en": "Whining while steering"
+    },
+    "search_terms": {
+      "ar": [
+        "ونة الدركسون",
+        "صوت الباور",
+        "ونه مع اللف"
+      ],
+      "en": [
+        "power steering whine",
+        "steering groan",
+        "whining when steering"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "starter_click",
+    "label": {
+      "ar": "طقطقة وقت التشغيل",
+      "en": "Clicking on startup"
+    },
+    "search_terms": {
+      "ar": [
+        "طقطقة السلف",
+        "طقطقة التشغيل",
+        "السلف يطق"
+      ],
+      "en": [
+        "starter click",
+        "clicking on startup",
+        "rapid clicking starting"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "slow_crank",
+    "label": {
+      "ar": "تشغيل بطيء أو ثقيل",
+      "en": "Slow cranking"
+    },
+    "search_terms": {
+      "ar": [
+        "السلف ثقيل",
+        "التشغيل ثقيل",
+        "المكينة تدق سلف ببطء"
+      ],
+      "en": [
+        "slow crank",
+        "heavy cranking",
+        "slow cranking"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "no_start_crank",
+    "label": {
+      "ar": "غياب صوت التشغيل",
+      "en": "No cranking sound"
+    },
+    "search_terms": {
+      "ar": [
+        "السلف ساكت",
+        "ما تدق سلف",
+        "لا صوت عند التشغيل"
+      ],
+      "en": [
+        "no crank",
+        "no cranking",
+        "no sound starting"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "gear_grind",
+    "label": {
+      "ar": "صوت طحن تروس",
+      "en": "Gear grinding"
+    },
+    "search_terms": {
+      "ar": [
+        "حك التروس",
+        "طحن القير",
+        "صوت طحن عند التشغيل"
+      ],
+      "en": [
+        "gear grinding",
+        "starter grinding",
+        "grinding gears"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  },
+  {
+    "id": "electrical_buzz",
+    "label": {
+      "ar": "أزيز أو طنين كهربائي",
+      "en": "Electrical buzzing"
+    },
+    "search_terms": {
+      "ar": [
+        "ازيز كهربائي",
+        "طنين كهربائي",
+        "ازيز السلف"
+      ],
+      "en": [
+        "electrical buzz",
+        "starter buzz",
+        "electrical buzzing"
+      ]
+    },
+    "provenance": "curated_bilingual_vocabulary_not_verified_audio",
+    "diagnosis_confirmed": false
+  }
+]

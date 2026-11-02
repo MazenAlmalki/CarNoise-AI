@@ -11,7 +11,7 @@ const aliases={
  },
  texture:{
   squeal:/صرير|صفير|صفر|squeal|screech|chirp/i,grind:/حك|طحن|احتكاك|grind|scrap/i,
-  click:/طقطق|تكتك|طق|click|clunk|tick|knock/i,rattle:/خشخش|رجه|رجف|rattl|shak|vibrat/i,
+  click:/طقطق|تكتك|طق|click|clunk|tick|knock/i,rattle:/خشخش|rattl/i,vibration:/رجه|رجف|ترج|يرج|اهتزاز|shak|vibrat|shudder/i,
   hum:/ونه|ونّ|طنين|حسيس|هسهس|همهم|hum|whin|roar|hiss/i
  },
  location:{

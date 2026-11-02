@@ -15,7 +15,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Squealing or whistling when braking",
+    "possible_causes_en": [
+      "Pad wear or a wear indicator",
+      "Dust or temporary friction"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "brake_grind",
@@ -33,7 +39,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Metallic grinding when braking",
+    "possible_causes_en": [
+      "Wear in brake components",
+      "Debris near a brake disc"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "brake_click",
@@ -51,7 +63,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Repeated clicking while braking",
+    "possible_causes_en": [
+      "A brake component needing inspection",
+      "Small debris near a disc"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "brake_shudder",
@@ -69,7 +87,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Shuddering or vibration when braking",
+    "possible_causes_en": [
+      "Uneven friction or brake-disc condition",
+      "A suspension component issue"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "wheel_hum",
@@ -87,7 +111,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Humming that increases with road speed",
+    "possible_causes_en": [
+      "A wheel bearing",
+      "Tires or the road surface"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "wheel_growl",
@@ -105,7 +135,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "A growling sound from the wheels at speed",
+    "possible_causes_en": [
+      "Possible wheel-bearing wear",
+      "Tire noise"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "wheel_chirp",
@@ -123,7 +159,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Chirping or squealing near a moving wheel",
+    "possible_causes_en": [
+      "A bearing or rotating component",
+      "Friction near the wheel"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "cv_click",
@@ -141,7 +183,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Clicking when steering while moving",
+    "possible_causes_en": [
+      "A CV joint or axle",
+      "A nearby wheel component"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "steering_whine",
@@ -159,7 +207,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Whining or groaning while steering",
+    "possible_causes_en": [
+      "Steering-assist system or belt load",
+      "Steering components depending on vehicle design"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "steering_squeal",
@@ -177,7 +231,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Squealing while turning the steering wheel",
+    "possible_causes_en": [
+      "Accessory belt",
+      "Steering system"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "suspension_clunk",
@@ -195,7 +255,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Clunking over bumps",
+    "possible_causes_en": [
+      "Sway-bar links or suspension bushings",
+      "Suspension or steering parts"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "suspension_rattle",
@@ -213,7 +279,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Rattling over potholes and bumps",
+    "possible_causes_en": [
+      "Suspension components or links",
+      "A loose cover or part underneath"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "exhaust_heatshield",
@@ -231,7 +303,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Underbody rattling with engine vibration",
+    "possible_causes_en": [
+      "Exhaust heat shield",
+      "Exhaust supports or fasteners"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "exhaust_roar",
@@ -249,7 +327,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Loud exhaust noise under acceleration",
+    "possible_causes_en": [
+      "An exhaust-system leak",
+      "An exhaust joint issue"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "exhaust_pop",
@@ -267,7 +351,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Popping from the exhaust",
+    "possible_causes_en": [
+      "Changes in combustion or exhaust flow",
+      "An exhaust or running issue needing inspection"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "belt_squeal",
@@ -285,7 +375,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Belt squeal under acceleration",
+    "possible_causes_en": [
+      "Accessory belt or tensioner",
+      "A pulley or engine accessory"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "belt_start",
@@ -303,7 +399,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Squeal immediately after starting",
+    "possible_causes_en": [
+      "Accessory-belt slip",
+      "A pulley or belt tensioner"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "engine_idle_tick",
@@ -321,7 +423,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Engine ticking at idle",
+    "possible_causes_en": [
+      "Injector or valve sounds that may be normal",
+      "Lubrication or mechanical noise requiring inspection"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "engine_rev_knock",
@@ -339,7 +447,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Engine knocking under acceleration",
+    "possible_causes_en": [
+      "Abnormal combustion under load",
+      "A possible mechanical issue"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "engine_idle_rattle",
@@ -357,7 +471,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Engine rattling at idle",
+    "possible_causes_en": [
+      "Belt tensioner or engine accessory",
+      "A loose part or heat shield"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "engine_hiss",
@@ -375,7 +495,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Hissing near the engine",
+    "possible_causes_en": [
+      "An air or vacuum leak",
+      "A cooling-system issue depending on other signs"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "engine_hot_hiss",
@@ -393,7 +519,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Hissing with elevated engine temperature",
+    "possible_causes_en": [
+      "A cooling problem or leak",
+      "Overheating requiring professional help"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "cabin_rattle",
@@ -411,7 +543,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Cabin rattling while driving",
+    "possible_causes_en": [
+      "An unsecured item or part",
+      "Interior trim or glass"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "ac_idle_rattle",
@@ -429,7 +567,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Rattling with AC on at idle",
+    "possible_causes_en": [
+      "Compressor clutch or another AC accessory",
+      "A vibrating cover or nearby part"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "ac_squeal",
@@ -447,7 +591,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Squealing with the AC on",
+    "possible_causes_en": [
+      "Accessory belt under AC load",
+      "A pulley or AC compressor"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "gear_grind",
@@ -465,7 +615,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Grinding when shifting a manual transmission",
+    "possible_causes_en": [
+      "Clutch or shift linkage",
+      "Gears or drivetrain components"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "starting_click",
@@ -483,7 +639,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Clicking while attempting to start",
+    "possible_causes_en": [
+      "Battery or starting electrical circuit",
+      "Starter or its connections"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "starting_grind",
@@ -501,7 +663,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Metallic grinding during startup",
+    "possible_causes_en": [
+      "Starter or engagement gears",
+      "A rotating starting-system component"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "wheel_road_variation",
@@ -519,7 +687,13 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "Humming that changes with the road surface",
+    "possible_causes_en": [
+      "Tire tread interacting with the road",
+      "A bearing if the sound persists independently of road surface"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   },
   {
     "id": "reverse_click",
@@ -537,6 +711,12 @@
     "record_type": "curated_conditional_pattern",
     "recording_verified": false,
     "diagnosis_confirmed": false,
-    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification."
+    "disclaimer": "Possible causes depend on user-described circumstances. No confirmed component or sound identification.",
+    "symptom_en": "A clunk when reversing",
+    "possible_causes_en": [
+      "Brake-pad movement in its supports",
+      "Brake or wheel components"
+    ],
+    "translation_provenance": "ai_authored_translation_of_existing_source_paraphrase_not_new_mechanic_validation"
   }
 ]

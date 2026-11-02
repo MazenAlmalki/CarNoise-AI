@@ -63,7 +63,7 @@ export function buildContextEngine({messages=[],current='',vehicleHistory=[],med
   earlierConversation:recent,
   priorCaseHistory:existingVehicles,
   mediaEvidence:observedMedia,
-  retrievalQuery:[...selected.slice(-3),currentText].filter(Boolean).join(' ؛ ').slice(0,1200),
+  retrievalQuery:[currentText,...selected.slice(-3)].filter(Boolean).join(' ؛ ').slice(0,1200),
   instructions:[
    'Use only user-authored descriptions as user facts; do not promote prior assistant guesses to confirmed diagnoses.',
    'Preserve details already supplied and avoid repeating answered questions.',

@@ -13,7 +13,8 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const provider=http.createServer(async(req,res)=>{
   let raw='';for await(const chunk of req)raw+=chunk;
   requests.push(JSON.parse(raw));res.setHeader('Content-Type','application/json');
-  res.end(JSON.stringify({choices:[{message:{content:'A squeal may have several causes. Its source is not confirmed.'}}]}));
+  const last=requests.at(-1).messages.at(-1).content;
+  res.end(JSON.stringify({choices:[{message:{content:last.includes('What should I do next')?'When does it happen?':'A squeal may have several causes. Its source is not confirmed.'}}]}));
  });
  const providerPort=await listen(provider);t.after(()=>new Promise(resolve=>provider.close(resolve)));
  const probe=http.createServer();const appPort=await listen(probe);await new Promise(resolve=>probe.close(resolve));
@@ -27,7 +28,7 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  });
  const base=`http://127.0.0.1:${appPort}`;
  const insight={type:'audio',audioEventAnalysis:{provider:'gemini',model:'gemini-test-audio',attempted:true,succeeded:true},audioObservation:{provider:'gemini',description:'Repeated high-pitched squealing is audible.',sounds:['squeal'],hasClearSound:true,uncertainty:'Source unknown.',diagnosisConfirmed:false},transcription:{hasRecognizedSpeech:false,text:''}};
- async function chat(mediaInsight){const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the attachment',language:'en',mediaInsight})});assert.equal(response.status,200);return response.json();}
+ async function chat(mediaInsight,extra={}){const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the attachment',language:'en',mediaInsight,...extra})});assert.equal(response.status,200);return response.json();}
  const status=await (await fetch(base+'/api/model-status')).json();assert.equal(status.audio.provider,'gemini');assert.equal(status.audio.configured,false);
  const reply=await chat(insight);assert.equal(reply.grounding,'language-model-with-retrieval');assert.equal(requests.length,1);
  assert.match(JSON.stringify(requests[0]),/Repeated high-pitched squealing/);
@@ -39,4 +40,17 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const speech=await chat({...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[]},transcription:{hasRecognizedSpeech:true,text:'السلام عليكم'}});
  assert.equal(speech.grounding,'language-model-with-retrieval');assert.equal(requests.length,2);
  assert.match(requests[1].messages.at(-1).content,/السلام عليكم/);
+ const fallbackSpeech=await chat({...insight,audioEventAnalysis:{...insight.audioEventAnalysis,succeeded:false},audioObservation:null,
+  transcription:{hasRecognizedSpeech:true,text:'The car squeals when braking',source:'groq_whisper_transcript_may_contain_errors'},
+  speechTranscriptionAnalysis:{attempted:true,provider:'groq',succeeded:true},warnings:['Gemini audio analysis failed: quota reached.']});
+ assert.equal(fallbackSpeech.grounding,'language-model-with-retrieval');assert.equal(requests.length,3);
+ assert.match(requests[2].messages.at(-1).content,/The car squeals when braking/);
+ const direct=await chat(null,{message:'What should I do next',vehicle:{name:'Camry 2018'},messages:[{role:'user',content:'It is still happening'}],
+  questionMemory:{questionsAsked:2,askedFields:['timing','location'],lastQuestions:['When does it happen?','Where does it come from?'],userDetails:['My brakes squeal when braking']}});
+ assert.equal(direct.grounding,'language-model-with-retrieval');assert.doesNotMatch(direct.reply,/\?/);assert.match(direct.reply,/brake|friction|pad/i);
+ const context=JSON.parse(requests[3].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
+ assert.equal(context.questionPlan.askQuestion,false);assert.equal(context.questionPlan.questionBudget,0);assert.equal(context.vehicle.modelId,'toyota-camry');assert.equal(context.vehicle.year,2018);
+ assert.ok(context.contextEngine.userReportedDetails.some(x=>x.includes('brakes squeal')));assert.ok(JSON.stringify(context.vehicle).length<1000);
+
+
 });

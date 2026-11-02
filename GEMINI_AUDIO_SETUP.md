@@ -85,3 +85,7 @@ Run `npm.cmd run check` and `npm.cmd test`. Optional FFmpeg integration tests ex
 Gemini HTTP 500/502/503/504 responses receive up to two additional attempts using the same model and audio excerpt, within one 60-second request deadline. Short `Retry-After` instructions are honored; longer delays are reported for a later manual retry. API keys, model-not-found responses, and quota errors are not automatically retried. This cannot repair an outage or grant access to a model.
 
 If it still fails, share the displayed **HTTP status** and your selected **model name**, without keys. Run `node scripts/list_gemini_models.js` to check model metadata access for your project. Listing a model does not prove audio input support or available inference quota.
+
+## Independent speech fallback
+
+If Gemini cannot supply intelligible speech or a clear sound event, `SPEECH_FALLBACK=auto` can reuse an existing Groq chat configuration for Whisper speech-to-text, or local Whisper when explicitly enabled. This uses a separate status from sound recognition, preserves Arabic/English words, and displays a correctable transcript. Provider audio disclosure and configuration are detailed in [YOUTUBE_SHORTS_RESEARCH.md](YOUTUBE_SHORTS_RESEARCH.md). Set `SPEECH_FALLBACK=none` to disable it.

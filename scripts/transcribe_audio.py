@@ -11,12 +11,14 @@ import sys
 def main():
     if len(sys.argv) != 3:
         raise ValueError("Expected audio/video path and UI language.")
-    file_path, ui_language = sys.argv[1:]
+    file_path, requested_language = sys.argv[1:]
+    if requested_language not in {"auto", "ar", "en"}:
+        raise ValueError("Speech language must be auto, ar or en.")
     from faster_whisper import WhisperModel
     model_name = os.environ.get("WHISPER_MODEL", "base")
     device = "cpu"
     model = WhisperModel(model_name, device=device, compute_type="int8", cpu_threads=4)
-    language = "ar" if ui_language == "ar" else None
+    language = None if requested_language == "auto" else requested_language
     segments, info = model.transcribe(
         file_path,
         language=language,

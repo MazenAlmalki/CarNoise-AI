@@ -6,6 +6,7 @@ import { spawn } from 'node:child_process';
 import { analyzeWaveform } from './audioWaveform.js';
 import { describeVehicleImages } from './llamaVision.js';
 import { audioProviderConfiguration, describeAudioWav } from './geminiAudio.js';
+import { speechFallbackConfiguration, transcribeWithGroq } from './speechFallback.js';
 
 const maxStdout=20_000;
 async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
@@ -40,11 +41,11 @@ async function videoFrames(input,temp){
  }
  return results;
 }
-async function speechTranscription(input,language){
- if(process.env.ENABLE_SPEECH_TRANSCRIPTION!=='1')return null;
- const python=process.env.AUDIO_PYTHON?.trim()||(process.platform==='win32'?'python':'python3');
+async function speechTranscription(input,language,env=process.env){
+ if(env.ENABLE_SPEECH_TRANSCRIPTION!=='1')return null;
+ const python=env.AUDIO_PYTHON?.trim()||(process.platform==='win32'?'python':'python3');
  const script=path.resolve('scripts','transcribe_audio.py');
- const output=await runProcess(python,[script,input,language],{timeout:180000,limit:12000});
+ const output=await runProcess(python,[script,input,env.SPEECH_LANGUAGE||'auto'],{timeout:180000,limit:12000});
  const parsed=JSON.parse(output.trim());
  if(typeof parsed.text!=='string'||typeof parsed.hasRecognizedSpeech!=='boolean')throw Error('Invalid transcription response');
  return parsed;
@@ -57,11 +58,20 @@ async function audioSimilarity(input){
  if(!Array.isArray(result.matches))throw new Error('Audio model response malformed.');
  return result;
 }
+async function audioExcerpt(source,temp,seconds,env){
+ const output=path.join(temp,'audio-excerpt.wav');
+ await runProcess(env.FFMPEG_PATH?.trim()||'ffmpeg',[
+  '-hide_banner','-loglevel','error','-i',source,'-map','0:a:0','-vn','-t',String(seconds),
+  '-ac','1','-ar','16000','-c:a','pcm_s16le','-f','wav','-y',output
+ ],{timeout:40000});
+ return readFile(output);
+}
 // Normalize a bounded excerpt locally; only the extracted audio reaches Gemini.
 async function analyzeAudioTrack(source,temp,language,options){
  const env=options.env||process.env;
  const warnings=[];
- let waveform=null,audio=null,transcription=null,audioObservation=null;
+ let waveform=null,audio=null,transcription=null,audioObservation=null,excerpt=null;
+ const speechTranscriptionAnalysis={attempted:false,provider:'none',succeeded:false};
  try{waveform=await analyzeWaveform(source);}catch(error){warnings.push('Audio waveform unavailable: '+String(error.message).slice(0,140));}
  let config;
  try{config=audioProviderConfiguration(env);}catch(error){warnings.push(error.message);}
@@ -70,12 +80,8 @@ async function analyzeAudioTrack(source,temp,language,options){
   audioEventAnalysis.attempted=true;
   try{
    if(!config.configured)throw Error('Gemini audio: set GEMINI_API_KEY in your server .env and restart the server.');
-   const output=path.join(temp,'audio-excerpt.wav');
-   await runProcess(env.FFMPEG_PATH?.trim()||'ffmpeg',[
-    '-hide_banner','-loglevel','error','-i',source,'-map','0:a:0','-vn','-t',String(config.excerptLimitSeconds),
-    '-ac','1','-ar','16000','-c:a','pcm_s16le','-f','wav','-y',output
-   ],{timeout:40000});
-   const result=await describeAudioWav(await readFile(output),language,options);
+   excerpt=await audioExcerpt(source,temp,config.excerptLimitSeconds,env);
+   const result=await describeAudioWav(excerpt,language,options);
    audioObservation=result.observation;transcription=result.transcription;audioEventAnalysis.succeeded=true;
    warnings.push('Only the first '+config.excerptLimitSeconds+' seconds at most were sent to Gemini. Hosted observations and transcripts may be wrong; no mechanical fault is confirmed.');
   }catch(error){
@@ -84,7 +90,7 @@ async function analyzeAudioTrack(source,temp,language,options){
   }
  }else{
   if(env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
-   try{transcription=await speechTranscription(source,language);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
+   try{speechTranscriptionAnalysis.attempted=true;speechTranscriptionAnalysis.provider='local';transcription=await speechTranscription(source,language,env);speechTranscriptionAnalysis.succeeded=Boolean(transcription);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
   }else warnings.push('Speech was not transcribed. Optional Whisper is disabled.');
   if(config?.provider==='local'&&env.ENABLE_AUDIO_CLAP==='1'){
    audioEventAnalysis.attempted=true;
@@ -92,7 +98,26 @@ async function analyzeAudioTrack(source,temp,language,options){
    catch(error){warnings.push('Optional CLAP unavailable: '+String(error.message).slice(0,140));}
   }else warnings.push('Sound-event classification is not configured; waveform metrics alone cannot identify sounds.');
  }
- return {audioObservation,transcription,audio,audioEventAnalysis,waveform,warnings};
+ // Recognized speech takes precedence over a failed sound classifier. Try ASR
+ // only when there is neither intelligible speech nor a useful hosted sound event.
+ if(transcription?.hasRecognizedSpeech&&audioEventAnalysis.provider==='gemini'){
+  Object.assign(speechTranscriptionAnalysis,{attempted:true,provider:'gemini',succeeded:true});
+ }
+ if(!transcription?.hasRecognizedSpeech&&!audioObservation?.hasClearSound){
+  try{
+   const fallback=speechFallbackConfiguration(env);
+   if(fallback.provider!=='none'&&!(speechTranscriptionAnalysis.attempted&&speechTranscriptionAnalysis.provider===fallback.provider)){
+    speechTranscriptionAnalysis.attempted=true;speechTranscriptionAnalysis.provider=fallback.provider;
+    if(!fallback.configured)throw Error('Speech transcription is not configured. Check SPEECH_FALLBACK and its credentials/dependencies.');
+    if(fallback.provider==='groq'){
+     excerpt=excerpt||await audioExcerpt(source,temp,config?.excerptLimitSeconds||30,env);
+     transcription=await transcribeWithGroq(excerpt,options);
+    }else transcription=await speechTranscription(source,language,env);
+    speechTranscriptionAnalysis.succeeded=Boolean(transcription);
+   }
+  }catch(error){warnings.push('Speech fallback unavailable: '+String(error.message).slice(0,240));}
+ }
+ return {audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings};
 }
 export async function analyzeUploadedMedia(file,language='ar',options={}){
  const extension=fileExtension(file.mimetype);
