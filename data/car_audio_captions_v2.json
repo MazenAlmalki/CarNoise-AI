@@ -1,0 +1,471 @@
+[
+  {
+    "id": "normal_idle",
+    "category": "engine_idle",
+    "caption_en": "Steady low rumbling of a car engine idling normally, without any distinct knock.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "rough_idle",
+    "category": "engine_idle",
+    "caption_en": "A running car engine idles unevenly with irregular sputters and rhythmic shuddering.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_ticking",
+    "category": "engine_idle",
+    "caption_en": "Quick light metallic ticking sound from a running car engine.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_knock",
+    "category": "engine_idle",
+    "caption_en": "Repeated deep metallic knocking beats from a running engine.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_rattle",
+    "category": "engine_idle",
+    "caption_en": "Loose metallic rattling and clattering from the engine compartment.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_misfire",
+    "category": "engine_idle",
+    "caption_en": "Uneven sputtering and repeated small pops from a car engine during idle.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_revs",
+    "category": "engine_idle",
+    "caption_en": "Vehicle engine revving up and down with changing pitch.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_hesitation",
+    "category": "engine_idle",
+    "caption_en": "Car engine accelerating unevenly with sputtering and brief interruptions.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "diesel_idle",
+    "category": "engine_idle",
+    "caption_en": "Steady rhythmic diesel engine clattering and rumbling.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_whistle",
+    "category": "engine_idle",
+    "caption_en": "High pitched whistling or whining from the engine bay.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_hiss",
+    "category": "engine_idle",
+    "caption_en": "Hissing or air leaking noise from under the hood.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "engine_backfire",
+    "category": "engine_idle",
+    "caption_en": "A sudden sharp popping or backfiring noise from a running engine.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "normal_start",
+    "category": "starting_electrical",
+    "caption_en": "A car starter turns over and the engine starts successfully.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "starter_click",
+    "category": "starting_electrical",
+    "caption_en": "Repeated rapid electrical clicking while attempting to start a car.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "starter_single_click",
+    "category": "starting_electrical",
+    "caption_en": "One loud click when the ignition is turned but the engine does not turn.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "slow_crank",
+    "category": "starting_electrical",
+    "caption_en": "A struggling starter slowly cranking a vehicle engine before starting.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "no_start_crank",
+    "category": "starting_electrical",
+    "caption_en": "An engine starter cranking repeatedly without the engine starting.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "electrical_buzz",
+    "category": "starting_electrical",
+    "caption_en": "Electrical buzzing or humming heard inside a car.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "relay_click",
+    "category": "starting_electrical",
+    "caption_en": "A quick small click from an automotive relay or switch.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "car_horn",
+    "category": "starting_electrical",
+    "caption_en": "A vehicle horn honking loudly.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "car_alarm",
+    "category": "starting_electrical",
+    "caption_en": "A car alarm blaring repetitive electronic beeps and siren-like tones.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "warning_beep",
+    "category": "starting_electrical",
+    "caption_en": "A vehicle dashboard warning beeping repeatedly.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "belt_squeal",
+    "category": "belts_cooling_aircon",
+    "caption_en": "High pitched squealing from an engine belt while a vehicle engine runs.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "belt_chirp",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Repeated short chirping squeaks from an engine accessory belt.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "pulley_whine",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Continuous high pitched whine of a rotating pulley or bearing under a hood.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "fan_noise",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Fast rotating car cooling fan whirring loudly.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "fan_rattle",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Car radiator fan rattling or hitting a loose shroud while spinning.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "ac_compressor_click",
+    "category": "belts_cooling_aircon",
+    "caption_en": "A brief mechanical click as a vehicle air conditioning compressor engages.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "ac_compressor_grind",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Rough grinding, groaning or rattling noise from a car air conditioning compressor.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "ac_blower_whir",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Air conditioning cabin blower fan spinning and blowing air.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "ac_blower_rattle",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Clicking and rattling of a vehicle interior ventilation fan.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "ac_hiss",
+    "category": "belts_cooling_aircon",
+    "caption_en": "Soft steady hissing sound from a car air conditioning system.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "brake_squeal",
+    "category": "brakes_wheels",
+    "caption_en": "A car's brakes making a continuous high pitched squeal when the vehicle slows.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "brake_grind",
+    "category": "brakes_wheels",
+    "caption_en": "Harsh metallic grinding or scraping while the driver applies the car brakes.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "brake_pulse",
+    "category": "brakes_wheels",
+    "caption_en": "Repetitive mechanical pulsing or chattering during braking.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "wheel_bearing_hum",
+    "category": "brakes_wheels",
+    "caption_en": "Low humming or droning sound from a rolling car wheel, increasing with driving speed.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "tire_rumble",
+    "category": "brakes_wheels",
+    "caption_en": "Low rumbling and roaring from vehicle tires rolling on pavement.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "tire_thump",
+    "category": "brakes_wheels",
+    "caption_en": "Regular repeating thumping sound from a rotating car tire.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "tire_squeal",
+    "category": "brakes_wheels",
+    "caption_en": "Car tires squealing or screeching on pavement.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "wheel_click",
+    "category": "brakes_wheels",
+    "caption_en": "Regular rhythmic clicking from a vehicle wheel while rolling.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "cv_joint_click",
+    "category": "brakes_wheels",
+    "caption_en": "Repeated clicking from a vehicle axle joint while turning at low speed.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "steering_squeak",
+    "category": "brakes_wheels",
+    "caption_en": "Squeaking or creaking sound while turning the steering wheel.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "power_steering_whine",
+    "category": "brakes_wheels",
+    "caption_en": "Whining or groaning sound while a car steering wheel is turned.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "suspension_clunk",
+    "category": "suspension_drivetrain",
+    "caption_en": "Dull clunking under a car when it drives over bumps.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "suspension_squeak",
+    "category": "suspension_drivetrain",
+    "caption_en": "Short squeaky rubbing or creaking from car suspension as it moves.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "suspension_rattle",
+    "category": "suspension_drivetrain",
+    "caption_en": "Light repeated clattering of loose parts beneath a moving car on rough road.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "transmission_whine",
+    "category": "suspension_drivetrain",
+    "caption_en": "Mechanical gear whine while a vehicle shifts or accelerates.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "gear_grind",
+    "category": "suspension_drivetrain",
+    "caption_en": "Grinding gear teeth and scraping while changing vehicle gear.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "transmission_clunk",
+    "category": "suspension_drivetrain",
+    "caption_en": "A single sharp clunk as a vehicle transmission engages drive.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "differential_howl",
+    "category": "suspension_drivetrain",
+    "caption_en": "High steady gear howling sound coming from a driving vehicle.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "driveshaft_rattle",
+    "category": "suspension_drivetrain",
+    "caption_en": "Metallic clattering underneath the middle of a moving car.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "exhaust_rattle",
+    "category": "suspension_drivetrain",
+    "caption_en": "Metallic rattling from a loose car exhaust pipe or heat shield.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "exhaust_leak",
+    "category": "suspension_drivetrain",
+    "caption_en": "Loud rhythmic puffing or ticking from a leaking car exhaust.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "exhaust_roar",
+    "category": "suspension_drivetrain",
+    "caption_en": "Loud low-pitched roaring sound coming from a car exhaust.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "exhaust_pop",
+    "category": "suspension_drivetrain",
+    "caption_en": "Short popping or crackling from a car exhaust pipe.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "door_squeak",
+    "category": "ambient_other",
+    "caption_en": "Creaking and squeaking sound as a car door opens or closes.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "door_slam",
+    "category": "ambient_other",
+    "caption_en": "A car door closing with a heavy solid slam.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "interior_rattle",
+    "category": "ambient_other",
+    "caption_en": "Plastic trim and small objects rattling inside a car cabin while moving.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "glass_rattle",
+    "category": "ambient_other",
+    "caption_en": "Glass window rattling inside a moving vehicle door.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "wind_rush",
+    "category": "ambient_other",
+    "caption_en": "Air rushing and wind buffeting against a vehicle microphone.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "passing_traffic",
+    "category": "ambient_other",
+    "caption_en": "Road traffic sounds with multiple passing vehicles.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "people_talking",
+    "category": "ambient_other",
+    "caption_en": "Human speech and conversation close to a microphone.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "speech_greeting",
+    "category": "ambient_other",
+    "caption_en": "A person speaking briefly in a microphone.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "radio_music",
+    "category": "ambient_other",
+    "caption_en": "Music playing from a car radio or stereo.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "silence",
+    "category": "ambient_other",
+    "caption_en": "Mostly quiet audio recording with faint background room noise.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "microphone_noise",
+    "category": "ambient_other",
+    "caption_en": "Wind buffeting and distortion noise from a recording microphone.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  },
+  {
+    "id": "unrelated_background",
+    "category": "ambient_other",
+    "caption_en": "Background household, public space or environmental noises instead of a vehicle sound.",
+    "classification_scope": "audio_event_similarity_only_not_mechanic_verified",
+    "origin": "curated_caption_not_from_youtube_link"
+  }
+]
