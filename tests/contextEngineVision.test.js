@@ -43,6 +43,11 @@ test('waveform and CLAP limits are explicit in media context',()=>{
  assert.match(x.mediaEvidence.limitation,/NOT a recognized car sound/);
 });
 
+test('older local vision model settings are ignored when using hosted Llama',()=>{
+ const cfg=visionConfiguration({CHAT_API_KEY:'test-key',VISION_MODEL:'old-local-vision-tag'});
+ assert.equal(cfg.model,'meta-llama/llama-4-scout');
+});
+
 test('vision uses remote Llama Scout and the private text API key',()=>{
  const cfg=visionConfiguration({CHAT_API_KEY:'test-key'});
  assert.equal(cfg.model,DEFAULT_VISION_MODEL);
