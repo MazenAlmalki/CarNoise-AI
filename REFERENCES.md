@@ -138,3 +138,13 @@ Actual implementation: `server/textRetrieval.js` performs keyword and phrase loo
 See `data/saudi_official_context_v1.json` for paraphrases and per-record source URLs. The 1,200 Saudi user-utterance examples are **synthetically generated** from existing source card titles and aliases; they have no claim of independent external collection, real owner experiences, or mechanic confirmation. The 124 additional colloquial aliases are author-created language examples. The underlying 40 card references are in `data/typed_symptoms_v1.json`.
 
 **Data licensing and verification:** Original publishers retain their own rights. Descriptions are newly authored paraphrases, not copied user reviews. The system does not store or expose real users' VIN, names, plates or personal information in this research corpus.
+
+
+## 10. Authored Saudi colloquial language and unusual-message examples (November 2, 2026)
+
+- `data/saudi_dialect_glossary_v1.json`: **128 author-curated examples**, including explanatory translations of Saudi everyday and automotive terminology. Not a third-party collected language corpus or published dictionary.
+- `data/saudi_conversation_edge_cases_v1.jsonl`: **204 synthetically authored variants** representing 51 user-intent scenarios. They are used for reasoning-prompt design and tests, **not mechanical fault evidence**.
+- `server/saudiDialect.js`: lightweight local matching, ambiguity flags and conversation-intent hints for the LLM.
+- `SAUDI_DIALECT_GUIDE.md`: project-specific descriptions and validation limitations.
+
+These authored linguistic examples have **no external source URL** because they are generated for this project. They must not be cited as real mechanic comments, independently observed user conversations or verified real-world vehicle cases. Original sources for automotive information remain in sections above.
