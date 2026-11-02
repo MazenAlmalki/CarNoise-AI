@@ -324,3 +324,16 @@ python scripts/import_kwerimoto.py
 - Updated frontend wording to distinguish successful audio upload/waveform processing from real sound recognition.
 - Added `tests/mediaRenderFailure.test.js` and corrected prior `tests/audioClarification.test.js` expectations.
 - This is a source-code fix; run `npm.cmd test`, confirm the CLAP error shown in the UI, and verify with a fresh short recording on the target laptop. Failed CLAP may still require installing Python dependencies, additional RAM or changing the inference model.
+
+
+### Phase 21 — Public YouTube sound research + three-stage clarification (November 2, 2026)
+
+- Compiled **28 video-topic metadata records from 8 real YouTube videos**, with source URLs, publisher/channel, source-described timestamps where available, suggested discussion categories and explicit unverified-audio labels. No audiovisual assets were downloaded and no labels were inferred from unheard recordings.
+- Added `data/sound_description_examples_v1.jsonl` with **536 synthetic phrasing examples** mapped to the 67 existing CLAP caption categories. This is an additional language testing corpus, **not real sound training**.
+- Added `server/soundReferences.js` to supply relevant public video topic links as *background reading* based on explicit user descriptions. Video metadata is not evidence of the user's sound.
+- Added `server/soundInterview.js` with a **3-step interview** for unrecognized sounds: location (6 choices), timing (8 choices), and sound texture (10 choices). Responses are accumulated as **user descriptions**, never presented as automatic audio findings.
+- If CLAP is enabled but produces no useful match or errors, the bot explains the situation and asks one focused question at a time. If CLAP is not configured at all, it instead presents **one optional Start describing sound** action before asking questions; this avoids repeating the earlier bug of immediately forcing noise choices on genuinely uploaded recordings.
+- The UI saves the guided interview stage in the reply and sends validated user choices to the backend; only after all three choices does the regular LLM generate an explanation informed by description and retrieved general evidence.
+- Added `tests/soundInterview.test.js` and updated older media clarification regressions, and included new server modules in the JS syntax check.
+- Source checks confirm 28 references, 536 synthetic descriptions, JS syntax validity and successful isolated 3-stage progression. Real CLAP accuracy and browser click-through require local on-device tests.
+- Details: `SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md`. **No YouTube audio was downloaded, used for fine-tuning or verified as a labeled recording.**
