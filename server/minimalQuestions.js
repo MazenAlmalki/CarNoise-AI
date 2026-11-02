@@ -70,9 +70,15 @@ export function enforceQuestionBudget(reply,plan,{language='ar'}={}){
  if(!raw)return raw;
  // Treat '?' as question marks, not as turn-boundary markers in URLs.
  let without=raw;
- const questions=[...raw.matchAll(/[^\n؟?]*[؟?]/g)];
- if(questions.length){
-  without=raw.replace(/[^\n؟?]*[؟?]/g,'').replace(/\s{2,}/g,' ').trim();
+ // Remove question clauses but preserve answer sentences before them.
+ // Iterate because a response may contain several follow-up questions.
+ if(/[؟?]/.test(raw)){
+  let previous='';
+  while(/[؟?]/.test(without)&&previous!==without){
+   previous=without;
+   without=without.replace(/(^|[.!؛،,\n])[^.!؛،,\n؟?]*[؟?]/g,'$1');
+  }
+  without=without.replace(/\s{2,}/g,' ').trim();
  }
  if(plan.askQuestion&&plan.questionBudget>0){
   const prompt=language==='en'?plan.suggestedQuestionEnglish:plan.suggestedQuestion;
