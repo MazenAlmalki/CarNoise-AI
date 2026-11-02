@@ -47,7 +47,7 @@ function validateResult(v) {
 app.get('/api/health',(_req,res)=>res.json({ok:true,chat:publicChatConfiguration()}));
 app.get('/api/model-status',(_req,res)=>{
  const chat=publicChatConfiguration();
- const visionModel=process.env.VISION_MODEL?.trim()||DEFAULT_VISION_MODEL;
+ const visionModel=process.env.VISION_MODEL?.trim()?.startsWith('meta-llama/')?process.env.VISION_MODEL.trim():DEFAULT_VISION_MODEL;
  const visionConfigured=chat.configured;
  res.json({
   chat,
@@ -96,7 +96,7 @@ app.get('/api/media-status',async(_req,res)=>{
   ffmpegReady:ffmpeg,
   waveformAnalysisReady:ffmpeg,
   videoFrameAnalysisReady:ffmpeg,
-  visionModelConfigured:process.env.VISION_MODEL?.trim()||DEFAULT_VISION_MODEL,
+  visionModelConfigured:process.env.VISION_MODEL?.trim()?.startsWith('meta-llama/')?process.env.VISION_MODEL.trim():DEFAULT_VISION_MODEL,
   visionApiConfigured:publicChatConfiguration().configured,
   audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',
   note:'Images and sampled video frames use hosted Meta Llama 4 Scout API; FFmpeg extracts video frames. CLAP is separate and optional. Waveform features cannot identify car defects.'
