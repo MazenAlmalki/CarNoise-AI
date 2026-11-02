@@ -17,14 +17,16 @@ test('unrecognized audio provides user-selectable descriptions without diagnoses
  assert.ok(source.includes("ما قدرت أتعرف على الكلام أو نوع الصوت"));
 });
 
-test('sound choices require a real sound classifier attempt',()=>{
+test('classifier failures report errors instead of offering generic sound guesses',()=>{
  const start=server.indexOf("app.post('/api/chat'");
  const end=server.indexOf('const history=buildChatHistory(',start);
  const route=server.slice(start,end);
  assert.ok(route.includes("!spokenText"));
  assert.ok(route.includes("mediaObject?.audioEventAnalysis?.attempted===true"));
  assert.ok(route.includes("audio-classifier-not-configured"));
- assert.ok(route.includes("if(!classified && wasAttempted)return res.json(mediaClarification(language,true))"));
+ assert.ok(route.includes("if(!classified && wasAttempted){"));
+ assert.ok(route.includes("audio-classifier-error"));
+ assert.ok(route.includes("audioError:typeof failure"));
  assert.ok(!route.includes("return res.json(mediaClarification(language));"));
 });
 
