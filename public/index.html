@@ -11,6 +11,7 @@
     />
     <title>ورشتك | Warshatak</title>
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/workshop.css" />
     <script defer src="/app.js"></script>
   </head>
   <body>
@@ -122,6 +123,10 @@
         </header>
         <main class="main" id="main">
           <div id="intro" class="intro">
+            <div class="workshop-heading">
+              <span data-i18n="workshopHeading">مساحة لسيارتك. وراحة بالك.</span
+              ><span class="workshop-edition">WARSHATAK / GARAGE</span>
+            </div>
             <div class="welcome-row">
               <div class="welcome-copy">
                 <div class="eyebrow">
@@ -142,21 +147,22 @@
                   >
                 </div>
               </div>
-              <div class="companion-scene" aria-hidden="true">
-                <div class="orbit orbit-one"></div>
-                <div class="orbit orbit-two"></div>
-                <span class="scene-cross cross-one">+</span
-                ><span class="scene-cross cross-two">+</span
-                ><img
-                  class="companion"
-                  src="/assets/companion.svg"
-                  width="360"
-                  height="300"
-                  alt=""
-                /><span class="companion-tag"
-                  ><i></i
-                  ><span data-i18n="companionTag">مساعدك في المشوار</span></span
-                >
+              <div class="mechanic-stage" aria-hidden="true">
+                <div class="workshop-stamp">
+                  <svg class="icon"><use href="/assets/icons.svg#car" /></svg
+                  ><span data-i18n="workshopStamp">ورشتك الرقمية</span
+                  ><span class="stamp-line"></span>
+                </div>
+                <div class="stage-disc"></div>
+                <div class="stage-grid"></div>
+                <svg class="mechanic mechanic-hero" viewBox="0 0 380 360">
+                  <use data-mechanic href="/assets/mechanic.svg#welcome" />
+                </svg>
+                <div class="mechanic-caption">
+                  <span class="caption-line"></span
+                  ><span data-i18n="companionTag">معك، خطوة بخطوة</span>
+                </div>
+                <span class="stage-coordinate">W / 01</span>
               </div>
             </div>
             <div class="section-heading">
@@ -166,7 +172,11 @@
               >
             </div>
             <div class="suggestions">
-              <button class="suggestion" data-example="brakes">
+              <button
+                class="suggestion"
+                data-example="brakes"
+                data-card-number="01"
+              >
                 <span class="suggest-icon"
                   ><svg class="icon">
                     <use href="/assets/icons.svg#brake" /></svg></span
@@ -179,7 +189,11 @@
                   <use href="/assets/icons.svg#arrow" />
                 </svg>
               </button>
-              <button class="suggestion" data-example="starting">
+              <button
+                class="suggestion"
+                data-example="starting"
+                data-card-number="02"
+              >
                 <span class="suggest-icon"
                   ><svg class="icon">
                     <use href="/assets/icons.svg#bolt" /></svg></span
@@ -192,7 +206,11 @@
                   <use href="/assets/icons.svg#arrow" />
                 </svg>
               </button>
-              <button class="suggestion" data-example="driving">
+              <button
+                class="suggestion"
+                data-example="driving"
+                data-card-number="03"
+              >
                 <span class="suggest-icon"
                   ><svg class="icon">
                     <use href="/assets/icons.svg#wave" /></svg></span
@@ -206,19 +224,14 @@
                 </svg>
               </button>
             </div>
-            <div class="feature-strip">
-              <div>
-                <svg class="icon"><use href="/assets/icons.svg#chat" /></svg
-                ><span data-i18n="featureOne">سجل مستقل لكل سيارة</span>
-              </div>
-              <div>
-                <svg class="icon"><use href="/assets/icons.svg#attach" /></svg
-                ><span data-i18n="featureTwo">نص، صوت، صورة وفيديو</span>
-              </div>
-              <div>
-                <span class="language-glyph">ع</span
-                ><span data-i18n="featureThree">يفهم كلامك، بطريقتك</span>
-              </div>
+            <div class="mechanic-tip">
+              <svg class="icon tip-marker" aria-hidden="true">
+                <use href="/assets/icons.svg#arrow" /></svg
+              ><strong data-i18n="tipLabel">نصيحة من الورشة</strong
+              ><span data-i18n="mechanicTip"
+                >قل لنا متى يظهر الصوت، وش يتغيّر معه. التفاصيل الصغيرة
+                تفرق.</span
+              >
             </div>
           </div>
           <section
@@ -243,13 +256,13 @@
             role="status"
             aria-live="polite"
           >
-            <img
-              class="typing-avatar"
-              src="/assets/brand-mark.svg"
-              alt=""
-              width="36"
-              height="36"
-            />
+            <svg
+              class="mechanic mechanic-small"
+              viewBox="0 0 380 360"
+              aria-hidden="true"
+            >
+              <use data-mechanic href="/assets/mechanic.svg#thinking" />
+            </svg>
             <div class="typing-body">
               <span id="typingLabel" data-i18n="analyzing"
                 >جاري تجهيز الرد...</span
@@ -262,8 +275,32 @@
           <div id="errorBox" class="error-box hidden" role="alert"></div>
         </main>
         <div class="composer-area">
+          <div
+            id="recordingStatus"
+            class="recording-status hidden"
+            role="status"
+          >
+            <svg
+              class="mechanic mechanic-small"
+              viewBox="0 0 380 360"
+              aria-hidden="true"
+            >
+              <use data-mechanic href="/assets/mechanic.svg#recording" /></svg
+            ><span
+              ><strong data-i18n="recordingNow">التسجيل شغّال</strong
+              ><small data-i18n="recordingHint"
+                >اضغط إيقاف، ثم اسمع المقطع قبل الإرسال.</small
+              ></span
+            ><time id="recordingDuration" dir="ltr" aria-hidden="true"
+              >00:00</time
+            ><span class="recording-led" aria-hidden="true"></span>
+          </div>
           <div id="mediaPreview" class="media-preview hidden"></div>
           <form id="composer" class="composer">
+            <div class="drop-target" aria-hidden="true">
+              <svg class="icon"><use href="/assets/icons.svg#attach" /></svg
+              ><span data-i18n="dropLabel">أفلت الملف هنا لإرفاقه</span>
+            </div>
             <div class="composer-main">
               <label for="description" class="sr-only" data-i18n="inputLabel"
                 >وصف مشكلة السيارة</label

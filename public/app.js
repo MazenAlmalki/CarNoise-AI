@@ -3,28 +3,28 @@ const $=id=>document.getElementById(id);
 const translations={
   "ar": {
     "brandSub": "مساعد سيارتك الذكي",
-    "newAnalysis": "محادثة جديدة",
+    "newAnalysis": "افتح موضوع جديد",
     "myCars": "سياراتي",
     "history": "محادثات السيارة",
     "localPrivacy": "سجلك على هذا الجهاز. تُرسل رسائلك للمزود، والمرفقات تُرفع مؤقتًا عند الإرسال.",
     "workspace": "مساحة سيارتك",
     "aiAssistant": "مساعد ذكي",
-    "eyebrow": "وضوح أكثر. قلق أقل.",
-    "heroTitle": "كل صوت، وراه قصة.<br><span>خلّنا نفهمها سوا.</span>",
-    "heroDescription": "اوصف اللي تلاحظه، أو أرسل مقطع. نرتّب لك الاحتمالات والخطوة الجاية، بكل بساطة.",
-    "tryExample": "من وين نبدأ؟",
-    "exampleBrakes": "صرير مع الفرامل",
-    "exampleStart": "طقطقة أول التشغيل",
-    "exampleDrive": "ونة مع السرعة",
+    "eyebrow": "أهلًا بك في ورشتك",
+    "heroTitle": "سيارتك لها حكاية.<br><span>نفهمها مع بعض.</span>",
+    "heroDescription": "صوت جديد؟ رجّة غريبة؟ اكتب اللي تلاحظه أو شارك مقطع، ونرتّب لك الاحتمالات والخطوة الجاية.",
+    "tryExample": "وش اللي ملاحظ؟",
+    "exampleBrakes": "الفرامل تصفّر",
+    "exampleStart": "طقطقة عند التشغيل",
+    "exampleDrive": "صوت يزيد مع السرعة",
     "featureOne": "سجل مستقل لكل سيارة",
     "featureTwo": "نص، صوت، صورة وفيديو",
     "featureThree": "يفهم كلامك، بطريقتك",
-    "inputPlaceholder": "وش تلاحظ على سيارتك؟ خذ راحتك، نسمعك.",
+    "inputPlaceholder": "خذ راحتك… وش اللي صاير مع سيارتك؟",
     "attach": "إرفاق",
     "record": "تسجيل",
     "stop": "إيقاف",
     "analyze": "إرسال",
-    "analyzing": "نرتّب لك التفاصيل",
+    "analyzing": "نراجع تفاصيل كلامك",
     "disclaimer": "ورشتك يساعدك تفهم الاحتمالات، ولا يغني عن فحص مختص. المرفقات تُرفع مؤقتًا عند الإرسال.",
     "addVehicle": "إضافة سيارة",
     "vehicleName": "اسم السيارة",
@@ -123,13 +123,13 @@ const translations={
     "skipToChat": "انتقل للمحادثة",
     "madeFor": "معك، في كل مشوار.",
     "welcomeNote": "إرشاد يساعدك تفهم، مو تشخيص نهائي.",
-    "companionTag": "مساعدك في المشوار",
-    "exampleHint": "اختر مثال أو اكتب بطريقتك",
-    "brakesHint": "صوت يظهر عند التهدئة",
-    "startHint": "خلّنا نعرف متى يبدأ",
-    "driveHint": "نفهم الصوت خطوة بخطوة",
+    "companionTag": "معك، خطوة بخطوة",
+    "exampleHint": "بداية بسيطة لمحادثة مفيدة",
+    "brakesHint": "تظهر مع الضغط على الفرامل",
+    "startHint": "أول ما أشغّل السيارة",
+    "driveHint": "يتغيّر وأنا أمشي",
     "inputLabel": "وصف مشكلة السيارة",
-    "composerHint": "مساحة للكلام، والصوت، وكل التفاصيل.",
+    "composerHint": "اكتبها، سجّلها، أو شاركنا مقطع.",
     "enterHint": "Enter للإرسال · Shift + Enter لسطر جديد",
     "openMenu": "فتح قائمة السيارات",
     "closeMenu": "إغلاق القائمة",
@@ -139,32 +139,40 @@ const translations={
     "attachLabel": "إرفاق صورة أو صوت أو فيديو",
     "recordLabel": "تسجيل مقطع صوتي",
     "stopLabel": "إيقاف التسجيل",
-    "closeDialog": "إغلاق نافذة إضافة سيارة"
+    "closeDialog": "إغلاق نافذة إضافة سيارة",
+    "workshopHeading": "مساحة لسيارتك. وراحة بالك.",
+    "workshopStamp": "ورشتك الرقمية",
+    "tipLabel": "نصيحة من الورشة",
+    "mechanicTip": "قل لنا متى يظهر الصوت، وش يتغيّر معه. التفاصيل الصغيرة تفرق.",
+    "recordingNow": "التسجيل شغّال",
+    "recordingHint": "اضغط إيقاف، ثم اسمع المقطع قبل الإرسال.",
+    "dropLabel": "أفلت الملف هنا لإرفاقه",
+    "networkError": "ما قدرنا نوصل للسيرفر. تأكد أن التطبيق شغّال وافتحه من عنوانه الصحيح، ثم جرّب إرسال رسالتك مرة ثانية."
   },
   "en": {
     "brandSub": "Your car companion",
-    "newAnalysis": "New conversation",
+    "newAnalysis": "Start a conversation",
     "myCars": "My vehicles",
     "history": "Conversations",
     "localPrivacy": "History stays on this device. Messages go to your provider; attachments upload temporarily on Send.",
     "workspace": "Your garage",
     "aiAssistant": "AI assistant",
-    "eyebrow": "MORE CLARITY. LESS WORRY.",
-    "heroTitle": "Every sound has a story.<br><span>Let’s work it out.</span>",
-    "heroDescription": "Tell us what you notice, or share a clip. We’ll explore the possibilities and your next step, together.",
-    "tryExample": "Where shall we start?",
-    "exampleBrakes": "Brake squeal",
-    "exampleStart": "Startup clicking",
-    "exampleDrive": "Humming at speed",
+    "eyebrow": "WELCOME TO YOUR WORKSHOP",
+    "heroTitle": "Your car has a story.<br><span>Let’s understand it.</span>",
+    "heroDescription": "A new noise? An unusual shake? Tell us what you notice or share a clip. We’ll explore the possibilities and a sensible next step.",
+    "tryExample": "What have you noticed?",
+    "exampleBrakes": "My brakes squeal",
+    "exampleStart": "Clicking on startup",
+    "exampleDrive": "A noise at speed",
     "featureOne": "A history for every car",
     "featureTwo": "Text, audio, photo & video",
     "featureThree": "Your words. Your language.",
-    "inputPlaceholder": "What’s going on with your car? We’re listening.",
+    "inputPlaceholder": "Take your time. What’s going on with your car?",
     "attach": "Attach",
     "record": "Record",
     "stop": "Stop",
     "analyze": "Send",
-    "analyzing": "Connecting the details",
+    "analyzing": "Considering your details",
     "disclaimer": "Warshatak explores possibilities, not diagnoses. Consult a qualified mechanic. Attachments upload temporarily on Send.",
     "addVehicle": "Add a vehicle",
     "vehicleName": "Vehicle name",
@@ -263,13 +271,13 @@ const translations={
     "skipToChat": "Skip to conversation",
     "madeFor": "With you. Every mile.",
     "welcomeNote": "Helpful guidance. Never a final diagnosis.",
-    "companionTag": "Your companion on the road",
-    "exampleHint": "Pick a prompt or use your own words",
-    "brakesHint": "A sound when slowing down",
-    "startHint": "Let’s find when it starts",
-    "driveHint": "Explore it step by step",
+    "companionTag": "With you, step by step",
+    "exampleHint": "A small starting point. A useful conversation.",
+    "brakesHint": "When I press the brakes",
+    "startHint": "As I start the engine",
+    "driveHint": "It changes as I drive",
     "inputLabel": "Describe your car problem",
-    "composerHint": "A little context goes a long way.",
+    "composerHint": "Write it, record it, or share a clip.",
     "enterHint": "Enter to send · Shift + Enter for a new line",
     "openMenu": "Open vehicle menu",
     "closeMenu": "Close menu",
@@ -279,7 +287,15 @@ const translations={
     "attachLabel": "Attach a photo, audio or video",
     "recordLabel": "Record audio",
     "stopLabel": "Stop recording",
-    "closeDialog": "Close add vehicle dialog"
+    "closeDialog": "Close add vehicle dialog",
+    "workshopHeading": "A space for your car. A little peace of mind.",
+    "workshopStamp": "YOUR DIGITAL WORKSHOP",
+    "tipLabel": "A tip from the workshop",
+    "mechanicTip": "Tell us when it happens and what changes it. Small details make a difference.",
+    "recordingNow": "Recording is on",
+    "recordingHint": "Stop, then listen to your clip before sending.",
+    "dropLabel": "Drop your file here to attach",
+    "networkError": "We couldn’t reach the app server. Make sure it is running and open the app at its server address, then try sending again."
   }
 };
 function icon(name) {
@@ -295,10 +311,21 @@ function loadState(){try{const data=JSON.parse(localStorage.getItem(STORAGE_KEY)
 const state=loadState();
 let session=null,questionIndex=0,submitting=false,pendingMedia=null,pendingUrl=null,recording=null,mediaStream=null,mediaChunks=[],recorder=null;
 let mediaRenderVersion=0;
+let visibleThreadId=null,visibleMessageCount=0;
+let recordingStartedAt=0,recordingClock=null;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
 const textNode=(tag,text,cls)=>{const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;};
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{showError(t('storageError'));}}
-function showError(message){$('errorBox').replaceChildren();$('errorBox').textContent=message||'';$('errorBox').classList.toggle('hidden',!message);}
+function showError(message){
+ $('errorBox').replaceChildren();
+ if(message){
+  const mascot=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  mascot.setAttribute('viewBox','0 0 380 360');mascot.setAttribute('aria-hidden','true');mascot.classList.add('mechanic','mechanic-small');
+  const use=document.createElementNS('http://www.w3.org/2000/svg','use');use.setAttribute('href','/assets/mechanic.svg#error');mascot.append(use);
+  $('errorBox').append(mascot,textNode('span',message,'error-copy'));
+ }
+ $('errorBox').classList.toggle('hidden',!message);
+}
 function carName(car){return car.name||(state.lang==='ar'?car.nameAr:car.nameEn)||t('defaultCar');}
 function selectedCar(){return state.cars.find(c=>c.id===state.carId)||state.cars[0];}
 function dateLabel(iso){return new Date(iso).toLocaleDateString(state.lang==='ar'?'ar-SA':'en-US',{day:'numeric',month:'short'});}
@@ -335,13 +362,14 @@ function applySettings(){
  document.title=state.lang==='ar'?'ورشتك | مساعد سيارتك':'Warshatak | Your Car Companion';
  $('languageSwitch').textContent=state.lang==='ar'?'EN':'عربي';
  $('themeSwitch').replaceChildren(icon(state.theme==='dark'?'sun':'moon'));
- document.querySelector('meta[name="theme-color"]').content=state.theme==='dark'?'#0d191b':'#f7f9f6';
+ document.querySelector('meta[name="theme-color"]').content=state.theme==='dark'?'#141e1e':'#f5f3ec';
  const labels={menuButton:'openMenu',closeSidebar:'closeMenu',languageSwitch:'changeLanguage',themeSwitch:state.theme==='dark'?'themeLight':'themeDark',addCar:'addVehicle',attachButton:'attachLabel',recordButton:recording?'stopLabel':'recordLabel',cancelCar:'closeDialog'};
  for(const [id,key] of Object.entries(labels)){ $(id).setAttribute('aria-label',t(key));$(id).title=t(key); }
  $('recordButton').querySelector('span').textContent=recording?t('stop'):t('record');
  $('typingLabel').textContent=t('analyzing');
  renderSidebar();
  if(session)renderSession();
+ syncMechanicState();
 }
 function addMessage(message,role){
  const wrap=textNode('div','','message '+role);
@@ -352,6 +380,7 @@ function addMessage(message,role){
  $('messages').append(wrap);
 }
 function newAnalysis(){
+ visibleThreadId=null;visibleMessageCount=0;
  session=null;questionIndex=0;submitting=false;$('attachButton').disabled=false;$('recordButton').disabled=false;$('intro').classList.remove('hidden');$('conversation').classList.add('hidden');$('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');$('busy').classList.add('hidden');$('messages').replaceChildren();$('description').disabled=false;$('sendButton').disabled=false;$('description').value='';showError('');clearPendingMedia();renderSidebar();
 }
 function createCase(description){
@@ -445,7 +474,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
   if(session?.id===active.id){
    $('description').value=message;
    renderSession();
-   showError(error.message||t('answerFailed'));
+   showError(error instanceof TypeError&&/fetch|network/i.test(error.message)?t('networkError'):error.message||t('answerFailed'));
   }
  }finally{
   submitting=false;$('busy').classList.add('hidden');
@@ -494,8 +523,10 @@ function renderSession(){
   $('intro').classList.add('hidden');$('conversation').classList.remove('hidden');
   $('messages').replaceChildren();$('resultBox').replaceChildren();
   $('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');
+  const previousCount=visibleThreadId===session.id?visibleMessageCount:0;
   for(const [index,msg] of session.messages.entries()){
    addMessage(msg.content,msg.role);
+   if(index<previousCount)$('messages').lastElementChild.classList.add('message-settled');
    if(msg.role==='assistant'&&Array.isArray(msg.clarificationOptions)){
     renderAudioClarifications(msg,index===session.messages.length-1);
    }
@@ -509,6 +540,7 @@ function renderSession(){
     $('messages').append(cited);
    }
   }
+  visibleThreadId=session.id;visibleMessageCount=session.messages.length;
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
   if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'تم فحص عناصر مرئية أو خصائص أولية للإشارة الصوتية، وهذا ليس تشخيصًا للعطل.':'Basic image or audio-signal features were processed; this is not a fault diagnosis.','media-warning'));
@@ -573,11 +605,18 @@ async function analyze(){
  }catch(e){showError(e.message||t('answerFailed'));const retry=textNode('button',t('retry'),'retry');retry.type='button';retry.addEventListener('click',analyze);$('errorBox').append(document.createElement('br'),retry);}
  finally{submitting=false;$('busy').classList.add('hidden');}
 }
-function loadCase(entry){clearPendingMedia();session=entry;renderSidebar();showError('');renderSession();}
+function loadCase(entry){visibleThreadId=null;visibleMessageCount=0;clearPendingMedia();session=entry;renderSidebar();showError('');renderSession();}
 async function deleteMediaBlob(id){
  const db=await openDb();
  try{await new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
  finally{db.close();}
+}
+function closeWorkshopDialog(dialog,value=''){
+ if(!dialog.open||dialog.dataset.closing)return;
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches||!dialog.animate){dialog.close(value);return;}
+ dialog.dataset.closing='true';
+ const motion=dialog.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:'translateY(8px)'}],{duration:140,easing:'ease-in'});
+ motion.finished.catch(()=>{}).then(()=>{dialog.close(value);delete dialog.dataset.closing;});
 }
 function confirmDeletion(message,title){
  const dialog=$('confirmDialog');
@@ -704,17 +743,17 @@ async function recordToggle(){
   recorder.onstop=()=>{
    const blob=new Blob(mediaChunks,{type:recorder.mimeType||'audio/webm'});const type=blob.type.split(';')[0];
    if(blob.size>0)mediaFile(new File([blob],'recording-'+Date.now()+'.webm',{type}));
-   mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;recording=false;
+   mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;recording=false;stopRecordingClock();
    $('recordButton').setAttribute('aria-label',t('recordLabel'));
    $('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');
   };
-  recorder.start();recording=true;$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
- }catch{showError(t('recordError'));mediaStream?.getTracks().forEach(track=>track.stop());}
+  recorder.start();recording=true;startRecordingClock();$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
+ }catch{recording=false;stopRecordingClock();showError(t('recordError'));mediaStream?.getTracks().forEach(track=>track.stop());}
 }
 $('addCar').addEventListener('click',openCarDialog);
 $('carForm').addEventListener('submit',e=>{
  e.preventDefault();const name=$('carName').value.trim();if(!name)return;
- const car={id:makeId(),name};state.cars.push(car);state.carId=car.id;persist();$('carDialog').close();$('carForm').reset();newAnalysis();closeNav();
+ const car={id:makeId(),name};state.cars.push(car);state.carId=car.id;persist();closeWorkshopDialog($('carDialog'));$('carForm').reset();newAnalysis();closeNav();
 });
 for(const id of ['cancelCar','cancelCarBottom'])$(id).addEventListener('click',()=>$('carDialog').close());
 $('languageSwitch').addEventListener('click',()=>{state.lang=state.lang==='ar'?'en':'ar';if(session&&Array.isArray(session.messages))session.lang=state.lang;persist();applySettings();});
@@ -764,3 +803,38 @@ mobileLayout.addEventListener('change',syncNavigation);
 // Keep the off-canvas menu out of the keyboard order while it is closed.
 new MutationObserver(syncNavigation).observe($('sidebar'),{attributes:true,attributeFilter:['class']});
 syncNavigation();
+
+// The mechanic reflects actual interface state; no inferred audio or diagnostic state.
+function syncMechanicState(){
+ const pose=recording?'recording':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':'welcome';
+ document.body.dataset.assistantState=pose;
+ if(recording){$('sendButton').disabled=true;$('attachButton').disabled=true;}
+ document.querySelectorAll('[data-mechanic]').forEach(use=>use.setAttribute('href','/assets/mechanic.svg#'+pose));
+}
+function updateRecordingClock(){
+ const seconds=Math.floor((performance.now()-recordingStartedAt)/1000);
+ $('recordingDuration').textContent=String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');
+}
+function startRecordingClock(){
+ clearInterval(recordingClock);recordingStartedAt=performance.now();updateRecordingClock();
+ recordingClock=setInterval(updateRecordingClock,250);
+ $('recordingStatus').classList.remove('hidden');$('sendButton').disabled=true;
+ $('recordButton').setAttribute('aria-pressed','true');syncMechanicState();
+}
+function stopRecordingClock(){
+ clearInterval(recordingClock);recordingClock=null;$('recordingStatus').classList.add('hidden');
+ $('recordButton').setAttribute('aria-pressed','false');
+ $('sendButton').disabled=Boolean(submitting||(session&&!Array.isArray(session.messages)));
+ $('attachButton').disabled=Boolean(submitting);syncMechanicState();
+}
+new MutationObserver(syncMechanicState).observe($('busy'),{attributes:true,attributeFilter:['class']});
+new MutationObserver(syncMechanicState).observe($('errorBox'),{attributes:true,attributeFilter:['class']});
+syncMechanicState();
+
+// Native dialogs retain focus management; close motion is bounded and optional.
+for(const dialog of [$('carDialog'),$('confirmDialog')]){
+ dialog.addEventListener('cancel',event=>{event.preventDefault();closeWorkshopDialog(dialog,'cancel');});
+}
+$('confirmDialog').querySelector('form').addEventListener('submit',event=>{
+ event.preventDefault();closeWorkshopDialog($('confirmDialog'),event.submitter?.value||'cancel');
+});

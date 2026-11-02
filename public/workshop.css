@@ -1,0 +1,1076 @@
+/* The workshop edition builds on shared component styles and bundled typefaces. */
+:root {
+  --bg: #141e1e;
+  --panel: #1b2827;
+  --panel2: #233331;
+  --surface: #2c3e38;
+  --border: #3c4b44;
+  --text: #f4f1e7;
+  --muted: #bbc5b8;
+  --subtle: #a4b0a2;
+  --accent: #eebc83;
+  --accentText: #312516;
+  --shadow: #07111136;
+  --grid: #b7c1a70a;
+  --workshop-green: #a3bea3;
+}
+:root[data-theme="light"] {
+  --bg: #f5f3ec;
+  --panel: #fffef8;
+  --panel2: #ebece0;
+  --surface: #e2e6d6;
+  --border: #d3d8c8;
+  --text: #223c32;
+  --muted: #53634e;
+  --subtle: #626c57;
+  --accent: #875022;
+  --accentText: #fffaf1;
+  --shadow: #273d2310;
+  --grid: #6c785b09;
+  --workshop-green: #446347;
+}
+body {
+  font-size: 14px;
+}
+.sidebar {
+  width: 284px;
+  flex-basis: 284px;
+  padding: 30px 21px 20px;
+  background: var(--panel);
+  border-inline-end-style: solid;
+}
+.brand {
+  margin: 0 7px 34px;
+  gap: 14px;
+}
+.brand-name strong {
+  font-size: 29px;
+  font-weight: 600;
+}
+.brand-name small {
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--subtle);
+}
+.brand-icon {
+  border-radius: 14px;
+  box-shadow: 0 5px 14px var(--shadow);
+}
+.full {
+  font-size: 14px;
+  min-height: 48px;
+  border-radius: 10px;
+  padding-inline: 16px;
+}
+.side-label {
+  font-size: 12px;
+  margin: 30px 8px 12px;
+}
+.plus-button,
+.icon-button {
+  min-width: 36px;
+  min-height: 36px;
+}
+.car-row {
+  padding: 15px 10px;
+  gap: 12px;
+}
+.car-name {
+  font-size: 14px;
+}
+.car-symbol {
+  width: 40px;
+  height: 40px;
+  background: var(--panel);
+  border-color: var(--border);
+}
+.folder-item:has(.active) {
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  box-shadow: none;
+  position: relative;
+}
+.folder-item:has(.active)::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 15px;
+  width: 3px;
+  border-radius: 4px;
+  background: var(--accent);
+}
+.folder-item:has(.active)::after {
+  content: "";
+  position: absolute;
+  inset-inline: 13px;
+  bottom: 5px;
+  height: 4px;
+  border-inline: 1px solid var(--subtle);
+  border-bottom: 1px solid var(--subtle);
+  opacity: 0.35;
+  pointer-events: none;
+}
+.car-row.active {
+  color: var(--text);
+}
+.history-row {
+  padding: 12px 10px;
+}
+.history-name {
+  font-size: 13px;
+}
+.history-date {
+  font-size: 11px;
+}
+.empty-side {
+  padding: 22px 14px;
+  line-height: 1.9;
+  font-size: 13px;
+  border-radius: 10px;
+}
+.empty-side::before {
+  content: "W.";
+  font:
+    500 23px Inter,
+    sans-serif;
+  color: var(--workshop-green);
+  margin-bottom: 13px;
+}
+.privacy-note {
+  font-size: 11px;
+  line-height: 1.9;
+}
+.made {
+  font-size: 11px;
+}
+.workspace {
+  background-size: 28px 28px;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+}
+.topbar {
+  height: 84px;
+  margin-inline: 38px;
+}
+.location-kicker,
+.live-dot {
+  font-size: 12px;
+}
+.current-location strong {
+  font-size: 14px;
+}
+.pill-btn {
+  width: 40px;
+  height: 38px;
+  font-size: 11px;
+  background: var(--panel);
+}
+.live-dot i {
+  background: var(--workshop-green);
+  box-shadow: none;
+}
+.main {
+  width: min(1040px, calc(100% - 90px));
+  padding: 24px 0;
+  overflow-y: auto;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.workshop-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 17px;
+  font-size: 12px;
+  color: var(--subtle);
+}
+.workshop-edition {
+  font:
+    500 9px Inter,
+    sans-serif;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
+.welcome-row {
+  grid-template-columns: 1.25fr 1fr;
+  gap: 30px;
+  min-height: 340px;
+  padding: 24px 0 10px;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: var(--workshop-green);
+}
+.small-line {
+  background: var(--workshop-green);
+  width: 25px;
+}
+.intro h1 {
+  font-size: clamp(36px, 3.5vw, 53px);
+  line-height: 1.65;
+  letter-spacing: -1.7px;
+  font-weight: 500;
+  margin: 14px 0 16px;
+  filter: none;
+}
+.intro h1 span {
+  color: var(--accent);
+}
+.subtitle {
+  font-size: 14px;
+  line-height: 2;
+  max-width: 440px;
+  margin-bottom: 20px;
+}
+.welcome-note {
+  font-size: 11px;
+  gap: 7px;
+}
+.mechanic-stage {
+  height: 340px;
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.stage-disc {
+  position: absolute;
+  width: 268px;
+  height: 268px;
+  border-radius: 50%;
+  background: var(--panel2);
+  z-index: -1;
+  top: 36px;
+}
+.stage-disc::after {
+  content: "";
+  position: absolute;
+  inset: -15px;
+  border: 1px dashed var(--border);
+  border-radius: 50%;
+}
+.stage-grid {
+  position: absolute;
+  bottom: 28px;
+  width: 85%;
+  height: 55px;
+  border-block: 1px solid var(--border);
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 27px,
+    var(--grid) 27px 28px
+  );
+  transform: skewX(-20deg);
+  z-index: -1;
+}
+.mechanic {
+  display: block;
+  flex-shrink: 0;
+  overflow: visible;
+}
+.mechanic-hero {
+  width: 350px;
+  max-width: 110%;
+  height: 330px;
+  animation: mechanicEnter 0.5s ease-out backwards;
+  transition: transform 0.25s ease;
+}
+.workshop-stamp {
+  position: absolute;
+  inset-inline: 15px;
+  top: 5px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--subtle);
+}
+.workshop-stamp .icon {
+  width: 16px;
+  height: 16px;
+}
+.stamp-line {
+  height: 1px;
+  background: var(--border);
+  flex: 1;
+}
+.mechanic-caption {
+  position: absolute;
+  bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: var(--bg);
+  padding: 5px 12px;
+  font-size: 11px;
+  color: var(--muted);
+}
+.caption-line {
+  width: 20px;
+  height: 2px;
+  background: var(--accent);
+}
+.stage-coordinate {
+  position: absolute;
+  bottom: 48px;
+  right: 12px;
+  font:
+    9px Inter,
+    sans-serif;
+  letter-spacing: 2px;
+  color: var(--subtle);
+  writing-mode: vertical-rl;
+}
+.section-heading {
+  margin: 22px 0 14px;
+  font-size: 15px;
+  font-weight: 500;
+}
+.section-detail {
+  font-size: 12px;
+  font-weight: 400;
+}
+.suggestions {
+  gap: 13px;
+}
+.suggestion {
+  padding: 19px 17px 38px;
+  border-radius: 12px;
+  gap: 12px;
+  background: var(--panel);
+  min-height: 114px;
+  align-items: center;
+  box-shadow: 0 3px 0 var(--shadow);
+}
+.suggestion::after {
+  content: attr(data-card-number);
+  position: absolute;
+  bottom: 13px;
+  inset-inline-end: 15px;
+  color: var(--subtle);
+  font:
+    10px Inter,
+    sans-serif;
+  letter-spacing: 1px;
+}
+.suggestion::before {
+  content: "";
+  position: absolute;
+  bottom: 18px;
+  inset-inline-start: 17px;
+  width: 24px;
+  height: 1px;
+  background: var(--border);
+}
+.suggest-icon {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  background: var(--panel2);
+  color: var(--workshop-green);
+  border-radius: 10px;
+}
+.suggest-icon .icon {
+  width: 22px;
+  height: 22px;
+}
+.suggest-copy strong {
+  font-size: 13px;
+  line-height: 1.6;
+}
+.suggest-copy small {
+  font-size: 11px;
+  line-height: 1.6;
+  margin-top: 5px;
+}
+.suggestion-arrow {
+  width: 16px;
+  height: 16px;
+}
+.suggestion:hover {
+  box-shadow: 0 10px 25px var(--shadow);
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.mechanic-tip {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 12px;
+  line-height: 1.9;
+  color: var(--muted);
+  margin-top: 23px;
+  padding-inline: 5px;
+}
+.mechanic-tip strong {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--workshop-green);
+}
+.tip-marker {
+  width: 14px;
+  height: 14px;
+  transform: rotate(-90deg);
+  color: var(--accent);
+  font-family: Inter, sans-serif;
+}
+.feature-strip {
+  display: none;
+  padding-top: 20px;
+  font-size: 11px;
+  gap: 25px;
+}
+.composer-area {
+  width: min(1040px, calc(100% - 90px));
+  padding: 16px 0 16px;
+  position: relative;
+  flex-shrink: 0;
+  z-index: 5;
+  background: var(--bg);
+}
+.composer {
+  padding: 18px;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 0 9px 30px var(--shadow);
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background-color 0.25s;
+}
+.composer textarea {
+  font-size: 14px;
+  min-height: 56px;
+  line-height: 1.9;
+  max-height: 160px;
+}
+.composer textarea::placeholder {
+  opacity: 1;
+}
+.tool-btn {
+  min-height: 40px;
+  font-size: 12px;
+  padding: 9px 11px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.tool-btn .icon {
+  width: 18px;
+  height: 18px;
+}
+.submit-btn {
+  min-height: 40px;
+  font-size: 13px;
+  padding: 9px 18px;
+  gap: 14px;
+}
+.composer-caption {
+  font-size: 11px;
+  padding-top: 12px;
+}
+.footer-note {
+  font-size: 10px;
+  margin-top: 10px;
+  max-width: 760px;
+}
+.drop-target {
+  display: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: var(--panel2);
+  border: 2px dashed var(--accent);
+  border-radius: 14px;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 15px;
+  color: var(--text);
+}
+.drag-over .drop-target {
+  display: flex;
+  animation: enter 0.2s both;
+}
+.media-preview {
+  border-radius: 13px;
+  padding: 15px;
+  gap: 15px;
+  border-inline-start: 3px solid var(--workshop-green);
+}
+.media-preview .media-name {
+  font-size: 13px;
+}
+.media-preview img {
+  width: 80px;
+  height: 70px;
+  object-fit: cover;
+}
+.media-warning {
+  font-size: 12px;
+}
+.remove-media {
+  min-width: 34px;
+  min-height: 34px;
+}
+.recording-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  margin-bottom: 10px;
+  padding: 8px 15px;
+}
+.mechanic-small {
+  width: 53px;
+  height: 57px;
+}
+.recording-status strong {
+  font-size: 13px;
+  font-weight: 500;
+  display: block;
+}
+.recording-status small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.recording-status time {
+  font:
+    500 14px Inter,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  margin-inline-start: auto;
+}
+.recording-led {
+  background: var(--danger);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: pulse 1.5s 5;
+}
+.typing-status {
+  border: 1px solid var(--border);
+  padding: 5px 16px 5px 8px;
+  gap: 10px;
+  max-width: 100%;
+}
+.typing-body {
+  font-size: 13px;
+  gap: 20px;
+}
+.typing-dots i {
+  width: 5px;
+  height: 5px;
+}
+body[data-assistant-state="thinking"] .mechanic-hero {
+  transform: rotate(-2deg);
+}
+body[data-assistant-state="recording"] .mechanic-hero {
+  transform: rotate(2deg);
+}
+.message {
+  max-width: 84%;
+  font-size: 14px;
+  line-height: 2;
+  padding: 20px 24px;
+  animation: enter 0.25s both;
+  border-radius: 15px;
+  box-shadow: 0 3px 0 var(--shadow);
+}
+.message.assistant {
+  background: var(--panel);
+  border-start-start-radius: 4px;
+}
+.message.user {
+  background: var(--panel2);
+  border-color: var(--border);
+  border-end-end-radius: 4px;
+}
+.message-label {
+  font-size: 11px;
+  gap: 9px;
+  margin-bottom: 11px;
+}
+.assistant .message-label {
+  color: var(--workshop-green);
+}
+.assistant .message-label::before {
+  width: 25px;
+  height: 25px;
+  border-radius: 7px;
+}
+.message.message-settled {
+  animation: none;
+}
+.message-sources {
+  font-size: 12px;
+  gap: 10px;
+}
+.message-source-link {
+  padding: 6px 10px;
+}
+.error-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.9;
+  border-radius: 13px;
+  padding: 8px 16px;
+}
+.error-copy {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.car-dialog {
+  border-radius: 16px;
+  padding: 30px;
+}
+.dialog-heading h2 {
+  font-size: 23px;
+}
+.car-dialog label,
+.dialog-actions {
+  font-size: 14px;
+}
+.car-dialog input {
+  font-size: 14px;
+  min-height: 48px;
+}
+.dialog-actions > button {
+  min-height: 42px;
+  font-size: 13px;
+}
+.splash-content img {
+  background: #edc18c;
+  box-shadow: none;
+}
+.splash-content > span {
+  font-size: 14px;
+}
+.splash-track::after {
+  animation-duration: 1s;
+}
+@keyframes mechanicEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px) rotate(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0);
+  }
+}
+@media (min-width: 1450px) {
+  .welcome-row {
+    min-height: 405px;
+  }
+  .intro h1 {
+    font-size: 55px;
+  }
+  .mechanic-stage {
+    height: 365px;
+  }
+  .mechanic-hero {
+    height: 360px;
+    width: 380px;
+  }
+}
+@media (max-width: 1150px) {
+  .sidebar {
+    width: 245px;
+    flex-basis: 245px;
+    padding-inline: 16px;
+  }
+  .main,
+  .composer-area {
+    width: calc(100% - 50px);
+  }
+  .welcome-row {
+    gap: 15px;
+    min-height: 340px;
+  }
+  .intro h1 {
+    font-size: 37px;
+  }
+  .mechanic-stage {
+    height: 310px;
+  }
+  .mechanic-hero {
+    width: 320px;
+    height: 300px;
+  }
+  .stage-disc {
+    width: 230px;
+    height: 230px;
+    top: 42px;
+  }
+  .suggestion {
+    padding: 15px 12px 32px;
+    gap: 9px;
+  }
+  .suggest-copy strong {
+    font-size: 12px;
+  }
+  .suggest-copy small {
+    display: block;
+    font-size: 10px;
+  }
+  .suggest-icon {
+    width: 30px;
+    height: 32px;
+  }
+  .mechanic-tip {
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .mechanic-tip > span:last-child {
+    flex-basis: 100%;
+  }
+  .topbar {
+    margin-inline: 25px;
+  }
+  .section-detail {
+    font-size: 11px;
+  }
+}
+@media (max-width: 850px) {
+  .sidebar {
+    width: 220px;
+    flex-basis: 220px;
+  }
+  .main,
+  .composer-area {
+    width: calc(100% - 36px);
+  }
+  .welcome-row {
+    grid-template-columns: 1fr 180px;
+    gap: 0;
+    min-height: 315px;
+  }
+  .welcome-copy {
+    padding-top: 10px;
+  }
+  .intro h1 {
+    font-size: 30px;
+  }
+  .subtitle {
+    font-size: 13px;
+  }
+  .mechanic-stage {
+    height: 270px;
+  }
+  .mechanic-hero {
+    width: 230px;
+    height: 260px;
+    max-width: 130%;
+  }
+  .stage-disc {
+    width: 160px;
+    height: 190px;
+    top: 50px;
+  }
+  .workshop-stamp {
+    inset-inline: 3px;
+    font-size: 8px;
+  }
+  .workshop-stamp .icon {
+    display: none;
+  }
+  .mechanic-caption {
+    font-size: 9px;
+    padding: 4px;
+  }
+  .stage-coordinate {
+    display: none;
+  }
+  .suggestions {
+    grid-template-columns: 1fr;
+  }
+  .suggestion {
+    min-height: 84px;
+    flex-direction: row;
+    padding: 16px 15px;
+    gap: 12px;
+  }
+  .suggest-copy strong {
+    font-size: 13px;
+  }
+  .suggest-copy small {
+    font-size: 11px;
+  }
+  .suggestion::after {
+    bottom: 10px;
+  }
+  .suggestion::before {
+    display: none;
+  }
+  .suggestion-arrow {
+    position: static;
+    margin-inline-start: auto;
+  }
+  .workshop-edition {
+    display: none;
+  }
+  .feature-strip {
+    font-size: 10px;
+    gap: 12px;
+  }
+  .section-heading {
+    margin-top: 18px;
+  }
+  .section-detail {
+    font-size: 10px;
+  }
+  .topbar {
+    margin-inline: 18px;
+  }
+  .composer-caption {
+    font-size: 10px;
+  }
+}
+@media (max-width: 680px) {
+  .sidebar {
+    width: min(310px, 86vw);
+    padding: 26px 19px 18px;
+  }
+  .brand {
+    margin-bottom: 30px;
+  }
+  .car-name {
+    font-size: 14px;
+  }
+  .topbar {
+    height: 74px;
+    margin-inline: 18px;
+  }
+  .current-location {
+    gap: 2px;
+  }
+  .current-location strong {
+    font-size: 13px;
+  }
+  .location-kicker {
+    font-size: 10px;
+  }
+  .main {
+    padding-top: 18px;
+  }
+  .workshop-heading {
+    font-size: 11px;
+    padding-bottom: 13px;
+  }
+  .welcome-row {
+    grid-template-columns: 1fr 140px;
+    min-height: 300px;
+    padding-top: 15px;
+    gap: 0;
+  }
+  .intro h1 {
+    font-size: 31px;
+    letter-spacing: -1px;
+    line-height: 1.65;
+  }
+  .welcome-copy {
+    padding: 8px 0 0;
+  }
+  .subtitle {
+    font-size: 13px;
+    line-height: 1.9;
+    margin-bottom: 13px;
+    grid-column: 1/-1;
+  }
+  .eyebrow {
+    font-size: 10px;
+    gap: 6px;
+  }
+  .small-line {
+    width: 16px;
+  }
+  .welcome-note {
+    font-size: 10px;
+  }
+  .welcome-note .icon {
+    width: 13px;
+    height: 13px;
+  }
+  .mechanic-stage {
+    height: 245px;
+    align-self: start;
+    margin-top: 14px;
+  }
+  .mechanic-hero {
+    width: 210px;
+    height: 240px;
+    max-width: 150%;
+  }
+  .stage-disc {
+    width: 130px;
+    height: 170px;
+    top: 45px;
+  }
+  .stage-disc::after {
+    inset: -8px;
+  }
+  .workshop-stamp,
+  .mechanic-caption,
+  .stage-coordinate {
+    display: none;
+  }
+  .stage-grid {
+    bottom: 15px;
+  }
+  .section-heading {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .section-detail {
+    font-size: 10px;
+  }
+  .suggestions {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+  .suggestion {
+    min-height: 76px;
+    padding: 13px 14px;
+    gap: 12px;
+  }
+  .suggest-copy strong {
+    font-size: 13px;
+  }
+  .suggest-copy small {
+    display: block;
+    font-size: 11px;
+  }
+  .suggest-icon {
+    width: 36px;
+    height: 36px;
+  }
+  .suggestion::after {
+    bottom: 10px;
+    inset-inline-end: 16px;
+    font-size: 9px;
+  }
+  .suggestion-arrow {
+    align-self: flex-start;
+    width: 14px;
+    height: 14px;
+  }
+  .mechanic-tip {
+    font-size: 11px;
+    margin-top: 18px;
+    padding: 0;
+    gap: 3px 8px;
+  }
+  .mechanic-tip strong {
+    font-size: 11px;
+  }
+  .feature-strip {
+    display: none;
+  }
+  .composer-area {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .composer {
+    padding: 14px;
+  }
+  .composer textarea {
+    font-size: 14px;
+    min-height: 52px;
+  }
+  .composer-caption {
+    font-size: 10px;
+  }
+  .footer-note {
+    font-size: 10px;
+    max-width: 100%;
+    line-height: 1.8;
+  }
+  .tool-btn {
+    padding: 8px;
+    min-width: 42px;
+  }
+  .message {
+    max-width: 96%;
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+  .message-label {
+    font-size: 11px;
+  }
+  .recording-status {
+    padding: 7px 11px;
+    gap: 8px;
+  }
+  .recording-status small {
+    font-size: 10px;
+  }
+  .recording-status .mechanic-small {
+    width: 40px;
+    height: 48px;
+  }
+  .recording-status time {
+    font-size: 12px;
+  }
+  .history-list {
+    min-height: 100px;
+  }
+}
+@media (max-width: 390px) {
+  .welcome-row {
+    grid-template-columns: 1fr 105px;
+  }
+  .intro h1 {
+    font-size: 28px;
+  }
+  .mechanic-hero {
+    width: 175px;
+    height: 225px;
+  }
+  .mechanic-stage {
+    height: 230px;
+  }
+  .stage-disc {
+    width: 100px;
+    height: 150px;
+    top: 45px;
+  }
+  .welcome-note {
+    font-size: 9px;
+  }
+  .subtitle {
+    font-size: 12px;
+  }
+  .section-detail {
+    max-width: 140px;
+    text-align: end;
+  }
+  .recording-status small {
+    max-width: 170px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mechanic-hero,
+  .recording-led {
+    animation: none !important;
+    transform: none !important;
+  }
+  .message {
+    animation: none !important;
+  }
+}
