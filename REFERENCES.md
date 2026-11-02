@@ -148,3 +148,13 @@ See `data/saudi_official_context_v1.json` for paraphrases and per-record source 
 - `SAUDI_DIALECT_GUIDE.md`: project-specific descriptions and validation limitations.
 
 These authored linguistic examples have **no external source URL** because they are generated for this project. They must not be cited as real mechanic comments, independently observed user conversations or verified real-world vehicle cases. Original sources for automotive information remain in sections above.
+
+
+## 11. Saudi automotive terminology and English language reliability (November 2, 2026)
+
+- Motory Saudi: parking/hand brake, **جلنط** — https://ksa.motory.com/ar/الاخبار/جلنط-هاند-بريك-سيارة/
+- StriveME: brakes terminology including **جلنط**, brake pads and rotors — https://striveme.com/article/محركات/أخبار/إليك-معنى-فحمات-السيارة-وهوبات-السيارة-وقماشات-السيارة-وتيل-الفرامل-وجلنط
+- Saudi owners' community terminology list (contextual, not technical certification): **بوري** as horn and **جلنط** as parking brake — https://montada.haraj.com.sa/58319/
+- RAC general dashboard warning-light guidance — https://www.rac.co.uk/drive/advice/know-how/car-dashboard-warning-lights-meaning/
+
+The 89 entries and 317 variants in `data/saudi_car_terms_v1.json` contain **author-created translations and examples**; these publications inform selected entries but do not independently verify all synonyms. The 1,068 paired dialogue examples are generated and are **not** real user logs, diagnosed repairs, or model fine-tuning. Source and limitations: `SAUDI_CAR_TERMS_AND_ENGLISH.md`.
