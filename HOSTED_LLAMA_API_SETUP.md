@@ -1,24 +1,22 @@
-# Warshatak — Meta Llama via hosted API
+# Warshatak — Hosted Meta Llama API
 
-The main conversational model and the legacy text-analysis endpoint now use **Meta Llama 3.3 70B Instruct** through OpenRouter's OpenAI-compatible API, instead of local Qwen.
+**Current provider:** OpenRouter with Meta Llama 3.3 70B Instruct (chat) and Meta Llama 4 Scout (image/video frames). There is no active local Qwen dependency.
 
-## 1. Configure your private `.env`
-
-In `C:\Users\umaze\Documents\CarNoise-AI\.env`, remove duplicated old `CHAT_MODEL`, `LLAMA_API_URL` and `LLAMA_MODEL` values, and keep one line each for:
+Open your private `C:\Users\umaze\Documents\CarNoise-AI\.env` and use these lines exactly once:
 
 ```dotenv
 CHAT_API_URL=https://openrouter.ai/api/v1/chat/completions
-CHAT_API_KEY=YOUR_OPENROUTER_KEY
+CHAT_API_KEY=YOUR_OPENROUTER_API_KEY
 CHAT_MODEL=meta-llama/llama-3.3-70b-instruct
 CHAT_MAX_TOKENS=450
+VISION_MODEL=meta-llama/llama-4-scout
 ```
 
-**You must create your own key** at https://openrouter.ai/settings/keys . Never share it in chat, commit it to GitHub or put it in frontend JavaScript. `.env.example` is a checked-in blank template; `.env` is private. OpenRouter requests may require paid API credits; ChatGPT subscriptions are **not** API credits. Keys, limits, rates and available models may change. For the current model listing see https://openrouter.ai/meta-llama/llama-3.3-70b-instruct/api .
+Keep the audio-related lines if using FFmpeg, optional CLAP or Whisper; see [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md).
 
-**Do not change Ollama's local vision settings to Llama text API credentials:** `VISION_MODEL=qwen3-vl:2b` is a **separate image and sampled-video-frame analyzer** still running locally on Ollama. This change replaces the **text conversation and legacy analysis only**, not Qwen-VL visual analysis, Whisper speech recognition or CLAP acoustic similarity.
+Create a key: https://openrouter.ai/settings/keys . Keep it private. API requests can cost credits; ChatGPT subscriptions do not include OpenRouter API credits. OpenRouter will receive chat text, retrieved context and any images sent to the Llama Scout vision model. Do not include sensitive personal information in uploads.
 
-## 2. Run
-
+Start:
 ```powershell
 cd "$HOME\Documents\CarNoise-AI"
 git pull origin main
@@ -27,17 +25,8 @@ npm.cmd test
 npm.cmd run dev
 ```
 
-Visit `http://localhost:3000/api/model-status`: `chat.provider` should be `openrouter.ai`, `chat.model` should be `meta-llama/llama-3.3-70b-instruct`, and `chat.configured` should be `true`. This means **configured**, not that your key is valid or a request succeeded. Then open `http://localhost:3000` and send `سيارتي ترج وهي واقفة` and follow up with another sentence in the same thread.
+Visit `http://localhost:3000/api/model-status` to confirm the expected models are configured. A true configuration status does NOT verify the key, credits or API availability; test with a real message and photo.
 
-## Key troubleshooting
+Troubleshooting: 503 missing key; 401 invalid key; 402 insufficient credits; 429 rate-limited; 502 model/provider/network error. Use server logs, never paste the full key into chat.
 
-- 503 about `CHAT_API_KEY`: key missing in the actual `.env`; restart the server after editing.
-- 401: invalid or expired API key.
-- 402: provider may require sufficient credits.
-- 429: API rate limit reached.
-- 502: network/provider/model issue; inspect server console. The backend does **not** log or return the key itself.
-- This switch may improve responsiveness versus CPU-only text chat, but requires an internet connection, incurs provider data processing and may incur API usage costs. Text prompts and chat context are sent to the configured provider; recordings are not sent directly to this text-only model, but any derived media insights put in the prompt may be sent.
-
-## Hosting note
-
-Default `CHAT_API_URL` points to OpenRouter. Another OpenAI-compatible API can be selected if it hosts a Meta Llama model: set `CHAT_API_URL`, `CHAT_MODEL`, `CHAT_API_KEY` accordingly. The endpoint must be HTTPS unless explicitly using localhost.
+[Context Engine and all setup details](LLAMA_CONTEXT_ENGINE_SETUP.md).
