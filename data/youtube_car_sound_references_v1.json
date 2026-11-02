@@ -388,5 +388,35 @@
     "actual_audio_verified": false,
     "mechanical_fault_confirmed": false,
     "usage": "educational_reference_not_training_audio"
+  },
+  {
+    "id": "yt-cv-2022-1",
+    "source_id": "yt-cv-2022",
+    "url": "https://www.youtube.com/watch?v=sNuEUwOq4k0",
+    "title": "CV Axle Clicking And/Or Popping Noise (Just a better example of what it sounds like)",
+    "channel": "Barbour's Auto Help",
+    "published": "2022-02-01",
+    "suggested_audio_category": "cv_joint_click",
+    "timestamp_seconds": null,
+    "description": "Publisher reports examples recorded from outside, inside, and underneath a vehicle; this does not label the user's recording.",
+    "provenance": "youtube_publisher_description_only",
+    "actual_audio_verified": false,
+    "mechanical_fault_confirmed": false,
+    "usage": "educational_reference_not_training_audio"
+  },
+  {
+    "id": "yt-knock-2014-1",
+    "source_id": "yt-knock-2014",
+    "url": "https://www.youtube.com/watch?v=maZyPJIOknE",
+    "title": "Engine Knock Sound - Explained",
+    "channel": "Engineering Explained",
+    "published": "2014-09-10",
+    "suggested_audio_category": "engine_knock",
+    "timestamp_seconds": null,
+    "description": "Educational explanation of combustion knock; do not conflate all engine clunks with detonation.",
+    "provenance": "youtube_publisher_description_only",
+    "actual_audio_verified": false,
+    "mechanical_fault_confirmed": false,
+    "usage": "educational_reference_not_training_audio"
   }
 ]
