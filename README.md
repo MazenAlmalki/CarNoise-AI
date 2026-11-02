@@ -245,3 +245,12 @@ The main free-form chat **and** legacy text analysis now use an external **Meta 
 - Read [HOSTED_LLAMA_API_SETUP.md](HOSTED_LLAMA_API_SETUP.md) to migrate the actual private `.env` and test the API.
 
 A key is required and API calls may incur provider charges. ChatGPT plans do not include OpenRouter API credits. Hosted text processing sends user prompts and relevant derived context to the chosen provider; it does **not** magically make CLAP or vision faster.
+
+
+## V5.12 — Fewer questions, stronger contextual car-noise retrieval
+
+Warshatak now uses a bounded question planner to **ask only when something important is missing**. It stops asking once two useful details are known, enforces at most one question in a response and two clarification questions for the ongoing case, and avoids repeating already answered questions. The audio fallback now finishes after two choices instead of three.
+
+A new knowledge layer retrieves **30 evidence-linked symptom patterns** from nine source URLs by matching two or more features (timing, sound type, approximate location). These are not proven diagnoses or actual sound recordings; the library complements existing automotive symptom cards, YouTube educational topic links, and synthetic language examples. Read [MINIMAL_QUESTIONS_AND_EVIDENCE.md](MINIMAL_QUESTIONS_AND_EVIDENCE.md) for source inventory, limitations and testing instructions.
+
+For Groq, use only the model IDs returned for your Groq account. The included Llama defaults may not be available to Groq users; adjust `CHAT_MODEL` in your private `.env` to a supported chat model.
