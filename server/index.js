@@ -107,7 +107,7 @@ app.post('/api/chat',async(req,res)=>{
       return res.json({reply:safety,grounding:'safety-guidance',knowledgeMatches:summary});
     }
     const reliable=groundedResponse(understanding,language,history);
-    if(reliable)return res.json({reply:reliable,grounding:'reviewed-knowledge-card',knowledgeMatches:summary});
+    if(reliable)return res.json({reply:reliable,grounding:'publisher-knowledge-card',knowledgeMatches:summary});
   }
   const endpointValue=process.env.LLAMA_API_URL?.trim()||'http://127.0.0.1:11434/v1/chat/completions';
   const key=process.env.LLAMA_API_KEY?.trim();
