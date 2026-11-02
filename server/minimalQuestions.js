@@ -48,7 +48,8 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
  const gaps=Object.entries(notes).filter(([,v])=>!v).map(([k])=>k);
  const isAmbiguous=insufficient(current)||(!notes.timing&&!notes.texture&&!notes.location&&!hasAudioCandidates);
  const critical=unsafe.test(texts.join(' '));
- const canAsk=!critical&&(total<2)&&(isAmbiguous||gaps.length>0)&&!hasAudioCandidates;
+ // Once two distinct useful observations exist, answer with possibilities now.
+ const canAsk=!critical&&(total<2)&&Object.values(notes).filter(Boolean).length<2&&(isAmbiguous||gaps.length>0)&&!hasAudioCandidates;
  const questionType=gaps.includes('timing')?'timing':gaps.includes('texture')?'texture':gaps.includes('location')?'location':null;
  const text=questionType==='timing'?'متى يظهر الصوت بالضبط: عند التشغيل، الفرامل، اللف، المطبات، أو المشي؟'
   :questionType==='texture'?'وش أقرب وصف للصوت: طقطقة، صرير، ونة، أو حك؟'
@@ -61,7 +62,7 @@ export function planMinimalQuestions({messages=[],current='',hasAudioCandidates=
   questionBudget:Math.max(0,2-total),askQuestion:Boolean(canAsk&&questionType&&!repeated),
   questionType:canAsk&&!repeated?questionType:null,suggestedQuestion:canAsk&&!repeated?text:null,
   suggestedQuestionEnglish:canAsk&&!repeated?english:null,
-  stopAsking:total>=2||critical||(!gaps.length),urgent:critical,
+  stopAsking:total>=2||critical||(!gaps.length)||Object.values(notes).filter(Boolean).length>=2,urgent:critical,
   evidenceRule:'Describe ranked possibilities now if at least two details are known; do not require completing every field. Never diagnose a particular failed part from sound alone.'};
 }
 export function enforceQuestionBudget(reply,plan,{language='ar'}={}){
