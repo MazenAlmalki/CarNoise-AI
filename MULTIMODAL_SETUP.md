@@ -84,3 +84,28 @@ The text chat route now inserts the **current Saudi date at request time** into 
 With the Node server running, open `http://localhost:3000/api/model-status`. It queries **local Ollama** and returns whether `CHAT_MODEL` and `VISION_MODEL` are installed. If `ollamaReachable:false`, start Ollama first. Remote text providers are not checked by this local-only endpoint.
 
 The visual model request uses `keep_alive:0` to unload after visual inference and reduce simultaneous memory pressure on low-RAM laptops. Running two models in sequence can still be slow. An attached photo/video/audio file can also be submitted without a written description.
+
+
+## V5.6 — Audio and video without CLAP (November 2, 2026)
+
+You do **not** need PyTorch/CLAP to upload audio anymore. By default, Warshatak uses FFmpeg locally to decode up to 12 seconds of audio and estimates volume, temporal variation and rough high/low frequency content. This does **not** identify a horn, squeal, bearing, or any particular faulty car component. The AI must say when it only has these basic signal features and ask one relevant question about the sound. Optional CLAP remains available with `ENABLE_AUDIO_CLAP=1`, but may overwhelm a Windows laptop with 8 GB RAM.
+
+**FFmpeg is required for the built-in lightweight audio path and video frame extraction.** On Windows 11, open a separate PowerShell terminal and check:
+
+```powershell
+ffmpeg -version
+```
+
+If not found, use Windows Package Manager if available:
+
+```powershell
+winget install --id Gyan.FFmpeg -e --source winget
+```
+
+Close and reopen VS Code after installing so its terminal PATH refreshes. Verify `ffmpeg -version`, then restart `npm.cmd run dev`. If winget is unavailable, install FFmpeg via its official download instructions and add the binary directory to PATH. Do not use untrusted binary mirrors.
+
+Check readiness in browser: `http://localhost:3000/api/media-status` returns `ffmpegReady` and `waveformAnalysisReady`; these must be `true` for basic audio processing. `audioClapEnabled:false` is **expected** and not a blocking error for waveform processing. `visionModelConfigured` is only a name, not proof it is downloaded; `/api/model-status` checks Ollama model tags.
+
+**How to use:** Click Attach, choose audio/video/image (up to 25 MB), enter a message if you like, and Send. You can now attach or record a new clip **in an existing conversation** too. The clip is temporarily uploaded to the backend for local analysis, then the chat receives explicit observations with limits. A video uses at most two still frames and any audio waveform it can decode; frame observations may be slow or fail with low RAM. On errors, the UI should tell you the recording was **not analyzed**. Only the most recent attachment is shown with the conversation; older attachments may remain stored locally until that case is deleted.
+
+**Testing:** send a short recorded audio clip and ask what was observed. A waveform-only result must not claim it recognized the noise. Then send a short car video with audible sound; verify visual/frame limitations and/or waveform description. Never record while driving or in a dangerous position.
