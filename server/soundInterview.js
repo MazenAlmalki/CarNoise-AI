@@ -27,6 +27,15 @@ function options(stage,lang){
 }
 export function beginSoundInterview({language:lang='ar',reason='uncertain',error=null}={}){
  const en=language(lang)==='en';
+ // If the actual classifier was not enabled, do not auto-start a diagnostic
+ // questionnaire as if we had listened to the sound.
+ if(reason==='classifier-not-configured')return {
+  reply:en?'The recording arrived, but sound recognition is not enabled. I cannot identify its contents from waveform measurements. You can describe the sound manually if you like.':'وصل التسجيل، لكن مودل التعرف على الصوت غير مفعّل. قياس الإشارة وحده ما يحدد نوعه. إذا تبي نقرّب المشكلة من وصفك، اختر بدء الأسئلة.',
+  grounding:'sound-recognition-disabled',audioStatus:reason,
+  clarificationOptions:[{stage:'optin',value:'start',label:en?'Describe sound manually':'ابدأ وصف الصوت',text:en?'Help me describe the car sound.':'ساعدني أوصف صوت السيارة.'}],
+  audioInterview:{stage:'optin',answers:{}}
+ };
+
  const context=reason==='classifier-error'
   ? en?'The sound model failed; I cannot identify this clip.':'مودل الصوت تعطل، فما قدرت أتعرف على المقطع.'
   : reason==='classifier-not-configured'
@@ -41,6 +50,12 @@ export function beginSoundInterview({language:lang='ar',reason='uncertain',error
 export function advanceSoundInterview(input,lang='ar'){
  if(!input||typeof input!=='object')return null;
  const stage=input.stage;
+ if(stage==='optin'){
+  if(input.value!=='start')return null;
+  return {done:false,reply:language(lang)==='en'?questions.location.en:questions.location.ar,
+   grounding:'sound-guided-questions',clarificationOptions:options('location',lang),
+   audioInterview:{stage:'location',answers:{}}};
+ }
  if(!valid.has(stage)||!valid.get(stage).has(input.value))return null;
  const index=order.indexOf(stage);
  // Never accept arbitrary labels/sentences from the browser as automotive facts.
