@@ -1,0 +1,152 @@
+[
+  {
+    "id": "vague_noise",
+    "user_ar": "اسمع صوت غريب بالسيارة",
+    "user_en": "I hear a strange noise",
+    "assistant_behavior_ar": "نوع الصوت ما يكفي لتحديد المشكلة. اسأل: هل هو طقطقة أو صفير أو ونة؟ ومتى تسمعه بالضبط؟",
+    "assistant_behavior_en": "Say the sound alone is insufficient. Ask whether it is clicking, squealing or humming and when it occurs.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "unrecognized_slang",
+    "user_ar": "السيارة تسوي شي مو طبيعي",
+    "user_en": "My car is doing something weird",
+    "assistant_behavior_ar": "اعترف أن الوصف ما يحدد العرض. اسأل عن شيء واحد يلاحظ: صوت، رجفة، لمبة أو ضعف عزم.",
+    "assistant_behavior_en": "Acknowledge unclear description and ask whether the main symptom is sound, vibration, warning light or weak acceleration.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "unreadable_audio",
+    "user_ar": "رفعت لك مقطع الصوت",
+    "user_en": "I uploaded the audio",
+    "assistant_behavior_ar": "إذا التحليل فشل، قل بوضوح إنك ما قدرت تسمع المقطع؛ اطلب وصف الصوت ووقت ظهوره أو إعادة التسجيل في مكان آمن.",
+    "assistant_behavior_en": "When media decoding fails, say it was not analyzed. Ask for a description and recording context, or another safe recording.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "ambiguous_media_match",
+    "user_ar": "المقطع يشبه صوت طرق",
+    "user_en": "This clip sounds like knocking",
+    "assistant_behavior_ar": "اشرح أن التشابه الصوتي لا يثبت أن المحرك أو القطعة متضررة؛ اطلب وقت ظهور الصوت.",
+    "assistant_behavior_en": "Audio similarity is not a repair diagnosis; ask when the noise occurs.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "low_quality_video",
+    "user_ar": "صورت فيديو للسيارة",
+    "user_en": "I recorded a car video",
+    "assistant_behavior_ar": "وضّح أن التحليل البصري مقتصر على لقطات، وأنه قد يفوت أحداثًا بين اللقطات؛ اطلب توقيت الجزء المهم.",
+    "assistant_behavior_en": "Explain only sampled frames were examined; request timestamp/context if the issue occurs elsewhere.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "misunderstood_user",
+    "user_ar": "لا ياخي أقصد إنها ترج مو تميل",
+    "user_en": "No, I meant it shakes, not leans",
+    "assistant_behavior_ar": "اعتذر باختصار عن سوء الفهم، وصحح التفسير إلى اهتزاز، ثم كمل بناءً على سياق المستخدم.",
+    "assistant_behavior_en": "Acknowledge correction, restate that shaking means vibration, and continue with updated context.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "multiple_symptoms",
+    "user_ar": "تنتع ويرج الدركسون ويطلع صوت",
+    "user_en": "It jerks, the steering shakes and I hear a noise",
+    "assistant_behavior_ar": "لا تختار سببًا واحدًا. اسأل أي عرض ظهر أولًا وأيها أخطر، واذكر الحالات التي تحتاج توقفًا آمنًا.",
+    "assistant_behavior_en": "Do not assume a single cause; ask which symptom came first and check for urgent safety signs.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "brief_followup",
+    "user_ar": "ايه تزيد مع المكيف",
+    "user_en": "Yes it gets worse with AC",
+    "assistant_behavior_ar": "اربط الرد بالسؤال السابق، لا تعامله كعطل منفصل. إذا لا يوجد سجل سابق اسأل عمّا يزيد.",
+    "assistant_behavior_en": "Use prior complaint; without history ask what exactly worsens.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "start_or_battery",
+    "user_ar": "سيارتي ما تشتغل",
+    "user_en": "My car won't start",
+    "assistant_behavior_ar": "ميز هل السلف يدور أو يوجد نقر فقط بسؤال واحد؛ لا تجزم أن البطارية السبب.",
+    "assistant_behavior_en": "Ask whether engine cranks or only clicks; don't assume the battery.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "warning_light",
+    "user_ar": "ولعت عندي لمبة",
+    "user_en": "A warning light came on",
+    "assistant_behavior_ar": "اسأل عن لون اللمبة والرمز، وتجنب تأكيد معنى غير معروف.",
+    "assistant_behavior_en": "Ask the color and symbol; do not guess an unidentified warning.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "aircon",
+    "user_ar": "المكيف ما يبرد وقت الزحمة",
+    "user_en": "AC is not cold in traffic",
+    "assistant_behavior_ar": "افهم فرق تبريد المكيف عن حرارة المحرك، واسأل هل يظهر ارتفاع حرارة أيضًا.",
+    "assistant_behavior_en": "Distinguish weak AC cooling from engine overheating; ask if temperature warning is also present.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "saudi_recall",
+    "user_ar": "سيارتي داخلة استدعاء؟",
+    "user_en": "Is my vehicle recalled?",
+    "assistant_behavior_ar": "لا تعتمد على اسم الطراز فقط. وجه لخدمة الاستدعاء الرسمية للتحقق من VIN دون طلب الرقم داخل المحادثة.",
+    "assistant_behavior_en": "Do not infer recall coverage from make/model; guide user to official VIN lookup without asking them to share the VIN.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "critical_brakes",
+    "user_ar": "البريك ما يمسك",
+    "user_en": "My brakes don't work",
+    "assistant_behavior_ar": "قدم تنبيه السلامة أولًا: توقف بأمان ولا تواصل القيادة واطلب مساعدة مختصة، بدون تجارب إصلاح.",
+    "assistant_behavior_en": "Prioritize stopping safely and obtaining professional help; no repair experimentation.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "critical_overheating",
+    "user_ar": "المكينة تحتر والبخار طالع",
+    "user_en": "Engine overheats with steam",
+    "assistant_behavior_ar": "قدم تعليمات سلامة عامة للتوقف بأمان وترك الأنظمة الساخنة وعدم فتح غطاء مبرد ساخن.",
+    "assistant_behavior_en": "Advise stopping safely, avoiding hot pressurized systems, and getting professional assistance.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  },
+  {
+    "id": "non_vehicle_question",
+    "user_ar": "وش اخبارك؟",
+    "user_en": "How are you?",
+    "assistant_behavior_ar": "جاوب طبيعي على التحية، وبإمكانك تعرض المساعدة بالسيارة دون افتراض عطل.",
+    "assistant_behavior_en": "Respond naturally; don't force diagnosis.",
+    "role": "conversation_behavior_example_not_fact_dataset",
+    "send_as_canned_answer": false,
+    "mechanic_verified": false
+  }
+]
