@@ -99,11 +99,13 @@ export async function analyzeUploadedMedia(file,language='ar'){
    // contribute coarse similarity, but does not provide a verified diagnosis.
    let waveform=null;
    try{waveform=await analyzeWaveform(source);}catch(e){warnings.push('Video audio waveform unavailable: '+String(e.message).slice(0,140));}
-   if(process.env.ENABLE_AUDIO_CLAP==='1'){
-    try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP audio: '+String(e.message).slice(0,140));}
-   }else warnings.push('Audio event identification is not enabled; waveform metrics are not a sound diagnosis.');
+   const audioEventAnalysis={attempted:process.env.ENABLE_AUDIO_CLAP==='1',model:'CLAP',succeeded:false};
+   if(audioEventAnalysis.attempted){
+    try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
+    catch(e){warnings.push('Optional CLAP audio: '+String(e.message).slice(0,140));}
+   }else warnings.push('Audio event classification is not configured; waveform metrics alone cannot identify sounds.');
    if(!visual&&!audio&&!waveform&&!transcription?.hasRecognizedSpeech)throw Error(warnings.join(' | '));
-   return {type:'video',visual,audio,waveform,transcription,warnings,limitations:'Only sampled frames, basic waveform features and optional automated speech transcript/CLAP. None confirms a mechanical fault.'};
+   return {type:'video',visual,audio,audioEventAnalysis,waveform,transcription,warnings,limitations:'Only sampled frames, basic waveform features and optional automated speech transcript/CLAP. None confirms a mechanical fault.'};
   }
   const waveform=await analyzeWaveform(source);
   let audio=null,transcription=null;
@@ -112,9 +114,11 @@ export async function analyzeUploadedMedia(file,language='ar'){
    try{transcription=await speechTranscription(source,language);}
    catch(e){warnings.push('Speech transcription unavailable: '+String(e.message).slice(0,140));}
   }else warnings.push('Speech was not transcribed. Install faster-whisper and set ENABLE_SPEECH_TRANSCRIPTION=1 to interpret spoken words.');
-  if(process.env.ENABLE_AUDIO_CLAP==='1'){
-   try{audio=await audioSimilarity(source);}catch(e){warnings.push('Optional CLAP unavailable: '+String(e.message).slice(0,140));}
-  }else warnings.push('Sound-event classification is not enabled. Only basic waveform features were processed.');
-  return {type:'audio',waveform,audio,transcription,warnings,limitations:'Waveform features cannot identify speech, engine components or faults. Optional Whisper may transcribe speech with errors and optional CLAP provides uncalibrated sound similarity, neither verifies a mechanical diagnosis.'};
+  const audioEventAnalysis={attempted:process.env.ENABLE_AUDIO_CLAP==='1',model:'CLAP',succeeded:false};
+  if(audioEventAnalysis.attempted){
+   try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
+   catch(e){warnings.push('Optional CLAP unavailable: '+String(e.message).slice(0,140));}
+  }else warnings.push('Sound-event classification is not configured; only basic waveform features were processed.');
+  return {type:'audio',waveform,audio,audioEventAnalysis,transcription,warnings,limitations:'Waveform features cannot identify speech, engine components or faults. Optional Whisper may transcribe speech with errors and optional CLAP provides uncalibrated sound similarity, neither verifies a mechanical diagnosis.'};
  }finally{await rm(temp,{recursive:true,force:true}).catch(()=>{});}
 }
