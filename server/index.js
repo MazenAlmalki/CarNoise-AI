@@ -92,9 +92,9 @@ app.post('/api/chat',async(req,res)=>{
   const message=chatString(data.message,700);
   const mediaInsight=data.mediaInsight&&typeof data.mediaInsight==='object'?JSON.stringify(data.mediaInsight).slice(0,2600):null;
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
-  const history=Array.isArray(data.messages)?data.messages.slice(-12).filter(x=>x&&['user','assistant'].includes(x.role)&&typeof x.content==='string').map(x=>({role:x.role,content:chatString(x.content,900)})).filter(x=>x.content):[];
+  const history=Array.isArray(data.messages)?data.messages.slice(-6).filter(x=>x&&['user','assistant'].includes(x.role)&&typeof x.content==='string').map(x=>({role:x.role,content:chatString(x.content,900)})).filter(x=>x.content):[];
   const vehicleHistory=Array.isArray(data.vehicleHistory)?data.vehicleHistory.slice(0,5).map(x=>({date:chatString(x?.date,16),description:chatString(x?.description,200),suspectedSummary:chatString(x?.suspectedSummary,200)})):[];
-  const matches=retrieveTypedSymptoms(message,{limit:3});
+  const matches=retrieveTypedSymptoms(message,{limit:2});
   const knowledge=matches.map(({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status})=>({id,symptom_ar,symptom_en,possible_causes_ar,possible_causes_en,safe_next_step_ar,safe_next_step_en,source_url,verification_status}));
   const endpointValue=process.env.LLAMA_API_URL?.trim()||'http://127.0.0.1:11434/v1/chat/completions';
   const key=process.env.LLAMA_API_KEY?.trim();
@@ -114,10 +114,17 @@ app.post('/api/chat',async(req,res)=>{
       ...history,
       {role:'user',content:message}
     ];
-    const response=await fetch(endpoint,{method:'POST',headers,body:JSON.stringify({model,temperature:0.35,max_tokens:450,messages,stream:false}),signal:AbortSignal.timeout(local?120000:30000)});
-    if(!response.ok){console.error('Llama chat provider:',response.status);return res.status(502).json({error:language==='en'?'AI model unavailable. Check Ollama and the model configured in .env.':'تعذّر الرد من مودل الذكاء الاصطناعي. تأكد أن Ollama شغال والمودل المحدد في .env محمّل.'});}
+    // Native Ollama chat supports disabling extended thinking, unlike generic OpenAI-compatible endpoints.
+    const maxOutput=Math.max(80,Math.min(400,Number(process.env.CHAT_MAX_TOKENS)||220));
+    const contextWindow=Math.max(1024,Math.min(8192,Number(process.env.CHAT_CONTEXT)||2048));
+    const requestUrl=local?new URL('/api/chat',endpoint.origin):endpoint;
+    const requestBody=local
+      ? {model,stream:false,think:false,keep_alive:'10m',options:{temperature:0.3,num_predict:maxOutput,num_ctx:contextWindow},messages}
+      : {model,temperature:0.3,max_tokens:maxOutput,messages,stream:false};
+    const response=await fetch(requestUrl,{method:'POST',headers,body:JSON.stringify(requestBody),signal:AbortSignal.timeout(local?120000:30000)});
+    if(!response.ok){console.error('Chat provider:',response.status);return res.status(502).json({error:language==='en'?'AI model unavailable. Check Ollama and the model configured in .env.':'تعذّر الرد من مودل الذكاء الاصطناعي. تأكد أن Ollama شغال والمودل المحدد في .env محمّل.'});}
     const payload=await response.json();
-    const reply=chatString(payload?.choices?.[0]?.message?.content,1900);
+    const reply=chatString(local?payload?.message?.content:payload?.choices?.[0]?.message?.content,1900);
     if(!reply)return res.status(502).json({error:language==='en'?'AI model returned an empty reply.':'المودل رجع رد فارغ، حاول مرة ثانية.'});
     return res.json({reply,knowledgeMatches:matches.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}))});
   }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
