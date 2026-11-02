@@ -4,7 +4,10 @@ import {chatProvider} from './chatProvider.js';
 export const DEFAULT_VISION_MODEL='meta-llama/llama-4-scout';
 export function visionConfiguration(env=process.env){
  const api=chatProvider(env);
- const model=(env.VISION_MODEL||DEFAULT_VISION_MODEL).trim();
+ const requested=(env.VISION_MODEL||DEFAULT_VISION_MODEL).trim();
+ // Never route outdated local model tags from an old .env to a remote API.
+ const model=api.endpoint.includes('openrouter.ai')
+  ? requested.startsWith('meta-llama/')?requested:DEFAULT_VISION_MODEL : requested;
  if(!model)throw new Error('Vision model is not configured');
  return {...api,model};
 }
