@@ -86,7 +86,7 @@ app.post('/api/analyze',async(req,res)=>{
     const result=validateResult(parsed);
     if(!result) return res.status(502).json({error:'نتيجة الذكاء الاصطناعي ناقصة، حاول مرة ثانية.'});
     return res.json({result,poweredBy:'Llama',knowledgeMatches:retrievedKnowledge.map(({id,symptom_ar,symptom_en,source_url})=>({id,symptom_ar,symptom_en,source_url}))});
-  }catch(error){console.error('Llama request:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:'تعذّر الاتصال بـ Llama. تأكد أن Ollama شغال والنموذج محمّل.'});}
+  }catch(error){console.error('Llama request:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:'تعذّر الاتصال بـ Llama API. تأكد من اتصال الإنترنت ومفتاح API ورصيد المزود.'});}
 });
 
 const uploadMedia=multer({storage:multer.memoryStorage(),limits:{fileSize:25*1024*1024,files:1,fields:1},fileFilter:(_req,file,cb)=>{if(/^(audio|video|image)\//.test(file.mimetype))cb(null,true);else cb(new Error('Unsupported media type'));}});
