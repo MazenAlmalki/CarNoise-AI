@@ -1,0 +1,93 @@
+body {
+  overflow: auto;
+  height: auto;
+  min-height: 100dvh;
+}
+.sound-check {
+  max-width: 760px;
+  margin: auto;
+  padding: 32px 22px;
+  line-height: 1.9;
+}
+.sound-check header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.sound-check h1 {
+  font-size: clamp(24px, 5vw, 36px);
+  line-height: 1.5;
+  margin: 30px 0 15px;
+}
+.sound-check h2 {
+  font-size: 18px;
+}
+.sound-check p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.sound-check section {
+  padding: 22px;
+  margin: 22px 0;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+}
+.sound-check button,
+.sound-check select {
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 9px;
+  margin: 5px;
+  max-width: 100%;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.sound-check label {
+  display: block;
+}
+.sound-check meter,
+.sound-check audio,
+.sound-check textarea {
+  display: block;
+  width: 100%;
+  margin: 12px 0;
+  max-width: 100%;
+}
+.sound-check textarea {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 14px;
+  resize: vertical;
+  box-sizing: border-box;
+  font-size: 13px;
+}
+.sound-check a {
+  color: var(--accent);
+}
+.sound-check [hidden] {
+  display: none !important;
+}
+#level {
+  height: 20px;
+}
+#voice {
+  font-size: 13px;
+}
+#voice summary {
+  cursor: pointer;
+}
+#result {
+  direction: ltr;
+  text-align: left;
+}
+button:focus-visible,
+a:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}

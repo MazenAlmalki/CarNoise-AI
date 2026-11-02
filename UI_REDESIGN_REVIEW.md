@@ -43,3 +43,9 @@ A missing/empty browser voice list no longer blocks speech before the engine can
 The mechanic's player is visible during playback on desktop and mobile, with immediate pause/resume/stop controls. The mouth responds to speech start and word-boundary events and closes during pauses, errors, stop and completion; the previous independent repeating mouth animation was removed. Engines without word-boundary events can only provide start/resume/end cues, not detailed word synchronization. Reduced motion keeps the mouth static. This is event synchronization, not phoneme-accurate lip sync or waveform analysis.
 
 Browser fixtures verified empty voice lists, requested Arabic language/default voice, paused-engine recovery, speech chunking, visible mobile avatar, boundary pulses, closed mouth during pause/stop, ignored stale callbacks and visible language errors. Existing recording/retry and UI regressions also passed. Native audible output on the user's Windows device has not been verified.
+
+## Independent sound troubleshooting
+
+`/sound-check.html` provides a bundled one-second generated 440 Hz WAV, the same mechanic speech controller, and a local microphone recording with a live RMS meter, playback, download and optional device selection. The report distinguishes browser playback state from the user's explicit heard/not-heard answer. It includes no API keys, device IDs or automatic network uploads. Voice settings are shared with the app, and the page explains this. OS/tab mute and physical audibility cannot be inferred from a moving playback timer.
+
+Chromium checks used a synthetic microphone device to verify nonzero signal capture, recorded-file playback, no muted/zero-volume media elements, bilingual mobile layout, report/download and zero uploads; axe reported no violations in the tested diagnostic state. This does not establish audible sound on the user's Windows device. The report is intended to isolate that remaining issue.

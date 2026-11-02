@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>اختبار الصوت | Warshatak</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/workshop.css" />
+    <link rel="stylesheet" href="/sound-check.css" />
+    <script type="module" src="/sound-check.js"></script>
+  </head>
+  <body>
+    <main class="sound-check">
+      <header>
+        <a href="/" data-copy="back">الرجوع لورشتك</a
+        ><button id="language" type="button">English</button>
+      </header>
+      <h1 data-copy="title">خلّنا نحدد وين ينقطع الصوت</h1>
+      <p data-copy="intro">
+        هذه الاختبارات لا تحتاج مفتاح API، ولا ترفع تسجيلك. يبدأ الصوت فقط عند
+        الضغط على تشغيل.
+      </p>
+      <section>
+        <h2 data-copy="toneTitle">١. نغمة معروفة</h2>
+        <p data-copy="toneHint">
+          اضغط تشغيل. النغمة مدتها ثانية واحدة. إذا تحرك الوقت بدون صوت، راجع
+          كتم موقع localhost ومخرج الصوت لهذا التبويب.
+        </p>
+        <audio
+          id="tone"
+          controls
+          preload="metadata"
+          src="/assets/sound-check.wav"
+        ></audio>
+        <p id="toneStatus" role="status"></p>
+        <div>
+          <button id="heard" type="button" data-copy="heard">سمعت النغمة</button
+          ><button id="silent" type="button" data-copy="silent">
+            ما سمعتها
+          </button>
+        </div>
+        <p id="guidance" role="status"></p>
+      </section>
+      <section>
+        <h2 data-copy="speechTitle">٢. صوت الميكانيكي</h2>
+        <p data-copy="speechHint">
+          إذا سمعت النغمة ولم تسمع الكلام، افتح الخيارات أدناه ثم «تجربة الصوت».
+          إلغاء الكتم واختيار صوت هنا يطبّق على ورشتك أيضًا.
+        </p>
+        <details id="voice" open></details>
+        <p id="speechStatus" role="status"></p>
+      </section>
+      <section>
+        <h2 data-copy="micTitle">٣. الميكروفون والتسجيل</h2>
+        <p data-copy="micHint">
+          ابدأ وتكلم لعشر ثوانٍ كحد أقصى. إذا بقي المؤشر صفرًا أثناء الكلام،
+          جرّب ميكروفونًا آخر. بعد الإيقاف شغّل التسجيل أو نزّله.
+        </p>
+        <label for="input" data-copy="input">الميكروفون</label
+        ><select id="input">
+          <option value="" data-copy="default">الافتراضي</option></select
+        ><button id="record" type="button" data-copy="record">
+          ابدأ التسجيل</button
+        ><label for="level" data-copy="level">مستوى الإشارة</label
+        ><meter id="level" min="0" max="100" value="0"></meter>
+        <p id="micStatus" role="status"></p>
+        <audio id="recorded" controls hidden></audio
+        ><a id="download" hidden data-copy="download"
+          >تنزيل التسجيل لفحصه خارج المتصفح</a
+        >
+      </section>
+      <section>
+        <h2 data-copy="outputTitle">مخرج تشغيل النغمة والتسجيل</h2>
+        <label for="output" data-copy="output">السماعة</label
+        ><select id="output">
+          <option value="" data-copy="default">الافتراضي</option>
+        </select>
+        <p id="outputStatus" role="status"></p>
+        <p data-copy="outputHint">
+          تظهر الأجهزة المتاحة بعد السماح بالميكروفون. تغيير المخرج هنا يخص
+          الاختبار؛ صوت الميكانيكي يستخدم مخرج الكلام في النظام.
+        </p>
+      </section>
+      <button id="report" type="button" data-copy="report">
+        جهز نتيجة الاختبار للمشاركة</button
+      ><label for="result" data-copy="result"
+        >انسخ النتيجة وأرسلها في المحادثة</label
+      ><textarea id="result" readonly rows="8"></textarea>
+    </main>
+  </body>
+</html>

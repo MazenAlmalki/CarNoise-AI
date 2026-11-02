@@ -256,6 +256,15 @@ export function createVoice({
     const title = document.createElement("summary");
     title.textContent = w().title;
     container.append(title);
+    const diagnosis = document.createElement("a");
+    diagnosis.href = "/sound-check.html?lang=" + getLanguage();
+    diagnosis.textContent =
+      getLanguage() === "ar"
+        ? "فحص الصوت والميكروفون"
+        : "Check sound and microphone";
+    diagnosis.style.display = "block";
+    diagnosis.style.marginBlock = "10px";
+    container.append(diagnosis);
     if (!supported) {
       const n = document.createElement("p");
       n.textContent = w().unsupported;
