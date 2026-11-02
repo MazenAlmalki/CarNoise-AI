@@ -136,7 +136,7 @@ async function sendChat(text){
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(!state.cases.some(x=>x.id===active.id))return;
-  active.messages.push({role:'assistant',content:data.reply.slice(0,1900)});
+  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),sources:data.grounding==='reviewed-knowledge-card'&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   persist();
   if(session?.id===active.id)renderSession();
  }catch(error){
@@ -164,7 +164,18 @@ function renderSession(){
   $('intro').classList.add('hidden');$('conversation').classList.remove('hidden');
   $('messages').replaceChildren();$('resultBox').replaceChildren();
   $('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');
-  for(const msg of session.messages)addMessage(msg.content,msg.role);
+  for(const msg of session.messages){
+   addMessage(msg.content,msg.role);
+   if(msg.role==='assistant'&&Array.isArray(msg.sources)&&msg.sources.length){
+    const cited=textNode('div',state.lang==='ar'?'مصادر إرشادية: ':'Reference sources: ','message-sources');
+    for(const s of msg.sources){
+     if(typeof s.url!=='string'||!s.url.startsWith('https://'))continue;
+     const link=textNode('a',String(s.label||'Reference').slice(0,65),'message-source-link');
+     link.href=s.url;link.target='_blank';link.rel='noopener noreferrer';cited.append(link);
+    }
+    $('messages').append(cited);
+   }
+  }
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
   if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'تمت معالجة المرفق بمودل منفصل؛ النتائج استرشادية وليست تشخيصًا.':'Media processed by a separate model; observations are not a diagnosis.','media-warning'));
