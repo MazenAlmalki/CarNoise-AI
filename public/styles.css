@@ -118,3 +118,11 @@ body{
 .message-sources{display:flex;align-items:center;flex-wrap:wrap;gap:8px;max-width:80%;margin-inline-start:auto;font-size:11px;color:var(--muted)}
 .message-source-link{color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:3px 9px;border-radius:999px;background:var(--panel)}
 .message-source-link:hover{text-decoration:underline}
+
+
+/* Choose a plain-language sound description when audio cannot be recognized. */
+.audio-clarification-choices{display:flex;flex-wrap:wrap;gap:8px;max-width:720px;padding:8px 0 16px}
+.audio-clarification-title{width:100%;font-size:12px;opacity:.8}
+.audio-clarification-choice{font:inherit;font-size:13px;color:inherit;cursor:pointer;border:1px solid rgba(177,160,249,.45);border-radius:999px;padding:9px 14px;background:rgba(142,127,220,.12);transition:background .15s,border-color .15s}
+.audio-clarification-choice:hover:not(:disabled){background:rgba(142,127,220,.24);border-color:rgba(177,160,249,.8)}
+.audio-clarification-choice:disabled{opacity:.45;cursor:default}
