@@ -13,6 +13,7 @@ import { interpretSaudiSpeech } from './saudiDialect.js';
 import { findSaudiCarTerms } from './saudiCarTerms.js';
 import { detectReplyLanguage } from './chatLanguage.js';
 import { buildChatHistory, conversationContext } from './conversationContext.js';
+import { ffmpegAvailable } from './mediaStatus.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -85,6 +86,17 @@ app.post('/api/analyze',async(req,res)=>{
 });
 
 const uploadMedia=multer({storage:multer.memoryStorage(),limits:{fileSize:25*1024*1024,files:1,fields:1},fileFilter:(_req,file,cb)=>{if(/^(audio|video|image)\//.test(file.mimetype))cb(null,true);else cb(new Error('Unsupported media type'));}});
+app.get('/api/media-status',async(_req,res)=>{
+ const ffmpeg=await ffmpegAvailable();
+ res.json({
+  ffmpegReady:ffmpeg,
+  waveformAnalysisReady:ffmpeg,
+  videoFrameAnalysisReady:ffmpeg,
+  visionModelConfigured:process.env.VISION_MODEL?.trim()||'qwen3-vl:2b',
+  audioClapEnabled:process.env.ENABLE_AUDIO_CLAP==='1',
+  note:'Waveform signal features do not identify sound events or diagnose faults. Vision depends on Ollama and the vision model; CLAP requires Python dependencies.'
+ });
+});
 app.post('/api/media/analyze',uploadMedia.single('media'),async(req,res)=>{
  if(!req.file)return res.status(400).json({error:'أرفق ملف صورة أو صوت أو فيديو.'});
  try{const result=await analyzeUploadedMedia(req.file,req.body?.language==='en'?'en':'ar');return res.json({analysis:result});}
@@ -160,8 +172,12 @@ app.post('/api/chat',async(req,res)=>{
     const payload=await response.json();
     const reply=chatString(local?payload?.message?.content:payload?.choices?.[0]?.message?.content,1900);
     if(!reply)return res.status(502).json({error:language==='en'?'AI model returned an empty reply.':'المودل رجع رد فارغ، حاول مرة ثانية.'});
-    const safeReply=safetyWarning && !/stop|توقف|مكان آمن|professional|مختص|مساعدة/.test(reply)
-      ? safetyWarning+'\n'+reply : reply;
+    // Strip stock forms of address sometimes injected by small local models.
+    const naturalReply=reply.replace(/(?:يا\s*(?:بطل|غالي|الغالي|حبيبي|صاحبي|أسطورة)|\b(?:champ|buddy)\b)/gi,'')
+      .replace(/^(?:أهلا?ً?\s+بك|أهلًا\s+بك|أهلاً\s+بك|مرحبًا\s+بك)[،,.!\s]*/i,'')
+      .trim();
+    const safeReply=safetyWarning && !/stop|توقف|مكان آمن|professional|مختص|مساعدة/.test(naturalReply)
+      ? safetyWarning+'\n'+naturalReply : naturalReply;
     return res.json({reply:safeReply,grounding:'language-model-with-retrieval',knowledgeMatches:[...summary,...saudiSources.map(x=>({id:x.id,symptom_ar:x.topic,symptom_en:x.topic,source_url:x.source_url}))]});
   }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
 });
