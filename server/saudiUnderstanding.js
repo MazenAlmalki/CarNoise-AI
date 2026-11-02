@@ -25,7 +25,7 @@ export function normalizeSaudiDescription(text){
 // High-precision composite intents: do not infer a diagnosis from a single word.
 // Use canonical existing source cards so references and safety guidance stay auditable.
 const intentRules=[
- {pattern:/\b(?:اهتزاز|رجفه|رجه|ترج|يرج|shaking|vibrat|rough idle)\b/i, context:/(?:وقوف|واقفه|واقف|اشاره|idle|stopped)/i, canonical:'السيارة ترج وهي واقفة',id:'T008'},
+ {pattern:/(?:اهتزاز|رجفه|رجه|ترج|يرج|shaking|vibrat|rough idle)/i, context:/(?:وقوف|واقفه|واقف|اشاره|idle|stopped)/i, canonical:'السيارة ترج وهي واقفة',id:'T008'},
  {pattern:/(?:حراره|حرارة|ارتفاع الحرارة|سخونه|overheat)/i,context:/(?:المحرك|السياره|المكينه|engine|car)/i,canonical:'المكينة تحتر',id:'T013'},
  {pattern:/(?:الفرامل|brake)/i,context:/(?:طحن|حك|grind|scrap)/i,canonical:'الفرامل تحك',id:'T002'}
 ];
