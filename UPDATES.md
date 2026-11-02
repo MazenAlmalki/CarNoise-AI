@@ -282,3 +282,14 @@ python scripts/import_kwerimoto.py
 - Added `tests/mediaButtons.test.js` to check the cleanup and follow-up attachment path.
 - Users still need FFmpeg installed for lightweight audio/video decoding and browser microphone permission for live recording. These are separate dependencies from enabling the buttons.
 - Source review and syntax checks do not confirm that browser microphone access or FFmpeg are available on the user's Windows machine.
+
+
+### Phase 17 — Ask the user to identify an unclear recording (November 2, 2026)
+
+- If an uploaded audio clip has no reliable recognized speech and no audio-event interpretation, the assistant now **does not invent a car noise or fault**. It says the recording could not be identified and presents **seven clickable descriptions**: spoken words, clicking, squealing, whistling, humming, vibration, or something else.
+- If the media pipeline failed outright, the same clarification choices appear instead of a fake audio analysis.
+- The choice is sent as an explicit **user description**, not claimed as a model observation. The rest of the chat can then ask one question based on the selected description.
+- Selection chips are stored with the assistant chat message and can be used in that conversation; older choices become inactive. Fixed a pending-state issue so newest chips are enabled after the response completes.
+- Short video clips with no successfully analyzed visual frames can also use the clarification flow. Video with actual visual observations still gets the normal vision-limited response.
+- Added `tests/audioClarification.test.js` covering available choices, fallback routes and frontend click behavior.
+- **No new sound-recognition capability is claimed**: clicking "صرير" is the user's own description, not acoustic classification.
