@@ -273,3 +273,12 @@ python scripts/import_kwerimoto.py
 - Added `server/mediaStatus.js` and `GET /api/media-status` to report FFmpeg readiness. `MULTIMODAL_SETUP.md` now contains Windows setup/testing instructions.
 - Created `tests/conversationMedia.test.js` and expanded `npm.cmd run check` to include new modules.
 - **Still requires on-device test:** FFmpeg availability, actual browser microphone permissions, Ollama vision response time, and accuracy of the language model's multi-turn answers. Audio waveform features do not replace specialized sound recognition.
+
+
+### Phase 16 — Fix disabled Record/Attach buttons after messages (November 2, 2026)
+
+- Found the actual UI issue: `renderSession()` disabled the Record and Attach controls while `submitting=true`, but `sendChat()`'s `finally` block only restored Send and the text input. The media controls remained disabled for the rest of the thread.
+- Fixed the `finally` block to reactivate Record and Attach after any response or error, without allowing a new recording during a pending request.
+- Added `tests/mediaButtons.test.js` to check the cleanup and follow-up attachment path.
+- Users still need FFmpeg installed for lightweight audio/video decoding and browser microphone permission for live recording. These are separate dependencies from enabling the buttons.
+- Source review and syntax checks do not confirm that browser microphone access or FFmpeg are available on the user's Windows machine.
