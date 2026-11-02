@@ -1,64 +1,372 @@
 <!doctype html>
 <html lang="ar" dir="rtl" data-theme="dark">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#101b30"><meta name="description" content="ورشتك — مساعدك الذكي لأصوات السيارات وسجل الصيانة.">
-<title>ورشتك | Warshatak</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/styles.css"><script defer src="/app.js"></script>
-</head>
-<body>
-<div class="app">
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar-top">
-    <a href="/" class="brand"><span class="brand-icon">◈</span><span class="brand-name" data-brand="warshatak">ورشتك <em>✦</em><small data-i18n="brandSub">مساعد سيارتك الذكي</small></span></a>
-    <button id="closeSidebar" class="icon-button mobile-only" aria-label="Close menu">✕</button>
-  </div>
-  <button id="newCaseSide" class="primary-btn full"><span>＋</span><span data-i18n="newAnalysis">تحليل جديد</span></button>
-  <div class="side-label"><span data-i18n="myCars">سياراتي</span><button id="addCar" class="plus-button" aria-label="Add car">＋</button></div>
-  <div id="carList" class="car-list"></div>
-  <div class="side-label history-heading"><span data-i18n="history">سجل المشاكل</span><span id="historyCount" class="count">0</span></div>
-  <div id="historyList" class="history-list"></div>
-  <div class="side-bottom"><div class="privacy-note"><span>◌</span><span data-i18n="localPrivacy">سجل سيارتك محلي، والمرفقات تُرفع مؤقتًا عند الإرسال.</span></div><div class="made">ورشتك <span>·</span> V5</div></div>
-</aside>
-<div id="overlay" class="overlay hidden"></div>
-<div class="workspace">
-  <header class="topbar">
-    <div class="head-start"><button id="menuButton" class="icon-button mobile-only" aria-label="Open menu">☰</button><div class="current-location"><span class="location-kicker" data-i18n="workspace">مساحة سيارتك</span><strong id="currentCarName">سيارتي</strong></div></div>
-    <div class="header-actions">
-      <span class="live-dot"><i></i><span data-i18n="aiAssistant">مساعد ذكي</span></span>
-      <button id="languageSwitch" class="pill-btn" aria-label="Change language">EN</button>
-      <button id="themeSwitch" class="pill-btn theme-btn" aria-label="Toggle theme">☀</button>
-    </div>
-  </header>
-  <main class="main" id="main">
-    <div id="intro" class="intro">
-      <div class="hero-glow"></div>
-      <div class="eyebrow"><span class="spark">✦</span><span data-i18n="eyebrow">افهم سيارتك بشكل أفضل</span></div>
-      <h1 data-i18n-html="heroTitle">سيارتك تتكلم.<br><span>خلّنا نفهمها.</span></h1>
-      <p class="subtitle" data-i18n="heroDescription">تكلم مع ورشتك عن مشكلة سيارتك، واسأل وناقش على راحتك.</p>
-      <div class="prompt-label" data-i18n="tryExample">ابدأ بصوت تسمعه</div>
-      <div class="suggestions">
-        <button class="suggestion" data-example="brakes"><span class="suggest-icon orange">◉</span><span data-i18n="exampleBrakes">صرير الفرامل</span><b>↗</b></button>
-        <button class="suggestion" data-example="starting"><span class="suggest-icon purple">✳</span><span data-i18n="exampleStart">طقطقة التشغيل</span><b>↗</b></button>
-        <button class="suggestion" data-example="driving"><span class="suggest-icon blue">≈</span><span data-i18n="exampleDrive">ونة مع السرعة</span><b>↗</b></button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0d191b" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand-mark.svg" />
+    <meta
+      name="description"
+      content="ورشتك — مساعدك الذكي لأصوات السيارات وسجل الصيانة."
+    />
+    <title>ورشتك | Warshatak</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <div id="splash" class="splash" aria-hidden="true">
+      <div class="splash-content">
+        <img
+          src="/assets/brand-mark.svg"
+          width="72"
+          height="72"
+          alt=""
+        /><strong data-i18n="brandName">ورشتك</strong
+        ><span data-i18n="splashTagline">معك، في كل مشوار.</span>
+        <div class="splash-track"></div>
       </div>
-      <div class="feature-strip"><div><span>✧</span><span data-i18n="featureOne">سجل لكل سيارة</span></div><div><span>⌁</span><span data-i18n="featureTwo">ملفات صوت وفيديو</span></div><div><span>◇</span><span data-i18n="featureThree">عربي وإنجليزي</span></div></div>
     </div>
-    <section id="conversation" class="conversation hidden" aria-live="polite"><div id="messages" class="messages"></div><div id="questionBox" class="question-card hidden"><div class="question-top"><span id="questionCount"></span><div class="progress"><span id="questionProgress"></span></div></div><h2 id="questionText"></h2><div id="choices" class="choices"></div></div><section id="resultBox" class="results hidden"></section></section>
-    <div id="busy" class="busy typing-status hidden" role="status" aria-live="polite"><span class="typing-avatar" aria-hidden="true">✦</span><div class="typing-body"><span id="typingLabel" data-i18n="analyzing">جاري تجهيز الرد...</span><div class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></div></div></div>
-    <div id="errorBox" class="error-box hidden" role="alert"></div>
-  </main>
-  <div class="composer-area">
-    <div id="mediaPreview" class="media-preview hidden"></div>
-    <form id="composer" class="composer">
-      <div class="composer-main"><textarea id="description" rows="2" maxlength="600" data-i18n-placeholder="inputPlaceholder" placeholder="وش المشكلة اللي تواجهك في السيارة؟"></textarea></div>
-      <div class="composer-controls"><div class="media-buttons"><button type="button" id="attachButton" class="tool-btn" title="Attach image, audio or video" aria-label="Attach image, audio or video">♬ <span data-i18n="attach">إرفاق</span></button><button type="button" id="recordButton" class="tool-btn" title="Record microphone" aria-label="Record microphone">● <span data-i18n="record">تسجيل</span></button><input type="file" id="mediaInput" accept="image/*,audio/*,video/*" hidden></div><button id="sendButton" type="submit" class="submit-btn"><span data-i18n="analyze">إرسال</span><span>↗</span></button></div>
-    </form>
-    <p class="footer-note" data-i18n="disclaimer">النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛ تحليل الصوت يتطلب CLAP.</p>
-  </div>
-</div>
-</div>
-<dialog id="carDialog" class="car-dialog"><form id="carForm"><div class="dialog-heading"><h2 data-i18n="addVehicle">إضافة سيارة</h2><button type="button" id="cancelCar" class="icon-button">✕</button></div><label for="carName" data-i18n="vehicleName">اسم السيارة</label><input id="carName" maxlength="48" required data-i18n-placeholder="carPlaceholder" placeholder="مثال: كامري 2022"><div class="dialog-actions"><button type="button" id="cancelCarBottom" class="ghost-btn" data-i18n="cancel">إلغاء</button><button type="submit" class="primary-btn" data-i18n="save">حفظ</button></div></form></dialog>
-</body></html>
+    <a class="skip-link" href="#description" data-i18n="skipToChat"
+      >انتقل للمحادثة</a
+    >
+    <div class="app">
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-top">
+          <a href="/" class="brand" aria-label="Warshatak"
+            ><img
+              class="brand-icon"
+              src="/assets/brand-mark.svg"
+              alt=""
+              width="44"
+              height="44"
+            /><span class="brand-name"
+              ><strong data-brand="warshatak">ورشتك</strong
+              ><small>WARSHATAK</small></span
+            ></a
+          >
+          <button
+            id="closeSidebar"
+            class="icon-button mobile-only"
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
+        <button id="newCaseSide" class="primary-btn full">
+          <svg class="icon"><use href="/assets/icons.svg#plus" /></svg
+          ><span data-i18n="newAnalysis">تحليل جديد</span>
+        </button>
+        <div class="side-label">
+          <span data-i18n="myCars">سياراتي</span
+          ><button id="addCar" class="plus-button" aria-label="Add car">
+            ＋
+          </button>
+        </div>
+        <div id="carList" class="car-list"></div>
+        <div class="side-label history-heading">
+          <span data-i18n="history">سجل المشاكل</span
+          ><span id="historyCount" class="count">0</span>
+        </div>
+        <div id="historyList" class="history-list"></div>
+        <div class="side-bottom">
+          <div class="privacy-note">
+            <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
+            ><span data-i18n="localPrivacy"
+              >سجل سيارتك محلي، والمرفقات تُرفع مؤقتًا عند الإرسال.</span
+            >
+          </div>
+          <div class="made">
+            <span class="brand-mini">W.</span>
+            <span data-i18n="madeFor">معك، في كل مشوار.</span>
+          </div>
+        </div>
+      </aside>
+      <div id="overlay" class="overlay hidden"></div>
+      <div class="workspace">
+        <header class="topbar">
+          <div class="head-start">
+            <button
+              id="menuButton"
+              class="icon-button mobile-only"
+              aria-label="Open menu"
+              aria-controls="sidebar"
+              aria-expanded="false"
+            >
+              <svg class="icon"><use href="/assets/icons.svg#menu" /></svg>
+            </button>
+            <div class="current-location">
+              <span class="location-kicker" data-i18n="workspace"
+                >مساحة سيارتك</span
+              ><strong id="currentCarName">سيارتي</strong>
+            </div>
+          </div>
+          <div class="header-actions">
+            <span class="live-dot"
+              ><i></i><span data-i18n="aiAssistant">مساعد ذكي</span></span
+            >
+            <button
+              id="languageSwitch"
+              class="pill-btn"
+              aria-label="Change language"
+            >
+              EN
+            </button>
+            <button
+              id="themeSwitch"
+              class="pill-btn theme-btn"
+              aria-label="Toggle theme"
+            >
+              ☀
+            </button>
+          </div>
+        </header>
+        <main class="main" id="main">
+          <div id="intro" class="intro">
+            <div class="welcome-row">
+              <div class="welcome-copy">
+                <div class="eyebrow">
+                  <span class="small-line"></span
+                  ><span data-i18n="eyebrow">وضوح أكثر. قلق أقل.</span>
+                </div>
+                <h1 data-i18n-html="heroTitle">
+                  كل صوت، وراه قصة.<br /><span>خلّنا نفهمها سوا.</span>
+                </h1>
+                <p class="subtitle" data-i18n="heroDescription">
+                  اوصف اللي تلاحظه، أو أرسل مقطع. نرتّب لك الاحتمالات والخطوة
+                  الجاية، بكل بساطة.
+                </p>
+                <div class="welcome-note">
+                  <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
+                  ><span data-i18n="welcomeNote"
+                    >إرشاد يساعدك تفهم، مو تشخيص نهائي.</span
+                  >
+                </div>
+              </div>
+              <div class="companion-scene" aria-hidden="true">
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <span class="scene-cross cross-one">+</span
+                ><span class="scene-cross cross-two">+</span
+                ><img
+                  class="companion"
+                  src="/assets/companion.svg"
+                  width="360"
+                  height="300"
+                  alt=""
+                /><span class="companion-tag"
+                  ><i></i
+                  ><span data-i18n="companionTag">مساعدك في المشوار</span></span
+                >
+              </div>
+            </div>
+            <div class="section-heading">
+              <span data-i18n="tryExample">من وين نبدأ؟</span
+              ><span class="section-detail" data-i18n="exampleHint"
+                >اختر مثال أو اكتب بطريقتك</span
+              >
+            </div>
+            <div class="suggestions">
+              <button class="suggestion" data-example="brakes">
+                <span class="suggest-icon"
+                  ><svg class="icon">
+                    <use href="/assets/icons.svg#brake" /></svg></span
+                ><span class="suggest-copy"
+                  ><strong data-i18n="exampleBrakes">صرير مع الفرامل</strong
+                  ><small data-i18n="brakesHint"
+                    >صوت يظهر عند التهدئة</small
+                  ></span
+                ><svg class="icon suggestion-arrow" aria-hidden="true">
+                  <use href="/assets/icons.svg#arrow" />
+                </svg>
+              </button>
+              <button class="suggestion" data-example="starting">
+                <span class="suggest-icon"
+                  ><svg class="icon">
+                    <use href="/assets/icons.svg#bolt" /></svg></span
+                ><span class="suggest-copy"
+                  ><strong data-i18n="exampleStart">طقطقة أول التشغيل</strong
+                  ><small data-i18n="startHint"
+                    >خلّنا نعرف متى يبدأ</small
+                  ></span
+                ><svg class="icon suggestion-arrow" aria-hidden="true">
+                  <use href="/assets/icons.svg#arrow" />
+                </svg>
+              </button>
+              <button class="suggestion" data-example="driving">
+                <span class="suggest-icon"
+                  ><svg class="icon">
+                    <use href="/assets/icons.svg#wave" /></svg></span
+                ><span class="suggest-copy"
+                  ><strong data-i18n="exampleDrive">ونة تزيد مع السرعة</strong
+                  ><small data-i18n="driveHint"
+                    >نفهم الصوت خطوة بخطوة</small
+                  ></span
+                ><svg class="icon suggestion-arrow" aria-hidden="true">
+                  <use href="/assets/icons.svg#arrow" />
+                </svg>
+              </button>
+            </div>
+            <div class="feature-strip">
+              <div>
+                <svg class="icon"><use href="/assets/icons.svg#chat" /></svg
+                ><span data-i18n="featureOne">سجل مستقل لكل سيارة</span>
+              </div>
+              <div>
+                <svg class="icon"><use href="/assets/icons.svg#attach" /></svg
+                ><span data-i18n="featureTwo">نص، صوت، صورة وفيديو</span>
+              </div>
+              <div>
+                <span class="language-glyph">ع</span
+                ><span data-i18n="featureThree">يفهم كلامك، بطريقتك</span>
+              </div>
+            </div>
+          </div>
+          <section
+            id="conversation"
+            class="conversation hidden"
+            aria-live="polite"
+          >
+            <div id="messages" class="messages"></div>
+            <div id="questionBox" class="question-card hidden">
+              <div class="question-top">
+                <span id="questionCount"></span>
+                <div class="progress"><span id="questionProgress"></span></div>
+              </div>
+              <h2 id="questionText"></h2>
+              <div id="choices" class="choices"></div>
+            </div>
+            <section id="resultBox" class="results hidden"></section>
+          </section>
+          <div
+            id="busy"
+            class="busy typing-status hidden"
+            role="status"
+            aria-live="polite"
+          >
+            <img
+              class="typing-avatar"
+              src="/assets/brand-mark.svg"
+              alt=""
+              width="36"
+              height="36"
+            />
+            <div class="typing-body">
+              <span id="typingLabel" data-i18n="analyzing"
+                >جاري تجهيز الرد...</span
+              >
+              <div class="typing-dots" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </div>
+            </div>
+          </div>
+          <div id="errorBox" class="error-box hidden" role="alert"></div>
+        </main>
+        <div class="composer-area">
+          <div id="mediaPreview" class="media-preview hidden"></div>
+          <form id="composer" class="composer">
+            <div class="composer-main">
+              <label for="description" class="sr-only" data-i18n="inputLabel"
+                >وصف مشكلة السيارة</label
+              ><textarea
+                id="description"
+                rows="2"
+                maxlength="600"
+                data-i18n-placeholder="inputPlaceholder"
+                placeholder="وش المشكلة اللي تواجهك في السيارة؟"
+              ></textarea>
+            </div>
+            <div class="composer-controls">
+              <div class="media-buttons">
+                <button
+                  type="button"
+                  id="attachButton"
+                  class="tool-btn"
+                  title="Attach image, audio or video"
+                  aria-label="Attach image, audio or video"
+                >
+                  <svg class="icon"><use href="/assets/icons.svg#attach" /></svg
+                  ><span data-i18n="attach">إرفاق</span></button
+                ><button
+                  type="button"
+                  id="recordButton"
+                  class="tool-btn"
+                  title="Record microphone"
+                  aria-label="Record microphone"
+                >
+                  <svg class="icon"><use href="/assets/icons.svg#mic" /></svg
+                  ><span data-i18n="record">تسجيل</span></button
+                ><input
+                  type="file"
+                  id="mediaInput"
+                  accept="image/*,audio/*,video/*"
+                  hidden
+                />
+              </div>
+              <button id="sendButton" type="submit" class="submit-btn">
+                <span data-i18n="analyze">إرسال</span
+                ><svg class="icon"><use href="/assets/icons.svg#arrow" /></svg>
+              </button>
+            </div>
+          </form>
+          <div class="composer-caption">
+            <span data-i18n="composerHint"
+              >مساحة للكلام، والصوت، وكل التفاصيل.</span
+            ><span data-i18n="enterHint"
+              >Enter للإرسال · Shift + Enter لسطر جديد</span
+            >
+          </div>
+          <p class="footer-note" data-i18n="disclaimer">
+            النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛
+            تحليل الصوت يتطلب CLAP.
+          </p>
+        </div>
+      </div>
+    </div>
+    <dialog id="carDialog" class="car-dialog" aria-labelledby="carDialogTitle">
+      <form id="carForm">
+        <div class="dialog-heading">
+          <h2 id="carDialogTitle" data-i18n="addVehicle">إضافة سيارة</h2>
+          <button type="button" id="cancelCar" class="icon-button">✕</button>
+        </div>
+        <label for="carName" data-i18n="vehicleName">اسم السيارة</label
+        ><input
+          id="carName"
+          maxlength="48"
+          required
+          data-i18n-placeholder="carPlaceholder"
+          placeholder="مثال: كامري 2022"
+        />
+        <div class="dialog-actions">
+          <button
+            type="button"
+            id="cancelCarBottom"
+            class="ghost-btn"
+            data-i18n="cancel"
+          >
+            إلغاء</button
+          ><button type="submit" class="primary-btn" data-i18n="save">
+            حفظ
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog
+      id="confirmDialog"
+      class="car-dialog confirm-dialog"
+      aria-labelledby="confirmTitle"
+      aria-describedby="confirmDescription"
+    >
+      <form method="dialog">
+        <div class="dialog-heading"><h2 id="confirmTitle"></h2></div>
+        <p id="confirmDescription"></p>
+        <div class="dialog-actions">
+          <button value="cancel" class="ghost-btn" data-i18n="cancel" autofocus>
+            إلغاء</button
+          ><button value="delete" class="danger-btn" data-i18n="deleteAction">
+            حذف
+          </button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

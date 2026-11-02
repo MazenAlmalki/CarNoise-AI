@@ -1,23 +1,293 @@
-
 const $=id=>document.getElementById(id);
+// Shared product copy for the Arabic and English layouts.
 const translations={
-ar:{
-brandSub:'مساعد سيارتك الذكي',newAnalysis:'تحليل جديد',myCars:'سياراتي',history:'سجل المشاكل',localPrivacy:'سجل سيارتك محلي، والمرفقات تُرفع مؤقتًا عند الإرسال.',workspace:'مساحة سيارتك',aiAssistant:'مساعد ذكي',eyebrow:'افهم سيارتك بشكل أفضل',
-heroTitle:'سيارتك تتكلم.<br><span>خلّنا نفهمها.</span>',heroDescription:'تكلم مع ورشتك عن مشكلة سيارتك، وخلّنا نفهمها سوا.',tryExample:'ابدأ بصوت تسمعه',exampleBrakes:'صرير الفرامل',exampleStart:'طقطقة التشغيل',exampleDrive:'ونة مع السرعة',featureOne:'سجل لكل سيارة',featureTwo:'صوت وفيديو',featureThree:'عربي وإنجليزي',
-inputPlaceholder:'وش المشكلة اللي تواجهك في السيارة؟ اكتب وخلّنا نسولف...',attach:'إرفاق',record:'تسجيل',stop:'إيقاف',analyze:'إرسال',analyzing:'جاري تجهيز الرد...',disclaimer:'النتائج احتمالات وليست تشخيصًا. عند الإرسال يُرفع المرفق لسيرفرك لتحليله مؤقتًا؛ الصوت يحتاج CLAP.',
-addVehicle:'إضافة سيارة',vehicleName:'اسم السيارة',carPlaceholder:'مثال: كامري 2022',cancel:'إلغاء',save:'حفظ',defaultCar:'سيارتي',noHistory:'ما فيه تحليلات سابقة',question:'السؤال',of:'من',introMessage:'خلّنا نحدد الصوت بأربع أسئلة.',resultIntro:'هذه احتمالات حسب وصفك.',possibleReasons:'الأسباب المحتملة',nextSteps:'وش تسوي؟',urgentSigns:'علامات مهمة',resultLabel:'تحليل Llama',resultNotice:'التحليل احتمالي، مو تشخيص فني.',newCheck:'تحليل جديد',low:'للمتابعة',medium:'يستحسن الفحص',high:'اهتمام عاجل',required:'اوصف الصوت بثمانية أحرف على الأقل.',mediaInfo:'الملف يُرسل عند الضغط على إرسال. إذا تعذّر تحديد الصوت، ورشتك بيسألك عن مكانه ووقته ووصفه.',fileTooLarge:'الحد الأقصى 25MB للمقطع.',fileType:'ارفع صورة أو ملف صوت أو فيديو.',mediaSaved:'مقطع محفوظ',mediaMissing:'المقطع غير متوفر على هذا الجهاز.',recordUnsupported:'المتصفح ما يدعم التسجيل.',recordError:'ما قدرنا نستخدم الميكروفون. تأكد من السماح له.',storageError:'تعذّر حفظ المقطع. جرّب ملف أصغر.',localOnly:'يتم الحفظ على هذا الجهاز فقط',remove:'إزالة',deleteCase:'حذف السجل',deleteCar:'حذف السيارة',deleteMedia:'حذف المقطع',confirmCase:'هل تحذف السجل والمقطع المرتبط به نهائيًا؟',confirmCar:'هل تحذف السيارة وكل سجلاتها ومقاطعها نهائيًا؟',confirmMedia:'هل تحذف المقطع نهائيًا؟',retry:'إعادة المحاولة',carNeeded:'أدخل اسم السيارة.',answerFailed:'تعذّر التحليل، حاول مرة ثانية.',startAgain:'ابدأ تحليلًا جديدًا',
-questions:[['متى تسمعه؟',['عند التشغيل','أثناء القيادة','عند الفرامل','عند الالتفاف','على المطبات','عند التسارع','غير متأكد']],['وش نوع الصوت؟',['طقطقة','صرير','صفير','حكة / احتكاك','ونة','رجّة / اهتزاز','غير متأكد']],['من وين يجي؟',['أمام السيارة','خلف السيارة','من جهة الإطارات','من المحرك','غير متأكد']],['كم يتكرر؟',['كل مرة','أحيانًا','بدأ اليوم','غير متأكد']]],
-examples:{brakes:'أسمع صرير عالي لما أضغط على الفرامل',starting:'فيه طقطقة أول ما أشغل السيارة الصباح',driving:'أسمع ونة تزيد كل ما زادت سرعة السيارة'}
-},
-en:{
-brandSub:'Your car companion',newAnalysis:'New analysis',myCars:'My vehicles',history:'Problem history',localPrivacy:'Vehicle history stays local; attachments upload temporarily when sent.',workspace:'Your garage',aiAssistant:'AI assistant',eyebrow:'Understand your car better',
-heroTitle:'Your car is talking.<br><span>Let’s figure it out.</span>',heroDescription:'Chat naturally about your car problem and explore what it could mean.',tryExample:'Try an example',exampleBrakes:'Brake squeal',exampleStart:'Startup clicking',exampleDrive:'Humming at speed',featureOne:'History for each car',featureTwo:'Audio & video',featureThree:'Arabic & English',
-inputPlaceholder:'Tell me what is happening with your car...',attach:'Attach',record:'Record',stop:'Stop',analyze:'Send',analyzing:'Preparing a response...',disclaimer:'Results are not a diagnosis. On Send, media is temporarily uploaded to your server; audio needs CLAP.',
-addVehicle:'Add a vehicle',vehicleName:'Vehicle name',carPlaceholder:'e.g. Camry 2022',cancel:'Cancel',save:'Save',defaultCar:'My car',noHistory:'No past analyses',question:'Question',of:'of',introMessage:'Four quick questions to narrow it down.',resultIntro:'Here are some possibilities based on your description.',possibleReasons:'Possible causes',nextSteps:'What to do next',urgentSigns:'Important warning signs',resultLabel:'Llama analysis',resultNotice:'Possibilities only. Not a mechanic’s diagnosis.',newCheck:'New analysis',low:'Monitor',medium:'Inspection advised',high:'Urgent attention',required:'Describe the noise using at least 8 characters.',mediaInfo:'Media is uploaded for analysis when you press Send. Audio requires optional CLAP setup.',fileTooLarge:'Maximum media file size is 25 MB.',fileType:'Choose an image, audio, or video file.',mediaSaved:'Saved media',mediaMissing:'Media unavailable on this device.',recordUnsupported:'Audio recording is not supported by this browser.',recordError:'Cannot access the microphone. Check permissions.',storageError:'Could not save media. Try a smaller file.',localOnly:'Stored on this device only',remove:'Remove',deleteCase:'Delete record',deleteCar:'Delete vehicle',deleteMedia:'Delete media',confirmCase:'Permanently delete this record and its media?',confirmCar:'Permanently delete this vehicle, its history and media?',confirmMedia:'Permanently delete this media?',retry:'Try again',carNeeded:'Enter a vehicle name.',answerFailed:'Analysis failed. Please try again.',startAgain:'Start a new analysis',
-questions:[['When do you hear it?',['When starting','While driving','When braking','When turning','Over bumps','When accelerating','Not sure']],['What does it sound like?',['Clicking','Squealing','Whistling','Scraping','Humming','Vibration','Not sure']],['Where does it come from?',['Front of car','Rear of car','Near wheels','Engine bay','Not sure']],['How often?',['Every time','Sometimes','Started today','Not sure']]],
-examples:{brakes:'I hear a high-pitched squeal when pressing the brakes.',starting:'There is a clicking noise when I start the car.',driving:'There is a humming noise that gets louder as I drive faster.'}
-}
+  "ar": {
+    "brandSub": "مساعد سيارتك الذكي",
+    "newAnalysis": "محادثة جديدة",
+    "myCars": "سياراتي",
+    "history": "محادثات السيارة",
+    "localPrivacy": "سجلك على هذا الجهاز. تُرسل رسائلك للمزود، والمرفقات تُرفع مؤقتًا عند الإرسال.",
+    "workspace": "مساحة سيارتك",
+    "aiAssistant": "مساعد ذكي",
+    "eyebrow": "وضوح أكثر. قلق أقل.",
+    "heroTitle": "كل صوت، وراه قصة.<br><span>خلّنا نفهمها سوا.</span>",
+    "heroDescription": "اوصف اللي تلاحظه، أو أرسل مقطع. نرتّب لك الاحتمالات والخطوة الجاية، بكل بساطة.",
+    "tryExample": "من وين نبدأ؟",
+    "exampleBrakes": "صرير مع الفرامل",
+    "exampleStart": "طقطقة أول التشغيل",
+    "exampleDrive": "ونة مع السرعة",
+    "featureOne": "سجل مستقل لكل سيارة",
+    "featureTwo": "نص، صوت، صورة وفيديو",
+    "featureThree": "يفهم كلامك، بطريقتك",
+    "inputPlaceholder": "وش تلاحظ على سيارتك؟ خذ راحتك، نسمعك.",
+    "attach": "إرفاق",
+    "record": "تسجيل",
+    "stop": "إيقاف",
+    "analyze": "إرسال",
+    "analyzing": "نرتّب لك التفاصيل",
+    "disclaimer": "ورشتك يساعدك تفهم الاحتمالات، ولا يغني عن فحص مختص. المرفقات تُرفع مؤقتًا عند الإرسال.",
+    "addVehicle": "إضافة سيارة",
+    "vehicleName": "اسم السيارة",
+    "carPlaceholder": "مثال: كامري 2022",
+    "cancel": "إلغاء",
+    "save": "حفظ",
+    "defaultCar": "سيارتي",
+    "noHistory": "كل مشوار يبدأ بمحادثة. سجلاتك بتكون هنا.",
+    "question": "السؤال",
+    "of": "من",
+    "introMessage": "خلّنا نحدد الصوت بأربع أسئلة.",
+    "resultIntro": "هذه احتمالات حسب وصفك.",
+    "possibleReasons": "الأسباب المحتملة",
+    "nextSteps": "وش تسوي؟",
+    "urgentSigns": "علامات مهمة",
+    "resultLabel": "تحليل Llama",
+    "resultNotice": "التحليل احتمالي، مو تشخيص فني.",
+    "newCheck": "تحليل جديد",
+    "low": "للمتابعة",
+    "medium": "يستحسن الفحص",
+    "high": "اهتمام عاجل",
+    "required": "اوصف الصوت بثمانية أحرف على الأقل.",
+    "mediaInfo": "حتى 25 MB. يُرفع المرفق فقط عند الإرسال؛ قدرات التحليل تعتمد على الإعدادات المتاحة.",
+    "fileTooLarge": "الحد الأقصى 25MB للمقطع.",
+    "fileType": "ارفع صورة أو ملف صوت أو فيديو.",
+    "mediaSaved": "مقطع محفوظ",
+    "mediaMissing": "المقطع غير متوفر على هذا الجهاز.",
+    "recordUnsupported": "المتصفح ما يدعم التسجيل.",
+    "recordError": "ما قدرنا نستخدم الميكروفون. تأكد من السماح له.",
+    "storageError": "تعذّر حفظ المقطع. جرّب ملف أصغر.",
+    "localOnly": "يتم الحفظ على هذا الجهاز فقط",
+    "remove": "إزالة",
+    "deleteCase": "حذف السجل",
+    "deleteCar": "حذف السيارة",
+    "deleteMedia": "حذف المقطع",
+    "confirmCase": "هل تحذف السجل والمقطع المرتبط به نهائيًا؟",
+    "confirmCar": "هل تحذف السيارة وكل سجلاتها ومقاطعها نهائيًا؟",
+    "confirmMedia": "هل تحذف المقطع نهائيًا؟",
+    "retry": "إعادة المحاولة",
+    "carNeeded": "أدخل اسم السيارة.",
+    "answerFailed": "تعذّر التحليل، حاول مرة ثانية.",
+    "startAgain": "ابدأ تحليلًا جديدًا",
+    "questions": [
+      [
+        "متى تسمعه؟",
+        [
+          "عند التشغيل",
+          "أثناء القيادة",
+          "عند الفرامل",
+          "عند الالتفاف",
+          "على المطبات",
+          "عند التسارع",
+          "غير متأكد"
+        ]
+      ],
+      [
+        "وش نوع الصوت؟",
+        [
+          "طقطقة",
+          "صرير",
+          "صفير",
+          "حكة / احتكاك",
+          "ونة",
+          "رجّة / اهتزاز",
+          "غير متأكد"
+        ]
+      ],
+      [
+        "من وين يجي؟",
+        [
+          "أمام السيارة",
+          "خلف السيارة",
+          "من جهة الإطارات",
+          "من المحرك",
+          "غير متأكد"
+        ]
+      ],
+      [
+        "كم يتكرر؟",
+        [
+          "كل مرة",
+          "أحيانًا",
+          "بدأ اليوم",
+          "غير متأكد"
+        ]
+      ]
+    ],
+    "examples": {
+      "brakes": "أسمع صرير عالي لما أضغط على الفرامل",
+      "starting": "فيه طقطقة أول ما أشغل السيارة الصباح",
+      "driving": "أسمع ونة تزيد كل ما زادت سرعة السيارة"
+    },
+    "deleteAction": "حذف",
+    "brandName": "ورشتك",
+    "splashTagline": "معك، في كل مشوار.",
+    "skipToChat": "انتقل للمحادثة",
+    "madeFor": "معك، في كل مشوار.",
+    "welcomeNote": "إرشاد يساعدك تفهم، مو تشخيص نهائي.",
+    "companionTag": "مساعدك في المشوار",
+    "exampleHint": "اختر مثال أو اكتب بطريقتك",
+    "brakesHint": "صوت يظهر عند التهدئة",
+    "startHint": "خلّنا نعرف متى يبدأ",
+    "driveHint": "نفهم الصوت خطوة بخطوة",
+    "inputLabel": "وصف مشكلة السيارة",
+    "composerHint": "مساحة للكلام، والصوت، وكل التفاصيل.",
+    "enterHint": "Enter للإرسال · Shift + Enter لسطر جديد",
+    "openMenu": "فتح قائمة السيارات",
+    "closeMenu": "إغلاق القائمة",
+    "changeLanguage": "Switch to English",
+    "themeLight": "تفعيل المظهر الفاتح",
+    "themeDark": "تفعيل المظهر الداكن",
+    "attachLabel": "إرفاق صورة أو صوت أو فيديو",
+    "recordLabel": "تسجيل مقطع صوتي",
+    "stopLabel": "إيقاف التسجيل",
+    "closeDialog": "إغلاق نافذة إضافة سيارة"
+  },
+  "en": {
+    "brandSub": "Your car companion",
+    "newAnalysis": "New conversation",
+    "myCars": "My vehicles",
+    "history": "Conversations",
+    "localPrivacy": "History stays on this device. Messages go to your provider; attachments upload temporarily on Send.",
+    "workspace": "Your garage",
+    "aiAssistant": "AI assistant",
+    "eyebrow": "MORE CLARITY. LESS WORRY.",
+    "heroTitle": "Every sound has a story.<br><span>Let’s work it out.</span>",
+    "heroDescription": "Tell us what you notice, or share a clip. We’ll explore the possibilities and your next step, together.",
+    "tryExample": "Where shall we start?",
+    "exampleBrakes": "Brake squeal",
+    "exampleStart": "Startup clicking",
+    "exampleDrive": "Humming at speed",
+    "featureOne": "A history for every car",
+    "featureTwo": "Text, audio, photo & video",
+    "featureThree": "Your words. Your language.",
+    "inputPlaceholder": "What’s going on with your car? We’re listening.",
+    "attach": "Attach",
+    "record": "Record",
+    "stop": "Stop",
+    "analyze": "Send",
+    "analyzing": "Connecting the details",
+    "disclaimer": "Warshatak explores possibilities, not diagnoses. Consult a qualified mechanic. Attachments upload temporarily on Send.",
+    "addVehicle": "Add a vehicle",
+    "vehicleName": "Vehicle name",
+    "carPlaceholder": "e.g. Camry 2022",
+    "cancel": "Cancel",
+    "save": "Save",
+    "defaultCar": "My car",
+    "noHistory": "Your next conversation starts here. We’ll keep it in this space.",
+    "question": "Question",
+    "of": "of",
+    "introMessage": "Four quick questions to narrow it down.",
+    "resultIntro": "Here are some possibilities based on your description.",
+    "possibleReasons": "Possible causes",
+    "nextSteps": "What to do next",
+    "urgentSigns": "Important warning signs",
+    "resultLabel": "Llama analysis",
+    "resultNotice": "Possibilities only. Not a mechanic’s diagnosis.",
+    "newCheck": "New analysis",
+    "low": "Monitor",
+    "medium": "Inspection advised",
+    "high": "Urgent attention",
+    "required": "Describe the noise using at least 8 characters.",
+    "mediaInfo": "Up to 25 MB. Uploads only on Send; analysis depends on available capabilities.",
+    "fileTooLarge": "Maximum media file size is 25 MB.",
+    "fileType": "Choose an image, audio, or video file.",
+    "mediaSaved": "Saved media",
+    "mediaMissing": "Media unavailable on this device.",
+    "recordUnsupported": "Audio recording is not supported by this browser.",
+    "recordError": "Cannot access the microphone. Check permissions.",
+    "storageError": "Could not save media. Try a smaller file.",
+    "localOnly": "Stored on this device only",
+    "remove": "Remove",
+    "deleteCase": "Delete record",
+    "deleteCar": "Delete vehicle",
+    "deleteMedia": "Delete media",
+    "confirmCase": "Permanently delete this record and its media?",
+    "confirmCar": "Permanently delete this vehicle, its history and media?",
+    "confirmMedia": "Permanently delete this media?",
+    "retry": "Try again",
+    "carNeeded": "Enter a vehicle name.",
+    "answerFailed": "Analysis failed. Please try again.",
+    "startAgain": "Start a new analysis",
+    "questions": [
+      [
+        "When do you hear it?",
+        [
+          "When starting",
+          "While driving",
+          "When braking",
+          "When turning",
+          "Over bumps",
+          "When accelerating",
+          "Not sure"
+        ]
+      ],
+      [
+        "What does it sound like?",
+        [
+          "Clicking",
+          "Squealing",
+          "Whistling",
+          "Scraping",
+          "Humming",
+          "Vibration",
+          "Not sure"
+        ]
+      ],
+      [
+        "Where does it come from?",
+        [
+          "Front of car",
+          "Rear of car",
+          "Near wheels",
+          "Engine bay",
+          "Not sure"
+        ]
+      ],
+      [
+        "How often?",
+        [
+          "Every time",
+          "Sometimes",
+          "Started today",
+          "Not sure"
+        ]
+      ]
+    ],
+    "examples": {
+      "brakes": "I hear a high-pitched squeal when pressing the brakes.",
+      "starting": "There is a clicking noise when I start the car.",
+      "driving": "There is a humming noise that gets louder as I drive faster."
+    },
+    "deleteAction": "Delete",
+    "brandName": "Warshatak",
+    "splashTagline": "With you. Every mile.",
+    "skipToChat": "Skip to conversation",
+    "madeFor": "With you. Every mile.",
+    "welcomeNote": "Helpful guidance. Never a final diagnosis.",
+    "companionTag": "Your companion on the road",
+    "exampleHint": "Pick a prompt or use your own words",
+    "brakesHint": "A sound when slowing down",
+    "startHint": "Let’s find when it starts",
+    "driveHint": "Explore it step by step",
+    "inputLabel": "Describe your car problem",
+    "composerHint": "A little context goes a long way.",
+    "enterHint": "Enter to send · Shift + Enter for a new line",
+    "openMenu": "Open vehicle menu",
+    "closeMenu": "Close menu",
+    "changeLanguage": "التبديل إلى العربية",
+    "themeLight": "Use light theme",
+    "themeDark": "Use dark theme",
+    "attachLabel": "Attach a photo, audio or video",
+    "recordLabel": "Record audio",
+    "stopLabel": "Stop recording",
+    "closeDialog": "Close add vehicle dialog"
+  }
 };
+function icon(name) {
+ const node=document.createElementNS('http://www.w3.org/2000/svg','svg');
+ node.classList.add('icon');node.setAttribute('aria-hidden','true');
+ const use=document.createElementNS('http://www.w3.org/2000/svg','use');
+ use.setAttribute('href','/assets/icons.svg#'+name);node.append(use);return node;
+}
 const optionKeys=['timing','sound','location','frequency'];
 const STORAGE_KEY='carnoise-garage-v2';
 const makeId=()=>globalThis.crypto?.randomUUID?.()||String(Date.now())+'-'+Math.random().toString(36).slice(2);
@@ -37,7 +307,9 @@ function renderSidebar(){
  $('currentCarName').textContent=carName(selectedCar());
  for(const car of state.cars){
   const button=document.createElement('button');button.className='car-row'+(state.carId===car.id?' active':'');button.type='button';
-  button.append(textNode('span','◇','car-symbol'),textNode('span',carName(car),'car-name'),textNode('span',String(state.cases.filter(c=>c.carId===car.id).length),'car-count'));
+  const symbol=textNode('span','','car-symbol');symbol.append(icon('car'));
+  button.setAttribute('aria-pressed',String(state.carId===car.id));
+  button.append(symbol,textNode('span',carName(car),'car-name'),textNode('span',String(state.cases.filter(c=>c.carId===car.id).length),'car-count'));
   button.addEventListener('click',()=>{state.carId=car.id;persist();renderSidebar();newAnalysis();closeNav();});
   const row=textNode('div','','folder-item');row.append(button);
   const del=textNode('button','✕','delete-action');del.type='button';del.title=t('deleteCar');del.setAttribute('aria-label',t('deleteCar')+' '+carName(car));del.addEventListener('click',()=>deleteVehicle(car.id));row.append(del);
@@ -59,10 +331,13 @@ function applySettings(){
  document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=t(n.dataset.i18n));
  document.querySelectorAll('[data-i18n-html]').forEach(n=>{const key=n.dataset.i18nHtml;if(key==='heroTitle')n.innerHTML=t(key);});
  document.querySelectorAll('[data-i18n-placeholder]').forEach(n=>n.placeholder=t(n.dataset.i18nPlaceholder));
- document.querySelector('[data-brand="warshatak"]').innerHTML=state.lang==='ar'?'ورشتك <em>✦</em>':'Warshatak <em>✦</em>';
+ document.querySelector('[data-brand="warshatak"]').textContent=t('brandName');
  document.title=state.lang==='ar'?'ورشتك | مساعد سيارتك':'Warshatak | Your Car Companion';
  $('languageSwitch').textContent=state.lang==='ar'?'EN':'عربي';
- $('themeSwitch').textContent=state.theme==='dark'?'☀':'☾';
+ $('themeSwitch').replaceChildren(icon(state.theme==='dark'?'sun':'moon'));
+ document.querySelector('meta[name="theme-color"]').content=state.theme==='dark'?'#0d191b':'#f7f9f6';
+ const labels={menuButton:'openMenu',closeSidebar:'closeMenu',languageSwitch:'changeLanguage',themeSwitch:state.theme==='dark'?'themeLight':'themeDark',addCar:'addVehicle',attachButton:'attachLabel',recordButton:recording?'stopLabel':'recordLabel',cancelCar:'closeDialog'};
+ for(const [id,key] of Object.entries(labels)){ $(id).setAttribute('aria-label',t(key));$(id).title=t(key); }
  $('recordButton').querySelector('span').textContent=recording?t('stop'):t('record');
  $('typingLabel').textContent=t('analyzing');
  renderSidebar();
@@ -304,9 +579,18 @@ async function deleteMediaBlob(id){
  try{await new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
  finally{db.close();}
 }
+function confirmDeletion(message,title){
+ const dialog=$('confirmDialog');
+ $('confirmTitle').textContent=title;$('confirmDescription').textContent=message;
+ dialog.returnValue='cancel';
+ return new Promise(resolve=>{
+  dialog.addEventListener('close',()=>resolve(dialog.returnValue==='delete'),{once:true});
+  dialog.showModal();
+ });
+}
 async function deleteCase(id){
  const entry=state.cases.find(c=>c.id===id);
- if(!entry||!window.confirm(t('confirmCase')))return;
+ if(!entry||!await confirmDeletion(t('confirmCase'),t('deleteCase')))return;
  if(entry.mediaId){try{await deleteMediaBlob(entry.mediaId);}catch{showError(t('storageError'));return;}}
  state.cases=state.cases.filter(c=>c.id!==id);
  persist();
@@ -314,7 +598,7 @@ async function deleteCase(id){
 }
 async function deleteVehicle(id){
  const car=state.cars.find(c=>c.id===id);
- if(!car||!window.confirm(t('confirmCar')))return;
+ if(!car||!await confirmDeletion(t('confirmCar'),t('deleteCar')))return;
  const cases=state.cases.filter(c=>c.carId===id);
  try{for(const entry of cases)if(entry.mediaId)await deleteMediaBlob(entry.mediaId);}
  catch{showError(t('storageError'));return;}
@@ -326,13 +610,13 @@ async function deleteVehicle(id){
 }
 async function deleteSavedMedia(id){
  const entry=state.cases.find(c=>c.id===id);
- if(!entry?.mediaId||!window.confirm(t('confirmMedia')))return;
+ if(!entry?.mediaId||!await confirmDeletion(t('confirmMedia'),t('deleteMedia')))return;
  try{await deleteMediaBlob(entry.mediaId);}catch{showError(t('storageError'));return;}
  entry.mediaId=null;entry.mediaName=null;entry.mediaType=null;
  persist();if(session?.id===entry.id)renderSession();else renderSidebar();
 }
-function openNav(){$('sidebar').classList.add('open');$('overlay').classList.remove('hidden');}
-function closeNav(){$('sidebar').classList.remove('open');$('overlay').classList.add('hidden');}
+function openNav(){$('sidebar').inert=false;$('sidebar').classList.add('open');$('overlay').classList.remove('hidden');$('menuButton').setAttribute('aria-expanded','true');document.querySelector('.workspace').inert=true;$('closeSidebar').focus();}
+function closeNav(){const wasOpen=$('sidebar').classList.contains('open');$('sidebar').classList.remove('open');$('overlay').classList.add('hidden');$('menuButton').setAttribute('aria-expanded','false');document.querySelector('.workspace').inert=false;if(wasOpen)$('menuButton').focus();}
 function openCarDialog(){$('carDialog').showModal();$('carName').focus();}
 async function openDb(){
  return new Promise((resolve,reject)=>{
@@ -361,6 +645,7 @@ function showMedia(file,pending=true){
  const url=URL.createObjectURL(file);
  if(pending){if(pendingUrl)URL.revokeObjectURL(pendingUrl);pendingUrl=url;}
  const node=document.createElement(file.type.startsWith('image/')?'img':file.type.startsWith('video/')?'video':'audio');
+ if(node.tagName==='IMG')node.alt=file.name||t('mediaSaved');
  node.controls=true;node.preload='metadata';node.src=url;node.onended=()=>{};
  area.append(textNode('span',file.name||t('mediaSaved'),'media-name'),node);
  if(pending){const remove=textNode('button','✕','remove-media');remove.type='button';remove.title=t('remove');remove.addEventListener('click',clearPendingMedia);area.append(remove);}
@@ -385,6 +670,7 @@ async function showSavedMedia(id,type,name){
   attached.append(textNode('strong',name||t('mediaSaved')));
   const url=URL.createObjectURL(f);
   const media=document.createElement(type?.startsWith('image/')?'img':type?.startsWith('video/')?'video':'audio');
+  if(media.tagName==='IMG')media.alt=name||t('mediaSaved');
   media.controls=true;media.preload='metadata';media.src=url;
   media.style.maxWidth='100%';media.style.maxHeight='220px';
   attached.append(media);
@@ -419,9 +705,10 @@ async function recordToggle(){
    const blob=new Blob(mediaChunks,{type:recorder.mimeType||'audio/webm'});const type=blob.type.split(';')[0];
    if(blob.size>0)mediaFile(new File([blob],'recording-'+Date.now()+'.webm',{type}));
    mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;recording=false;
+   $('recordButton').setAttribute('aria-label',t('recordLabel'));
    $('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');
   };
-  recorder.start();recording=true;$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
+  recorder.start();recording=true;$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
  }catch{showError(t('recordError'));mediaStream?.getTracks().forEach(track=>track.stop());}
 }
 $('addCar').addEventListener('click',openCarDialog);
@@ -443,3 +730,37 @@ $('mediaInput').addEventListener('change',e=>mediaFile(e.target.files?.[0]));
 $('recordButton').addEventListener('click',recordToggle);
 document.querySelectorAll('[data-example]').forEach(button=>button.addEventListener('click',()=>{if(!session&&!submitting)startAnalysis(t('examples')[button.dataset.example]);}));
 applySettings();
+
+// Brief brand entry, once per tab. Storage restrictions must never block the app.
+try {
+ if(sessionStorage.getItem('warshatak-introduced'))$('splash').remove();
+ else sessionStorage.setItem('warshatak-introduced','1');
+} catch {}
+$('splash')?.addEventListener('animationend',event=>{
+ if(event.target===$('splash')&&event.animationName==='splashOut')$('splash').remove();
+});
+// Attachments use the same validation and upload path, including drag and drop.
+let dragDepth=0;
+$('composer').addEventListener('dragenter',event=>{event.preventDefault();if(!submitting){dragDepth++;$('composer').classList.add('drag-over');}});
+$('composer').addEventListener('dragover',event=>event.preventDefault());
+$('composer').addEventListener('dragleave',()=>{if(--dragDepth<=0){dragDepth=0;$('composer').classList.remove('drag-over');}});
+$('composer').addEventListener('drop',event=>{event.preventDefault();dragDepth=0;$('composer').classList.remove('drag-over');if(!submitting)mediaFile(event.dataTransfer?.files?.[0]);});
+document.addEventListener('keydown',event=>{
+ if(!$('sidebar').classList.contains('open'))return;
+ if(event.key==='Escape'){closeNav();return;}
+ if(event.key==='Tab'){
+  const controls=[...$('sidebar').querySelectorAll('a[href],button:not(:disabled)')].filter(node=>node.getClientRects().length);
+  const first=controls[0],last=controls.at(-1);
+  if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
+  else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
+ }
+});
+const mobileLayout=matchMedia('(max-width:680px)');
+function syncNavigation(){
+ if(!mobileLayout.matches&&$('sidebar').classList.contains('open'))closeNav();
+ $('sidebar').inert=mobileLayout.matches&&!$('sidebar').classList.contains('open');
+}
+mobileLayout.addEventListener('change',syncNavigation);
+// Keep the off-canvas menu out of the keyboard order while it is closed.
+new MutationObserver(syncNavigation).observe($('sidebar'),{attributes:true,attributeFilter:['class']});
+syncNavigation();
