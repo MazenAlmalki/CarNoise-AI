@@ -261,3 +261,15 @@ python scripts/import_kwerimoto.py
 - Updated `public/app.js` to show English/Arabic chat content with automatic per-message text direction.
 - Added `tests/saudiCarTerms.test.js`, added new JS modules to `npm.cmd run check`, and created `SAUDI_CAR_TERMS_AND_ENGLISH.md`.
 - Source-level checks passed in code evaluation for bilingual routing and horn/parking-brake matching. Final English end-to-end test on the user’s Windows/Ollama installation is still required.
+
+
+### Phase 15 — Stop robotic replies, retain context and activate lightweight media (November 2, 2026)
+
+- Replaced the verbose system prompt with an explicit **natural conversational style**: no `يا بطل`, `يا غالي`, `حبيبي` or repetitive `أهلاً بك` introductions, no unwarranted numbered lists, and one contextual clarification maximum. Small-model output cleanup strips repeated pet-name phrases.
+- Created `server/conversationContext.js` to retain the original user-described problem plus recent conversation turns and detect common follow-up phrasing; the frontend sends the first user message plus ten most recent turns to avoid oversized API requests.
+- Reactivated attachment/record buttons after a conversation starts. New clips can be recorded or uploaded on follow-up turns and analyzed when sent.
+- Added `server/audioWaveform.js`: uses local FFmpeg to decode short clips and produce basic acoustic measurements (quiet/loud, intermittent/steady, coarse frequency texture, clipping). **Cannot recognize a squeal, horn, or vehicle defect**; no fake claims of having identified car faults from audio.
+- Updated `server/multimodal.js` to use waveform analysis for audio and soundtracks of videos, even when heavyweight CLAP remains disabled. Video retains sampled still-frame vision when available.
+- Added `server/mediaStatus.js` and `GET /api/media-status` to report FFmpeg readiness. `MULTIMODAL_SETUP.md` now contains Windows setup/testing instructions.
+- Created `tests/conversationMedia.test.js` and expanded `npm.cmd run check` to include new modules.
+- **Still requires on-device test:** FFmpeg availability, actual browser microphone permissions, Ollama vision response time, and accuracy of the language model's multi-turn answers. Audio waveform features do not replace specialized sound recognition.
