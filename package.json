@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node --watch server/index.js",
     "start": "node server/index.js",
-    "check": "node --check server/index.js && node --check server/multimodal.js && node --check server/saudiUnderstanding.js && node --check server/saudiDialect.js && node --check server/saudiKnowledge.js && node --check server/textRetrieval.js && node --check public/app.js",
+    "check": "node --check server/index.js && node --check server/multimodal.js && node --check server/saudiUnderstanding.js && node --check server/saudiDialect.js && node --check server/saudiCarTerms.js && node --check server/chatLanguage.js && node --check server/saudiKnowledge.js && node --check server/textRetrieval.js && node --check public/app.js",
     "test": "node --test"
   },
   "engines": {
