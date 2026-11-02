@@ -118,3 +118,17 @@ Test by running `npm.cmd run check`, `npm.cmd run dev`, then submit `السيا�
 - **Browser:** the selected media is sent **only after Send**; still retained for local history. Media processing errors produce an explicit warning and the textual conversation can continue.
 - **Actual test status:** GitHub source and configuration are updated; the user's local Ollama, FFmpeg and CLAP environments have **not** been independently tested.
 - **Setup:** [MULTIMODAL_SETUP.md](MULTIMODAL_SETUP.md). Existing private `.env` must be updated manually (the example alone does not change it).
+
+
+## V5.1 — Saudi Arabic understanding and grounded responses (November 2, 2026)
+
+Warshatak now uses an explicit, testable **Saudi dialect normalization and intent layer** for common car complaints. For example, `سيارتي ترج وهي واقفة` is understood as a vibration/rough-idle symptom and matched to a source-linked guidance card. The card's possible explanation and safe next step are shown directly, instead of asking a small language model to invent reasons. The AI chat remains available for less-clear or broader questions.
+
+- `server/saudiUnderstanding.js`: Saudi aliases, combined symptom/context matching, follow-up awareness, and high-risk safety detection.
+- `server/index.js`: known high-confidence automotive symptoms use publisher-based card answers before model inference; inconclusive free-form messages still use the configured AI model.
+- `public/app.js` and `public/styles.css`: show source links below these **publisher-grounded** replies.
+- `tests/saudiUnderstanding.test.js`: 7 regression tests for idling vibration, AC follow-up, Arabic normalization, English descriptions, ambiguous inputs, and brake safety.
+- Run `npm.cmd run check` and `npm.cmd test` after `git pull origin main`.
+- Verified in isolated code checks: 7 test cases passed. **Real browser integration on the user's PC is not yet verified.**
+
+**Limitations:** Rule-based matching covers frequent expressions, not all Saudi dialects or every car. Publisher summaries are not mechanic-confirmed individual vehicle diagnoses. Low-confidence cases can still receive imperfect model-generated answers; always validate against actual inspection for safety-critical issues.
