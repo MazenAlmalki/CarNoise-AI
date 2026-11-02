@@ -155,7 +155,7 @@ app.post('/api/chat',async(req,res)=>{
   if(message.length<2)return res.status(400).json({error:language==='en'?'Write a little more about your car.':'اكتب وصف بسيط عن مشكلة سيارتك.'});
   // No model has decoded speech in this media: a signal chart cannot justify
   // saying the user said anything, nor inventing an automotive noise.
-  if((mediaType==='audio'||mediaType==='video')&&asksAboutUploadedMedia&&!spokenText&&!mediaObject?.audio?.matches?.length){
+  if((mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&!mediaObject?.audio?.matches?.length){
     return res.json(mediaClarification(language));
   }
   if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia){
