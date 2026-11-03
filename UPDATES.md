@@ -452,3 +452,7 @@ Validation: syntax checks and 173 Node tests passed. Chromium measured the actua
 Known-recording results now show a tentative problem, suggested inspection steps and publisher source, with optional safety/reference playback. File/PCM identity explanations and the “What was identified” heading are hidden from the customer view and manual narration, including saved older cards, without rewriting history. Guidance is shown first. Internal evidence basis and diagnosisConfirmed:false remain intact; no new semantic analysis or confirmed diagnosis is claimed. Thirty-second attachment pacing and recognition behavior are unchanged.
 
 Validation: syntax checks and 174 Node tests passed. Chromium verified a real known-file upload, the 30-second wait, clean Arabic/English rendering, source links, responsive containment and manual narration with no byte/fingerprint wording. TTS response was mocked; the upload and result API were real. Old saved identity explanations are omitted by presentation/narration without changing their stored records.
+
+### Remove homepage problem suggestions
+
+Removed the three initial problem-example buttons and their section heading/click handler, so users start by writing their own description or attaching a clip. The welcome content, dictation, attachment and send controls remain available. Business-model canvas fields are unchanged.

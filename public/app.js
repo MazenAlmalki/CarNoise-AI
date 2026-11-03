@@ -929,7 +929,6 @@ $('mediaInput').accept=MEDIA_ACCEPT;
 $('mediaInput').addEventListener('change',e=>mediaFile(e.target.files?.[0]));
 $('recordButton').addEventListener('click',recordToggle);
 $('historySearch').addEventListener('input',renderHistory);
-document.querySelectorAll('[data-example]').forEach(button=>button.addEventListener('click',()=>{if(!session&&!submitting)startAnalysis(t('examples')[button.dataset.example]);}));
 applySettings();
 
 // Attachments use the same validation and upload path, including drag and drop.
