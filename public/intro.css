@@ -175,12 +175,6 @@
   text-shadow: 0 2px 8px #000;
   color: var(--film-ink);
 }
-.intro-captions [role="status"] {
-  color: var(--film-muted);
-  font-size: 12px;
-  margin: 12px auto 0;
-  max-width: 560px;
-}
 .intro-light {
   position: absolute;
   inset: -50%;
@@ -368,10 +362,6 @@
   .intro-captions > p:first-child {
     font-size: 14px;
     padding: 4px 10px;
-  }
-  .intro-captions [role="status"] {
-    margin-top: 4px;
-    font-size: 10px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

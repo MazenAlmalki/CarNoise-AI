@@ -4,10 +4,6 @@ import {
   INTRO_SEEN_KEY,
   introCueAt,
 } from "./intro-copy.js";
-import { playIntroAudio } from "./intro-audio.js";
-// Replace null with local narration URLs (e.g. /assets/intro-ar.wav). Aim for
-// 9–10 seconds. The same subtitles/timeline remain available without audio.
-export const recordedSources = { ar: null, en: null };
 export function createCinematicIntro({
   getLanguage,
   onLanguage,
@@ -18,17 +14,12 @@ export function createCinematicIntro({
   const find = (name) => dialog.querySelector('[data-intro="' + name + '"]');
   let language = getLanguage(),
     playing = false,
-    muted = false,
-    audio = null,
     frame = null,
     endTimer = null,
     dissolveTimer = null,
     started = 0,
-    voiceStarted = 0,
-    actualCue = -1,
     restoreFocus = null,
-    lastSubtitle = -1,
-    lastTimingAt = 0;
+    lastSubtitle = -1;
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
   function markSeen() {
     try {
@@ -36,8 +27,6 @@ export function createCinematicIntro({
     } catch {}
   }
   function clearPlayback() {
-    audio?.stop();
-    audio = null;
     cancelAnimationFrame(frame);
     clearTimeout(endTimer);
     clearTimeout(dissolveTimer);
@@ -73,8 +62,6 @@ export function createCinematicIntro({
       find(key).textContent = copy[key];
     find("language").textContent = language === "ar" ? "EN" : "عربي";
     find("language").setAttribute("aria-label", copy.language);
-    find("mute").textContent = muted ? copy.unmute : copy.mute;
-    find("mute").setAttribute("aria-pressed", String(muted));
     lastSubtitle = -1;
     subtitle(0);
     document.getElementById("replayIntro").textContent = copy.replay;
@@ -112,39 +99,13 @@ export function createCinematicIntro({
     markSeen();
     playing = true;
     started = performance.now();
-    voiceStarted = 0;
-    actualCue = -1;
     lastSubtitle = -1;
-    find("notice").textContent = "";
     dialog.dataset.phase = "playing";
     dialog.dataset.scene = "logo";
-    audio = playIntroAudio({
-      language,
-      lines: introCopy[language].lines,
-      muted,
-      recordedSource: recordedSources[language],
-      onStart: () => {
-        voiceStarted = performance.now();
-      },
-      onCue: (index) => {
-        actualCue = index;
-        lastTimingAt = performance.now();
-        subtitle(index);
-      },
-      onNotice: (key) => {
-        find("notice").textContent = key
-          ? introCopy[language][key] || introCopy[language].blocked
-          : "";
-      },
-    });
     function tick(now) {
       if (!playing) return;
-      const elapsed = now - started,
-        narrationElapsed = now - (voiceStarted || started);
-      const cue =
-        actualCue >= 0 && now - lastTimingAt < 1200
-          ? actualCue
-          : introCueAt(narrationElapsed);
+      const elapsed = now - started;
+      const cue = introCueAt(elapsed);
       subtitle(cue);
       const nextScene =
         elapsed > 8300 ? "resolve" : lastSubtitle >= 1 ? "tagline" : "logo";
@@ -160,7 +121,6 @@ export function createCinematicIntro({
     restoreFocus = document.activeElement;
     language = getLanguage();
     render();
-    find("notice").textContent = "";
     dialog.dataset.phase = "ready";
     dialog.dataset.scene = "logo";
     dialog.dataset.reduced = String(reduced.matches);
@@ -180,14 +140,6 @@ export function createCinematicIntro({
   }
   find("begin").onclick = begin;
   find("skip").onclick = () => finish(true);
-  find("mute").onclick = () => {
-    muted = !muted;
-    audio?.setMuted(muted);
-    find("mute").textContent = muted
-      ? introCopy[language].unmute
-      : introCopy[language].mute;
-    find("mute").setAttribute("aria-pressed", String(muted));
-  };
   find("language").onclick = () => {
     onLanguage(language === "ar" ? "en" : "ar");
   };

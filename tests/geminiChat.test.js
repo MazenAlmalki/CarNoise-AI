@@ -14,7 +14,7 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
   let raw='';for await(const chunk of req)raw+=chunk;
   requests.push(JSON.parse(raw));res.setHeader('Content-Type','application/json');
   const last=requests.at(-1).messages.at(-1).content;
-  const reply=last==='مرحبا'?'أهلًا بك!':/سلام عليكم/.test(last)?'وعليكم السلام! كيف أقدر أساعدك؟':last==='Hello'?'Hello! How can I help?':last==='What is a CV joint?'?'A CV joint transfers rotation while allowing an axle to change angle.':last.includes('What should I do next')?'When does it happen?':'A squeal may have several causes. Its source is not confirmed.';
+  const reply=requests.at(-1).messages.some(m=>m.content.includes('FORCE_WRONG_LANGUAGE'))?'Always English.':last.includes('أعد كتابة الجواب السابق')?'وعليكم السلام! كيف أقدر أساعدك؟':last==='مرحبا'?'أهلًا بك!':/سلام عليكم/.test(last)?'وعليكم السلام! كيف أقدر أساعدك؟':last==='Hello'?'Hello! How can I help?':last==='What is a CV joint?'?'A CV joint transfers rotation while allowing an axle to change angle.':last.includes('What should I do next')?'When does it happen?':'A squeal may have several causes. Its source is not confirmed.';
   res.end(JSON.stringify({choices:[{message:{content:reply}}]}));
  });
  const providerPort=await listen(provider);t.after(()=>new Promise(resolve=>provider.close(resolve)));
@@ -75,6 +75,19 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const uncertainImitation=await chat({...imitation,audioObservation:{...imitation.audioObservation,soundOrigin:'uncertain'}});assert.notEqual(uncertainImitation.grounding,'human-vocal-imitation');
  const emergency=await chat(imitation,{messages:[{role:'user',content:'brake failure, the car will not stop'}]});assert.notEqual(emergency.grounding,'human-vocal-imitation');
  const humanSpeech=await chat({...imitation,transcription:{hasRecognizedSpeech:true,text:'السلام عليكم'}},{language:'ar'});assert.notEqual(humanSpeech.grounding,'human-vocal-imitation');assert.match(humanSpeech.reply,/وعليكم/);
+ const speechRequest=requests.find(x=>x.messages.at(-1).content.includes('أجب عن كلامه بالعربية'));
+ assert.ok(speechRequest,'Arabic transcript must use an Arabic request wrapper');
+ assert.equal(JSON.parse(speechRequest.messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content).responseLanguage,'ar');
+ const spokenArabic={...insight,audioObservation:null,transcription:{hasRecognizedSpeech:true,text:'salam alaikum',language:'ar-SA'}};
+ const beforeRepair=requests.length;
+ const correctedArabic=await chat(spokenArabic,{message:'Listen to this voice note',language:'en'});
+ assert.equal(correctedArabic.responseLanguage,'ar');assert.match(correctedArabic.reply,/وعليكم السلام/);
+ assert.equal(requests.length,beforeRepair+2,'one correction if the provider first responds in English');
+ assert.match(requests.at(-1).messages.at(-1).content,/أعد كتابة الجواب السابق بالعربية/);
+ const refused=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the recording',language:'en',mediaInsight:{...insight,transcription:{hasRecognizedSpeech:true,text:'FORCE_WRONG_LANGUAGE',language:'ar'}}})});
+ assert.equal(refused.status,502);const refusal=await refused.json();assert.match(refusal.error,/رد عربي/);assert.equal(refusal.reply,undefined,'an uncorrected English response must never be sent as the Arabic answer');
+
+
 
 
 

@@ -444,7 +444,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
     if(mediaFile){
      const payload=new FormData();
      payload.append('media',mediaFile,active.mediaName||'recording');
-     payload.append('language',active.lang||state.lang);
+     payload.append('language',state.lang);
      setLoading('media');
      const analysisResponse=await fetch('/api/media/analyze',{method:'POST',body:payload,signal:controller.signal});
      const parsed=await analysisResponse.json();
@@ -462,9 +462,10 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
   if(controller.signal.aborted)throw new DOMException('Request cancelled or timed out.','AbortError');
   setLoading('reply');
   const response=await fetch('/api/chat',{signal:controller.signal,method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:active.lang||state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer})});
+   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
+  if(['ar','en'].includes(data.responseLanguage))active.lang=data.responseLanguage;
   if(data.audioStatus==='classifier-error'&&data.audioError){
    if(active.mediaAnalysis?.audioEventAnalysis?.provider==='gemini')showError((state.lang==='ar'?'تعذر تحليل الصوت عبر Gemini: ':'Gemini audio analysis failed: ')+String(data.audioError).slice(0,240));
    else showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));

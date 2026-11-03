@@ -136,3 +136,9 @@ test('does not retry credentials, model or quota errors, and respects bounded Re
  await assert.rejects(()=>describeAudioWav(wav(),'en',{env,sleepImpl:async()=>{throw Error('too long');},fetchImpl:async()=>{calls++;return {ok:false,status:503,headers:{get:()=> '120'}};}}),/HTTP 503/);
  assert.equal(calls,1);
 });
+
+
+test('Gemini preserves original Arabic speech language independently of English interface',async()=>{
+ const result=await describeAudioWav(wav(),'en',{env,fetchImpl:async()=>response({...observation,hasSpeech:true,transcript:'السلام عليكم',speechLanguage:'ar',hasClearSound:false,sounds:[]})});
+ assert.equal(result.transcription.text,'السلام عليكم');assert.equal(result.transcription.language,'ar');assert.equal(result.transcription.hasRecognizedSpeech,true);
+});
