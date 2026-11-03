@@ -80,9 +80,8 @@ The repository holds **12 linked sound-page records**, not the recordings themse
 | `data/audio_dataset_catalog_v1.json` | Four dataset leads with access/licensing notes |
 | `data/large_audio_dataset_catalog.json` | Five larger dataset records with reported sizes and caveats |
 | `data/cases_template.csv` | Blank template for real, independently checked repair cases |
-| `scripts/import_kwerimoto.py` | Code to fetch and validate publisher metadata; not an audio downloader |
 
-For deeper collection notes, see `data/AUDIO_SOURCES_README.md`, `data/LARGE_AUDIO_COLLECTION.md`, and `DATA_COLLECTION_GUIDE.md`.
+For current source provenance and evaluation requirements, see `data/car-audio/README.md` and the JSON manifests alongside the reference files.
 
 ## 6. Academic reporting cautions
 
@@ -145,7 +144,7 @@ See `data/saudi_official_context_v1.json` for paraphrases and per-record source 
 - `data/saudi_dialect_glossary_v1.json`: **128 author-curated examples**, including explanatory translations of Saudi everyday and automotive terminology. Not a third-party collected language corpus or published dictionary.
 - `data/saudi_conversation_edge_cases_v1.jsonl`: **204 synthetically authored variants** representing 51 user-intent scenarios. They are used for reasoning-prompt design and tests, **not mechanical fault evidence**.
 - `server/saudiDialect.js`: lightweight local matching, ambiguity flags and conversation-intent hints for the LLM.
-- `SAUDI_DIALECT_GUIDE.md`: project-specific descriptions and validation limitations.
+- `PROJECT_STACK_AR.md`: current project-specific implementation and validation limitations.
 
 These authored linguistic examples have **no external source URL** because they are generated for this project. They must not be cited as real mechanic comments, independently observed user conversations or verified real-world vehicle cases. Original sources for automotive information remain in sections above.
 
@@ -157,7 +156,7 @@ These authored linguistic examples have **no external source URL** because they 
 - Saudi owners' community terminology list (contextual, not technical certification): **بوري** as horn and **جلنط** as parking brake — https://montada.haraj.com.sa/58319/
 - RAC general dashboard warning-light guidance — https://www.rac.co.uk/drive/advice/know-how/car-dashboard-warning-lights-meaning/
 
-The 89 entries and 317 variants in `data/saudi_car_terms_v1.json` contain **author-created translations and examples**; these publications inform selected entries but do not independently verify all synonyms. The 1,068 paired dialogue examples are generated and are **not** real user logs, diagnosed repairs, or model fine-tuning. Source and limitations: `SAUDI_CAR_TERMS_AND_ENGLISH.md`.
+The 89 entries and 317 variants in `data/saudi_car_terms_v1.json` contain **author-created translations and examples**; these publications inform selected entries but do not independently verify all synonyms. The 1,068 paired dialogue examples are generated and are **not** real user logs, diagnosed repairs, or model fine-tuning. Source and limitations are retained in the associated JSON records; see `PROJECT_STACK_AR.md` for the implementation.
 
 
 ## 12. Public YouTube sound-research index (November 2, 2026)
@@ -166,4 +165,4 @@ Public video links were checked at the publisher-description/metadata level and 
 
 The **536 generated sound-description samples** in `data/sound_description_examples_v1.jsonl` are user-question language variations based on the existing 67 authored CLAP captions; they are not videos, real-user fault logs, sound files or supervised model training. The separate `server/soundReferences.js` module returns public video links only as reading recommendations when text relates to a topic, never as an acoustic classifier result. Video descriptions may reflect uploader claims or diagnostic uncertainty rather than confirmed mechanical causation.
 
-See `SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md` for exact sources and methodology. Other explanation sources: FTC Auto Repair Basics and Christian Brothers Automotive's published car-noise vocabulary.
+Source records and methodology fields remain in the associated JSON datasets. Other explanation sources: FTC Auto Repair Basics and Christian Brothers Automotive's published car-noise vocabulary.

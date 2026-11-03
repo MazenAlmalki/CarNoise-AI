@@ -1,127 +1,85 @@
 # ورشتك | Warshatak
 
-> **Microphone behavior:** “إملاء صوتي / Dictate” converts speech into an editable draft; it never automatically sends or analyzes a car recording. Use **Attach** for vehicle audio/video. See [dictation and content routing](DICTATION_AND_CONTENT_ROUTING.md) for ASR setup, provider limitations and validation.
+Arabic/English vehicle assistant built with Node.js/Express and plain HTML/CSS/JavaScript. Results suggest possibilities and inspection steps, not confirmed diagnoses.
 
-An Arabic-first vehicle-noise assistant with English support, a mechanic-themed interface, per-vehicle conversations, and text, microphone, audio, photo and video attachments. Its responses explore possibilities; they are not mechanic-confirmed diagnoses.
+## Run
 
-## Run on Windows
-
-Requires Node.js 20 or newer. FFmpeg is needed for recording/video decoding and Gemini audio excerpts. Local CLAP/Whisper additionally need their optional Python dependencies.
-
-From the folder containing `package.json`:
+Requires Node.js 20+ and, for decoding audio/video or dictation, FFmpeg on PATH.
 
 ```powershell
 npm.cmd install
-# First-time setup only: preserve any existing private configuration.
+# First-time setup only; preserve existing private configuration.
 if (-not (Test-Path .env)) { Copy-Item .env.example .env }
-```
-
-Edit your private `.env` to select your providers, then start:
-
-```powershell
-ffmpeg -version
 npm.cmd run dev
 ```
 
-Open the server address (normally port 3000). Use `npm.cmd start` without watch mode. Restart the server after changing `.env`. On macOS/Linux use `npm` instead of `npm.cmd`.
+Open `http://localhost:3000`. Use `npm.cmd start` without watch mode. On Linux/macOS use `npm`. Restart after editing `.env`; never commit keys.
 
-## Configure the providers
+## Provider configuration
 
-| Feature | Configuration | Guide |
-| --- | --- | --- |
-| Text chat | `CHAT_API_URL`, `CHAT_API_KEY`, `CHAT_MODEL` for your compatible provider | [Hosted chat setup](HOSTED_LLAMA_API_SETUP.md) |
-| Audio descriptions and speech | `AUDIO_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_AUDIO_MODEL` | [Gemini setup](GEMINI_AUDIO_SETUP.md) |
-| Local audio processing | `AUDIO_PROVIDER=local`, optional CLAP/Whisper flags | [Local media setup](MULTIMODAL_SETUP.md) |
-| Images/video frames | `VISION_MODEL`, using the configured chat endpoint and key | [Text/vision context setup](LLAMA_CONTEXT_ENGINE_SETUP.md) |
+Only configure the features you use. Model names in `.env.example` are defaults, not proof of availability: verify model/input support and quota for your account.
 
-Keep existing working provider settings when adding Gemini. A model name must be available to your provider/project and support the required input type. A working text endpoint does not establish vision support. Current prices and quotas depend on the chosen provider/model; a ChatGPT subscription does not supply those API credits.
+| Feature | Settings |
+| --- | --- |
+| Text chat | `CHAT_API_URL`, `CHAT_API_KEY`, `CHAT_MODEL` (OpenAI-compatible endpoint) |
+| Images/video frames | `VISION_MODEL`, using the chat endpoint/key; requires vision support |
+| Attached audio understanding | `AUDIO_PROVIDER=gemini`, `GEMINI_API_KEY`, `GEMINI_AUDIO_MODEL` |
+| Microphone dictation | `SPEECH_FALLBACK=groq`, `GROQ_API_KEY`, `GROQ_SPEECH_MODEL`; `SPEECH_LANGUAGE=auto` for Arabic/English |
+| Optional local transcription | `SPEECH_FALLBACK=local`, `ENABLE_SPEECH_TRANSCRIPTION=1`, `AUDIO_PYTHON`, `WHISPER_MODEL`; requires faster-whisper and model files |
+| Read aloud | Browser/system voices, or Gemini TTS using `GEMINI_API_KEY`, `GEMINI_TTS_MODEL`, `GEMINI_TTS_VOICE` |
 
-The default template uses hosted Meta Llama text/vision. Gemini is optional and does not change the text or vision provider. With Gemini selected, CLAP is bypassed. To list Gemini model metadata without displaying your key:
+`SPEECH_FALLBACK=none` disables dictation. `auto` reuses a Groq chat key only when the chat host is `api.groq.com`, or enabled local Whisper. Missing ASR produces an unavailable message, never a vehicle-analysis fallback. Dictation is limited to 60 seconds / 5 MiB.
 
-```powershell
-node scripts/list_gemini_models.js
-```
+`AUDIO_PROVIDER=local` defaults to decoding/measurements with optional CLAP/Whisper disabled. Waveform measurements cannot identify a sound. Optional CLAP needs Python dependencies/model files and is similarity scoring, not a trained fault classifier. With Gemini selected CLAP is bypassed. `FFMPEG_PATH` overrides FFmpeg; `GEMINI_AUDIO_MAX_SECONDS` bounds target audio (30 seconds by default). `GEMINI_REFERENCE_AUDIO=0` disables the additional reference-audio comparison. Inspect available Gemini model metadata with `node scripts/list_gemini_models.js`; metadata alone does not validate inference.
 
-For bilingual YouTube reference metadata, pending Shorts research and independent speech-to-text fallback, see [YouTube and speech research](YOUTUBE_SHORTS_RESEARCH.md). Public YouTube collection was blocked in this cloud instance; no new Shorts have been reviewed.
+## User flows and limits
 
-For the bounded 18-model Saudi-market focus and answer-first conversation policy, see [Saudi vehicle evidence](SAUDI_VEHICLE_EVIDENCE.md).
+- **Microphone → editable text draft → explicit Send.** Existing typed text is preserved. Stopping does not create a chat message or save microphone audio as an attachment. Cancel/navigation stops capture and ignores stale results.
+- **Attach → preview → explicit Send.** Images/audio/video upload only on Send, up to 25 MiB. Written descriptions and automatic transcripts remain separate.
+- Attached audio observations distinguish speech, mechanical sounds, mixed, music, silence, other and uncertain. Mechanical does not establish a vehicle fault; missing/failed analysis cannot supply a diagnosis.
+- Fifteen bundled reference excerpts support optional native-audio comparison. Four registered recordings also support exact file identity without an API/FFmpeg, or exact decoded-PCM identity with FFmpeg. Identity is not recognition of new similar sounds; source labels remain unverified uploader claims.
+- Possible matches include inspection guidance and sources; unclear or unmatched clips can return **No reliable match**. No invented probabilities, validated 70% threshold, training or reliable fault-classifier claim.
+- Presentation minimums are 5 seconds for text and 30 seconds for attachment results, with safety responses exempt. These are UI delays, not evidence of analysis time.
 
-## What the app does
+## Storage and privacy
 
-- Arabic/RTL and English/LTR, light/dark themes, responsive navigation and reduced-motion support.
-- Vehicle folders and conversation history stored in the current browser.
-- Recording and media previews before Send; attachments can be added during a conversation.
-- Context assembled from the user's descriptions, bounded history and source-linked reference material.
-- Tentative sound descriptions through Gemini, or optional local CLAP similarities and Whisper transcripts.
-- Local FFmpeg waveform measurements and extracted video frames.
+History/vehicles live in browser localStorage and attachments in IndexedDB. Clearing browser data may erase them; no synced account is implemented. On Send, messages/context reach the configured chat provider. Uploaded media is processed temporarily on the server; images/frames may reach the vision provider and bounded audio may reach Google or Groq according to settings. Dictation recordings are temporary. Server temporary files are removed after processing/errors; provider retention terms still apply. Keep credentials server-side.
 
-A waveform does not identify a sound or vehicle fault. CLAP scores are not fault probabilities. Hosted observations/transcripts can also be wrong. Video images do not establish what its audio contains. The app reports unsuccessful analysis instead of claiming it understood the clip.
+## API routes
 
-## Privacy
-
-Conversation state stays in this browser's localStorage; attachments stay in its IndexedDB. This is not a synced cloud account, and clearing browser storage can erase that data.
-
-On Send, messages and relevant context reach your selected chat provider. Attachments upload temporarily to the Node server. Images/frames may reach the vision provider; when Gemini audio is selected, a bounded audio excerpt reaches Google (first 30 seconds at most by default). Local temporary media is removed after processing, including errors. Providers' own data-handling terms still apply. API keys belong only in private server configuration, never in frontend files, screenshots or GitHub.
-
-## Readiness and errors
-
-`/api/model-status` and `/api/media-status` show provider configuration and FFmpeg availability. `configured: true` means a key is present; it does not prove authorization, quota or successful inference. Verify with an actual short recording or image.
-
-- **Failed to fetch:** check that the app server is running and the browser uses its address, rather than an HTML file or an unrelated Live Server port.
-- **Missing/denied key:** check the appropriate provider key in `.env` and restart.
-- **Model unavailable:** choose a supported model returned for your account/project.
-- **Gemini HTTP 500/502/503/504:** the app retries transient failures up to twice within one deadline; an exhausted request reports the HTTP code. Long `Retry-After` instructions are left for a later manual retry.
-- **Quota/rate limit:** check your provider's limits. The app does not automatically retry 429 errors or enable billing.
-- **FFmpeg missing:** install it on PATH or set `FFMPEG_PATH` to the executable.
-
-## API and validation
+These routes support current UI features or saved-case compatibility and are retained:
 
 | Route | Purpose |
 | --- | --- |
-| `GET /api/health` | Server health and text-provider configuration |
-| `GET /api/model-status` | Provider configuration metadata |
-| `GET /api/media-status` | Media configuration and FFmpeg availability |
-| `POST /api/chat` | Conversation and bounded reference retrieval |
-| `POST /api/media/analyze` | Multipart attachment analysis (`media` field, up to 25 MB) |
-| `POST /api/analyze` | Compatibility with older four-question records |
+| `GET /api/health`, `/api/model-status`, `/api/media-status` | Health/configuration and media readiness |
+| `POST /api/chat` | Conversation |
+| `POST /api/analyze` | Older saved-case analysis compatibility |
+| `POST /api/media/analyze` | Attached-file analysis (`media` field) |
+| `GET /api/audio-references/:id` | Allowlisted reference playback |
+| `GET /api/speech/transcription-status` | Dictation configuration |
+| `POST /api/speech/transcribe` | Temporary dictation (`audio` field) |
+| `GET /api/speech/status`, `POST /api/speech` | Read-aloud configuration and generation |
+
+`configured: true` establishes configuration only, not successful access. Connection errors: start the server and use its address. Quota/429 errors: check provider limits; creating another key does not guarantee more quota. Missing decoder: install FFmpeg or set its path. Do not paste secrets into chat.
+
+## Verify
 
 ```powershell
 npm.cmd run check
 npm.cmd test
+npm.cmd run evaluate:audio
 ```
 
-Gemini tests use mocked provider responses and real local FFmpeg when available; live provider access must be checked with your own key. Optional FFmpeg integration tests report a skip if it is absent. V2 dataset evaluation remains blocked until independently reviewed held-out recordings exist; that readiness status is separate from the automated tests.
+Node/provider mocks verify routing, contracts and failure handling, not recognition accuracy. Browser smoke scripts in `scripts/smoke_*.cjs` use Playwright/Chromium (`PLAYWRIGHT_MODULE`, `CHROMIUM_PATH`, `SMOKE_URL`); see each script for options. No live provider success or acoustic accuracy follows from mocked tests.
 
-## Further documentation
+Audio evaluation currently reports **blocked** (exit 2): independent reviewed recordings are missing. All clips from one source must stay in the same reference/test group. No training, ingestion or model downloads run as part of cleanup.
 
-- [Frontend design and behavior](FRONTEND_DESIGN.md)
-- [Question limits and evidence retrieval](MINIMAL_QUESTIONS_AND_EVIDENCE.md)
-- [Saudi vocabulary](SAUDI_CAR_TERMS_AND_ENGLISH.md) and [dialect guide](SAUDI_DIALECT_GUIDE.md)
-- [Reference sources and licensing](REFERENCES.md), [data collection](DATA_COLLECTION_GUIDE.md), and [sound research](SOUND_RESEARCH_AND_GUIDED_QUESTIONS.md)
-- [Development history](UPDATES.md)
+## Essential documentation
 
-The reference corpora include synthetic language examples and educational source summaries. They are not verified vehicle-fault training labels or evidence that a particular recording matches a video.
+- [Actual stack, APIs and data — Arabic](PROJECT_STACK_AR.md)
+- [Sources and licensing](REFERENCES.md)
+- [Reference timestamps, hashes and labels](data/uploaded_audio_references/README.md)
+- [Independent evaluation requirements](data/car-audio/README.md)
+- [Business model](BUSINESS_MODEL.md) and [Arabic canvas, PDF/PNG/HTML](docs/business/CANVAS_README.md)
 
-Natural Arabic reply voice and waveform-synchronized mechanic: see [GEMINI_SPEECH_SETUP.md](GEMINI_SPEECH_SETUP.md). The cinematic intro stays silent.
-
-## V2 garage and sound evidence
-
-The compact vehicle switcher, searchable/renamable conversation history, copyable problem summary, actual microphone meter, upload phases and latency measurements are documented in [WARSHATAK_V2_REVIEW.md](WARSHATAK_V2_REVIEW.md). All 15 reference WAVs are retained. Their component titles remain **unverified suspected faults**, distinct from acoustic categories. See [data/car-audio/README.md](data/car-audio/README.md) for evaluation, provenance and limitations. The intro remains silent.
-
-## Phase 3 — unified case evidence
-
-Written symptom details are preserved alongside automatic transcripts, sound/video observations, vehicle corrections and unverified history. Shared media validation, measured upload progress and Saudi usage mappings support the same workflow. See [Phase 3 review](PHASE_3_REVIEW.md) for behavior, test commands and limitations. Work stops after Phase 3: new recordings are required before dataset ingestion, classifier work or training, and the requested 70% threshold remains disabled until independently validated.
-
-## Compact sound-reference results
-
-New attached recordings can produce one simple result card: a **possible** named match, a short resemblance explanation, practical inspection steps and a playable reference. Unclear, ambiguous or failed comparisons show **No reliable match**. The two reuploaded videos reuse all 15 existing reference clips; this is audio comparison, not training. See [sound-reference results and source review](SOUND_REFERENCE_RESULTS.md).
-
-## Four known recordings — local identity
-
-The four supplied clips (القماشات، البطارية، بطة السير، ربلة كرسي المساعد) now support exact original-file identity without FFmpeg or a paid API, plus decoded-audio identity when FFmpeg is available. Uploading the same recording shows its user-supplied label and inspection guidance; new/re-encoded sounds are not promised a match. This is recording identity, not trained fault recognition. See [KNOWN_RECORDINGS.md](KNOWN_RECORDINGS.md).
-
-## Business model
-
-See [BUSINESS_MODEL.md](BUSINESS_MODEL.md) for the proposed Saudi-first customer segments, pricing experiments, revenue streams, unit economics and 90-day validation plan. Financial figures are unvalidated planning assumptions; paid plans and workshop workspaces are not implemented.
-
-The business model is also available as an [Arabic Business Model Canvas](docs/business/CANVAS_README.md), with a printable A3 PDF, high-resolution PNG and editable HTML.
+Historical review/prompt documents and unused YouTube/dataset-import tools were removed. Runtime references, source hashes, evaluation metadata, tests and business artifacts remain in the repository; deleted history is recoverable through Git.
