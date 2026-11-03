@@ -1,7 +1,9 @@
 # Single-screen silent welcome
 
-The first visit shows one branded screen with the logo, name and tagline together. It starts automatically, holds briefly, then fades directly into the app and focuses the chat composer. Total duration is 2.4 seconds including a 550ms fade. There is no separate start page, scene sequence, changing captions, music or narration.
+One page shows the logo, name, tagline and a central **ابدأ المحادثة / Start chat** button. It waits indefinitely for explicit activation; there is no automatic transition timer. The button fades into the app in 550ms (150ms with reduced motion), then focuses the chat composer. Escape/Space exit immediately. No music, narration, changing scenes or start gate is used.
 
-Start chatting skips the wait and fades out. Escape/Space close immediately. Replay remains in settings; replay restores focus to the triggering control. The existing `warshatak-cinematic-v1` first-visit key and garage language preference are retained. Changing language does not restart the timer. Reduced motion uses static content and a shorter 800ms total with a simple fade. The modal keeps the app inert until it closes. A transparent backdrop allows the chat to appear during the fade.
+Replay and language switching remain in the compact Settings area. The `warshatak-cinematic-v1` first-visit key and saved garage language are preserved. The first-visit flag is written on dismissal, not merely on opening. Backgrounding the tab does not dismiss the screen. App controls remain inert until dismissal. Explicit replay is blocked while recording or waiting for a response. Existing conversations/data are never deleted or migrated.
 
-Edit copy/duration in `public/intro-copy.js`, behavior in `public/cinematic-intro.js`, and styling in `public/intro.css`. Microphone recording and mechanic reply speech are separate and unchanged. No .env changes are required.
+Copy: `public/intro-copy.js`. Behavior: `public/cinematic-intro.js`. Styles: `public/intro.css`. No .env changes are required.
+
+Validation: `npm.cmd run check`, `npm.cmd test`, and optional Playwright `scripts/smoke_examples.cjs` (see audio comparison review for tool environment variables).

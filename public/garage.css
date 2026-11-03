@@ -303,3 +303,61 @@ body[data-speech-state="idle"] .assistant-dock > button {
     animation: none;
   }
 }
+/* One footer entry keeps secondary controls out of the conversation history. */
+.garage-settings > summary {
+  cursor: pointer;
+  min-height: 44px;
+  padding: 12px;
+  font-size: 13px;
+  color: var(--muted);
+  border-radius: 10px;
+  background: var(--panel2);
+}
+.garage-settings[open] > summary {
+  margin-bottom: 8px;
+}
+.garage-settings .voice-panel {
+  border: 0;
+  background: transparent;
+  margin-bottom: 4px;
+}
+.reference-example {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  background: var(--panel);
+  margin-block: 12px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.reference-example h3 {
+  font-size: 14px;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.reference-example p {
+  font-size: 13px;
+  line-height: 1.8;
+}
+.reference-example audio {
+  width: 100%;
+  max-width: 420px;
+}
+.reference-feedback {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.reference-feedback button {
+  font: inherit;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+  color: var(--text);
+  border-radius: 9px;
+  min-height: 40px;
+  padding: 8px 14px;
+}
+.reference-feedback button[aria-pressed="true"] {
+  border-color: var(--accent);
+}

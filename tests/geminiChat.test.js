@@ -62,12 +62,12 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  const clearReference={result:'clear',needsClarification:false,matches:[{id:'upload1-02',label_ar:'القماشات',label_en:'Brake pads',faultVerified:false}],reason:'Similar sound, uncertain mechanical source.',diagnosisConfirmed:false};
  const beforeReference=requests.length;
  const matched=await chat({...insight,audioObservation:{...insight.audioObservation,referenceComparison:clearReference}});
- assert.doesNotMatch(matched.reply,/\?/);
+ assert.equal((matched.reply.match(/[?؟]/g)||[]).length,1);assert.equal(matched.referenceExample.id,'upload1-02');
  const matchedContext=JSON.parse(requests[beforeReference].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
  assert.equal(matchedContext.questionPlan.askQuestion,false);assert.match(matchedContext.mediaInsight,/upload1-02/);
  await chat({...insight,audioObservation:{...insight.audioObservation,referenceComparison:{...clearReference,result:'partial',needsClarification:true}}});
  const partialContext=JSON.parse(requests[beforeReference+1].messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);
- assert.equal(partialContext.questionPlan.askQuestion,true);
+ assert.equal(partialContext.questionPlan.askQuestion,false);assert.equal(partialContext.questionPlan.questionBudget,0);
  const imitation={...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[],soundOrigin:'human_vocal_imitation',originReason:'Audible vocal articulation and breath.'}};
  const providerCount=requests.length;
  const joke=await chat(imitation,{language:'ar'});assert.equal(joke.grounding,'human-vocal-imitation');assert.match(joke.reply,/V8/);assert.equal(requests.length,providerCount);assert.deepEqual(joke.knowledgeMatches,[]);

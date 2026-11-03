@@ -1,5 +1,5 @@
-import { introCopy, INTRO_DURATION, INTRO_SEEN_KEY } from "./intro-copy.js";
-// One silent welcome screen. The timer never restarts when switching language.
+import { introCopy, INTRO_SEEN_KEY } from "./intro-copy.js";
+// One silent welcome screen, dismissed only by an explicit action.
 export function createCinematicIntro({
   getLanguage,
   onLanguage,
@@ -9,11 +9,8 @@ export function createCinematicIntro({
     app = document.querySelector(".app");
   const find = (name) => dialog.querySelector('[data-intro="' + name + '"]');
   const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-  let endTimer = null,
-    fadeTimer = null,
-    restoreFocus = null;
+  let fadeTimer = null;
   function clear() {
-    clearTimeout(endTimer);
     clearTimeout(fadeTimer);
   }
   function render() {
@@ -43,16 +40,13 @@ export function createCinematicIntro({
     dialog.close();
     delete document.body.dataset.introActive;
     app.inert = false;
-    if (
-      restoreFocus?.isConnected &&
-      restoreFocus !== document.body &&
-      !restoreFocus.closest("[inert]")
-    )
-      restoreFocus.focus({ preventScroll: true });
-    else document.getElementById("description").focus({ preventScroll: true });
+    document.getElementById("description").focus({ preventScroll: true });
   }
   function finish(immediate = false) {
     if (!dialog.open) return;
+    try {
+      localStorage.setItem(INTRO_SEEN_KEY, "1");
+    } catch {}
     clear();
     if (immediate) {
       close();
@@ -64,20 +58,12 @@ export function createCinematicIntro({
   function open() {
     if (!beforeOpen()) return;
     clear();
-    restoreFocus = document.activeElement;
     render();
     dialog.dataset.phase = "playing";
     document.body.dataset.introActive = "true";
     app.inert = true;
     dialog.showModal();
     find("skip").focus();
-    try {
-      localStorage.setItem(INTRO_SEEN_KEY, "1");
-    } catch {}
-    endTimer = setTimeout(
-      () => finish(),
-      reduced.matches ? 650 : INTRO_DURATION - 550,
-    );
   }
   find("skip").onclick = () => finish();
   find("language").onclick = () =>
@@ -95,9 +81,6 @@ export function createCinematicIntro({
   document.getElementById("replayIntro").onclick = open;
   document.getElementById("settingsLanguage").onclick = () =>
     onLanguage(getLanguage() === "ar" ? "en" : "ar");
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden && dialog.open) finish(true);
-  });
   addEventListener("pagehide", () => {
     if (dialog.open) close();
   });

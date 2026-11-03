@@ -1,5 +1,5 @@
-// Single-screen silent welcome. Duration includes the final fade.
-export const INTRO_DURATION = 2400;
+// Single-screen silent welcome. No automatic exit timer.
+
 export const INTRO_SEEN_KEY = "warshatak-cinematic-v1";
 export const introCopy = {
   ar: {
@@ -14,7 +14,7 @@ export const introCopy = {
   en: {
     name: "Warshatak",
     tagline: "With you. Every mile.",
-    skip: "Start chatting",
+    skip: "Start chat",
     replay: "Replay intro",
     settings: "Your experience",
     language: "Language",

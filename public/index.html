@@ -61,6 +61,7 @@
         <input id="historySearch" class="history-search" type="search" autocomplete="off" placeholder="ابحث في المحادثات…" />
         <div id="historyList" class="history-list"></div>
         <div class="side-bottom">
+          <details id="garageSettings" class="garage-settings"><summary id="garageSettingsTitle">الإعدادات</summary>
           <details id="experienceSettings" class="voice-panel">
             <summary id="experienceTitle">تجربتك</summary>
             <div class="voice-settings">
@@ -69,6 +70,7 @@
             </div>
           </details>
           <details id="voicePanel" class="voice-panel"></details>
+          </details>
           <div class="privacy-note">
             <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
             ><span data-i18n="localPrivacy"
@@ -366,7 +368,6 @@
     >
       <nav class="intro-toolbar" aria-label="Introduction controls">
         <button data-intro="language" type="button">EN</button>
-        <button data-intro="skip" type="button">تخطي المقدمة</button>
       </nav>
       <div class="intro-focus">
         <div class="intro-emblem">
@@ -374,6 +375,7 @@
         </div>
         <h1 data-intro="name">ورشتك</h1>
         <p class="intro-tagline" data-intro="tagline"></p>
+        <button data-intro="skip" class="intro-start-chat" type="button">ابدأ المحادثة</button>
       </div>
     </dialog>
     <dialog id="carDialog" class="car-dialog" aria-labelledby="carDialogTitle">

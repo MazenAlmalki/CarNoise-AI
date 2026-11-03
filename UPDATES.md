@@ -6,6 +6,14 @@
 
 This log documents the work visible in our development conversation and GitHub repository. It distinguishes **implemented in source**, **locally reported working**, and **not yet implemented/tested**. It is a retrospective summary, not a claim that every feature has been fully tested in production.
 
+## November 3, 2026 — Listen to a reference example
+
+Added one user-played reference example after a successful Gemini raw-audio comparison, with Close/Different/Not sure/Skip feedback. The server validates IDs against the hash-checked library and reserves the reply's single question for the example, respecting the two-question budget, urgency, speech/failure guards and offered-example history. Feedback is local, unverified resemblance, never a confirmed fault or training label. Playback uses the real WAV without a TTS call; players stop on recording, navigation, or other playback. Unknown references fail closed.
+
+Changed the single-screen silent intro to wait for its central Start chat button, then fade and focus the composer. Grouped secondary sidebar controls under one Settings entry. Vehicle IDs/history/media are preserved.
+
+Validation: 142 Node tests passed; browser checks used mocked provider replies but real WAV HTTP playback, IndexedDB, synthetic microphone input and feedback persistence. Existing bilingual vehicle/history smoke checks passed, including accessibility checks. Live Gemini recognition remains unverified. Dataset readiness remains blocked: 15 references with pending independent acoustic review, no independent held-out recordings. No external recording license/reuse permission was established and no new recordings or training results were invented. Details: [REFERENCE_COMPARISON_REVIEW.md](REFERENCE_COMPARISON_REVIEW.md).
+
 ## November 3, 2026 — Single-screen intro
 
 Replaced the multi-scene intro and start gate with one silent logo/name/tagline screen that opens automatically and fades into the chat in 2.4 seconds. Retained skip, keyboard exit, language, replay and existing first-visit preferences; reduced motion uses a shorter static welcome. Removed unused scene/caption/particle markup and CSS. No voice, data or provider configuration changes.
