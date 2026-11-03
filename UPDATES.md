@@ -412,3 +412,7 @@ python scripts/import_kwerimoto.py
 ### Phase 3 continuation — unified evidence and verification
 
 Preserve detailed written media descriptions alongside ASR, audio/video observations, vehicle/year corrections and unverified history. Add curated Saudi usage terms, shared media validation, measured upload percentages, unsent-draft preservation and narrow-layout containment. Final syntax checks, 156 Node tests and three mocked-provider Chromium suites passed. See [PHASE_3_REVIEW.md](PHASE_3_REVIEW.md). Stop here pending new recordings: no dataset ingestion, classifier implementation or training; suspected fault labels remain unverified and the requested 70% threshold stays disabled.
+
+### Dictation separation and content-first attachment routing
+
+The microphone now transcribes into an editable draft through a separate bounded ASR endpoint, without automatic chat, case creation or stored media. Explicit attachments retain the media-analysis path. Gemini attachment observations distinguish speech/mechanical/mixed/music/silence/other/uncertain and separately flag actual mechanical events; failed or unrelated clips no longer trigger automatic vehicle-location interviews. Existing written details and draft edits are preserved. Syntax checks, 160 Node tests and four mocked-provider browser suites passed. Live ASR/acoustic accuracy remains unverified without credentials and independent recordings. No ingestion, weights, training or threshold activation. See [dictation and content routing](DICTATION_AND_CONTENT_ROUTING.md).

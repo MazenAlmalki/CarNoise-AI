@@ -1419,3 +1419,6 @@ body,
  .transcript-card button,.problem-summary button { max-width:100%; white-space:normal; }
  .vehicle-select { min-width:0; max-width:100%; }
 }
+
+#dictationOverflow { width:100%; max-height:140px; box-sizing:border-box; }
+#dictationNotice:empty { display:none; }

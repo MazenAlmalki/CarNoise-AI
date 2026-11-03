@@ -268,6 +268,9 @@
           <div id="errorBox" class="error-box hidden" role="alert"></div>
         </main>
         <div class="composer-area">
+          <textarea id="dictationOverflow" class="hidden" readonly aria-label="تفريغ للإضافة يدويًا / Transcript to copy"></textarea>
+          <p id="dictationNotice" role="status" aria-live="polite"></p>
+          <button id="cancelDictation" data-i18n="cancelDictation" type="button" class="ghost-btn hidden">إلغاء الإملاء</button>
           <div
             id="recordingStatus"
             class="recording-status hidden"
@@ -282,7 +285,7 @@
             ><span
               ><strong data-i18n="recordingNow">التسجيل شغّال</strong
               ><small data-i18n="recordingHint"
-                >اضغط إيقاف، ثم اسمع المقطع قبل الإرسال.</small
+                >اضغط إيقاف لتحويل كلامك إلى نص، ثم راجعه وأرسله.</small
               ></span
             ><span id="recordingMeter" class="recording-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><time id="recordingDuration" dir="ltr" aria-hidden="true"
               >00:00</time
@@ -300,7 +303,7 @@
               ><textarea
                 id="description"
                 rows="2"
-                maxlength="600"
+                maxlength="2000"
                 data-i18n-placeholder="inputPlaceholder"
                 placeholder="وش المشكلة اللي تواجهك في السيارة؟"
               ></textarea>
@@ -324,7 +327,7 @@
                   aria-label="Record microphone"
                 >
                   <svg class="icon"><use href="/assets/icons.svg#mic" /></svg
-                  ><span data-i18n="record">تسجيل</span></button
+                  ><span data-i18n="record">إملاء صوتي</span></button
                 ><input
                   type="file"
                   id="mediaInput"

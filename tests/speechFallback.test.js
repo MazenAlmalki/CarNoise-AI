@@ -49,7 +49,7 @@ test('a Gemini failure still yields a separate successful speech transcript thro
 
 test('clear sound events do not invoke unnecessary speech fallback; failed ASR never claims speech',{skip:!ffmpeg&&'FFmpeg unavailable'},async()=>{
  const bytes=wav();let calls=0;
- const result=await analyzeUploadedMedia({mimetype:'audio/wav',size:bytes.length,buffer:bytes},'ar',{env,fetchImpl:async()=>{calls++;return {ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify({hasSpeech:false,transcript:'',hasClearSound:true,sounds:['طقطقة'],description:'طقطقة مسموعة',uncertainty:'المصدر غير معلوم'})}]}}]})};}});
+ const result=await analyzeUploadedMedia({mimetype:'audio/wav',size:bytes.length,buffer:bytes},'ar',{env,fetchImpl:async()=>{calls++;return {ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify({contentType:'mechanical_sound',hasMechanicalSound:true,hasSpeech:false,transcript:'',hasClearSound:true,sounds:['طقطقة'],description:'طقطقة مسموعة',uncertainty:'المصدر غير معلوم'})}]}}]})};}});
  assert.equal(calls,1);assert.equal(result.speechTranscriptionAnalysis.attempted,false);
  const failure=await analyzeUploadedMedia({mimetype:'audio/wav',size:bytes.length,buffer:bytes},'ar',{env,fetchImpl:async()=>({ok:false,status:429})});
  assert.equal(failure.transcription,null);assert.equal(failure.speechTranscriptionAnalysis.succeeded,false);assert.match(failure.warnings.join(' '),/Speech.*429/);

@@ -5,7 +5,7 @@ import {describeAudioWithReferences,hasHumanVocalImitation,vocalImitationReply} 
 import {analyzeUploadedMedia} from '../server/multimodal.js';
 import {planMinimalQuestions,enforceQuestionBudget} from '../server/minimalQuestions.js';
 const env={AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'fixture-only-key',GEMINI_AUDIO_MODEL:'fixture-audio-model',GEMINI_AUDIO_MAX_SECONDS:'2',SPEECH_FALLBACK:'none'};
-const observation={hasSpeech:false,transcript:'',hasClearSound:true,description:'Repeated sound events are audible.',sounds:['repeated events'],uncertainty:'Sound resemblance is not a fault diagnosis.',referenceComparison:{result:'clear',referenceIds:['upload1-02'],reason:'Similar repeated high frequency events, with different background noise.'}};
+const observation={contentType:'mechanical_sound',hasMechanicalSound:true,hasSpeech:false,transcript:'',hasClearSound:true,description:'Repeated sound events are audible.',sounds:['repeated events'],uncertainty:'Sound resemblance is not a fault diagnosis.',referenceComparison:{result:'clear',referenceIds:['upload1-02'],reason:'Similar repeated high frequency events, with different background noise.'}};
 const response=value=>({ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(value)}]}}]})});
 test('all 15 actual uploaded-reference excerpts have valid hashes, bilingual source labels and real PCM audio',async()=>{
  const refs=await loadAudioReferences({});assert.equal(refs.length,15);assert.equal(new Set(refs.map(x=>x.id)).size,15);
@@ -41,7 +41,7 @@ test('real upload processing invokes reference comparison and clear resemblance 
 
 test('positive vocal imitation stays separate from car-reference matches and needs audible evidence',async()=>{
  const [reference]=await loadAudioReferences({});
- const value={...observation,soundOrigin:'human_vocal_imitation',originReason:'Human breath and voiced mouth articulation change with the imitation.',hasClearSound:false,sounds:[]};
+ const value={...observation,contentType:'other',hasMechanicalSound:false,soundOrigin:'human_vocal_imitation',originReason:'Human breath and voiced mouth articulation change with the imitation.',hasClearSound:false,sounds:[]};
  const result=await describeAudioWithReferences(reference.wav,'ar',{env,fetchImpl:async()=>response(value)});
  assert.equal(result.observation.soundOrigin,'human_vocal_imitation');assert.deepEqual(result.observation.referenceComparison.matches,[]);
  await assert.rejects(()=>describeAudioWithReferences(reference.wav,'ar',{env,fetchImpl:async()=>response({...value,originReason:''})}),/incomplete/);
@@ -54,7 +54,7 @@ test('acoustic categories are unverified observations and component names are re
 });
 
 test('ordinary speech, uncertain/mixed recordings and failed recognition never trigger teasing',()=>{
- const media={type:'audio',audioEventAnalysis:{provider:'gemini',succeeded:true},audioObservation:{provider:'gemini',soundOrigin:'human_vocal_imitation',originReason:'Clear human mouth articulation.'},transcription:{hasRecognizedSpeech:false}};
+ const media={type:'audio',audioEventAnalysis:{provider:'gemini',succeeded:true},audioObservation:{contentType:'other',hasMechanicalSound:false,provider:'gemini',contentType:'other',hasMechanicalSound:false,soundOrigin:'human_vocal_imitation',originReason:'Clear human mouth articulation.'},transcription:{hasRecognizedSpeech:false}};
  assert.equal(hasHumanVocalImitation(media),true);
  assert.equal(hasHumanVocalImitation({...media,transcription:{hasRecognizedSpeech:true,text:'My brakes do not work'}}),false);
  assert.equal(hasHumanVocalImitation({...media,audioObservation:{...media.audioObservation,soundOrigin:'uncertain'}}),false);

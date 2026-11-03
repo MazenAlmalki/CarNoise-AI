@@ -76,9 +76,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright"),
       () => document.body.dataset.assistantState === "recording",
     );
     assert.equal(await player.evaluate((a) => a.paused), true);
-    await p.locator("#recordButton").click();
-    await p.locator("#mediaPreview audio").waitFor();
-    await p.locator(".remove-media").click();
+    await p.locator("#cancelDictation").click();
     await p
       .locator(".reference-feedback button")
       .filter({ hasText: "Different" })

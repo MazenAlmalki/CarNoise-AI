@@ -131,6 +131,7 @@ fs.mkdirSync(artifacts, { recursive: true });
         label,
       );
     }
+    await page.route("**/api/speech/transcribe",r=>r.fulfill({json:{transcription:{hasRecognizedSpeech:true,text:"السلام عليكم"}}}));
     await page.route("**/api/speech/status", (r) =>
       r.fulfill({ json: { configured: false, provider: "gemini" } }),
     );
@@ -263,6 +264,9 @@ fs.mkdirSync(artifacts, { recursive: true });
     );
     await page.waitForTimeout(250);
     await page.locator("#recordButton").click();
+    await page.waitForFunction(()=>document.querySelector('#description').value.includes('السلام عليكم'));
+    assert.equal(requests.length,2,'stopping dictation must not send chat');
+    await page.locator('#mediaInput').setInputFiles('data/uploaded_audio_references/upload1-01.wav');
     await page.locator("#mediaPreview audio").waitFor();
     assert.equal(
       await page.evaluate(() =>

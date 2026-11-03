@@ -17,12 +17,13 @@ test('unrecognized audio provides user-selectable descriptions without diagnoses
  assert.ok(source.includes("ما قدرت أتعرف على الكلام أو نوع الصوت"));
 });
 
-test('unavailable classifier starts a location-first interview',()=>{
- const route=server.slice(server.indexOf("app.post('/api/chat'"),server.indexOf('const history=buildChatHistory('));
- assert.match(route,/beginSoundInterview\(\{language,reason:'classifier-not-configured'\}\)/);
- assert.match(route,/beginSoundInterview\(\{language,reason:'no-candidates'\}\)/);
- assert.match(route,/beginSoundInterview\(\{language,reason:'classifier-error',error:failure\}\)/);
- assert.match(route,/advanceSoundInterview\(data.audioInterviewAnswer,data.language\)/);
+test('unavailable classification never starts a vehicle interview',async()=>{
+ const {nonMechanicalMediaReply}=await import('../server/audioContent.js');
+ for(const attempted of [true,false]){
+  const result=nonMechanicalMediaReply({audioEventAnalysis:{attempted,succeeded:false}},'en');
+  assert.equal(result.audioInterview,undefined);assert.equal(result.clarificationOptions,undefined);
+  assert.match(result.reply,/cannot|not configured/);assert.doesNotMatch(result.reply,/engine|where do you hear/i);
+ }
 });
 
 test('user can select a sound from assistant response and send it to chat',()=>{

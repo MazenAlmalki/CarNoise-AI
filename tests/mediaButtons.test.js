@@ -17,7 +17,7 @@ test('media controls are re-enabled after a chat finishes, including failed requ
  assert.match(cleanup,/\$\('attachButton'\)\.disabled=false/);
  assert.match(cleanup,/\$\('recordButton'\)\.disabled=false/);
 });
-test('a continuing conversation accepts pending recording attachment',()=>{
+test('a continuing conversation accepts an explicitly attached media file',()=>{
  const start=app.indexOf('async function sendChat(');
  const end=app.indexOf('function renderSession()',start);
  const chat=app.slice(start,end);

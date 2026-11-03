@@ -12,7 +12,7 @@ try{execFileSync(process.env.FFMPEG_PATH||'ffmpeg',['-version'],{stdio:'ignore'}
 const ffmpegTest={skip:ffmpegReady?false:'FFmpeg is not installed; only optional media integration checks are skipped.'};
 
 const env={GEMINI_REFERENCE_AUDIO:'0',AUDIO_PROVIDER:'gemini',GEMINI_API_KEY:'unit-test-key',GEMINI_AUDIO_MODEL:'gemini-test-audio',GEMINI_AUDIO_MAX_SECONDS:'2',ENABLE_AUDIO_CLAP:'1',AUDIO_PYTHON:'must-not-run-python'};
-const observation={hasSpeech:false,transcript:'',hasClearSound:true,description:'A repeated high-pitched squeal is audible.',sounds:['high-pitched squeal'],uncertainty:'The source cannot be identified from this recording.'};
+const observation={contentType:'mechanical_sound',hasMechanicalSound:true,hasSpeech:false,transcript:'',hasClearSound:true,description:'A repeated high-pitched squeal is audible.',sounds:['high-pitched squeal'],uncertainty:'The source cannot be identified from this recording.'};
 const response=value=>({ok:true,json:async()=>({candidates:[{finishReason:'STOP',content:{parts:[{text:JSON.stringify(value)}]}}]})});
 function wav(seconds=1){
  const buf=Buffer.alloc(44+16000*seconds*2);
@@ -50,7 +50,7 @@ test('sends actual WAV bytes with header authentication and separates observatio
 });
 
 test('preserves Arabic speech; does not invent speech or force silence into sound candidates',async()=>{
- const result=await describeAudioWav(wav(),'ar',{env,fetchImpl:async()=>response({...observation,hasSpeech:true,transcript:'السلام عليكم',hasClearSound:false,sounds:[]})});
+ const result=await describeAudioWav(wav(),'ar',{env,fetchImpl:async()=>response({...observation,contentType:'speech',hasMechanicalSound:false,hasSpeech:true,transcript:'السلام عليكم',hasClearSound:false,sounds:[]})});
  assert.equal(result.transcription.text,'السلام عليكم');
  assert.equal(result.transcription.hasRecognizedSpeech,true);
  assert.deepEqual(result.observation.sounds,[]);
@@ -140,6 +140,6 @@ test('does not retry credentials, model or quota errors, and respects bounded Re
 
 
 test('Gemini preserves original Arabic speech language independently of English interface',async()=>{
- const result=await describeAudioWav(wav(),'en',{env,fetchImpl:async()=>response({...observation,hasSpeech:true,transcript:'السلام عليكم',speechLanguage:'ar',hasClearSound:false,sounds:[]})});
+ const result=await describeAudioWav(wav(),'en',{env,fetchImpl:async()=>response({...observation,contentType:'speech',hasMechanicalSound:false,hasSpeech:true,transcript:'السلام عليكم',speechLanguage:'ar',hasClearSound:false,sounds:[]})});
  assert.equal(result.transcription.text,'السلام عليكم');assert.equal(result.transcription.language,'ar');assert.equal(result.transcription.hasRecognizedSpeech,true);
 });

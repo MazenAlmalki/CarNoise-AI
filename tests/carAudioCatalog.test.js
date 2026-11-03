@@ -40,13 +40,13 @@ test('chat honestly distinguishes disabled recognition, no usable sound and prov
  for(let n=0;n<60;n++){try{if((await fetch(base+'/api/health')).ok){ready=true;break;}}catch{}await new Promise(resolve=>setTimeout(resolve,50));}
  assert.ok(ready,'test server must become ready');
  for(const [attempted,succeeded,status] of [[false,false,'classifier-not-configured'],[true,true,'no-candidates'],[true,false,'classifier-error']]){
-  const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the recording',language:'en',mediaInsight:{type:'audio',waveform:{ok:true,kind:'waveform_features_only'},audioEventAnalysis:{provider:'gemini',attempted,succeeded},audioObservation:null,transcription:{hasRecognizedSpeech:false,text:''},warnings:['Gemini audio analysis failed: quota reached.']}})});
+  const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the recording',language:'en',mediaInsight:{type:'audio',waveform:{ok:true,kind:'waveform_features_only'},audioEventAnalysis:{provider:'gemini',attempted,succeeded},audioObservation:succeeded?{provider:'gemini',contentType:'uncertain',hasClearSound:false}:null,transcription:{hasRecognizedSpeech:false,text:''},warnings:['Gemini audio analysis failed: quota reached.']}})});
   assert.equal(response.status,200);const result=await response.json();
-  assert.equal(result.audioStatus,status);assert.equal(result.audioInterview.answers&&Object.keys(result.audioInterview.answers).length,0);
-  assert.match(result.reply,/not enabled|cannot identify|did not produce a reliable/i);
+  assert.equal(result.audioStatus,status);assert.equal(result.audioInterview,undefined);
+  assert.match(result.reply,/not configured|cannot tell|could not reliably/i);
   assert.doesNotMatch(result.reply,/your (?:engine|brakes|battery) (?:is|are|has|have)|I (?:heard|recognized|diagnosed)/i);
   assert.ok(!result.knowledgeMatches?.length,'failed/no sound must not fabricate retrieved diagnoses');
-  if(!attempted){assert.equal(result.grounding,'sound-recognition-disabled');assert.equal(result.clarificationOptions[0].stage,'optin');}
+  if(!attempted){assert.equal(result.grounding,'audio-content-routing');assert.equal(result.clarificationOptions,undefined);}
   if(status==='classifier-error')assert.match(result.audioError,/quota/);
  }
 });

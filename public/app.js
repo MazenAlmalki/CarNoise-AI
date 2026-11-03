@@ -26,7 +26,8 @@ const translations={
     "exampleDrive": "صوت يزيد مع السرعة",
     "inputPlaceholder": "خذ راحتك… وش اللي صاير مع سيارتك؟",
     "attach": "إرفاق",
-    "record": "تسجيل",
+    "record": "إملاء صوتي",
+    "cancelDictation": "إلغاء الإملاء",
     "stop": "إيقاف",
     "analyze": "إرسال",
     "analyzing": "نراجع تفاصيل كلامك",
@@ -142,7 +143,7 @@ const translations={
     "themeLight": "تفعيل المظهر الفاتح",
     "themeDark": "تفعيل المظهر الداكن",
     "attachLabel": "إرفاق صورة أو صوت أو فيديو",
-    "recordLabel": "تسجيل مقطع صوتي",
+    "recordLabel": "إملاء كلام إلى مسودة",
     "stopLabel": "إيقاف التسجيل",
     "closeDialog": "إغلاق نافذة إضافة سيارة",
     "workshopHeading": "مساحة لسيارتك. وراحة بالك.",
@@ -150,7 +151,7 @@ const translations={
     "tipLabel": "نصيحة من الورشة",
     "mechanicTip": "قل لنا متى يظهر الصوت، وش يتغيّر معه. التفاصيل الصغيرة تفرق.",
     "recordingNow": "التسجيل شغّال",
-    "recordingHint": "اضغط إيقاف، ثم اسمع المقطع قبل الإرسال.",
+    "recordingHint": "اضغط إيقاف لتحويل كلامك إلى نص، ثم راجعه وأرسله.",
     "dropLabel": "أفلت الملف هنا لإرفاقه",
     "networkError": "ما قدرنا نوصل للسيرفر. تأكد أن التطبيق شغّال وافتحه من عنوانه الصحيح، ثم جرّب إرسال رسالتك مرة ثانية."
   },
@@ -170,7 +171,8 @@ const translations={
     "exampleDrive": "A noise at speed",
     "inputPlaceholder": "Take your time. What’s going on with your car?",
     "attach": "Attach",
-    "record": "Record",
+    "record": "Dictate",
+    "cancelDictation": "Cancel dictation",
     "stop": "Stop",
     "analyze": "Send",
     "analyzing": "Considering your details",
@@ -286,7 +288,7 @@ const translations={
     "themeLight": "Use light theme",
     "themeDark": "Use dark theme",
     "attachLabel": "Attach a photo, audio or video",
-    "recordLabel": "Record audio",
+    "recordLabel": "Dictate text to draft",
     "stopLabel": "Stop recording",
     "closeDialog": "Close add vehicle dialog",
     "workshopHeading": "A space for your car. A little peace of mind.",
@@ -294,7 +296,7 @@ const translations={
     "tipLabel": "A tip from the workshop",
     "mechanicTip": "Tell us when it happens and what changes it. Small details make a difference.",
     "recordingNow": "Recording is on",
-    "recordingHint": "Stop, then listen to your clip before sending.",
+    "recordingHint": "Stop to transcribe, then review and send.",
     "dropLabel": "Drop your file here to attach",
     "networkError": "We couldn’t reach the app server. Make sure it is running and open the app at its server address, then try sending again."
   }
@@ -317,6 +319,7 @@ let recordingStartedAt=0,recordingClock=null;
 let loadingTimer=null;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
 let cinematicIntro=null;
+let dictationController=null,dictationStopTimer=null,dictationStarting=false;
 let speechState='idle',editingCarId=null,editingCaseId=null,requestController=null,recordingGeneration=0,successUntil=0,successTimer=null;
 const recordingMeter=createRecordingMeter({onLevel:value=>{$('recordingStatus').style.setProperty('--recording-level',String(value));},onUnavailable:()=>{$('recordingMeter').dataset.unavailable='true';}});
 const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onNotice:message=>{if(message)$('garageSettings').open=true;$('speechNotice').textContent=message;$('speechNotice').classList.toggle('hidden',!message);},onMouth:value=>document.body.style.setProperty('--mouth-open',String(value)),onState:value=>{if(value==='loading'||value==='speaking')stopMediaPlayback();speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
@@ -425,6 +428,7 @@ function createCase(description){
  state.cases.push(entry);session=entry;questionIndex=0;persist();renderSidebar();return entry;
 }
 async function startAnalysis(description){
+ if(recording||dictationController||dictationStarting)return;
  description=String(description||'').trim();
  if(description.length<2&&pendingMedia){
   description=state.lang==='ar'?'حلل المرفق واذكر ما تستطيع ملاحظته مع حدود التحليل.':'Analyze the attachment and explain only observations and limitations.';
@@ -437,7 +441,7 @@ async function startAnalysis(description){
 }
 
 async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}={}){
- if(submitting||!session)return;
+ if(submitting||recording||dictationController||dictationStarting||!session)return;
  const turnStarted=performance.now();
  stopMediaPlayback();voice.stop();const controller=new AbortController();requestController=controller;const deadline=setTimeout(()=>controller.abort(),120000);
  const message=String(text||'').trim();
@@ -835,38 +839,67 @@ function mediaFile(file){
  pendingMedia=file;showError('');showMedia(file);
 }
 function discardRecording(){
+ dictationStarting=false;clearTimeout(dictationStopTimer);dictationStopTimer=null;dictationController?.abort();dictationController=null;
+ $('cancelDictation').classList.add('hidden');$('dictationNotice').textContent='';$('dictationOverflow').classList.add('hidden');$('dictationOverflow').value='';
  recordingMeter.stop();
  recordingGeneration++;
  if(recorder){recorder.onstop=null;recorder.ondataavailable=null;if(recorder.state!=='inactive')recorder.stop();recorder=null;}
  mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;recording=false;mediaChunks=[];
  stopRecordingClock();$('recordButton').disabled=false;$('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');$('recordButton').setAttribute('aria-label',t('recordLabel'));
 }
+async function transcribeDraft(blob,generation){
+ const controller=new AbortController();dictationController=controller;let timedOut=false;
+ const timeout=setTimeout(()=>{timedOut=true;controller.abort();},120000);
+ $('recordButton').disabled=true;$('sendButton').disabled=true;
+ $('dictationNotice').textContent=state.lang==='ar'?'جاري تحويل الكلام إلى نص…':'Transcribing speech…';
+ try{
+  const payload=new FormData();payload.append('audio',blob,'dictation.webm');
+  const response=await fetch('/api/speech/transcribe',{method:'POST',body:payload,signal:controller.signal});
+  const body=await response.json();
+  if(controller.signal.aborted||generation!==recordingGeneration)return;
+  if(!response.ok)throw Error(body.error||'Dictation failed');
+  const transcript=body.transcription;
+  if(transcript?.hasRecognizedSpeech!==true||typeof transcript.text!=='string'||!transcript.text.trim())throw Error(state.lang==='ar'?'ما فهمت كلامًا واضحًا. جرّب الإملاء مرة ثانية.':'No clear speech recognized. Please dictate again.');
+  // Read the CURRENT draft, preserving edits made while ASR was pending.
+  const draft=$('description'),combined=draft.value+(draft.value.trim()?'\n':'')+transcript.text.trim();
+  if(combined.length>draft.maxLength){$('dictationOverflow').value=transcript.text.trim();$('dictationOverflow').classList.remove('hidden');throw Error(state.lang==='ar'?'المسودة ممتلئة. حافظت عليها وعرضت التفريغ منفصلًا للنسخ.':'Draft is full. It is preserved; the transcript is shown separately to copy.');}
+  draft.value=combined;
+  draft.focus();$('dictationNotice').textContent=state.lang==='ar'?'تفريغ آلي قابل للخطأ. راجع النص ثم اضغط إرسال؛ لم يُرسل بعد.':'Automatic transcript may contain errors. Review and send; nothing has been sent.';
+ }catch(error){if(generation===recordingGeneration&&(!controller.signal.aborted||timedOut))showError(timedOut?(state.lang==='ar'?'انتهت مهلة الإملاء. جرّب مرة ثانية.':'Dictation timed out. Please retry.'):String(error.message||error));}
+ finally{
+  clearTimeout(timeout);
+  if(dictationController===controller){dictationController=null;$('recordButton').disabled=false;$('sendButton').disabled=Boolean(submitting);$('cancelDictation').classList.add('hidden');
+   if(controller.signal.aborted)$('dictationNotice').textContent='';}
+ }
+}
 async function recordToggle(){
- stopMediaPlayback();
- voice.stop();
+ stopMediaPlayback();voice.stop();
  if(recorder?.state==='recording'){recorder.stop();return;}
- if(submitting)return;
+ if(submitting||dictationController)return;
  if(!navigator.mediaDevices?.getUserMedia||!globalThis.MediaRecorder){showError(t('recordUnsupported'));return;}
- const generation=++recordingGeneration;$('recordButton').disabled=true;
+ const generation=++recordingGeneration;dictationStarting=true;$('sendButton').disabled=true;$('recordButton').disabled=true;showError('');
+ $('cancelDictation').classList.remove('hidden');$('dictationNotice').textContent='';
  try{
   const stream=await navigator.mediaDevices.getUserMedia({audio:true});
   if(generation!==recordingGeneration){stream.getTracks().forEach(track=>track.stop());return;}
   mediaStream=stream;
-  const captured=new MediaRecorder(stream),chunks=[];recorder=captured;
-  captured.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data);};
+  const captured=new MediaRecorder(stream),chunks=[];let size=0;recorder=captured;
+  captured.ondataavailable=e=>{if(e.data?.size){size+=e.data.size;if(size>5*1024*1024){discardRecording();showError(state.lang==='ar'?'التسجيل تجاوز 5 MiB. جرّب كلامًا أقصر.':'Recording exceeds 5 MiB; try a shorter dictation.');return;}chunks.push(e.data);}};
+  captured.onerror=()=>{discardRecording();showError(t('recordError'));};
   captured.onstop=()=>{
-   recordingMeter.stop();
-   stream.getTracks().forEach(track=>track.stop());
+   clearTimeout(dictationStopTimer);dictationStopTimer=null;recordingMeter.stop();stream.getTracks().forEach(track=>track.stop());
    if(generation!==recordingGeneration)return;
-   const blob=new Blob(chunks,{type:captured.mimeType||'audio/webm'});const type=blob.type.split(';')[0];
-   if(blob.size>0)mediaFile(new File([blob],'recording-'+Date.now()+'.webm',{type}));
+   const blob=new Blob(chunks,{type:captured.mimeType||'audio/webm'});
    mediaStream=null;recorder=null;recording=false;stopRecordingClock();
-   $('recordButton').setAttribute('aria-label',t('recordLabel'));
-   $('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');
+   $('recordButton').setAttribute('aria-label',t('recordLabel'));$('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');
+   if(blob.size>0)void transcribeDraft(blob,generation);
+   else {discardRecording();showError(t('recordError'));}
   };
-  captured.start();recording=true;startRecordingClock();delete $('recordingMeter').dataset.unavailable;void recordingMeter.start(stream);$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
- }catch{if(generation===recordingGeneration){recording=false;stopRecordingClock();showError(t('recordError'));mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;}}
- finally{if(generation===recordingGeneration)$('recordButton').disabled=false;}
+  captured.start(1000);recording=true;startRecordingClock();
+  dictationStopTimer=setTimeout(()=>{if(generation===recordingGeneration&&captured.state==='recording')captured.stop();},60000);
+  delete $('recordingMeter').dataset.unavailable;void recordingMeter.start(stream);$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
+ }catch{if(generation===recordingGeneration){discardRecording();showError(t('recordError'));}}
+ finally{if(generation===recordingGeneration){dictationStarting=false;if(!dictationController)$('recordButton').disabled=false;}}
 }
 $('addCar').addEventListener('click',openCarDialog);
 $('carForm').addEventListener('submit',e=>{
@@ -876,7 +909,7 @@ $('carForm').addEventListener('submit',e=>{
  const car={id:makeId(),name};state.cars.push(car);state.carId=car.id;persist();closeWorkshopDialog($('carDialog'));$('carForm').reset();newAnalysis();closeNav();
 });
 for(const id of ['cancelCar','cancelCarBottom'])$(id).addEventListener('click',()=>$('carDialog').close());
-$('languageSwitch').addEventListener('click',()=>{state.lang=state.lang==='ar'?'en':'ar';if(session&&Array.isArray(session.messages))session.lang=state.lang;persist();applySettings();});
+$('languageSwitch').addEventListener('click',()=>{discardRecording();state.lang=state.lang==='ar'?'en':'ar';if(session&&Array.isArray(session.messages))session.lang=state.lang;persist();applySettings();});
 $('themeSwitch').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applySettings();});
 $('newCaseSide').addEventListener('click',()=>{newAnalysis();closeNav();});
 $('menuButton').addEventListener('click',openNav);
@@ -973,3 +1006,6 @@ $('pauseSpeech').onclick=()=>voice.togglePause();
 $('stopSpeech').onclick=()=>voice.stop();
 
 cinematicIntro=createCinematicIntro({getLanguage:()=>state.lang,onLanguage:language=>{state.lang=language;if(session&&Array.isArray(session.messages))session.lang=language;persist();applySettings();},beforeOpen:()=>{if(submitting||recording){showError(state.lang==='ar'?'أوقف التسجيل أو انتظر اكتمال الرد قبل إعادة المقدمة.':'Stop recording or wait for the reply before replaying the intro.');return false;}voice.stop();closeNav();return true;}});
+
+$('cancelDictation').onclick=()=>discardRecording();
+window.addEventListener('pagehide',discardRecording);

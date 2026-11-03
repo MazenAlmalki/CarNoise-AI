@@ -1,5 +1,7 @@
 # ورشتك | Warshatak
 
+> **Microphone behavior:** “إملاء صوتي / Dictate” converts speech into an editable draft; it never automatically sends or analyzes a car recording. Use **Attach** for vehicle audio/video. See [dictation and content routing](DICTATION_AND_CONTENT_ROUTING.md) for ASR setup, provider limitations and validation.
+
 An Arabic-first vehicle-noise assistant with English support, a mechanic-themed interface, per-vehicle conversations, and text, microphone, audio, photo and video attachments. Its responses explore possibilities; they are not mechanic-confirmed diagnoses.
 
 ## Run on Windows

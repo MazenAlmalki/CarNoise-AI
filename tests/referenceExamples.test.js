@@ -8,6 +8,7 @@ const media = {
   type: "audio",
   audioEventAnalysis: { provider: "gemini", attempted: true, succeeded: true },
   audioObservation: {
+    contentType: "mechanical_sound",hasMechanicalSound:true,
     provider: "gemini",
     hasClearSound: true,
     description: "Repeated high pitched bursts.",
@@ -56,6 +57,7 @@ test("speech, emergency, exhausted budget, rejected/offered examples and failure
       media: {
         ...media,
         audioObservation: {
+    contentType: "mechanical_sound",hasMechanicalSound:true,
           ...media.audioObservation,
           referenceComparison: { result: "none", matches: [] },
         },
@@ -65,6 +67,7 @@ test("speech, emergency, exhausted budget, rejected/offered examples and failure
       media: {
         ...media,
         audioObservation: {
+    contentType: "mechanical_sound",hasMechanicalSound:true,
           ...media.audioObservation,
           referenceComparison: {
             result: "clear",

@@ -28,7 +28,7 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
   child.once('exit',code=>{clearTimeout(timeout);reject(Error('Test server exited '+code));});
  });
  const base=`http://127.0.0.1:${appPort}`;
- const insight={type:'audio',audioEventAnalysis:{provider:'gemini',model:'gemini-test-audio',attempted:true,succeeded:true},audioObservation:{provider:'gemini',description:'Repeated high-pitched squealing is audible.',sounds:['squeal'],hasClearSound:true,uncertainty:'Source unknown.',diagnosisConfirmed:false},transcription:{hasRecognizedSpeech:false,text:''}};
+ const insight={type:'audio',audioEventAnalysis:{provider:'gemini',model:'gemini-test-audio',attempted:true,succeeded:true},audioObservation:{contentType:'mechanical_sound',hasMechanicalSound:true,provider:'gemini',description:'Repeated high-pitched squealing is audible.',sounds:['squeal'],hasClearSound:true,uncertainty:'Source unknown.',diagnosisConfirmed:false},transcription:{hasRecognizedSpeech:false,text:''}};
  async function chat(mediaInsight,extra={}){const response=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the attachment',language:'en',mediaInsight,...extra})});assert.equal(response.status,200);return response.json();}
  const status=await (await fetch(base+'/api/model-status')).json();assert.equal(status.audio.provider,'gemini');assert.equal(status.audio.configured,false);
  const reply=await chat(insight);assert.equal(reply.grounding,'language-model-with-retrieval');assert.equal(requests.length,1);
@@ -36,7 +36,7 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  assert.match(JSON.stringify(requests[0]),/NOT a diagnosed fault/);
  const failed=await chat({...insight,audioEventAnalysis:{...insight.audioEventAnalysis,succeeded:false},audioObservation:null,warnings:['Gemini audio analysis failed: quota reached.']});
  assert.equal(failed.audioStatus,'classifier-error');assert.match(failed.audioError,/Gemini.*quota/);assert.equal(requests.length,1);
- const silent=await chat({...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[]}});
+ const silent=await chat({...insight,audioObservation:{...insight.audioObservation,contentType:'silence',hasMechanicalSound:false,hasClearSound:false,sounds:[]}});
  assert.equal(silent.audioStatus,'no-candidates');assert.equal(requests.length,1);
  const speech=await chat({...insight,audioObservation:{...insight.audioObservation,hasClearSound:false,sounds:[]},transcription:{hasRecognizedSpeech:true,text:'السلام عليكم'}});
  assert.equal(speech.grounding,'language-model-with-retrieval');assert.equal(requests.length,2);
@@ -90,5 +90,5 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  assert.equal(skipResponse.status,200);assert.match(skipResponse.headers.get('server-timing'),/application;dur=\d+/);
  const skipped=await skipResponse.json();assert.doesNotMatch(skipped.reply,/[?؟]/);assert.equal(skipped.canSkipQuestion,false);assert.equal(skipped.problemSummary.assessment,skipped.reply);assert.equal(skipped.problemSummary.urgent,false);assert.ok(skipped.timings.stages.chatProviderHeaders.ms>=0);
  const skipContext=JSON.parse(requests.at(-1).messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);assert.equal(skipContext.questionPlan.askQuestion,false);assert.equal(skipContext.questionPlan.questionBudget,0);
- const skippedFailure=await chat({...insight,audioObservation:null,audioEventAnalysis:{provider:'gemini',attempted:true,succeeded:false}},{skipClarification:true});assert.equal(skippedFailure.grounding,'language-model-with-retrieval');assert.equal(skippedFailure.canSkipQuestion,false);assert.doesNotMatch(skippedFailure.reply,/[?؟]/);
+ const skippedFailure=await chat({...insight,audioObservation:null,audioEventAnalysis:{provider:'gemini',attempted:true,succeeded:false}},{skipClarification:true});assert.equal(skippedFailure.grounding,'audio-content-routing');assert.equal(skippedFailure.canSkipQuestion,false);assert.doesNotMatch(skippedFailure.reply,/[?؟]/);
 });

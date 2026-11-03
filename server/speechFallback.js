@@ -26,7 +26,7 @@ export function acceptedSpeechSegments(segments){
   typeof segment.avg_logprob==='number'&&Number.isFinite(segment.avg_logprob)&&segment.no_speech_prob<=0.6&&segment.avg_logprob>=-1.05)
   .map(segment=>clean(segment.text,1000)).filter(Boolean).join(' ').slice(0,1000).trim();
 }
-export async function transcribeWithGroq(wav,{env=process.env,fetchImpl=fetch}={}){
+export async function transcribeWithGroq(wav,{env=process.env,fetchImpl=fetch,signal}={}){
  const key=groqKey(env);
  if(!key)throw Error('Speech transcription: configure GROQ_API_KEY, or use your existing Groq CHAT_API_URL and CHAT_API_KEY.');
  const config=speechFallbackConfiguration({...env,SPEECH_FALLBACK:'groq'});
@@ -36,7 +36,7 @@ export async function transcribeWithGroq(wav,{env=process.env,fetchImpl=fetch}={
  form.append('response_format','verbose_json');form.append('timestamp_granularities[]','segment');form.append('temperature','0');
  if(config.language!=='auto')form.append('language',config.language);
  let response;
- try{response=await fetchImpl('https://api.groq.com/openai/v1/audio/transcriptions',{method:'POST',headers:{Authorization:'Bearer '+key},body:form,signal:AbortSignal.timeout(45000)});}
+ try{response=await fetchImpl('https://api.groq.com/openai/v1/audio/transcriptions',{method:'POST',headers:{Authorization:'Bearer '+key},body:form,signal:signal?AbortSignal.any([signal,AbortSignal.timeout(45000)]):AbortSignal.timeout(45000)});}
  catch(error){throw Error(['TimeoutError','AbortError'].includes(error?.name)?'Speech transcription timed out.':'Speech transcription could not reach Groq. Check network/proxy access.');}
  if(!response.ok){
   const detail=[401,403].includes(response.status)?'key or access denied':response.status===429?'quota/rate limit reached':response.status===404?'speech model unavailable':'provider unavailable';

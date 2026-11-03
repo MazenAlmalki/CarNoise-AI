@@ -1,3 +1,4 @@
+import {audioContent} from './audioContent.js';
 import {validateMedia} from '../public/media-formats.js';
 import 'dotenv/config';
 import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
@@ -116,7 +117,8 @@ async function analyzeAudioTrack(source,temp,language,options){
   }catch(error){warnings.push('Speech fallback unavailable: '+String(error.message).slice(0,240));}
  }
  await waveformWork;
- return {audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings,timings:timing.snapshot()};
+ const content=audioContent({audioObservation,transcription,audioEventAnalysis});
+ return {audioContent:content,audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings,timings:timing.snapshot()};
 }
 export async function analyzeUploadedMedia(file,language='ar',options={}){
  const validation=validateMedia({mimetype:file?.mimetype,size:file?.buffer?.length});

@@ -12,9 +12,9 @@ test('stale asynchronous media renders cannot attach duplicate players',()=>{
  assert.match(app,/attached\.dataset\.savedMediaPreview=id/);
 });
 
-test('CLAP runtime errors are reported rather than hidden behind guesses',()=>{
- assert.match(server,/beginSoundInterview\(\{language,reason:'classifier-error',error:failure\}\)/);
- assert.match(server,/audioInterviewAnswer/);
- assert.match(app,/data\.audioStatus==='classifier-error'/);
- assert.match(app,/showError\(\(state\.lang==='ar'\?'فشل مودل CLAP/);
+test('runtime audio failure is visible without inferred sound or vehicle location',async()=>{
+ const {nonMechanicalMediaReply}=await import('../server/audioContent.js');
+ const result=nonMechanicalMediaReply({audioEventAnalysis:{attempted:true,succeeded:false},warnings:['CLAP unavailable']},'en');
+ assert.equal(result.audioStatus,'classifier-error');assert.equal(result.audioInterview,undefined);
+ assert.match(result.reply,/could not be analyzed/);assert.deepEqual(result.knowledgeMatches,[]);
 });
