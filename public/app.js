@@ -837,6 +837,7 @@ function syncMechanicState(){
  const pose=recording?'recording':speechState==='speaking'?'speaking':speechState==='loading'?'thinking':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':'welcome';
  document.body.dataset.assistantState=pose;
  const labels=state.lang==='ar'?{welcome:'معك، خطوة بخطوة',speaking:'الميكانيكي يتحدث',thinking:'جاري تجهيز الرد',recording:'أسمعك…',error:'جاهز للمساعدة'}:{welcome:'Here for your next mile',speaking:'Mechanic speaking',thinking:'Preparing your reply',recording:'Listening…',error:'Here to help'};
+ document.querySelector('.assistant-dock').setAttribute('aria-label',state.lang==='ar'?'تشغيل صوت الشخصية':'Character speech playback');
  $('dockLabel').textContent=speechState==='paused'?(state.lang==='ar'?'القراءة متوقفة مؤقتًا':'Speech paused'):labels[pose];
  $('pauseSpeech').textContent=speechState==='paused'?(state.lang==='ar'?'متابعة':'Resume'):(state.lang==='ar'?'إيقاف مؤقت':'Pause');
  $('stopSpeech').textContent=state.lang==='ar'?'إيقاف':'Stop';

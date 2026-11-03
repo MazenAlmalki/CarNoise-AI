@@ -60,4 +60,8 @@ All 121 Node tests pass. A browser fixture verified an Arabic reply in an Englis
 
 The intro sound was removed completely at the user's request; see `CINEMATIC_INTRO.md`. The voice-message path now uses recognized speech language/script independently of an older conversation language or interface. Gemini transcripts carry source speech-language metadata; the prompt requests original Arabic script without English translation. Generic listening requests are recognized and Arabic transcripts are wrapped in Arabic instructions. If the chat provider still produces the wrong language, one correction is attempted at the same existing chat provider within the original deadline. If it still fails, an Arabic error is returned instead of an English answer. This correction may use an additional chat inference request. No new external provider or hosted TTS is introduced.
 
-Device read-aloud remains separate: if no matching Arabic device voice is available, it shows an error and does not substitute English. The pending natural hosted TTS option remains disabled without explicit consent to export reply text.
+Device read-aloud remains separate: if no matching Arabic device voice is available, it shows an error and does not substitute English. The user subsequently explicitly authorized reply-text export, and Gemini read-aloud is now implemented; see the approved natural speech section below.
+
+## Approved natural speech output
+
+After explicit user consent to send selected reply text to Google, Gemini read-aloud is implemented in `server/speech.js`, `/api/speech` and `public/audio-speaker.js`. Earlier notes about a pending/unimplemented hosted TTS option describe the previous state. The active configuration and validation limits are documented in `GEMINI_SPEECH_SETUP.md`. The intro remains silent. Device speech remains optional; generated Arabic no longer depends on installed Windows Arabic voices.

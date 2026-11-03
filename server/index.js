@@ -1,3 +1,4 @@
+import {speechConfiguration,generateSpeech} from './speech.js';
 import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
@@ -50,6 +51,13 @@ function validateResult(v) {
   if (!trim(v.title,120) || !trim(v.summary) || !reasons.length || !nextSteps.length) return null;
   return {title:trim(v.title,120),summary:trim(v.summary),severity:v.severity,reasons,nextSteps,urgentSigns:strings(v.urgentSigns)};
 }
+// Reply text only is sent to Google for speech; recordings/history stay out.
+app.get('/api/speech/status',(_req,res)=>{res.set('Cache-Control','no-store');try{res.json(speechConfiguration());}catch{res.json({configured:false,provider:'gemini',error:'Check speech configuration.'});}});
+app.post('/api/speech',rateLimit({windowMs:900000,limit:10,standardHeaders:'draft-7',legacyHeaders:false}),async(req,res)=>{
+ const controller=new AbortController();res.on('close',()=>{if(!res.writableEnded)controller.abort();});
+ try{const audio=await generateSpeech(req.body?.text,req.body?.language==='en'?'en':'ar',{signal:controller.signal,voice:req.body?.voice});if(!controller.signal.aborted)res.set({'Content-Type':'audio/wav','Cache-Control':'no-store'}).send(audio);}
+ catch(error){if(!controller.signal.aborted)res.status(error.status||502).json({error:error.message,code:error.code||'SPEECH_FAILED'});}
+});
 app.get('/api/health',(_req,res)=>res.json({ok:true,chat:publicChatConfiguration()}));
 app.get('/api/model-status',(_req,res)=>{
  const audio=publicAudioConfiguration();

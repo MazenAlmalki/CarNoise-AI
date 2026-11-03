@@ -99,3 +99,5 @@ Gemini tests use mocked provider responses and real local FFmpeg when available;
 - [Development history](UPDATES.md)
 
 The reference corpora include synthetic language examples and educational source summaries. They are not verified vehicle-fault training labels or evidence that a particular recording matches a video.
+
+Natural Arabic reply voice and waveform-synchronized mechanic: see [GEMINI_SPEECH_SETUP.md](GEMINI_SPEECH_SETUP.md). The cinematic intro stays silent.

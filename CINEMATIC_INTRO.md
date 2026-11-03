@@ -18,7 +18,7 @@ Taglines: **معك، في كل مشوار.** / **With you. Every mile.**
 - `public/cinematic-intro.js`: scenes, replay, focus, storage and shared language.
 - `public/intro.css`: palette, Tajawal typography and motion. The bundled font license is `public/assets/fonts/TAJAWAL-LICENSE.txt`.
 
-This change only removes sound from the intro. Mechanic read-aloud, microphone recording and recording playback remain separate app features. Arabic read-aloud still requires an Arabic voice available to the browser. No hosted TTS service is enabled.
+This change only removes sound from the intro. Mechanic read-aloud, microphone recording and recording playback remain separate app features. Reply read-aloud now supports Gemini after explicit user consent; it does not require an installed Arabic Windows voice when Gemini is configured. See `GEMINI_SPEECH_SETUP.md`. The intro itself remains silent.
 
 ## Validation
 

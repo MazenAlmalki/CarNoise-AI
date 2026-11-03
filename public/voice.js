@@ -1,10 +1,12 @@
+import { createAudioSpeaker } from "./audio-speaker.js";
 // Infer the spoken language from the reply, independently of the UI language.
-export function speechLanguage(text,preferred='ar'){
- const ar=String(text).match(/\p{Script=Arabic}/gu)?.length||0;
- const en=String(text).match(/[A-Za-z]/g)?.length||0;
- return ar>en?'ar':en>ar?'en':preferred==='en'?'en':'ar';
+export function speechLanguage(text, preferred = "ar") {
+  const ar = String(text).match(/\p{Script=Arabic}/gu)?.length || 0;
+  const en = String(text).match(/[A-Za-z]/g)?.length || 0;
+  if (ar >= 3 && ar >= en * 0.6) return "ar";
+  return ar > en ? "ar" : en > ar ? "en" : preferred === "en" ? "en" : "ar";
 }
-// Browser-only, opt-in speech. Preference storage is independent of garage data.
+// Opt-in natural Gemini speech with an explicit device-voice alternative. Preference storage is independent of garage data.
 export function createVoice({
   container,
   getLanguage,
@@ -15,7 +17,14 @@ export function createVoice({
 }) {
   const synth = globalThis.speechSynthesis,
     supported = !!synth && !!globalThis.SpeechSynthesisUtterance;
-  let prefs = { auto: false, muted: false, voice: "", pace:"calm" },
+  let prefs = {
+      auto: false,
+      muted: false,
+      voice: "",
+      pace: "calm",
+      engine: "auto",
+      naturalVoice: "",
+    },
     utterance = null,
     generation = 0;
   try {
@@ -62,7 +71,8 @@ export function createVoice({
       test: "تجربة الصوت",
       default: "صوت الجهاز",
       unsupported: "القراءة الصوتية غير متاحة في هذا المتصفح.",
-      missing: "ما ظهر صوت عربي مناسب في المتصفح. القراءة تنتظر صوتًا مطابقًا للغة النص.",
+      missing:
+        "ما ظهر صوت عربي مناسب في المتصفح. القراءة تنتظر صوتًا مطابقًا للغة النص.",
       loading: "جاري تشغيل صوت الجهاز…",
       unavailable:
         "ما فيه صوت متاح يطابق لغة الرد. حدّث أصوات الجهاز أو جرّب خيار صوت آخر مطابق للغة.",
@@ -103,7 +113,72 @@ export function createVoice({
       failed: "Could not play speech. Try another voice.",
     },
   };
+  Object.assign(words.ar, {
+    engine: "مصدر الصوت",
+    automatic: "تلقائي",
+    natural: "صوت طبيعي — Gemini",
+    device: "أصوات الجهاز",
+    characterVoice: "صوت الشخصية",
+    disclosure:
+      "صوت Gemini يرسل نص الرد فقط إلى Google، ويستهلك من حصة API. لا يحتاج صوتًا عربيًا في Windows.",
+    keyMissing: "لتشغيل صوت Gemini، أضف GEMINI_API_KEY في السيرفر وأعد تشغيله.",
+    quota: "وصل صوت Gemini إلى حد الحصة أو الطلبات. حاول لاحقًا.",
+    access: "مفتاح Gemini أو صلاحية نموذج الصوت مرفوضة.",
+    model: "نموذج الصوت غير متاح لحسابك. تحقق من GEMINI_TTS_MODEL.",
+    network: "تعذّر الاتصال بخدمة توليد الصوت.",
+    syncUnavailable:
+      "الصوت يعمل، لكن هذا المتصفح لم يسمح بتحليل الصوت لمزامنة الفم.",
+    loading: "جاري تجهيز صوت الشخصية…",
+  });
+  Object.assign(words.en, {
+    engine: "Voice source",
+    automatic: "Automatic",
+    natural: "Natural voice — Gemini",
+    device: "Device voices",
+    characterVoice: "Character voice",
+    disclosure:
+      "Gemini speech sends only reply text to Google and uses API quota. It needs no installed Arabic device voice.",
+    keyMissing:
+      "Set GEMINI_API_KEY on the server and restart it to enable Gemini speech.",
+    quota: "Gemini speech quota or request limit reached. Try later.",
+    access: "Gemini key or speech-model access was denied.",
+    model:
+      "Speech model unavailable. Check GEMINI_TTS_MODEL and account access.",
+    network: "Cannot reach speech generation.",
+    syncUnavailable:
+      "Audio is playing, but this browser did not allow audio analysis for mouth synchronization.",
+    loading: "Preparing character speech…",
+  });
   const w = () => words[getLanguage()];
+  let hosted = null,
+    configPromise = null,
+    request = null,
+    cached = null,
+    activeText = "";
+  const speaker = createAudioSpeaker({
+    onState: setStatus,
+    onMouth,
+    onError: fail,
+    onSyncUnavailable: () => onNotice(w().syncUnavailable),
+  });
+  async function configuration() {
+    if (!configPromise)
+      configPromise = fetch("/api/speech/status", {
+        signal: AbortSignal.timeout(3000),
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((value) => {
+          hosted = value;
+          render();
+          return value;
+        })
+        .catch(() => {
+          configPromise = null;
+          return null;
+        });
+    return configPromise;
+  }
+
   function save() {
     try {
       localStorage.setItem("warshatak-voice", JSON.stringify(prefs));
@@ -137,28 +212,84 @@ export function createVoice({
     clearTimeout(startTimer);
     closeMouth();
     synth?.cancel();
+    request?.abort();
+    request = null;
+    speaker.stop();
+    activeText = "";
     utterance = null;
     setStatus("idle");
   }
   function fail(key) {
-    generation++;
-    synth?.cancel();
-    onNotice(w()[key] || w().failed);
-    clearTimeout(startTimer);
-    closeMouth();
-    utterance = null;
-    setStatus("idle");
+    stop();
+    const message = w()[key] || w().failed;
+    onNotice(message);
     const note = container.querySelector("[role=status]");
-    if (note) note.textContent = w()[key] || w().failed;
+    if (note) note.textContent = message;
     container.open = true;
   }
-  function speak(text) {
-    stop();
-    onNotice("");
-    if (!supported) {
-      onNotice(w().unsupported);
-      return;
+  async function naturalSpeech(text, language, id) {
+    const voice = prefs.naturalVoice || hosted.voice || "Charon",
+      key = language + "|" + voice + "|" + text;
+    setStatus("loading");
+    try {
+      if (cached?.key === key) {
+        await speaker.play(cached.blob);
+        return;
+      }
+      request = new AbortController();
+      const signal = AbortSignal.any([
+        request.signal,
+        AbortSignal.timeout(65000),
+      ]);
+      const response = await fetch("/api/speech", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text, language, voice }),
+        signal,
+      });
+      if (id !== generation) return;
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        const errors = {
+          SPEECH_KEY_MISSING: "keyMissing",
+          SPEECH_QUOTA: "quota",
+          SPEECH_ACCESS_DENIED: "access",
+          SPEECH_MODEL_UNAVAILABLE: "model",
+        };
+        fail(
+          errors[body.code] || (response.status === 429 ? "quota" : "failed"),
+        );
+        return;
+      }
+      const blob = await response.blob();
+      if (id !== generation) return;
+      if (
+        !blob.type.startsWith("audio/") ||
+        !blob.size ||
+        blob.size > 8 * 1024 * 1024 + 44
+      ) {
+        fail("failed");
+        return;
+      }
+      cached = { key, blob };
+      await speaker.play(blob);
+    } catch (error) {
+      if (id === generation)
+        fail(
+          ["TimeoutError", "AbortError"].includes(error?.name)
+            ? "timeout"
+            : "network",
+        );
     }
+  }
+  async function speak(text) {
+    text = String(text || "")
+      .replace(/[*#`]/g, "")
+      .slice(0, 1900);
+    if (status === "loading" && activeText === text) return;
+    stop();
+    activeText = text;
+    onNotice("");
     if (prefs.muted) {
       container.open = true;
       const message =
@@ -174,12 +305,47 @@ export function createVoice({
       onNotice(w().recording);
       return;
     }
-    const language = speechLanguage(text,getLanguage()),
+    const idForConfig = generation;
+    if (prefs.engine !== "browser") speaker.prepare();
+    const config = await configuration();
+    if (idForConfig !== generation) return;
+    const useNatural =
+      prefs.engine === "gemini" ||
+      (prefs.engine !== "browser" && config?.configured === true);
+    if (useNatural) {
+      if (!config?.configured) {
+        fail("keyMissing");
+        return;
+      }
+      await naturalSpeech(
+        text,
+        speechLanguage(text, getLanguage()),
+        idForConfig,
+      );
+      return;
+    }
+    speaker.stop();
+    if (!supported) {
+      fail(prefs.engine === "browser" ? "unsupported" : "keyMissing");
+      return;
+    }
+    const language = speechLanguage(text, getLanguage()),
       voices = synth
         .getVoices()
         .filter((v) => v.lang.toLowerCase().startsWith(language));
-    if(!voices.length){fail('unavailable');return;}
-    voices.sort((a,b)=>Number(b.lang.toLowerCase()===(language==='ar'?'ar-sa':'en-us'))-Number(a.lang.toLowerCase()===(language==='ar'?'ar-sa':'en-us')));
+    if (!voices.length) {
+      fail(prefs.engine === "browser" ? "unavailable" : "keyMissing");
+      return;
+    }
+    voices.sort(
+      (a, b) =>
+        Number(
+          b.lang.toLowerCase() === (language === "ar" ? "ar-sa" : "en-us"),
+        ) -
+        Number(
+          a.lang.toLowerCase() === (language === "ar" ? "ar-sa" : "en-us"),
+        ),
+    );
     const chosen = voices.find((v) => v.voiceURI === prefs.voice) || voices[0];
     const chunks = segments(String(text).slice(0, 4000)),
       id = generation;
@@ -195,7 +361,7 @@ export function createVoice({
       const current = new SpeechSynthesisUtterance(chunks[index]);
       utterance = current;
       current.lang = chosen.lang;
-      current.rate = prefs.pace==='normal'?1:0.94;
+      current.rate = prefs.pace === "normal" ? 1 : 0.94;
       current.pitch = 0.98;
       // An empty getVoices() list can be transient; leave voice unset so the
       // engine can resolve its default using the requested language.
@@ -275,7 +441,7 @@ export function createVoice({
     diagnosis.style.display = "block";
     diagnosis.style.marginBlock = "10px";
     container.append(diagnosis);
-    if (!supported) {
+    if (!supported && hosted?.configured !== true) {
       const n = document.createElement("p");
       n.textContent = w().unsupported;
       container.append(n);
@@ -283,6 +449,53 @@ export function createVoice({
     }
     const body = document.createElement("div");
     body.className = "voice-settings";
+    const engineLabel = document.createElement("label");
+    engineLabel.textContent = w().engine;
+    const engine = document.createElement("select");
+    engine.setAttribute("aria-label", w().engine);
+    for (const [value, text] of [
+      ["auto", w().automatic],
+      ["gemini", w().natural],
+      ["browser", w().device],
+    ])
+      engine.add(new Option(text, value));
+    engine.value = ["auto", "gemini", "browser"].includes(prefs.engine)
+      ? prefs.engine
+      : "auto";
+    engine.onchange = () => {
+      prefs.engine = engine.value;
+      save();
+      stop();
+      render();
+      container.querySelector("[data-engine]").focus();
+    };
+    engine.dataset.engine = "true";
+    engineLabel.append(engine);
+    body.append(engineLabel);
+    const disclosure = document.createElement("p");
+    disclosure.className = "voice-disclosure";
+    disclosure.textContent = w().disclosure;
+    body.append(disclosure);
+    const usesNatural =
+      prefs.engine === "gemini" ||
+      (prefs.engine !== "browser" && hosted?.configured === true);
+    if (usesNatural) {
+      const label = document.createElement("label");
+      label.textContent = w().characterVoice;
+      const select = document.createElement("select");
+      select.setAttribute("aria-label", w().characterVoice);
+      for (const name of hosted?.voices || ["Charon"])
+        select.add(new Option(name, name));
+      select.value = prefs.naturalVoice || hosted?.voice || "Charon";
+      select.onchange = () => {
+        prefs.naturalVoice = select.value;
+        save();
+        stop();
+      };
+      label.append(select);
+      body.append(label);
+    }
+
     for (const [key, label] of [
       ["auto", "auto"],
       ["muted", "mute"],
@@ -303,9 +516,9 @@ export function createVoice({
     label.textContent = w().voice;
     const select = document.createElement("select");
     select.setAttribute("aria-label", w().voice);
-    const voices = synth
-      .getVoices()
-      .filter((v) => v.lang.toLowerCase().startsWith(getLanguage()));
+    const voices = (synth?.getVoices() || []).filter((v) =>
+      v.lang.toLowerCase().startsWith(getLanguage()),
+    );
     const fallback = document.createElement("option");
     fallback.value = "";
     fallback.textContent = w().default;
@@ -322,9 +535,26 @@ export function createVoice({
       save();
       stop();
     };
+    label.hidden = usesNatural;
     label.append(select);
     body.append(label);
-    const paceLabel=document.createElement('label');paceLabel.textContent=getLanguage()==='ar'?'أسلوب القراءة':'Reading pace';const pace=document.createElement('select');pace.add(new Option(getLanguage()==='ar'?'هادئ وطبيعي':'Calm','calm'));pace.add(new Option(getLanguage()==='ar'?'عادي':'Normal','normal'));pace.value=prefs.pace==='normal'?'normal':'calm';pace.onchange=()=>{prefs.pace=pace.value;save();stop();};paceLabel.append(pace);body.append(paceLabel);
+    const paceLabel = document.createElement("label");
+    paceLabel.textContent =
+      getLanguage() === "ar" ? "أسلوب القراءة" : "Reading pace";
+    const pace = document.createElement("select");
+    pace.add(
+      new Option(getLanguage() === "ar" ? "هادئ وطبيعي" : "Calm", "calm"),
+    );
+    pace.add(new Option(getLanguage() === "ar" ? "عادي" : "Normal", "normal"));
+    pace.value = prefs.pace === "normal" ? "normal" : "calm";
+    pace.onchange = () => {
+      prefs.pace = pace.value;
+      save();
+      stop();
+    };
+    paceLabel.hidden = usesNatural;
+    paceLabel.append(pace);
+    body.append(paceLabel);
     const controls = document.createElement("div");
     controls.className = "voice-controls";
     controls.append(
@@ -337,12 +567,14 @@ export function createVoice({
       ),
       button(w().pause, () => {
         if (status === "speaking") {
-          synth.pause();
+          if (speaker.active()) speaker.pause();
+          else synth?.pause();
         }
       }),
       button(w().resume, () => {
         if (status === "paused") {
-          synth.resume();
+          if (speaker.active()) speaker.resume();
+          else synth?.resume();
         }
       }),
       button(w().stop, stop),
@@ -355,13 +587,16 @@ export function createVoice({
         ? w().speaking
         : status === "paused"
           ? w().paused
-          : voices.length
-            ? w().ready
-            : w().missing;
+          : status === "loading"
+            ? w().loading
+            : (usesNatural && hosted?.configured) || voices.length
+              ? w().ready
+              : w().missing;
     body.append(note);
     container.append(body);
   }
   render();
+  void configuration();
   synth?.addEventListener?.("voiceschanged", render);
   globalThis.addEventListener("pagehide", stop);
   return {
@@ -369,16 +604,33 @@ export function createVoice({
     render,
     speak,
     togglePause() {
-      if (status === "paused") synth?.resume();
-      else if (status === "speaking") synth?.pause();
+      if (status === "paused") {
+        if (speaker.active()) speaker.resume();
+        else synth?.resume();
+      } else if (status === "speaking") {
+        if (speaker.active()) speaker.pause();
+        else synth?.pause();
+      }
     },
     autoSpeak(text) {
       if (prefs.auto && !prefs.muted) speak(text);
     },
+    getSourceInfo() {
+      const natural =
+        prefs.engine === "gemini" ||
+        (prefs.engine !== "browser" && hosted?.configured === true);
+      return {
+        provider: natural ? "gemini" : "browser",
+        configured: natural ? hosted?.configured === true : supported,
+        voice: natural
+          ? prefs.naturalVoice || hosted?.voice || "Charon"
+          : prefs.voice || null,
+      };
+    },
     readButton(text) {
       const n = button(w().play, () => speak(text));
       n.className = "read-reply";
-      n.disabled = !supported;
+      n.disabled = false;
       return n;
     },
   };

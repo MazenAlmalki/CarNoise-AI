@@ -1821,3 +1821,10 @@ body:is(
   font-size: 12px;
   margin: 8px 0;
 }
+
+body[data-speech-state="speaking"] .assistant-dock svg {transform:translateY(calc(var(--mouth-open, .12) * -.8px));transition:transform 80ms linear}
+.voice-disclosure {line-height:1.8}
+@media(prefers-reduced-motion:reduce){body[data-speech-state="speaking"] .assistant-dock svg{transform:none;transition:none}}
+/* Keep voice options reachable in a full garage and on small screens. */
+.side-bottom {min-height:0;overflow-y:auto;flex-shrink:1}
+.voice-panel .voice-settings {max-height:42dvh;overflow-y:auto;padding-inline:2px}

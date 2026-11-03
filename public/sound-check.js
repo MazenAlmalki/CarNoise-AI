@@ -5,7 +5,7 @@ const copy = {
     back: "الرجوع لورشتك",
     title: "خلّنا نحدد وين ينقطع الصوت",
     intro:
-      "هذه الاختبارات لا تحتاج مفتاح API، ولا ترفع تسجيلك. يبدأ الصوت فقط عند الضغط على تشغيل.",
+      "النغمة والتسجيل لا يحتاجان مفتاح API ولا يرفعان تسجيلك. تجربة Gemini ترسل نص التجربة فقط إلى Google عند اختيار الصوت الطبيعي.",
     toneTitle: "١. نغمة معروفة",
     toneHint:
       "اضغط تشغيل. النغمة مدتها ثانية واحدة. إذا تحرك الوقت بدون صوت، راجع كتم موقع localhost ومخرج الصوت لهذا التبويب.",
@@ -26,7 +26,7 @@ const copy = {
     outputTitle: "مخرج تشغيل النغمة والتسجيل",
     output: "السماعة",
     outputHint:
-      "تظهر الأجهزة المتاحة بعد السماح بالميكروفون. تغيير المخرج هنا يخص الاختبار؛ صوت الميكانيكي يستخدم مخرج الكلام في النظام.",
+      "تظهر الأجهزة المتاحة بعد السماح بالميكروفون. تغيير المخرج هنا يخص النغمة والتسجيل فقط؛ صوت الميكانيكي يستخدم المخرج الافتراضي.",
     report: "جهز نتيجة الاختبار للمشاركة",
     result: "انسخ النتيجة وأرسلها في المحادثة",
   },
@@ -34,7 +34,7 @@ const copy = {
     back: "Back to Warshatak",
     title: "Find where the sound stops",
     intro:
-      "These checks need no API key and never upload your recording. Audio starts only when you press Play.",
+      "Tone and microphone checks need no API key and never upload your recording. Gemini speech sends only the test text to Google when natural voice is selected.",
     toneTitle: "1. Known test tone",
     toneHint:
       "Play the one-second tone. If time moves without audible sound, check localhost site mute and this tab’s audio output.",
@@ -55,7 +55,7 @@ const copy = {
     outputTitle: "Test tone and recording output",
     output: "Speaker",
     outputHint:
-      "Available devices appear after microphone permission. Output changes apply to this test; speech uses the system speech output.",
+      "Available devices appear after microphone permission. Output changes apply to the test tone and recording only; the mechanic uses the default output.",
     report: "Prepare test report",
     result: "Copy this result into the chat",
   },
@@ -299,6 +299,7 @@ $("report").onclick = () => {
       },
       recording: { muted: $("recorded").muted, volume: $("recorded").volume },
       speechSupported: !!globalThis.speechSynthesis,
+      voiceOutput: voice.getSourceInfo(),
       voiceLanguages:
         globalThis.speechSynthesis?.getVoices().map((v) => v.lang) || [],
       secureContext: isSecureContext,
