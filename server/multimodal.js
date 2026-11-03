@@ -1,4 +1,4 @@
-import {identifyKnownRecording} from './knownRecordings.js';
+import {identifyKnownRecording,identifyKnownSourceFile} from './knownRecordings.js';
 import {audioContent} from './audioContent.js';
 import {validateMedia} from '../public/media-formats.js';
 import 'dotenv/config';
@@ -121,11 +121,26 @@ async function analyzeAudioTrack(source,temp,language,options){
  const content=audioContent({audioObservation,transcription,audioEventAnalysis});
  return {audioContent:content,audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings,timings:timing.snapshot()};
 }
+function knownRecordingResult(type,localReferenceIdentity,started){
+ return {type,localReferenceIdentity,
+  audioContent:{type:'uncertain',status:'identity_matched',source:localReferenceIdentity.source,mechanicalEventObserved:false,verified:false},
+  audioEventAnalysis:{provider:'none',attempted:false,succeeded:false},transcription:null,visual:null,
+  timings:{totalMs:Math.round(performance.now()-started),stages:{localReferenceIdentity:{ms:Math.round(performance.now()-started)}}},
+  warnings:['Exact identity of a user-labeled reference recording, not a mechanical diagnosis. No external inference was called.'],
+  limitations:'Only a registered file or decoded recording was identified. Similar new recordings require separate audio understanding; the user-supplied fault label is unverified.'};
+}
 export async function analyzeUploadedMedia(file,language='ar',options={}){
  const validation=validateMedia({mimetype:file?.mimetype,size:file?.buffer?.length});
  if(!validation.ok)throw new Error(validation.error==='unsupported-type'?'Unsupported media type.':'Media must contain 1 byte to 25 MB.');
  const extension=validation.extension;
  file={...file,mimetype:validation.mime};
+ // Exact registered originals require neither FFmpeg nor a provider. This is
+ // whole-file identity, not recognition of arbitrary recordings from a filename.
+ const identityEnabled=(options.env||process.env).LOCAL_REFERENCE_IDENTITY!=='0';
+ if(identityEnabled&&!file.mimetype.startsWith('image/')){
+  const started=performance.now(),identity=identifyKnownSourceFile(file.buffer);
+  if(identity)return knownRecordingResult(file.mimetype.startsWith('video/')?'video':'audio',identity,started);
+ }
  const temp=await mkdtemp(path.join(os.tmpdir(),'warshatak-'));
  const source=path.join(temp,'upload'+extension);
  try{
@@ -140,12 +155,7 @@ export async function analyzeUploadedMedia(file,language='ar',options={}){
    try{
     const started=performance.now();
     const localReferenceIdentity=identifyKnownRecording(await audioExcerpt(source,temp,6,options.env||process.env));
-    if(localReferenceIdentity)return {type:file.mimetype.startsWith('video/')?'video':'audio',localReferenceIdentity,
-     audioContent:{type:'uncertain',status:'identity_matched',source:'local_exact_pcm_identity',mechanicalEventObserved:false,verified:false},
-     audioEventAnalysis:{provider:'none',attempted:false,succeeded:false},transcription:null,visual:null,
-     timings:{totalMs:Math.round(performance.now()-started),stages:{localReferenceIdentity:{ms:Math.round(performance.now()-started)}}},
-     warnings:['Exact identity of a user-labeled reference recording, not a mechanical diagnosis. No external inference was called.'],
-     limitations:'Only the registered decoded recording was identified. Similar new recordings require separate audio understanding; the user-supplied fault label is unverified.'};
+    if(localReferenceIdentity)return knownRecordingResult(file.mimetype.startsWith('video/')?'video':'audio',localReferenceIdentity,started);
    }catch{/* A decode/no-match must fall through without guessing a reference. */}
   }
   if(file.mimetype.startsWith('video/')){

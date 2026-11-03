@@ -1,3 +1,4 @@
+import {knownRecordingStatus} from './knownRecordings.js';
 import {buildSoundResult,soundResultText} from './soundResult.js';
 import {audioContent,nonMechanicalMediaReply} from './audioContent.js';
 import {dictationConfiguration,transcribeDictation,MAX_DICTATION_BYTES} from './dictation.js';
@@ -138,6 +139,7 @@ const uploadMedia=multer({storage:multer.memoryStorage(),limits:{fileSize:MAX_ME
 app.get('/api/media-status',async(_req,res)=>{
  const ffmpeg=await ffmpegAvailable();
  res.json({
+  localReferenceIdentity:knownRecordingStatus(),
   audio:publicAudioConfiguration(),
   speechFallback:publicSpeechFallback(),
   ffmpegReady:ffmpeg,

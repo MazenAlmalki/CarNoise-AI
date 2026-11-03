@@ -30,3 +30,13 @@ test('client labels and invented identity proofs do not become a named fault',as
 test('ambiguous PCM identity in a registry cannot be forced to one label',()=>{
  const matcher=createKnownRecordingMatcher([record,{...record,id:'four-other',reference_id:'upload1-08'}]);assert.equal(matcher.identifyKnownRecording(bytes),null);
 });
+
+test('exact registered source bytes are identified without decoding and cannot be confused with PCM proof',()=>{
+ const source=Buffer.from('registered original file bytes');
+ const matcher=createKnownRecordingMatcher([{...record,source_file_sha256:createHash('sha256').update(source).digest('hex')}]);
+ const identity=matcher.identifyKnownSourceFile(source);assert.equal(identity.source,'local_exact_file_identity');assert.equal(matcher.verifiedKnownRecording(identity).identityMethod,'local_exact_file_identity');
+ const changed=Buffer.from(source);changed[0]^=1;assert.equal(matcher.identifyKnownSourceFile(changed),null);
+ assert.equal(matcher.identifyKnownSourceFile(Buffer.from('بطة السير.mp4')),null);
+ assert.equal(matcher.verifiedKnownRecording({...identity,source:'local_exact_pcm_identity',pcmSha256:record.pcm_sha256}),null);
+ const pcmProof=matcher.identifyKnownRecording(bytes);assert.equal(matcher.verifiedKnownRecording({...pcmProof,source:'local_exact_file_identity',fileSha256:createHash('sha256').update(source).digest('hex')}),null);
+});

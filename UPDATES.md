@@ -424,3 +424,7 @@ Both supplied MP4 hashes match the prior source inventory. All 15 existing refer
 ### Local identity for the four explicitly labeled uploads
 
 Registered hashes and decoded PCM identities for the four actual supplied MP4s, without duplicating media. Exact matches return a known-recording card with the user's label and existing cited inspection guidance, before external inference. The path does not infer mechanical content or a confirmed fault; changed/new audio remains unmatched locally. Known-recording cards do not auto-request paid TTS. Microphone dictation remains separate. No model training or unvalidated threshold. See [KNOWN_RECORDINGS.md](KNOWN_RECORDINGS.md).
+
+### Fix known original uploads when FFmpeg is unavailable
+
+The reuploaded belt clip exactly matched the registered file hash. The prior PCM-only path reproduced the reported failure when FFmpeg was absent. Exact registered source-file identity now runs before decoder/temp/provider work, with method-bound proof and accurate file-identity wording. Decoded PCM identity remains an optional fallback. All four actual uploads passed the real browser flow with FFmpeg deliberately unavailable; 170 Node tests and syntax checks passed. No arbitrary new sound is labeled from its filename.

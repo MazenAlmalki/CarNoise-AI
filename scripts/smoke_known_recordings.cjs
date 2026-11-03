@@ -1,4 +1,4 @@
-// Real four uploads, FFmpeg, HTTP matching and UI. No audio-inference mocks.
+// Real four uploads, local file/audio identity, HTTP matching and UI. No audio-inference mocks.
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
 const fs=require('node:fs'),assert=require('node:assert/strict');
 const paths=process.argv.slice(2);if(paths.length!==4)throw Error('Supply four original MP4 paths in order: brakes, battery, belt, strut mount.');
@@ -31,6 +31,6 @@ const paths=process.argv.slice(2);if(paths.length!==4)throw Error('Supply four o
   const audio=page.locator('.sound-result audio');await page.locator('.sound-result summary').click();await audio.evaluate(a=>a.play());await page.waitForFunction(()=>document.querySelector('.sound-result audio').currentTime>0.05);await audio.evaluate(a=>a.pause());
   await page.locator('#languageSwitch').click();
   for(const width of [320,390,768,1440]){await page.setViewportSize({width,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);}
-  assert.deepEqual(errors,[]);console.log('PASS actual four videos: exact local audio identity, names and guidance, renamed-file rejection as a label source, real reference playback and no automatic TTS requests. No recognition-accuracy claim.');
+  assert.deepEqual(errors,[]);console.log('PASS actual four videos: exact local recording identity, names and guidance, renamed-file rejection as a label source, real reference playback and no automatic TTS requests. No recognition-accuracy claim.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
