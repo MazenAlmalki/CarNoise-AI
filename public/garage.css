@@ -361,3 +361,18 @@ body[data-speech-state="idle"] .assistant-dock > button {
 .reference-feedback button[aria-pressed="true"] {
   border-color: var(--accent);
 }
+.show-reply-now {
+  font: inherit;
+  font-size: 12px;
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel2);
+  color: var(--text);
+  margin-top: 12px;
+  cursor: pointer;
+}
+.speech-pending {
+  border-color: var(--border);
+}

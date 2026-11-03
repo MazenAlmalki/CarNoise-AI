@@ -6,6 +6,12 @@
 
 This log documents the work visible in our development conversation and GitHub repository. It distinguishes **implemented in source**, **locally reported working**, and **not yet implemented/tested**. It is a retrospective summary, not a claim that every feature has been fully tested in production.
 
+## November 3, 2026 — Coordinate reply text with actual voice start
+
+Automatic read-aloud now reveals a new non-urgent reply when actual speech playback starts, rather than displaying the text and starting a long separate wait for sound. Added Show text now and a 15-second automatic-start fallback that reveals text and cancels delayed speech. Errors, cancellation and navigation also release text. Urgent warnings and text-only/muted use remain immediate. Complete replies are saved normally; there is no persisted hidden-message state. Existing amplitude-based mouth movement, speech cache, single synthesis call, server-side keys and provider settings remain. This is start synchronization, not word-level lip/timestamp alignment or a claim of faster live Gemini generation.
+
+Validation: 145 Node tests pass. Browser tests use mocked speech latency and real PCM playback to check co-start, quota fallback, text-now cancellation, 15-second timeout, saved history and automatic speech disabled. Live provider latency remains unverified.
+
 ## November 3, 2026 — Intro on every visit
 
 The silent intro now opens on every page load and refresh, regardless of the old first-visit flag. It still waits for Start chat, fades to the composer, and preserves vehicles/history/language. Browser regression covers reload with the legacy seen flag set.

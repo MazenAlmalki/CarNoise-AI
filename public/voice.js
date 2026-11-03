@@ -194,7 +194,19 @@ export function createVoice({
     n.onclick = fn;
     return n;
   }
+  let deliveryCallbacks = null;
+  function finishDelivery() {
+    const callbacks = deliveryCallbacks;
+    deliveryCallbacks = null;
+    callbacks?.onStop?.();
+  }
   function setStatus(next) {
+    if (next === "speaking" && deliveryCallbacks) {
+      const callback = deliveryCallbacks.onStart;
+      deliveryCallbacks.onStart = null;
+      callback?.();
+    }
+    if (next === "idle") finishDelivery();
     if (
       next === "speaking" &&
       speechStarted &&
@@ -322,12 +334,16 @@ export function createVoice({
         );
     }
   }
-  async function speak(text, { turnStarted = null } = {}) {
+  async function speak(
+    text,
+    { turnStarted = null, onStart = () => {}, onStop = () => {} } = {},
+  ) {
     text = String(text || "")
       .replace(/[*#`]/g, "")
       .slice(0, 1900);
     if (status === "loading" && activeText === text) return;
     stop();
+    deliveryCallbacks = { onStart, onStop };
     speechStarted = performance.now();
     activeTurnStarted = turnStarted;
     lastTimings = { cacheHit: false };
@@ -341,11 +357,13 @@ export function createVoice({
           : "Voice is muted. Uncheck Mute voice in Mechanic voice first.";
       container.querySelector("[role=status]").textContent = message;
       onNotice(message);
+      finishDelivery();
       return;
     }
     if (!canSpeak()) {
       container.querySelector("[role=status]").textContent = w().recording;
       onNotice(w().recording);
+      finishDelivery();
       return;
     }
     const idForConfig = generation;
@@ -655,6 +673,7 @@ export function createVoice({
         else synth?.pause();
       }
     },
+    isAutoEnabled: () => prefs.auto && !prefs.muted,
     autoSpeak(text, options) {
       if (prefs.auto && !prefs.muted) speak(text, options);
     },

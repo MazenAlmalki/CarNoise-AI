@@ -32,3 +32,9 @@ The cinematic intro remains entirely silent. This feature applies only to reply 
 - The cloud environment has no Gemini key and does not currently permit the Google destination, so no live Google generation, project access, quota or voice quality was verified here. Local Windows setup uses the private server key and its normal network connection. Never paste the key into chat or frontend code.
 
 Final verification: all 132 Node tests passed, including a real HTTP speech route backed by a controlled Google-response fixture. The existing Arabic/English garage/media/browser tests and silent-intro checks also passed. No actual Google inference was claimed by those tests.
+
+## Coordinated text and speech
+
+When automatic read-aloud is enabled and unmuted, new non-urgent replies display a “Reply ready; preparing its speech” bubble until the actual WAV `playing` event or native utterance `start` event. That event reveals the complete text alongside speech. This coordinates onset; it is not word/phoneme timestamp alignment. Existing real-amplitude mouth motion is unchanged.
+
+“Show text now” immediately reveals the reply and cancels pending automatic playback. A 15-second automatic-start deadline does the same with an explanatory notice, preventing unexpectedly late speech. Quota, missing voices, playback failure, manual stop or navigation release pending text. Urgent safety replies bypass this delay and display immediately. Text-only/muted use remains immediate. Complete replies are saved before voice generation and remain readable after reload; pending presentation is never persisted. No extra speech requests, sentence-splitting calls or provider changes were introduced. Gemini still has its own synthesis latency, which cannot be measured live in this environment. Manual playback retains the existing timeout and replay cache.

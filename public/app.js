@@ -1,3 +1,4 @@
+import {createReplyDelivery} from './reply-delivery.js';
 import {renderReferenceExample} from './reference-example.js';
 import {createCinematicIntro} from './cinematic-intro.js';
 import {createVoice} from './voice.js';
@@ -319,6 +320,8 @@ let speechState='idle',editingCarId=null,editingCaseId=null,requestController=nu
 const recordingMeter=createRecordingMeter({onLevel:value=>{$('recordingStatus').style.setProperty('--recording-level',String(value));},onUnavailable:()=>{$('recordingMeter').dataset.unavailable='true';}});
 const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onNotice:message=>{if(message)$('garageSettings').open=true;$('speechNotice').textContent=message;$('speechNotice').classList.toggle('hidden',!message);},onMouth:value=>document.body.style.setProperty('--mouth-open',String(value)),onState:value=>{if(value==='loading'||value==='speaking')stopMediaPlayback();speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
 
+const replyDelivery=createReplyDelivery({onRelease:entry=>{if(session?.id===entry.caseId)renderSession();},onSlow:()=>{voice.stop();$('speechNotice').textContent=state.lang==='ar'?'الرد جاهز، لكن الصوت تأخر. عرضنا النص؛ تقدر تشغّل القراءة يدويًا.':'The reply is ready, but speech took too long. Text is shown; you can play it manually.';$('speechNotice').classList.remove('hidden');}});
+
 const textNode=(tag,text,cls)=>{const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;};
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}catch{showError(t('storageError'));}}
 function showError(message){
@@ -395,13 +398,16 @@ function applySettings(){
  if(session)renderSession();
  syncMechanicState();
 }
-function addMessage(message,role){
+function addMessage(message,role,messageData=null){
+ const waiting=role==='assistant'&&replyDelivery.isPending(messageData);
  const wrap=textNode('div','','message '+role);
- const content=textNode('div',message);
+ const content=textNode('div',waiting?(state.lang==='ar'?'الرد جاهز، نجهّز صوته…':'Reply ready; preparing its speech…'):message);
+ if(waiting){content.setAttribute('role','status');wrap.classList.add('speech-pending');}
  content.setAttribute('dir','auto');
  content.style.textAlign='start';
  wrap.append(textNode('div',role==='user'?(state.lang==='ar'?'أنت':'You'):'ورشتك | Warshatak','message-label'),content);
- if(role==='assistant')wrap.append(voice.readButton(message));
+ if(role==='assistant'&&!waiting)wrap.append(voice.readButton(message));
+ if(waiting){const reveal=textNode('button',state.lang==='ar'?'عرض النص الآن':'Show text now','show-reply-now');reveal.type='button';reveal.onclick=()=>{replyDelivery.release(messageData);voice.stop();};wrap.append(reveal);}
  $('messages').append(wrap);
 }
 function stopMediaPlayback(){document.querySelectorAll('audio,video').forEach(media=>media.pause());}
@@ -497,8 +503,11 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
   }
   if(!state.cases.some(x=>x.id===active.id))return;
   active.messages.push({role:'assistant',content:data.reply.slice(0,1900),referenceExample:data.referenceExample||null,canSkipQuestion:data.canSkipQuestion===true,clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
+  const spokenMessage=active.messages.at(-1);
+  const syncSpeech=session?.id===active.id&&voice.isAutoEnabled()&&data.problemSummary?.urgent!==true;
+  if(syncSpeech)replyDelivery.prepare(spokenMessage,active.id);
   persist();
-  if(session?.id===active.id){successUntil=performance.now()+1300;clearTimeout(successTimer);successTimer=setTimeout(syncMechanicState,1400);renderSidebar();renderSession();voice.autoSpeak(data.reply,{turnStarted});}
+  if(session?.id===active.id){successUntil=performance.now()+1300;clearTimeout(successTimer);successTimer=setTimeout(syncMechanicState,1400);renderSidebar();renderSession();voice.autoSpeak(data.reply,{turnStarted,onStart:()=>replyDelivery.release(spokenMessage),onStop:()=>replyDelivery.release(spokenMessage)});}
  }catch(error){
   if(state.cases.some(x=>x.id===active.id)){
    // Remove only the failed user turn so it can be retried without duplicated chat context.
@@ -596,8 +605,9 @@ function renderSession(){
   $('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');
   const previousCount=visibleThreadId===session.id?visibleMessageCount:0;
   for(const [index,msg] of session.messages.entries()){
-   addMessage(msg.content,msg.role);
+   addMessage(msg.content,msg.role,msg);
    if(index<previousCount)$('messages').lastElementChild.classList.add('message-settled');
+   if(replyDelivery.isPending(msg))continue;
    if(msg.role==='assistant'&&msg.referenceExample){
     const card=renderReferenceExample({message:msg,language:session.lang||state.lang,enabled:index===session.messages.length-1&&!submitting,onFeedback:(value,text)=>{if(submitting||msg.referenceFeedback)return;msg.referenceFeedback=value;persist();void sendChat(text,{skipClarification:value==='skip'});}});
     if(card)$('messages').append(card);
@@ -624,7 +634,7 @@ function renderSession(){
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
   if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'المرفق محفوظ. ملاحظات النماذج قد تخطئ، وقياسات الصوت الأولية لا تحدد نوعه أو العطل.':'Attachment saved. Model observations may be wrong; waveform metrics alone identify neither the sound nor a fault.','media-warning'));
-  renderProblemSummary();
+  if(!replyDelivery.isPending(session.messages.at(-1)))renderProblemSummary();
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
   $('attachButton').disabled=Boolean(submitting);$('recordButton').disabled=Boolean(submitting);
   $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
