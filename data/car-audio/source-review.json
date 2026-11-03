@@ -1,0 +1,388 @@
+{
+  "version": 1,
+  "kind": "source_identity_decode_and_visual_title_audit_not_acoustic_review",
+  "duplicates_added": 0,
+  "audio_listening_available": false,
+  "independent_evaluation_recordings": 0,
+  "recognition_accuracy": null,
+  "sources": [
+    {
+      "file_name": "بعض أصوات الأعطال في السيارة.mp4",
+      "sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "bytes": 1164876,
+      "duration_seconds": 28.235465,
+      "matches_existing_source_hash": true,
+      "reference_records": [
+        {
+          "id": "upload1-01",
+          "start_seconds": 0.5,
+          "end_seconds": 3.0,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.5,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              0.5,
+              1.75,
+              2.95
+            ],
+            "displayed_label_ar": "بطة السير",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": true,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-02",
+          "start_seconds": 3.8,
+          "end_seconds": 6.3,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.5,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              3.8,
+              5.05,
+              6.25
+            ],
+            "displayed_label_ar": "القماشات",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-03",
+          "start_seconds": 7.6,
+          "end_seconds": 9.8,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.2,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              7.6,
+              8.7,
+              9.75
+            ],
+            "displayed_label_ar": "صبره العكس",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": true,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-04",
+          "start_seconds": 10.8,
+          "end_seconds": 13.2,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.4,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              10.8,
+              12.0,
+              13.15
+            ],
+            "displayed_label_ar": "البوالات",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": true,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-05",
+          "start_seconds": 14.4,
+          "end_seconds": 16.7,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.3,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              14.4,
+              15.55,
+              16.65
+            ],
+            "displayed_label_ar": "طرمبه الماء",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-06",
+          "start_seconds": 17.7,
+          "end_seconds": 20,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.3,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              17.7,
+              18.85,
+              19.95
+            ],
+            "displayed_label_ar": "السيلف",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-07",
+          "start_seconds": 21,
+          "end_seconds": 23.5,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.5,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              21,
+              22.25,
+              23.45
+            ],
+            "displayed_label_ar": "جوزة المقصات",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload1-08",
+          "start_seconds": 24.6,
+          "end_seconds": 27.3,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.7,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              24.6,
+              25.95,
+              27.25
+            ],
+            "displayed_label_ar": "البطارية",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        }
+      ]
+    },
+    {
+      "file_name": "بعض اصوات اعطال السيارة 2.mp4",
+      "sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "bytes": 932227,
+      "duration_seconds": 21.640998,
+      "matches_existing_source_hash": true,
+      "reference_records": [
+        {
+          "id": "upload2-01",
+          "start_seconds": 0.2,
+          "end_seconds": 2,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 1.8,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              0.2,
+              1.1,
+              1.95
+            ],
+            "displayed_label_ar": "ربلة كرسي المساعد",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "visible",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-02",
+          "start_seconds": 3,
+          "end_seconds": 4.8,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 1.8,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              3,
+              3.9,
+              4.75
+            ],
+            "displayed_label_ar": "ربلة المساعد",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "visible",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-03",
+          "start_seconds": 5.8,
+          "end_seconds": 7.7,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 1.9,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              5.8,
+              6.75,
+              7.65
+            ],
+            "displayed_label_ar": "مروحة التبريد",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-04",
+          "start_seconds": 8.7,
+          "end_seconds": 10.7,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.0,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              8.7,
+              9.7,
+              10.65
+            ],
+            "displayed_label_ar": "بيرنج الدينمو",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-05",
+          "start_seconds": 11.7,
+          "end_seconds": 13.7,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.0,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              11.7,
+              12.7,
+              13.65
+            ],
+            "displayed_label_ar": "كرسي المكينة",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": false,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-06",
+          "start_seconds": 14.7,
+          "end_seconds": 16.7,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.0,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              14.7,
+              15.7,
+              16.65
+            ],
+            "displayed_label_ar": "سير التيمت",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": true,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        },
+        {
+          "id": "upload2-07",
+          "start_seconds": 17.8,
+          "end_seconds": 19.8,
+          "reference_sha256_matches": true,
+          "decoded_duration_seconds": 2.0,
+          "source_window_pcm_equals_existing_reference": true,
+          "source_window_decodes": true,
+          "label_review": {
+            "method": "manual_visual_inspection_of_source_frames",
+            "sample_seconds": [
+              17.8,
+              18.8,
+              19.75
+            ],
+            "displayed_label_ar": "علبة السكان",
+            "midpoint_and_end_label_visible": true,
+            "start_label_visibility": "transition_or_blank",
+            "status": "visual_title_association_only_audio_boundary_review_pending",
+            "term_clarification_required": true,
+            "note": "Original label_ar/label_en retained. Frames establish title association, not that the sound proves this fault; exact event boundaries and ambiguous terminology require listening/review.",
+            "acoustic_review_status": "not_listened_to_in_this_environment"
+          }
+        }
+      ]
+    }
+  ]
+}

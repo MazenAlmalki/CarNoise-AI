@@ -1,3 +1,4 @@
+import {renderSoundResult} from './sound-result.js';
 import {validateMedia,MEDIA_ACCEPT} from './media-formats.js';
 import {createReplyDelivery} from './reply-delivery.js';
 import {renderReferenceExample} from './reference-example.js';
@@ -407,6 +408,7 @@ function addMessage(message,role,messageData=null){
  const wrap=textNode('div','','message '+role);
  const content=textNode('div',waiting?(state.lang==='ar'?'الرد جاهز، نجهّز صوته…':'Reply ready; preparing its speech…'):message);
  if(waiting){content.setAttribute('role','status');wrap.classList.add('speech-pending');}
+ if(!waiting&&role==='assistant'&&messageData?.resultCard){const card=renderSoundResult(messageData.resultCard,session?.lang||state.lang);if(card)content.replaceChildren(card);}
  content.setAttribute('dir','auto');
  content.style.textAlign='start';
  wrap.append(textNode('div',role==='user'?(state.lang==='ar'?'أنت':'You'):'ورشتك | Warshatak','message-label'),content);
@@ -468,12 +470,12 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
  persist();
  $('description').value='';
  showError('');submitting=true;setLoading('reply');renderSession();$('busy').classList.remove('hidden');$('sendButton').disabled=true;
- const vehicleHistory=state.cases.filter(x=>x.carId===active.carId&&x.id!==active.id&&x.result).slice(-5)
-  .map(x=>({date:x.createdAt.slice(0,10),description:x.description.slice(0,200),suspectedSummary:String(x.result.summary||'').slice(0,200)}));
+ const vehicleHistory=state.cases.filter(x=>x.carId===active.carId&&x.id!==active.id&&(x.result||x.messages?.some(m=>m.role==='assistant'))).slice(-5)
+  .map(x=>({date:x.createdAt.slice(0,10),description:x.description.slice(0,200),suspectedSummary:String(x.result?.summary||x.problemSummary?.assessment||x.messages?.findLast(m=>m.role==='assistant')?.content||'').slice(0,200)}));
  try{
-  let mediaInsight=null;
+  let mediaInsight=null,mediaRequestedThisTurn=false;
   if(active.mediaId && !active.mediaAttempted){
-   active.mediaAttempted=true;
+   mediaRequestedThisTurn=true;active.mediaAttempted=true;
    try{
     const mediaFile=await readBlob(active.mediaId);
     if(mediaFile){
@@ -497,7 +499,7 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
   if(controller.signal.aborted)throw new DOMException('Request cancelled or timed out.','AbortError');
   setLoading('reply');
   const response=await fetch('/api/chat',{signal:controller.signal,method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar()),year:selectedCar()?.year||null},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification,offeredReferenceIds:active.messages.filter(m=>m.referenceExample).map(m=>m.referenceExample.id).slice(-100)})});
+   body:JSON.stringify({message,resultFormat:'compact',mediaAttachedThisTurn:mediaRequestedThisTurn,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar()),year:selectedCar()?.year||null},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification,offeredReferenceIds:active.messages.filter(m=>m.referenceExample).map(m=>m.referenceExample.id).slice(-100)})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(['ar','en'].includes(data.responseLanguage))active.lang=data.responseLanguage;
@@ -508,7 +510,7 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
    else showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));
   }
   if(!state.cases.some(x=>x.id===active.id))return;
-  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),referenceExample:data.referenceExample||null,canSkipQuestion:data.canSkipQuestion===true,clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
+  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),resultCard:data.resultCard||null,referenceExample:data.referenceExample||null,canSkipQuestion:data.canSkipQuestion===true,clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   const spokenMessage=active.messages.at(-1);
   const syncSpeech=session?.id===active.id&&voice.isAutoEnabled()&&data.problemSummary?.urgent!==true;
   if(syncSpeech)replyDelivery.prepare(spokenMessage,active.id);
@@ -572,6 +574,7 @@ function renderAudioClarifications(message,isLatest){
  $('messages').append(wrap);
 }
 function renderProblemSummary(){
+ if(session?.messages?.at(-1)?.resultCard)return;
  const summary=buildProblemSummary(session,state.lang);if(!summary)return;
  summary.vehicle=carName(selectedCar());
  const card=document.createElement('details');card.className='problem-summary';
@@ -614,7 +617,7 @@ function renderSession(){
    addMessage(msg.content,msg.role,msg);
    if(index<previousCount)$('messages').lastElementChild.classList.add('message-settled');
    if(replyDelivery.isPending(msg))continue;
-   if(msg.role==='assistant'&&msg.referenceExample){
+   if(msg.role==='assistant'&&!msg.resultCard&&msg.referenceExample){
     const card=renderReferenceExample({message:msg,language:session.lang||state.lang,enabled:index===session.messages.length-1&&!submitting,onFeedback:(value,text)=>{if(submitting||msg.referenceFeedback)return;msg.referenceFeedback=value;persist();void sendChat(text,{skipClarification:value==='skip'});}});
     if(card)$('messages').append(card);
    }
@@ -626,7 +629,7 @@ function renderSession(){
     const skip=textNode('button',state.lang==='ar'?'تخطي السؤال وعرض المتاح':'Skip question and summarize','skip-question');skip.type='button';skip.disabled=submitting;
     skip.onclick=()=>sendChat(state.lang==='ar'?'تخطّ السؤال ولخّص الاحتمالات بما تعرفه الآن دون أسئلة إضافية.':'Skip this question and summarize the possibilities using what is known, without more questions.',{skipClarification:true});$('messages').append(skip);
    }
-   if(msg.role==='assistant'&&Array.isArray(msg.sources)&&msg.sources.length){
+   if(msg.role==='assistant'&&!msg.resultCard&&Array.isArray(msg.sources)&&msg.sources.length){
     const cited=textNode('div',state.lang==='ar'?'مصادر إرشادية: ':'Reference sources: ','message-sources');
     for(const s of msg.sources){
      if(typeof s.url!=='string'||!s.url.startsWith('https://'))continue;
@@ -638,12 +641,13 @@ function renderSession(){
   }
   visibleThreadId=session.id;visibleMessageCount=session.messages.length;
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
-  if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
-  if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'المرفق محفوظ. ملاحظات النماذج قد تخطئ، وقياسات الصوت الأولية لا تحدد نوعه أو العطل.':'Attachment saved. Model observations may be wrong; waveform metrics alone identify neither the sound nor a fault.','media-warning'));
+  if(session.mediaAnalysisError&&!session.messages.at(-1)?.resultCard)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
+  if(session.mediaAnalysis&&!session.messages.at(-1)?.resultCard)$('messages').append(textNode('div',state.lang==='ar'?'المرفق محفوظ. ملاحظات النماذج قد تخطئ، وقياسات الصوت الأولية لا تحدد نوعه أو العطل.':'Attachment saved. Model observations may be wrong; waveform metrics alone identify neither the sound nor a fault.','media-warning'));
   if(!replyDelivery.isPending(session.messages.at(-1)))renderProblemSummary();
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
   $('attachButton').disabled=Boolean(submitting);$('recordButton').disabled=Boolean(submitting);
-  $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
+  const latestCard=session.messages.at(-1)?.resultCard?Array.from($('messages').querySelectorAll('.sound-result')).at(-1):null;
+  (latestCard||$('messages').lastElementChild)?.scrollIntoView?.({block:latestCard?'start':'nearest'});
   return;
  }
  $('attachButton').disabled=false;$('recordButton').disabled=false;
@@ -801,9 +805,10 @@ async function showSavedMedia(id,type,name){
   const target=box.classList.contains('hidden')?$('messages'):box;
   // Only one active preview per thread, even after multiple renders.
   target.querySelectorAll('[data-saved-media-preview]').forEach(node=>node.remove());
-  const attached=textNode('div','','reason');
+  const compact=Boolean(session?.messages?.at(-1)?.resultCard);
+  const attached=textNode(compact?'details':'div','','reason saved-media');
   attached.dataset.savedMediaPreview=id;
-  attached.append(textNode('strong',state.lang==='ar'?'تسجيلك':'Your recording'),textNode('span',name||t('mediaSaved')));
+  attached.append(textNode(compact?'summary':'strong',state.lang==='ar'?'المرفق الأصلي':'Your attachment'),textNode('span',name||t('mediaSaved')));
   const url=URL.createObjectURL(f);
   const media=document.createElement(type?.startsWith('image/')?'img':type?.startsWith('video/')?'video':'audio');
   if(media.tagName==='IMG')media.alt=name||t('mediaSaved');

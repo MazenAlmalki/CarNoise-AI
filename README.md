@@ -111,3 +111,7 @@ The compact vehicle switcher, searchable/renamable conversation history, copyabl
 ## Phase 3 — unified case evidence
 
 Written symptom details are preserved alongside automatic transcripts, sound/video observations, vehicle corrections and unverified history. Shared media validation, measured upload progress and Saudi usage mappings support the same workflow. See [Phase 3 review](PHASE_3_REVIEW.md) for behavior, test commands and limitations. Work stops after Phase 3: new recordings are required before dataset ingestion, classifier work or training, and the requested 70% threshold remains disabled until independently validated.
+
+## Compact sound-reference results
+
+New attached recordings can produce one simple result card: a **possible** named match, a short resemblance explanation, practical inspection steps and a playable reference. Unclear, ambiguous or failed comparisons show **No reliable match**. The two reuploaded videos reuse all 15 existing reference clips; this is audio comparison, not training. See [sound-reference results and source review](SOUND_REFERENCE_RESULTS.md).

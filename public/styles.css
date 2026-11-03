@@ -1422,3 +1422,17 @@ body,
 
 #dictationOverflow { width:100%; max-height:140px; box-sizing:border-box; }
 #dictationNotice:empty { display:none; }
+
+.sound-result { min-width:0; max-width:100%; overflow-wrap:anywhere; }
+.sound-result h3 { font-size:1.05rem; margin:0 0 .6rem; }
+.sound-result h4 { font-size:.9rem; margin:1rem 0 .25rem; }
+.sound-result p { margin:.35rem 0; }
+.sound-result-name { font-weight:700; font-size:1.15rem; }
+.sound-result ul { padding-inline-start:1.2rem; margin:.4rem 0; }
+.sound-result li { margin:.35rem 0; }
+.sound-result audio { display:block; width:100%; max-width:100%; margin-top:.5rem; }
+.sound-result details { margin-top:.8rem; }
+.sound-result summary { cursor:pointer; }
+.sound-result-note,.sound-result-source { font-size:.8rem; }
+.sound-result-source { display:inline-block; margin-top:.75rem; }
+.sound-result-safety { font-weight:600; }

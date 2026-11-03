@@ -1,3 +1,4 @@
+import {buildSoundResult,soundResultText} from './soundResult.js';
 import {audioContent,nonMechanicalMediaReply} from './audioContent.js';
 import {dictationConfiguration,transcribeDictation,MAX_DICTATION_BYTES} from './dictation.js';
 import {buildUnifiedCase,isMediaOnlyRequest} from './unifiedCase.js';
@@ -228,6 +229,14 @@ app.post('/api/chat',async(req,res)=>{
   // speech, an uncertain sound, a failed provider or an urgent fault report.
   if(!guided&&asksAboutUploadedMedia&&!questionPlan.urgent&&hasHumanVocalImitation(mediaObject))
     return res.json(vocalImitationReply(language));
+  // Compact attachment results need no second text-model inference. Keep user
+  // speech as conversation; it is not an audible car-fault observation.
+  if(data.resultFormat==='compact'&&(data.mediaAttachedThisTurn===true||asksAboutUploadedMedia)&&
+    (['audio','video'].includes(mediaType)||mediaFailure)&&!(speechIsMainMessage&&!hasHostedAudioEvidence(mediaObject))){
+   const resultCard=await buildSoundResult({media:mediaObject,language,current:message,messages:data.messages,conflicts:unifiedCase.possibleConflicts,failure:mediaFailure,vehicle:unifiedCase.vehicle,history:unifiedCase.history,
+    safety:questionPlan.urgent?(language==='ar'?'إذا تأثرت الفرامل أو التوجيه أو ظهر دخان، توقف بأمان واطلب مساعدة مختص.':'If braking or steering is impaired, or smoke appears, stop safely and request professional help.'):null});
+   return res.json({reply:soundResultText(resultCard,language),resultCard,responseLanguage:language,grounding:'audio-reference-result',audioContent:audioContent(mediaObject),evidenceConflicts:unifiedCase.possibleConflicts,problemSummary:null,canSkipQuestion:false});
+  }
   // Never turn an unclassified/failed/non-mechanical recording into a car interview.
   // Detailed written complaints still reach chat independently of audio failures.
   const content=audioContent(mediaObject);
