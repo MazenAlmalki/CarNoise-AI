@@ -1,0 +1,7 @@
+model_cost_per_case_sar,product,unit,revenue_sar,variable_cost_sar,contribution_sar,contribution_margin_pct
+1,driver_case,one transaction,12.00,3.50,8.50,70.83
+1,workshop_plan,one month at all 60 included cases,399.00,132.98,266.02,66.67
+3,driver_case,one transaction,12.00,5.50,6.50,54.17
+3,workshop_plan,one month at all 60 included cases,399.00,252.98,146.02,36.60
+6,driver_case,one transaction,12.00,8.50,3.50,29.17
+6,workshop_plan,one month at all 60 included cases,399.00,432.98,-33.98,-8.52

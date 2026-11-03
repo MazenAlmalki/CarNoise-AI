@@ -119,3 +119,7 @@ New attached recordings can produce one simple result card: a **possible** named
 ## Four known recordings — local identity
 
 The four supplied clips (القماشات، البطارية، بطة السير، ربلة كرسي المساعد) now support exact original-file identity without FFmpeg or a paid API, plus decoded-audio identity when FFmpeg is available. Uploading the same recording shows its user-supplied label and inspection guidance; new/re-encoded sounds are not promised a match. This is recording identity, not trained fault recognition. See [KNOWN_RECORDINGS.md](KNOWN_RECORDINGS.md).
+
+## Business model
+
+See [BUSINESS_MODEL.md](BUSINESS_MODEL.md) for the proposed Saudi-first customer segments, pricing experiments, revenue streams, unit economics and 90-day validation plan. Financial figures are unvalidated planning assumptions; paid plans and workshop workspaces are not implemented.

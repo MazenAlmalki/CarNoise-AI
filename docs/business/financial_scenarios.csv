@@ -1,0 +1,4 @@
+scenario_not_forecast,paying_workshops,paid_driver_cases,monthly_revenue_sar,variable_cost_sar,contribution_sar,fixed_budget_sar,contribution_less_fixed_budget_sar
+pilot,10,50,4590.00,1504.80,3085.20,5000.00,-1914.80
+working_case,25,200,12375.00,4024.50,8350.50,5000.00,3350.50
+larger_case,50,500,25950.00,8399.00,17551.00,5000.00,12551.00

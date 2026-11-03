@@ -1,0 +1,11 @@
+assumption,value,unit,evidence_status
+driver_case_price,12,SAR per paid case,unvalidated planning assumption
+workshop_monthly_price,399,SAR per account per month,unvalidated planning assumption
+workshop_included_cases,60,cases per account per month,unvalidated planning assumption
+model_cost_per_case,1,"SAR per case; illustrative, not a provider quote",unvalidated planning assumption
+marginal_infrastructure_per_case,0.20,SAR per case,unvalidated planning assumption
+driver_support_per_case,1,SAR per case,unvalidated planning assumption
+workshop_support_per_account,50,SAR per month,unvalidated planning assumption
+payment_rate,0.025,fraction of each transaction,unvalidated planning assumption
+payment_fixed_fee,1,SAR per transaction,unvalidated planning assumption
+fixed_monthly_budget,5000,SAR per month; excludes acquisition spending and taxes,unvalidated planning assumption
