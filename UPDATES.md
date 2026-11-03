@@ -446,3 +446,9 @@ Raised the preparation minimum to five seconds at the user's request, without ch
 New attachment attempts and compact attachment-result responses now use a 30-second presentation minimum measured from Send. Ordinary text retains the 5-second minimum. The UI says “Preparing your result / جاري تجهيز النتيجة”; the wait is not reported as additional analysis or model thinking. Already-slow analysis receives no extra thirty seconds. Safety warnings bypass pacing, and cancellation/navigation aborts the pending presentation. Existing inference, known-file recognition and voice preferences are unchanged.
 
 Validation: syntax checks and 173 Node tests passed. Chromium measured the actual 30-second hold for a real known-file upload, a 5-second ordinary reply, cancellation without stale output and immediate safety bypass. The later ordinary/safety replies in that timing test were mocked; the initial file upload and compact HTTP result were real.
+
+### Simplify the result card and narration
+
+Known-recording results now show a tentative problem, suggested inspection steps and publisher source, with optional safety/reference playback. File/PCM identity explanations and the “What was identified” heading are hidden from the customer view and manual narration, including saved older cards, without rewriting history. Guidance is shown first. Internal evidence basis and diagnosisConfirmed:false remain intact; no new semantic analysis or confirmed diagnosis is claimed. Thirty-second attachment pacing and recognition behavior are unchanged.
+
+Validation: syntax checks and 174 Node tests passed. Chromium verified a real known-file upload, the 30-second wait, clean Arabic/English rendering, source links, responsive containment and manual narration with no byte/fingerprint wording. TTS response was mocked; the upload and result API were real. Old saved identity explanations are omitted by presentation/narration without changing their stored records.

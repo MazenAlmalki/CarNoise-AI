@@ -49,3 +49,9 @@ test('unvalidated percentages, repair directives and provider debug do not enter
   assert.doesNotMatch(card.why,/Gemini|API|95|٧٠|%|٪|Replace|confirmed fault/);
  }
 });
+
+test('saved known-result narration omits old implementation fields and retains tentative wording',async()=>{
+ const {soundResultNarration}=await import('../public/sound-result.js');
+ const result=soundResultNarration({status:'known_recording',title:'Known reference recording',problem:'القماشات',why:'مطابق بالبايت SHA256',labelNote:'نفس الملف المرجعي',steps:['اطلب فحص الفرامل'],diagnosisConfirmed:false},'ar');
+ assert.match(result,/المشكلة المحتملة/);assert.match(result,/القماشات/);assert.match(result,/فحص الفرامل/);assert.doesNotMatch(result,/مطابق بالبايت|SHA256|نفس الملف|Known reference/);
+});

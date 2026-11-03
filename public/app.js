@@ -1,4 +1,4 @@
-import {renderSoundResult} from './sound-result.js';
+import {renderSoundResult,soundResultNarration} from './sound-result.js';
 import {validateMedia,MEDIA_ACCEPT} from './media-formats.js';
 import {createReplyDelivery,waitForReplyPreparation} from './reply-delivery.js';
 import {renderReferenceExample} from './reference-example.js';
@@ -412,7 +412,7 @@ function addMessage(message,role,messageData=null){
  content.setAttribute('dir','auto');
  content.style.textAlign='start';
  wrap.append(textNode('div',role==='user'?(state.lang==='ar'?'أنت':'You'):'ورشتك | Warshatak','message-label'),content);
- if(role==='assistant'&&!waiting)wrap.append(voice.readButton(message));
+ if(role==='assistant'&&!waiting)wrap.append(voice.readButton(soundResultNarration(messageData?.resultCard,session?.lang||state.lang)||message));
  if(waiting){const reveal=textNode('button',state.lang==='ar'?'عرض النص الآن':'Show text now','show-reply-now');reveal.type='button';reveal.onclick=()=>{replyDelivery.release(messageData);voice.stop();};wrap.append(reveal);}
  $('messages').append(wrap);
 }

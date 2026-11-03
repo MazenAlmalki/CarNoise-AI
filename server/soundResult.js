@@ -43,11 +43,11 @@ export async function buildSoundResult({media,language='ar',current='',messages=
   const ar=language==='ar',advice=sourceFor(guidance[known.reference_id]);
   let refs;try{refs=await loadAudioReferences();}catch{return noMatch('unavailable',language,safety);}
   if(!advice||!refs.some(r=>r.id===known.reference_id))return noMatch('unavailable',language,safety);
-  return {version:1,status:'known_recording',title:ar?'تسجيل مرجعي معروف':'Known reference recording',problem:ar?known.label_ar:known.label_en,
-   why:known.identityMethod==='local_exact_file_identity'?(ar?'هذا نفس الملف المرجعي الذي أرسلته بهذا الاسم، مطابق بالبايت. هذا تعرّف على الملف، وليس إثباتًا للعطل.':'This is the exact reference file you supplied under this name, identical byte-for-byte. This identifies the file, not a confirmed fault.'):(ar?'بصمة الصوت مطابقة للتسجيل الذي أرسلته بهذا الاسم. هذا تعرّف على التسجيل نفسه، وليس إثباتًا للعطل.':'The decoded audio exactly matches the recording you supplied under this name. This identifies the recording, not a confirmed fault.'),
-   steps:[ar?'دوّن وقت ظهور الصوت في سيارتك، ولا تغيّر قطعة اعتمادًا على التسجيل وحده.':'Note when the sound occurs in your car; do not replace a part based on this recording alone.',ar?advice.safe_next_step_ar:advice.safe_next_step_en],
-   safety,reference:{id:known.reference_id,url:'/api/audio-references/'+known.reference_id},sources:[{url:advice.source_url,label:ar?'إرشاد للفحص':'Inspection guidance'}],
-   labelNote:ar?'التسمية قدّمتها أنت، ولم يؤكدها فحص ميكانيكي.':'This is your supplied label; no mechanical inspection has verified it.',diagnosisConfirmed:false};
+  return {version:1,status:'known_recording',title:ar?'المشكلة المحتملة':'Possible problem',problem:ar?known.label_ar:known.label_en,
+   why:'',
+   steps:[ar?advice.safe_next_step_ar:advice.safe_next_step_en,ar?'دوّن متى يظهر الصوت، واطلب تأكيد السبب بالفحص قبل تغيير أي قطعة.':'Note when the sound occurs and confirm the cause by inspection before replacing parts.'],
+   safety,reference:{id:known.reference_id,url:'/api/audio-references/'+known.reference_id},sources:[{url:advice.source_url,label:/theaa\.com/.test(advice.source_url)?'The AA':/aaa\.com/.test(advice.source_url)?'AAA':/ftc\.gov/.test(advice.source_url)?'FTC':ar?'إرشاد للفحص':'Inspection guidance'}],
+   labelNote:'',evidenceBasis:'registered_recording_identity',diagnosisConfirmed:false};
  }
  const content=audioContent(media);
  // Source recordings have unknown vehicle/operating conditions. Identity and
@@ -86,5 +86,5 @@ export async function buildSoundResult({media,language='ar',current='',messages=
 }
 export function soundResultText(card,language='ar'){
  const ar=language==='ar';
- return [card.title,card.problem,card.why,(ar?'وش تسوي:':'What to do:')+'\n'+card.steps.map(s=>'• '+s).join('\n'),card.safety,card.labelNote].filter(Boolean).join('\n\n');
+ return [card.title,card.problem,card.why,(ar?'الخطوات المقترحة:':'Suggested steps:')+'\n'+card.steps.map(s=>'• '+s).join('\n'),card.safety,card.labelNote].filter(Boolean).join('\n\n');
 }
