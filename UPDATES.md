@@ -440,3 +440,9 @@ Raised the fast-reply preparation minimum from 1.4 to 3 seconds, preserving urge
 ### Five-second fast-reply pacing and technology explanation
 
 Raised the preparation minimum to five seconds at the user's request, without changing voice preferences, inference or urgent-response bypass. Added PROJECT_STACK_AR.md documenting the actual uploaded-source preparation, reference counts, local file/PCM identity, supported provider/model defaults and unverified training/accuracy claims. Presentation timing is not reported as model thinking time.
+
+### Attachment result presentation minimum of thirty seconds
+
+New attachment attempts and compact attachment-result responses now use a 30-second presentation minimum measured from Send. Ordinary text retains the 5-second minimum. The UI says “Preparing your result / جاري تجهيز النتيجة”; the wait is not reported as additional analysis or model thinking. Already-slow analysis receives no extra thirty seconds. Safety warnings bypass pacing, and cancellation/navigation aborts the pending presentation. Existing inference, known-file recognition and voice preferences are unchanged.
+
+Validation: syntax checks and 173 Node tests passed. Chromium measured the actual 30-second hold for a real known-file upload, a 5-second ordinary reply, cancellation without stale output and immediate safety bypass. The later ordinary/safety replies in that timing test were mocked; the initial file upload and compact HTTP result were real.

@@ -52,3 +52,12 @@ test('safety replies and already-slow responses receive no extra presentation pa
   let displayed=false;await waitForReplyPreparation({...args,onWait:()=>displayed=true});assert.equal(displayed,false);
  }
 });
+
+test('attachment presentation remains cancellable and never delays urgent or already-slow results',async()=>{
+ const controller=new AbortController();let waiting=false;
+ const pending=waitForReplyPreparation({startedAt:performance.now(),attachment:true,signal:controller.signal,onWait:()=>waiting=true});
+ assert.equal(waiting,true);controller.abort();await assert.rejects(pending,{name:'AbortError'});
+ for(const args of [{startedAt:performance.now(),attachment:true,urgent:true},{startedAt:performance.now()-40000,attachment:true}]){
+  let called=false;await waitForReplyPreparation({...args,onWait:()=>called=true});assert.equal(called,false);
+ }
+});

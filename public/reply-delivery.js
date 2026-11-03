@@ -29,9 +29,9 @@ export function createReplyDelivery({
 }
 
 // Presentation pacing only. Never describe this pause as additional inference.
-export async function waitForReplyPreparation({startedAt,signal,urgent=false,onWait=()=>{}}){
+export async function waitForReplyPreparation({startedAt,signal,urgent=false,attachment=false,onWait=()=>{}}){
  if(signal?.aborted)throw new DOMException('Request cancelled','AbortError');
- const remaining=urgent?0:Math.max(0,5000-(performance.now()-startedAt));
+ const remaining=urgent?0:Math.max(0,(attachment?30000:5000)-(performance.now()-startedAt));
  if(!remaining)return;
  onWait();
  await new Promise((resolve,reject)=>{
