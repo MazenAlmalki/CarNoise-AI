@@ -1,6 +1,8 @@
+import {verifiedKnownRecording} from './knownRecordings.js';
 // Preliminary content observations, never a trained fault classifier.
 export const AUDIO_CONTENT_TYPES=['speech','mechanical_sound','mixed','music','silence','other','uncertain'];
 export function audioContent(media){
+ if(verifiedKnownRecording(media?.localReferenceIdentity))return {type:'uncertain',status:'identity_matched',speechPresent:false,mechanicalEventObserved:false,source:'local_exact_pcm_identity',verified:false,limitation:'The known audio recording was identified; its contents and fault label were not independently classified or verified.'};
  const speech=media?.transcription?.hasRecognizedSpeech===true&&typeof media.transcription.text==='string'&&Boolean(media.transcription.text.trim());
  const analysis=media?.audioEventAnalysis,observation=media?.audioObservation;
  const succeeded=analysis?.provider==='gemini'&&analysis.succeeded===true&&observation?.provider==='gemini';

@@ -115,3 +115,7 @@ Written symptom details are preserved alongside automatic transcripts, sound/vid
 ## Compact sound-reference results
 
 New attached recordings can produce one simple result card: a **possible** named match, a short resemblance explanation, practical inspection steps and a playable reference. Unclear, ambiguous or failed comparisons show **No reliable match**. The two reuploaded videos reuse all 15 existing reference clips; this is audio comparison, not training. See [sound-reference results and source review](SOUND_REFERENCE_RESULTS.md).
+
+## Four known recordings — local identity
+
+The four supplied clips (القماشات، البطارية، بطة السير، ربلة كرسي المساعد) now support exact decoded-audio identity without a paid API. Uploading the same recording shows its user-supplied label and inspection guidance; new/re-encoded sounds are not promised a match. This is recording identity, not trained fault recognition. See [KNOWN_RECORDINGS.md](KNOWN_RECORDINGS.md).

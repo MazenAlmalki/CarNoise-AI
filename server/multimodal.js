@@ -1,3 +1,4 @@
+import {identifyKnownRecording} from './knownRecordings.js';
 import {audioContent} from './audioContent.js';
 import {validateMedia} from '../public/media-formats.js';
 import 'dotenv/config';
@@ -132,6 +133,20 @@ export async function analyzeUploadedMedia(file,language='ar',options={}){
   if(file.mimetype.startsWith('image/')){
    const observed=await describeVehicleImages([{mimeType:file.mimetype,base64:file.buffer.toString('base64')}],language,options);
    return {type:'image',visual:observed,summary:observed.description,limitations:'Image is a visual observation, NOT a mechanical diagnosis.'};
+  }
+  // The four registered clips can be recognized without an external provider.
+  // Normalize actual audio bytes; never look at the supplied filename/label.
+  if((options.env||process.env).LOCAL_REFERENCE_IDENTITY!=='0'){
+   try{
+    const started=performance.now();
+    const localReferenceIdentity=identifyKnownRecording(await audioExcerpt(source,temp,6,options.env||process.env));
+    if(localReferenceIdentity)return {type:file.mimetype.startsWith('video/')?'video':'audio',localReferenceIdentity,
+     audioContent:{type:'uncertain',status:'identity_matched',source:'local_exact_pcm_identity',mechanicalEventObserved:false,verified:false},
+     audioEventAnalysis:{provider:'none',attempted:false,succeeded:false},transcription:null,visual:null,
+     timings:{totalMs:Math.round(performance.now()-started),stages:{localReferenceIdentity:{ms:Math.round(performance.now()-started)}}},
+     warnings:['Exact identity of a user-labeled reference recording, not a mechanical diagnosis. No external inference was called.'],
+     limitations:'Only the registered decoded recording was identified. Similar new recordings require separate audio understanding; the user-supplied fault label is unverified.'};
+   }catch{/* A decode/no-match must fall through without guessing a reference. */}
   }
   if(file.mimetype.startsWith('video/')){
    // Audio and sampled frames do not depend on each other. Observe both results.

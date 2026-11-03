@@ -512,10 +512,10 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
   if(!state.cases.some(x=>x.id===active.id))return;
   active.messages.push({role:'assistant',content:data.reply.slice(0,1900),resultCard:data.resultCard||null,referenceExample:data.referenceExample||null,canSkipQuestion:data.canSkipQuestion===true,clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   const spokenMessage=active.messages.at(-1);
-  const syncSpeech=session?.id===active.id&&voice.isAutoEnabled()&&data.problemSummary?.urgent!==true;
+  const syncSpeech=session?.id===active.id&&voice.isAutoEnabled()&&data.problemSummary?.urgent!==true&&data.resultCard?.status!=='known_recording';
   if(syncSpeech)replyDelivery.prepare(spokenMessage,active.id);
   persist();
-  if(session?.id===active.id){successUntil=performance.now()+1300;clearTimeout(successTimer);successTimer=setTimeout(syncMechanicState,1400);renderSidebar();renderSession();voice.autoSpeak(data.reply,{turnStarted,onStart:()=>replyDelivery.release(spokenMessage),onStop:()=>replyDelivery.release(spokenMessage)});}
+  if(session?.id===active.id){successUntil=performance.now()+1300;clearTimeout(successTimer);successTimer=setTimeout(syncMechanicState,1400);renderSidebar();renderSession();if(data.resultCard?.status!=='known_recording')voice.autoSpeak(data.reply,{turnStarted,onStart:()=>replyDelivery.release(spokenMessage),onStop:()=>replyDelivery.release(spokenMessage)});}
  }catch(error){
   if(state.cases.some(x=>x.id===active.id)){
    // Remove only the failed user turn so it can be retried without duplicated chat context.

@@ -1,3 +1,4 @@
+import {verifiedKnownRecording} from './knownRecordings.js';
 import {readFileSync} from 'node:fs';
 import {loadAudioReferences} from './audioReferences.js';
 import {hasHostedAudioEvidence} from './geminiAudio.js';
@@ -37,6 +38,17 @@ function contradictsContext(id,current,history){
  return false;
 }
 export async function buildSoundResult({media,language='ar',current='',messages=[],conflicts=[],failure=null,safety=null,vehicle=null,history=[]}={}){
+ const known=verifiedKnownRecording(media?.localReferenceIdentity);
+ if(known){
+  const ar=language==='ar',advice=sourceFor(guidance[known.reference_id]);
+  let refs;try{refs=await loadAudioReferences();}catch{return noMatch('unavailable',language,safety);}
+  if(!advice||!refs.some(r=>r.id===known.reference_id))return noMatch('unavailable',language,safety);
+  return {version:1,status:'known_recording',title:ar?'تسجيل مرجعي معروف':'Known reference recording',problem:ar?known.label_ar:known.label_en,
+   why:ar?'بصمة الصوت مطابقة للتسجيل الذي أرسلته بهذا الاسم. هذا تعرّف على التسجيل نفسه، وليس إثباتًا للعطل.':'The decoded audio exactly matches the recording you supplied under this name. This identifies the recording, not a confirmed fault.',
+   steps:[ar?'دوّن وقت ظهور الصوت في سيارتك، ولا تغيّر قطعة اعتمادًا على التسجيل وحده.':'Note when the sound occurs in your car; do not replace a part based on this recording alone.',ar?advice.safe_next_step_ar:advice.safe_next_step_en],
+   safety,reference:{id:known.reference_id,url:'/api/audio-references/'+known.reference_id},sources:[{url:advice.source_url,label:ar?'إرشاد للفحص':'Inspection guidance'}],
+   labelNote:ar?'التسمية قدّمتها أنت، ولم يؤكدها فحص ميكانيكي.':'This is your supplied label; no mechanical inspection has verified it.',diagnosisConfirmed:false};
+ }
  const content=audioContent(media);
  // Source recordings have unknown vehicle/operating conditions. Identity and
  // unverified history cannot establish model-specific compatibility or a fault.

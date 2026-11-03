@@ -420,3 +420,7 @@ The microphone now transcribes into an editable draft through a separate bounded
 ### Compact reference-result cards and reuploaded-source audit
 
 Both supplied MP4 hashes match the prior source inventory. All 15 existing reference windows decode to identical PCM; WAVs and original labels/timestamps remain unchanged. Added sampled visual-title review with explicit ambiguous-term and pending acoustic-review flags. New compact Arabic/English cards name only one clear, eligible tentative audio match, cite related inspection guidance and offer reference playback; unmatched, ambiguous, conflicting or failed comparisons do not force a component. Microphone dictation remains separate. Recognition metrics remain unavailable with zero independent test recordings; no training or threshold activation. See [SOUND_REFERENCE_RESULTS.md](SOUND_REFERENCE_RESULTS.md).
+
+### Local identity for the four explicitly labeled uploads
+
+Registered hashes and decoded PCM identities for the four actual supplied MP4s, without duplicating media. Exact matches return a known-recording card with the user's label and existing cited inspection guidance, before external inference. The path does not infer mechanical content or a confirmed fault; changed/new audio remains unmatched locally. Known-recording cards do not auto-request paid TTS. Microphone dictation remains separate. No model training or unvalidated threshold. See [KNOWN_RECORDINGS.md](KNOWN_RECORDINGS.md).
