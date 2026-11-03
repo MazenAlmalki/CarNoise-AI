@@ -6,6 +6,8 @@ Warshatak is an Arabic-first vehicle-problem intake assistant. Its commercial op
 
 This document proposes a business model, prices and validation plan. It does not establish market demand, customers, revenue, partnerships, recognition accuracy or regulatory approval. All financial amounts are illustrative SAR assumptions, exclude VAT and are not current supplier quotes.
 
+[View the Arabic nine-block canvas](docs/business/CANVAS_README.md) · [PNG](docs/business/business-model-canvas-ar.png) · [A3 PDF](docs/business/business-model-canvas-ar.pdf) · [Editable HTML](docs/business/business-model-canvas-ar.html)
+
 ## 1. What exists and what can be sold
 
 | Current repository capability | Commercial implication |

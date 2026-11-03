@@ -123,3 +123,5 @@ The four supplied clips (القماشات، البطارية، بطة السير
 ## Business model
 
 See [BUSINESS_MODEL.md](BUSINESS_MODEL.md) for the proposed Saudi-first customer segments, pricing experiments, revenue streams, unit economics and 90-day validation plan. Financial figures are unvalidated planning assumptions; paid plans and workshop workspaces are not implemented.
+
+The business model is also available as an [Arabic Business Model Canvas](docs/business/CANVAS_README.md), with a printable A3 PDF, high-resolution PNG and editable HTML.

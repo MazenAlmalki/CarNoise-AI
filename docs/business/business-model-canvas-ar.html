@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة نموذج العمل — ورشتك | Warshatak</title>
+<style>
+:root{--ink:#173c34;--muted:#62736b;--line:#b9c5bb;--gold:#e7bb7b;--paper:#f5f5ef;--cream:#fff1d7;--sage:#e7eee5}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#e7eae4;color:var(--ink);font-family:"Noto Sans Arabic",sans-serif}
+.sheet{width:2000px;height:1414.2857px;padding:36px 40px 22px;background:var(--paper);display:grid;grid-template-rows:110px 72px 1fr 54px;gap:18px;overflow:hidden}
+.header{display:flex;align-items:center;justify-content:space-between;gap:30px}
+h1{font-size:51px;line-height:1.35;margin:0;font-weight:800;letter-spacing:-1.1px}
+.subtitle{font-size:21px;color:var(--muted);margin:4px 0 0;direction:ltr;text-align:right;letter-spacing:.8px}
+.brand{display:flex;align-items:center;gap:18px;direction:rtl}
+.brand-mark{width:76px;height:76px;border-radius:20px;background:var(--ink);color:var(--gold);display:grid;place-items:center}
+.brand-name{font-size:43px;font-weight:800;line-height:1.3}
+.brand-en{font-size:18px;letter-spacing:4px;direction:ltr;text-align:right;color:var(--muted)}
+.meta{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:12px}
+.meta div{background:#fff;border:1px solid #d8ded5;padding:9px 20px;border-radius:9px;font-size:23px;display:flex;align-items:center;gap:13px}
+.meta span{font-size:17px;color:var(--muted);white-space:nowrap}.meta strong{font-weight:600}
+.canvas{display:grid;direction:ltr;grid-template-columns:repeat(10,1fr);grid-template-rows:1fr 1fr .8fr;border:2px solid var(--ink);border-radius:14px;overflow:hidden;background:var(--line);gap:2px}
+.cell{direction:rtl;background:#fff;padding:23px 24px;display:flex;flex-direction:column;min-width:0;overflow:hidden}
+.partners{grid-column:1/3;grid-row:1/3}.activities{grid-column:3/5;grid-row:1}.resources{grid-column:3/5;grid-row:2}.value{grid-column:5/7;grid-row:1/3;background:#fdf8ed}.relationships{grid-column:7/9;grid-row:1}.channels{grid-column:7/9;grid-row:2}.customers{grid-column:9/11;grid-row:1/3}.costs{grid-column:1/6;grid-row:3;background:#fafcf8}.revenue{grid-column:6/11;grid-row:3;background:#fffaf1}
+.cell-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:20px}
+h2{font-size:25px;line-height:1.45;margin:0;font-weight:750}.en{display:block;font-size:15px;font-weight:400;color:var(--muted);direction:ltr;text-align:right;line-height:1.6;margin-top:3px}
+.num{flex-shrink:0;display:grid;place-items:center;direction:ltr;width:34px;height:34px;border:1px solid #ccd7cc;border-radius:50%;font-size:16px;color:var(--muted)}
+ul{margin:0;padding:0 20px 0 0;font-size:23px;line-height:1.7}li{padding-inline-start:2px;margin:0 0 12px}li::marker{color:#b1844f}
+.small-note{font-size:18px;line-height:1.65;color:var(--muted);margin:16px 0 0}
+.bottom-note{margin-top:auto;padding-top:20px}
+.note{background:var(--cream);border-right:4px solid var(--gold);border-radius:8px;padding:18px 20px;margin-bottom:18px;font-size:25px;line-height:1.65;font-weight:600}
+.value ul{font-size:22px;line-height:1.7}.value li{margin-bottom:12px}
+.tag{display:inline-block;font-size:17px;padding:4px 12px;background:var(--sage);border-radius:20px;color:var(--ink);font-weight:600;margin-bottom:8px}
+.segment{border:1px solid #d7dfd5;border-radius:10px;padding:14px 16px;margin-bottom:14px;background:#fbfcf9;font-size:23px;line-height:1.6}.segment p{margin:0}.segment .detail{font-size:19px;color:var(--muted);line-height:1.65;margin-top:5px}
+.costs .cell-head,.revenue .cell-head{margin-bottom:13px}
+.costs ul{display:grid;grid-template-columns:1fr 1fr;gap:5px 35px;font-size:22px;padding-right:22px}.costs li{margin-bottom:6px}
+.prices{display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:16px;align-items:stretch}
+.price{background:white;border:1px solid #ead4b6;border-radius:10px;padding:12px 18px;font-size:20px;line-height:1.6}.price-title{font-size:20px;font-weight:650}.amount{font-size:32px;font-weight:800;line-height:1.5}.amount small{font-size:17px;font-weight:500}.price-detail{font-size:17px;color:var(--muted)}
+.revenue .small-note{margin-top:9px;font-size:16px}
+.footer{display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:16px;line-height:1.65;color:var(--muted)}.footer .framework{direction:ltr;text-align:left;font-size:14px;max-width:650px}.footer a{color:inherit;text-decoration:none}
+@page{size:A3 landscape;margin:0}
+@media print{html,body{background:white;width:420mm;height:297mm;overflow:hidden}.sheet{zoom:.7937007874;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<main class="sheet" aria-label="لوحة نموذج العمل لورشتك">
+ <header class="header">
+  <div><h1>لوحة نموذج العمل</h1><p class="subtitle">BUSINESS MODEL CANVAS</p></div>
+  <div class="brand"><div class="brand-mark" aria-hidden="true"><svg width="46" height="46" viewBox="0 0 48 48" fill="none"><path d="M8 9h32v24H23L13 41v-8H8V9Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M15 17h18M15 24h13" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div><div><div class="brand-name">ورشتك</div><div class="brand-en">WARSHATAK</div></div></div>
+ </header>
+ <div class="meta">
+  <div><span>مصمّم لـ</span><strong>ورشتك | Warshatak</strong></div>
+  <div><span>السوق الأول</span><strong>السعودية</strong></div>
+  <div><span>التاريخ</span><strong>٣ نوفمبر ٢٠٢٦</strong></div>
+  <div><span>الإصدار</span><strong>١.٠ — مسودة</strong></div>
+ </div>
+ <section class="canvas" aria-label="الخانات التسع لنموذج العمل">
+  <section class="cell partners"><div class="cell-head"><h2>الشركاء الرئيسيون<span class="en">Key Partners</span></h2><span class="num">01</span></div>
+   <ul><li>ورش تجريبية وفنيون لمراجعة الحالات.</li><li>أصحاب المقاطع والمراجع المصرّح باستخدامها.</li><li>مزودو الاستضافة وخدمات الذكاء الاصطناعي.</li><li>مزود دفع إلكتروني عند إطلاق الباقات.</li></ul>
+   <p class="small-note bottom-note">شركاء مستهدفون؛ لا نفترض وجود اتفاقيات قائمة.</p>
+  </section>
+  <section class="cell activities"><div class="cell-head"><h2>الأنشطة الرئيسية<span class="en">Key Activities</span></h2><span class="num">02</span></div>
+   <ul><li>تنظيم وصف المشكلة والمرفقات.</li><li>تطوير تجربة عربية واضحة.</li><li>مراجعة الجودة مع الفنيين.</li><li>ضبط تكلفة الخدمة وموثوقيتها.</li></ul>
+  </section>
+  <section class="cell resources"><div class="cell-head"><h2>الموارد الرئيسية<span class="en">Key Resources</span></h2><span class="num">03</span></div>
+   <ul><li>الموقع وقاعدة الإرشادات.</li><li>مراجع صوتية ذات إذن استخدام.</li><li>مصطلحات سعودية وخبرة فنية.</li><li>تقييم مستقل قبل ادعاء الدقة.</li></ul>
+  </section>
+  <section class="cell value"><div class="cell-head"><h2>القيمة المقترحة<span class="en">Value Propositions</span></h2><span class="num">04</span></div>
+   <div class="note">وضوح أكثر قبل زيارة الورشة.</div>
+   <ul><li>مساعدة السائق على وصف المشكلة بسهولة.</li><li>جمع النص والمقطع وبيانات السيارة في سياق واحد.</li><li>عرض احتمالات وخطوات فحص مفهومة مع مصادر.</li><li>تجهيز ملخص يساعد الورشة قبل الفحص.</li><li>واجهة عربية مناسبة للاستخدام السعودي، مع دعم الإنجليزية.</li></ul>
+   <p class="small-note bottom-note">إرشاد أولي؛ يلزم فحص فني.</p>
+  </section>
+  <section class="cell relationships"><div class="cell-head"><h2>علاقات العملاء<span class="en">Customer Relationships</span></h2><span class="num">05</span></div>
+   <ul><li>خدمة ذاتية سهلة للسائق.</li><li>تهيئة ودعم للورش المشتركة.</li><li>استقبال الملاحظات وتحسين التجربة.</li><li>نتائج مفهومة وحدود واضحة.</li></ul>
+  </section>
+  <section class="cell channels"><div class="cell-head"><h2>قنوات الوصول<span class="en">Channels</span></h2><span class="num">06</span></div>
+   <ul><li>روابط وQR لاستقبال الحالات.</li><li>عروض وتجارب مباشرة للورش.</li><li>محتوى تعليمي عربي بالشبكات.</li><li>إحالات العملاء بموافقتهم.</li></ul>
+  </section>
+  <section class="cell customers"><div class="cell-head"><h2>شرائح العملاء<span class="en">Customer Segments</span></h2><span class="num">07</span></div>
+   <div class="segment"><span class="tag">العميل الأساسي</span><p>الورش المستقلة في السعودية</p><p class="detail">استقبال شكوى أوضح قبل فحص السيارة.</p></div>
+   <div class="segment"><span class="tag">العميل الثانوي</span><p>السائقون قبل زيارة الورشة</p><p class="detail">فهم الخطوة التالية وتجهيز وصف مفيد للمشكلة.</p></div>
+   <div class="segment"><span class="tag">توسع لاحق</span><p>الأساطيل الصغيرة</p><p class="detail">بعد اختبار احتياجاتها وصلاحيات الوصول.</p></div>
+  </section>
+  <section class="cell costs"><div class="cell-head"><h2>هيكل التكاليف<span class="en">Cost Structure</span></h2><span class="num">08</span></div>
+   <ul><li>خدمات النماذج ومعالجة الوسائط.</li><li>الاستضافة والتخزين والمراقبة.</li><li>التطوير ودعم العملاء والتسويق.</li><li>الدفع الإلكتروني وحقوق المحتوى والمراجعة.</li></ul>
+   <p class="small-note">تُقاس تكلفة الحالة الفعلية قبل اعتماد الأسعار أو توسيع الخدمة.</p>
+  </section>
+  <section class="cell revenue"><div class="cell-head"><h2>مصادر الإيرادات المقترحة<span class="en">Revenue Streams</span></h2><span class="num">09</span></div>
+   <div class="prices"><div class="price"><div class="price-title">تجربة تعريفية</div><div class="amount">مجانًا</div><div class="price-detail">إرشادات وتجربة المراجع</div></div><div class="price"><div class="price-title">حالة للسائق</div><div class="amount"><bdi>12</bdi> <small>ريالًا / حالة</small></div><div class="price-detail">مرفق ومتابعتان نصيتان</div></div><div class="price"><div class="price-title">اشتراك الورشة</div><div class="amount"><bdi>399</bdi> <small>ريالًا / شهر</small></div><div class="price-detail">حسابان للموظفين و60 حالة</div></div></div>
+   <p class="small-note">أسعار تجريبية غير مفعّلة، قبل الضريبة؛ يلزم اختبار الاستعداد للدفع وتكلفة الاستخدام.</p>
+  </section>
+ </section>
+ <footer class="footer"><div>مسودة تخطيطية: الأسعار والشراكات افتراضات، وليست نتائج تجارية أو دقة تشخيص مثبتة.</div><div class="framework">Framework: <a href="https://www.strategyzer.com/">The Business Model Canvas · Strategyzer AG</a><br>Adapted for Warshatak · CC BY-SA 3.0 · Content based on BUSINESS_MODEL.md</div></footer>
+</main>
+</body>
+</html>
