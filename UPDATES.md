@@ -6,6 +6,10 @@
 
 This log documents the work visible in our development conversation and GitHub repository. It distinguishes **implemented in source**, **locally reported working**, and **not yet implemented/tested**. It is a retrospective summary, not a claim that every feature has been fully tested in production.
 
+## November 3, 2026 — Single-screen intro
+
+Replaced the multi-scene intro and start gate with one silent logo/name/tagline screen that opens automatically and fades into the chat in 2.4 seconds. Retained skip, keyboard exit, language, replay and existing first-visit preferences; reduced motion uses a shorter static welcome. Removed unused scene/caption/particle markup and CSS. No voice, data or provider configuration changes.
+
 ## November 3, 2026 — V2 garage, voice timing and audio evidence
 
 Implemented a narrow vehicle dropdown, per-vehicle searchable conversation history, additive meaningful titles/renaming and one overflow control per thread. Existing IDs, messages and IndexedDB media links are preserved; deletion still confirms. Added a copyable problem summary separating reported symptoms, automatic transcripts, model possibilities, uncertain audio observations and absent confirmed mechanical findings. Users can skip clarification and request a summary.
