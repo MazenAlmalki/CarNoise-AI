@@ -27,3 +27,16 @@ export function createReplyDelivery({
     release,
   };
 }
+
+// Presentation pacing only. Never describe this pause as additional inference.
+export async function waitForReplyPreparation({startedAt,signal,urgent=false,onWait=()=>{}}){
+ if(signal?.aborted)throw new DOMException('Request cancelled','AbortError');
+ const remaining=urgent?0:Math.max(0,1400-(performance.now()-startedAt));
+ if(!remaining)return;
+ onWait();
+ await new Promise((resolve,reject)=>{
+  const cancel=()=>{clearTimeout(timer);signal?.removeEventListener('abort',cancel);reject(new DOMException('Request cancelled','AbortError'));};
+  const timer=setTimeout(()=>{signal?.removeEventListener('abort',cancel);resolve();},remaining);
+  signal?.addEventListener('abort',cancel,{once:true});
+ });
+}

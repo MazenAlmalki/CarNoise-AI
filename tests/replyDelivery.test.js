@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createReplyDelivery } from "../public/reply-delivery.js";
+import { createReplyDelivery, waitForReplyPreparation } from "../public/reply-delivery.js";
 test("reply stays pending until actual playback callback releases it; history text is never modified", () => {
   const released = [],
     message = { content: "Complete reply" },
@@ -40,4 +40,15 @@ test("slow speech releases text once and cancels the delayed voice through fallb
   assert.equal(slow, 1);
   gate.release(message);
   assert.equal(releases, 1);
+});
+
+test('cancelling preparation rejects immediately instead of releasing a stale reply',async()=>{
+ const controller=new AbortController();let displayed=false;
+ const pending=waitForReplyPreparation({startedAt:performance.now(),signal:controller.signal,onWait:()=>displayed=true});
+ assert.equal(displayed,true);controller.abort();await assert.rejects(pending,{name:'AbortError'});
+});
+test('safety replies and already-slow responses receive no extra presentation pause',async()=>{
+ for(const args of [{startedAt:performance.now(),urgent:true},{startedAt:performance.now()-3000}]){
+  let displayed=false;await waitForReplyPreparation({...args,onWait:()=>displayed=true});assert.equal(displayed,false);
+ }
 });

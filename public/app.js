@@ -1,6 +1,6 @@
 import {renderSoundResult} from './sound-result.js';
 import {validateMedia,MEDIA_ACCEPT} from './media-formats.js';
-import {createReplyDelivery} from './reply-delivery.js';
+import {createReplyDelivery,waitForReplyPreparation} from './reply-delivery.js';
 import {renderReferenceExample} from './reference-example.js';
 import {createCinematicIntro} from './cinematic-intro.js';
 import {createVoice} from './voice.js';
@@ -502,6 +502,7 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
    body:JSON.stringify({message,resultFormat:'compact',mediaAttachedThisTurn:mediaRequestedThisTurn,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar()),year:selectedCar()?.year||null},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification,offeredReferenceIds:active.messages.filter(m=>m.referenceExample).map(m=>m.referenceExample.id).slice(-100)})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
+  await waitForReplyPreparation({startedAt:turnStarted,signal:controller.signal,urgent:data.problemSummary?.urgent===true||Boolean(data.resultCard?.safety),onWait:()=>setLoading('preparation')});
   if(['ar','en'].includes(data.responseLanguage))active.lang=data.responseLanguage;
   active.evidenceConflicts=Array.isArray(data.evidenceConflicts)?data.evidenceConflicts:[];
   active.problemSummary=data.problemSummary||null;active.timings={chat:data.timings||null,media:active.mediaAnalysis?.timings||null};
@@ -1000,7 +1001,7 @@ $('confirmDialog').querySelector('form').addEventListener('submit',event=>{
 function setLoading(phase,percent=null){
  clearTimeout(loadingTimer);
  const ar=state.lang==='ar';
- $('typingLabel').textContent=phase==='media'?(ar?'جاري رفع المرفق…':'Uploading attachment…')+(Number.isFinite(percent)?' '+percent+'%':''):phase==='analysis'?(ar?'وصل المرفق، جاري تحليله…':'Attachment uploaded; analyzing…'):t('analyzing');
+ $('typingLabel').textContent=phase==='preparation'?(ar?'جاري تجهيز الرد…':'Preparing your reply…'):phase==='media'?(ar?'جاري رفع المرفق…':'Uploading attachment…')+(Number.isFinite(percent)?' '+percent+'%':''):phase==='analysis'?(ar?'وصل المرفق، جاري تحليله…':'Attachment uploaded; analyzing…'):t('analyzing');
  loadingTimer=setTimeout(()=>{if(!$('busy').classList.contains('hidden'))$('typingLabel').textContent=ar?'الطلب ما زال قيد الانتظار. تقدر تلغيه وتحاول مرة ثانية.':'Still waiting for this request. You can cancel and try again.';},15000);
 }
 $('cancelRequest').onclick=()=>requestController?.abort();

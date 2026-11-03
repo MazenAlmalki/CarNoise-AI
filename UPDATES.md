@@ -428,3 +428,7 @@ Registered hashes and decoded PCM identities for the four actual supplied MP4s, 
 ### Fix known original uploads when FFmpeg is unavailable
 
 The reuploaded belt clip exactly matched the registered file hash. The prior PCM-only path reproduced the reported failure when FFmpeg was absent. Exact registered source-file identity now runs before decoder/temp/provider work, with method-bound proof and accurate file-identity wording. Decoded PCM identity remains an optional fallback. All four actual uploads passed the real browser flow with FFmpeg deliberately unavailable; 170 Node tests and syntax checks passed. No arbitrary new sound is labeled from its filename.
+
+### Brief reply preparation pause
+
+Fast replies now keep the preparation state visible until about 1.4 seconds from Send, before text presentation or automatic read-aloud starts. The label is “Preparing your reply / جاري تجهيز الرد”, not a claim of extra inference. Already-slow responses receive no extra wait; urgent safety responses bypass it. Cancellation/navigation aborts the pause and cannot release a stale reply. Voice preferences and the no-automatic-paid-TTS rule for known-recording cards remain unchanged. Syntax checks and 172 Node tests passed; the browser speech-synchronization suite passed with mocked TTS and real playback.
