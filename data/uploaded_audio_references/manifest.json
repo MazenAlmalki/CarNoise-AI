@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "provenance": "Two user-supplied educational videos; compare raw reference audio, do not treat titles as verified diagnoses.",
   "records": [
     {
@@ -22,6 +22,31 @@
         "duration_seconds": 2.5,
         "rms_dbfs": -19.46,
         "peak_dbfs": -5.71
+      },
+      "reported_problem": {
+        "ar": "بطة السير",
+        "en": "Accessory belt pulley (uploader label)",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -44,6 +69,31 @@
         "duration_seconds": 2.5,
         "rms_dbfs": -14.42,
         "peak_dbfs": -5.93
+      },
+      "reported_problem": {
+        "ar": "القماشات",
+        "en": "Brake pads",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -66,6 +116,31 @@
         "duration_seconds": 2.2,
         "rms_dbfs": -23.12,
         "peak_dbfs": -4.3
+      },
+      "reported_problem": {
+        "ar": "صليبة العكس",
+        "en": "Driveshaft universal joint",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -88,6 +163,31 @@
         "duration_seconds": 2.4,
         "rms_dbfs": -20.72,
         "peak_dbfs": -3.77
+      },
+      "reported_problem": {
+        "ar": "البالات",
+        "en": "Valvetrain (uploader terminology)",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -110,6 +210,31 @@
         "duration_seconds": 2.3,
         "rms_dbfs": -23.75,
         "peak_dbfs": -5.9
+      },
+      "reported_problem": {
+        "ar": "طرمبة الماء",
+        "en": "Water pump",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -132,6 +257,31 @@
         "duration_seconds": 2.3,
         "rms_dbfs": -16.93,
         "peak_dbfs": -4.81
+      },
+      "reported_problem": {
+        "ar": "السلف",
+        "en": "Starter motor",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -154,6 +304,31 @@
         "duration_seconds": 2.5,
         "rms_dbfs": -21.76,
         "peak_dbfs": -5.78
+      },
+      "reported_problem": {
+        "ar": "جوزة المقصات",
+        "en": "Suspension ball joint",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -176,6 +351,31 @@
         "duration_seconds": 2.7,
         "rms_dbfs": -27.84,
         "peak_dbfs": -4.51
+      },
+      "reported_problem": {
+        "ar": "البطارية",
+        "en": "Battery",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -198,6 +398,31 @@
         "duration_seconds": 1.8,
         "rms_dbfs": -32.08,
         "peak_dbfs": -8.04
+      },
+      "reported_problem": {
+        "ar": "ربلة كرسي المساعد",
+        "en": "Strut mount rubber",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -220,6 +445,31 @@
         "duration_seconds": 1.8,
         "rms_dbfs": -14.74,
         "peak_dbfs": -7.93
+      },
+      "reported_problem": {
+        "ar": "ربلة المساعد",
+        "en": "Shock absorber bushing",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -242,6 +492,31 @@
         "duration_seconds": 1.9,
         "rms_dbfs": -25.32,
         "peak_dbfs": -10.53
+      },
+      "reported_problem": {
+        "ar": "مروحة التبريد",
+        "en": "Cooling fan",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -264,6 +539,31 @@
         "duration_seconds": 2.0,
         "rms_dbfs": -21.69,
         "peak_dbfs": -7.8
+      },
+      "reported_problem": {
+        "ar": "بيرنج الدينمو",
+        "en": "Alternator bearing",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -286,6 +586,31 @@
         "duration_seconds": 2.0,
         "rms_dbfs": -17.46,
         "peak_dbfs": -8.9
+      },
+      "reported_problem": {
+        "ar": "كرسي المكينة",
+        "en": "Engine mount",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -308,6 +633,31 @@
         "duration_seconds": 2.0,
         "rms_dbfs": -23.81,
         "peak_dbfs": -10.13
+      },
+      "reported_problem": {
+        "ar": "سير التيمت",
+        "en": "Timing drive (uploader terminology)",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     },
     {
@@ -330,6 +680,31 @@
         "duration_seconds": 2.0,
         "rms_dbfs": -19.99,
         "peak_dbfs": -6.23
+      },
+      "reported_problem": {
+        "ar": "علبة السكان",
+        "en": "Power steering unit (uploader terminology)",
+        "verification_status": "unverified_suspected_fault",
+        "provenance": "uploader_on_screen_title_manually_read"
+      },
+      "acoustics": {
+        "reviewed_category": null,
+        "review_status": "pending_independent_audio_review",
+        "observations": [],
+        "speech_present": null,
+        "music_present": null
+      },
+      "source_group_sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "split": "reference_only",
+      "recording_conditions": {
+        "vehicle": null,
+        "year": null,
+        "operating_condition": null,
+        "microphone_position": null
+      },
+      "usage_permission": {
+        "basis": "user_submitted_for_analysis_in_this_project",
+        "redistribution_license": null
       }
     }
   ]

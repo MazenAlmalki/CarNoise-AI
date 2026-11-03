@@ -7,6 +7,7 @@ import { analyzeWaveform } from './audioWaveform.js';
 import { describeVehicleImages } from './llamaVision.js';
 import { audioProviderConfiguration, describeAudioWithReferences } from './geminiAudio.js';
 import { speechFallbackConfiguration, transcribeWithGroq } from './speechFallback.js';
+import { createTimings } from './timings.js';
 
 const maxStdout=20_000;
 async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
@@ -69,10 +70,13 @@ async function audioExcerpt(source,temp,seconds,env){
 // Normalize a bounded excerpt locally; only the extracted audio reaches Gemini.
 async function analyzeAudioTrack(source,temp,language,options){
  const env=options.env||process.env;
+ const timing=createTimings();
  const warnings=[];
  let waveform=null,audio=null,transcription=null,audioObservation=null,excerpt=null;
  const speechTranscriptionAnalysis={attempted:false,provider:'none',succeeded:false};
- try{waveform=await analyzeWaveform(source);}catch(error){warnings.push('Audio waveform unavailable: '+String(error.message).slice(0,140));}
+ // Signal inspection and provider preparation are independent. Both settle
+ // before temporary files are removed; failure in one cannot lose the other.
+ const waveformWork=timing.measure('waveform',()=>analyzeWaveform(source,{ffmpeg:env.FFMPEG_PATH})).then(value=>{waveform=value;},error=>{warnings.push('Audio waveform unavailable: '+String(error.message).slice(0,140));});
  let config;
  try{config=audioProviderConfiguration(env);}catch(error){warnings.push(error.message);}
  const audioEventAnalysis={attempted:false,provider:config?.provider||'invalid',model:config?.provider==='gemini'?config.model:'CLAP',succeeded:false};
@@ -80,8 +84,8 @@ async function analyzeAudioTrack(source,temp,language,options){
   audioEventAnalysis.attempted=true;
   try{
    if(!config.configured)throw Error('Gemini audio: set GEMINI_API_KEY in your server .env and restart the server.');
-   excerpt=await audioExcerpt(source,temp,config.excerptLimitSeconds,env);
-   const result=await describeAudioWithReferences(excerpt,language,options);
+   excerpt=await timing.measure('normalize',()=>audioExcerpt(source,temp,config.excerptLimitSeconds,env));
+   const result=await timing.measure('audioProvider',()=>describeAudioWithReferences(excerpt,language,options));
    audioObservation=result.observation;transcription=result.transcription;audioEventAnalysis.succeeded=true;
    if(config.referenceAudioEnabled)warnings.push('Bundled user-supplied reference audio excerpts were also sent to Gemini for comparison; resemblance is not a confirmed mechanical fault.');
    warnings.push('Only the first '+config.excerptLimitSeconds+' seconds at most were sent to Gemini. Hosted observations and transcripts may be wrong; no mechanical fault is confirmed.');
@@ -91,11 +95,11 @@ async function analyzeAudioTrack(source,temp,language,options){
   }
  }else{
   if(env.ENABLE_SPEECH_TRANSCRIPTION==='1'){
-   try{speechTranscriptionAnalysis.attempted=true;speechTranscriptionAnalysis.provider='local';transcription=await speechTranscription(source,language,env);speechTranscriptionAnalysis.succeeded=Boolean(transcription);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
+    try{speechTranscriptionAnalysis.attempted=true;speechTranscriptionAnalysis.provider='local';transcription=await timing.measure('transcription',()=>speechTranscription(source,language,env));speechTranscriptionAnalysis.succeeded=Boolean(transcription);}catch(error){warnings.push('Speech transcription unavailable: '+String(error.message).slice(0,140));}
   }else warnings.push('Speech was not transcribed. Optional Whisper is disabled.');
   if(config?.provider==='local'&&env.ENABLE_AUDIO_CLAP==='1'){
    audioEventAnalysis.attempted=true;
-   try{audio=await audioSimilarity(source);audioEventAnalysis.succeeded=true;}
+   try{audio=await timing.measure('clap',()=>audioSimilarity(source));audioEventAnalysis.succeeded=true;}
    catch(error){warnings.push('Optional CLAP unavailable: '+String(error.message).slice(0,140));}
   }else warnings.push('Sound-event classification is not configured; waveform metrics alone cannot identify sounds.');
  }
@@ -111,14 +115,15 @@ async function analyzeAudioTrack(source,temp,language,options){
     speechTranscriptionAnalysis.attempted=true;speechTranscriptionAnalysis.provider=fallback.provider;
     if(!fallback.configured)throw Error('Speech transcription is not configured. Check SPEECH_FALLBACK and its credentials/dependencies.');
     if(fallback.provider==='groq'){
-     excerpt=excerpt||await audioExcerpt(source,temp,config?.excerptLimitSeconds||30,env);
-     transcription=await transcribeWithGroq(excerpt,options);
-    }else transcription=await speechTranscription(source,language,env);
+     excerpt=excerpt||await timing.measure('normalize',()=>audioExcerpt(source,temp,config?.excerptLimitSeconds||30,env));
+     transcription=await timing.measure('transcriptionFallback',()=>transcribeWithGroq(excerpt,options));
+    }else transcription=await timing.measure('transcriptionFallback',()=>speechTranscription(source,language,env));
     speechTranscriptionAnalysis.succeeded=Boolean(transcription);
    }
   }catch(error){warnings.push('Speech fallback unavailable: '+String(error.message).slice(0,240));}
  }
- return {audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings};
+ await waveformWork;
+ return {audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings,timings:timing.snapshot()};
 }
 export async function analyzeUploadedMedia(file,language='ar',options={}){
  const extension=fileExtension(file.mimetype);
@@ -133,10 +138,15 @@ export async function analyzeUploadedMedia(file,language='ar',options={}){
    return {type:'image',visual:observed,summary:observed.description,limitations:'Image is a visual observation, NOT a mechanical diagnosis.'};
   }
   if(file.mimetype.startsWith('video/')){
-   const track=await analyzeAudioTrack(source,temp,language,options);
-   let visual=null;
-   try{visual=await describeVehicleImages((await videoFrames(source,temp)).map(base64=>({mimeType:'image/jpeg',base64})),language,options);}
-   catch(error){track.warnings.push('Video frames could not be analyzed: '+String(error.message).slice(0,180));}
+   // Audio and sampled frames do not depend on each other. Observe both results.
+   const visualTiming=createTimings();
+   const [track,frameResult]=await Promise.all([
+    analyzeAudioTrack(source,temp,language,options),
+    visualTiming.measure('videoVision',async()=>describeVehicleImages((await videoFrames(source,temp)).map(base64=>({mimeType:'image/jpeg',base64})),language,options)).then(visual=>({visual}),error=>({error}))
+   ]);
+   const visual=frameResult.visual||null;
+   if(frameResult.error)track.warnings.push('Video frames could not be analyzed: '+String(frameResult.error.message).slice(0,180));
+   track.timings={totalMs:visualTiming.snapshot().totalMs,stages:{...track.timings.stages,...visualTiming.snapshot().stages}};
    if(!visual&&!track.audio&&!track.audioObservation&&!track.waveform&&!track.transcription?.hasRecognizedSpeech)throw Error(track.warnings.join(' | '));
    return {type:'video',...track,visual,limitations:'Audio observations/transcripts can be incorrect, sampled frames describe only visible pixels, and waveform features identify no sound source. None confirms a mechanical fault.'};
   }

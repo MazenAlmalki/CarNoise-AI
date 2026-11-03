@@ -71,21 +71,11 @@ body {
   min-width: 36px;
   min-height: 36px;
 }
-.car-row {
-  padding: 15px 10px;
-  gap: 12px;
-}
-.car-name {
-  font-size: 14px;
-}
 .car-symbol {
   width: 40px;
   height: 40px;
   background: var(--panel);
   border-color: var(--border);
-}
-.car-row.active {
-  color: var(--text);
 }
 .history-row {
   padding: 12px 10px;
@@ -751,9 +741,6 @@ body[data-assistant-state="recording"] .mechanic-hero {
   .brand {
     margin-bottom: 30px;
   }
-  .car-name {
-    font-size: 14px;
-  }
   .topbar {
     height: 74px;
     margin-inline: 18px;
@@ -1053,56 +1040,12 @@ body {
   margin-bottom: 6px;
   border-radius: 12px;
 }
-.car-row {
-  flex: 1;
-  min-width: 0;
-  margin: 0;
-  padding: 10px;
-  min-height: 58px;
-  border: 1px solid transparent;
-  border-radius: 12px;
-  gap: 10px;
-  background: transparent;
-}
-.car-row.active {
-  background: var(--surface);
-  border-color: var(--border);
-  box-shadow: none;
-}
-.car-row.active::after {
-  content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-}
-.car-row.active::before {
-  display: none;
-}
 .car-symbol {
   width: 32px;
   height: 32px;
   border: 0;
   background: var(--panel2);
   border-radius: 9px;
-}
-.vehicle-copy {
-  display: grid;
-  min-width: 0;
-  text-align: start;
-  flex: 1;
-  gap: 2px;
-}
-.car-name {
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  font-size: 13px;
-}
-.vehicle-copy small {
-  color: var(--muted);
-  font-size: 11px;
 }
 .vehicle-menu {
   flex-shrink: 0;
@@ -1168,13 +1111,6 @@ body {
 .history-date {
   font-size: 10px;
   opacity: 0.8;
-}
-.history-item .delete-action {
-  opacity: 0.4;
-}
-.history-item:hover .delete-action,
-.history-item:focus-within .delete-action {
-  opacity: 1;
 }
 .side-bottom {
   padding-top: 16px;
@@ -1753,7 +1689,6 @@ body:has(#intro:not(.hidden)) .assistant-dock {
 .vehicle-item { flex-wrap:wrap; }
 .vehicle-menu[open] { flex-basis:100%; order:2; }
 .vehicle-menu[open] > summary { position:absolute; inset-inline-end:0; top:0; }
-.vehicle-item:has(.vehicle-menu[open]) .car-row { margin-inline-end:26px; }
 .vehicle-actions { position:static; display:flex; gap:4px; flex-wrap:wrap; min-width:0; box-shadow:none; }
 .vehicle-actions button { width:auto; flex:1; font-size:11px; }
 /* Keep the speaker visible beside the conversation on phones and desktop. */

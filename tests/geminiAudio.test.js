@@ -90,6 +90,7 @@ test('Gemini failure retains waveform fallback and never reports successful audi
  const bytes=wav();const result=await analyzeUploadedMedia({mimetype:'audio/wav',size:bytes.length,buffer:bytes},'en',{env,fetchImpl:async()=>({ok:false,status:429})});
  assert.equal(result.waveform.ok,true);assert.equal(result.audioObservation,null);
  assert.equal(result.audioEventAnalysis.attempted,true);assert.equal(result.audioEventAnalysis.succeeded,false);
+ assert.equal(result.timings.stages.audioProvider.status,'error');assert.equal(result.timings.stages.waveform.status,'ok');assert.ok(result.timings.stages.audioProvider.ms>=0);
  assert.match(result.warnings.join(' '),/Gemini.*quota/);assert.equal(hasHostedAudioEvidence(result),false);
 });
 

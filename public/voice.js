@@ -38,6 +38,9 @@ export function createVoice({
   let status = "idle",
     startTimer = null,
     mouthTimer = null;
+  let speechStarted = 0,
+    activeTurnStarted = null,
+    lastTimings = {};
   const segments = (text) =>
     String(text)
       .replace(/[*#`]/g, "")
@@ -192,6 +195,38 @@ export function createVoice({
     return n;
   }
   function setStatus(next) {
+    if (
+      next === "speaking" &&
+      speechStarted &&
+      lastTimings.firstPlaybackMs == null
+    ) {
+      lastTimings.firstPlaybackMs = Math.round(
+        performance.now() - speechStarted,
+      );
+      if (
+        performance.getEntriesByName("warshatak:speech-first-playback").length >
+        30
+      )
+        performance.clearMeasures("warshatak:speech-first-playback");
+      performance.measure("warshatak:speech-first-playback", {
+        start: speechStarted,
+        end: performance.now(),
+      });
+      if (Number.isFinite(activeTurnStarted)) {
+        lastTimings.turnToFirstPlaybackMs = Math.round(
+          performance.now() - activeTurnStarted,
+        );
+        if (
+          performance.getEntriesByName("warshatak:turn-to-first-playback")
+            .length > 30
+        )
+          performance.clearMeasures("warshatak:turn-to-first-playback");
+        performance.measure("warshatak:turn-to-first-playback", {
+          start: activeTurnStarted,
+          end: performance.now(),
+        });
+      }
+    }
     status = next;
     onState(next);
     const n = container.querySelector("[role=status]");
@@ -233,10 +268,12 @@ export function createVoice({
     setStatus("loading");
     try {
       if (cached?.key === key) {
+        lastTimings.cacheHit = true;
         await speaker.play(cached.blob);
         return;
       }
       request = new AbortController();
+      const requestStarted = performance.now();
       const signal = AbortSignal.any([
         request.signal,
         AbortSignal.timeout(65000),
@@ -263,6 +300,9 @@ export function createVoice({
       }
       const blob = await response.blob();
       if (id !== generation) return;
+      lastTimings.generationAndDownloadMs = Math.round(
+        performance.now() - requestStarted,
+      );
       if (
         !blob.type.startsWith("audio/") ||
         !blob.size ||
@@ -282,12 +322,15 @@ export function createVoice({
         );
     }
   }
-  async function speak(text) {
+  async function speak(text, { turnStarted = null } = {}) {
     text = String(text || "")
       .replace(/[*#`]/g, "")
       .slice(0, 1900);
     if (status === "loading" && activeText === text) return;
     stop();
+    speechStarted = performance.now();
+    activeTurnStarted = turnStarted;
+    lastTimings = { cacheHit: false };
     activeText = text;
     onNotice("");
     if (prefs.muted) {
@@ -612,14 +655,15 @@ export function createVoice({
         else synth?.pause();
       }
     },
-    autoSpeak(text) {
-      if (prefs.auto && !prefs.muted) speak(text);
+    autoSpeak(text, options) {
+      if (prefs.auto && !prefs.muted) speak(text, options);
     },
     getSourceInfo() {
       const natural =
         prefs.engine === "gemini" ||
         (prefs.engine !== "browser" && hosted?.configured === true);
       return {
+        timings: { ...lastTimings },
         provider: natural ? "gemini" : "browser",
         configured: natural ? hosted?.configured === true : supported,
         voice: natural

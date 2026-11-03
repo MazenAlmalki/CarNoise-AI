@@ -1,6 +1,9 @@
 import {createCinematicIntro} from './cinematic-intro.js';
 import {createVoice} from './voice.js';
 import {summarizeQuestionMemory} from './questionMemory.js';
+import {caseTitle,filterCases,buildProblemSummary,summaryText} from './case-tools.js';
+import {createRecordingMeter} from './recording-meter.js';
+import {uploadMedia} from './media-upload.js';
 const $=id=>document.getElementById(id);
 // Shared product copy for the Arabic and English layouts.
 const translations={
@@ -308,9 +311,11 @@ let session=null,questionIndex=0,submitting=false,pendingMedia=null,pendingUrl=n
 let mediaRenderVersion=0;
 let visibleThreadId=null,visibleMessageCount=0;
 let recordingStartedAt=0,recordingClock=null;
+let loadingTimer=null;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
 let cinematicIntro=null;
-let speechState='idle',editingCarId=null,requestController=null,recordingGeneration=0;
+let speechState='idle',editingCarId=null,editingCaseId=null,requestController=null,recordingGeneration=0,successUntil=0,successTimer=null;
+const recordingMeter=createRecordingMeter({onLevel:value=>{$('recordingStatus').style.setProperty('--recording-level',String(value));},onUnavailable:()=>{$('recordingMeter').dataset.unavailable='true';}});
 const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onNotice:message=>{$('speechNotice').textContent=message;$('speechNotice').classList.toggle('hidden',!message);},onMouth:value=>document.body.style.setProperty('--mouth-open',String(value)),onState:value=>{speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
 
 const textNode=(tag,text,cls)=>{const e=document.createElement(tag);e.textContent=text;if(cls)e.className=cls;return e;};
@@ -332,34 +337,46 @@ function dateLabel(iso){return new Date(iso).toLocaleDateString(state.lang==='ar
 function renderSidebar(){
  $('carList').replaceChildren();$('historyList').replaceChildren();
  $('currentCarName').textContent=carName(selectedCar());
- for(const car of state.cars){
+ const select=document.createElement('select');select.id='vehicleSelect';select.className='vehicle-select';select.setAttribute('aria-label',state.lang==='ar'?'السيارة الحالية':'Current vehicle');
+ for(const car of state.cars)select.add(new Option(carName(car)+(car.year?' · '+car.year:''),car.id));
+ select.value=selectedCar().id;select.title=carName(selectedCar());
+ select.onchange=()=>{state.carId=select.value;$('historySearch').value='';persist();newAnalysis();closeNav();};
+ for(const car of [selectedCar()]){
   const row=textNode('div','','vehicle-item');
-  const button=textNode('button','','car-row'+(state.carId===car.id?' active':''));button.type='button';
   const symbol=textNode('span','','car-symbol');symbol.append(icon('car'));
-  button.setAttribute('aria-pressed',String(state.carId===car.id));button.title=carName(car);
-  const copy=textNode('span','','vehicle-copy');copy.append(textNode('span',carName(car),'car-name'));
-  if(car.year)copy.append(textNode('small',String(car.year)));
-  button.append(symbol,copy);button.addEventListener('click',()=>{if(state.carId!==car.id){state.carId=car.id;persist();newAnalysis();}closeNav();});
   const menu=document.createElement('details');menu.className='vehicle-menu';const toggle=textNode('summary','⋯');toggle.setAttribute('aria-label',(state.lang==='ar'?'خيارات ':'Options for ')+carName(car));menu.append(toggle);
   const actions=textNode('div','','vehicle-actions');
-  const rename=textNode('button',state.lang==='ar'?'تعديل الاسم':'Rename');rename.type='button';rename.onclick=()=>{editingCarId=car.id;$('carDialogTitle').textContent=state.lang==='ar'?'تعديل اسم السيارة':'Rename vehicle';$('carName').value=carName(car);menu.open=false;$('carDialog').showModal();};
-  const del=textNode('button',t('deleteCar'));del.type='button';del.onclick=()=>{menu.open=false;deleteVehicle(car.id);};actions.append(rename,del);menu.append(actions);row.append(button,menu);$('carList').append(row);
+  const rename=textNode('button',state.lang==='ar'?'تعديل الاسم':'Rename');rename.type='button';rename.onclick=()=>{editingCaseId=null;editingCarId=car.id;$('carDialogTitle').textContent=state.lang==='ar'?'تعديل اسم السيارة':'Rename vehicle';document.querySelector('label[for="carName"]').textContent=t('vehicleName');$('carName').value=carName(car);menu.open=false;$('carDialog').showModal();};
+  const del=textNode('button',t('deleteCar'));del.type='button';del.onclick=()=>{menu.open=false;deleteVehicle(car.id);};actions.append(rename,del);menu.append(actions);row.append(symbol,select,menu);$('carList').append(row);
  }
- const history=state.cases.filter(c=>c.carId===state.carId).slice().sort((a,b)=>b.createdAt.localeCompare(a.createdAt));
- $('historyCount').textContent=String(history.length);
- if(!history.length)$('historyList').append(textNode('div',t('noHistory'),'empty-side'));
+ $('historySearchLabel').textContent=state.lang==='ar'?'ابحث في محادثات السيارة':'Search this vehicle’s conversations';
+ $('historySearch').placeholder=state.lang==='ar'?'ابحث في المحادثات…':'Search conversations…';
+ renderHistory();
+}
+function renderHistory(){
+ $('historyList').replaceChildren();
+ const history=filterCases(state.cases,state.carId,$('historySearch').value,state.lang);
+ if(!history.length)$('historyList').append(textNode('div',$('historySearch').value?(state.lang==='ar'?'ما فيه محادثة تطابق بحثك.':'No conversations match your search.'):t('noHistory'),'empty-side'));
  for(const entry of history){
   const button=document.createElement('button');button.type='button';button.className='history-row'+(session?.id===entry.id?' active':'');
-  button.append(textNode('span',entry.description.slice(0,45),'history-name'),textNode('span',dateLabel(entry.createdAt),'history-date'));
+  button.title=caseTitle(entry,state.lang);if(session?.id===entry.id)button.setAttribute('aria-current','true');
+  button.append(textNode('span',caseTitle(entry,state.lang),'history-name'),textNode('span',dateLabel(entry.createdAt),'history-date'));
   button.addEventListener('click',()=>{loadCase(entry);closeNav();});
   const row=textNode('div','','history-item');row.append(button);
-  const del=textNode('button','✕','delete-action');del.type='button';del.title=t('deleteCase');del.setAttribute('aria-label',t('deleteCase')+' '+entry.description.slice(0,30));del.addEventListener('click',()=>deleteCase(entry.id));row.append(del);$('historyList').append(row);
+  const menu=document.createElement('details');menu.className='thread-menu';const toggle=textNode('summary','⋯');toggle.setAttribute('aria-label',(state.lang==='ar'?'خيارات المحادثة: ':'Conversation options: ')+caseTitle(entry,state.lang));menu.append(toggle);
+  const actions=textNode('div','','thread-actions');
+  const rename=textNode('button',state.lang==='ar'?'تعديل العنوان':'Rename');rename.type='button';rename.onclick=()=>{editingCarId=null;editingCaseId=entry.id;$('carDialogTitle').textContent=state.lang==='ar'?'عنوان المحادثة':'Conversation title';document.querySelector('label[for="carName"]').textContent=state.lang==='ar'?'العنوان':'Title';$('carName').value=caseTitle(entry,state.lang);menu.open=false;$('carDialog').showModal();};
+  const del=textNode('button',t('deleteCase'));del.type='button';del.onclick=()=>{menu.open=false;deleteCase(entry.id);};actions.append(rename,del);menu.append(actions);row.append(menu);$('historyList').append(row);
  }
 }
 function applySettings(){
  cinematicIntro?.setLanguage(state.lang);
  voice.stop();voice.render();
- const root=document.documentElement;root.lang=state.lang;root.dir=state.lang==='ar'?'rtl':'ltr';root.dataset.theme=state.theme;
+ const root=document.documentElement,themeChanged=root.dataset.theme!==state.theme;
+ // Cross-fading opposite text/background palettes briefly loses contrast.
+ if(themeChanged)root.classList.add('theme-switching');
+ root.lang=state.lang;root.dir=state.lang==='ar'?'rtl':'ltr';root.dataset.theme=state.theme;
+ if(themeChanged)requestAnimationFrame(()=>requestAnimationFrame(()=>root.classList.remove('theme-switching')));
  document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=t(n.dataset.i18n));
  document.querySelectorAll('[data-i18n-html]').forEach(n=>{const key=n.dataset.i18nHtml;if(key==='heroTitle')n.innerHTML=t(key);});
  document.querySelectorAll('[data-i18n-placeholder]').forEach(n=>n.placeholder=t(n.dataset.i18nPlaceholder));
@@ -386,6 +403,7 @@ function addMessage(message,role){
  $('messages').append(wrap);
 }
 function newAnalysis(){
+ successUntil=0;clearTimeout(successTimer);
  discardRecording();voice.stop();requestController?.abort();requestController=null;
  visibleThreadId=null;visibleMessageCount=0;
  session=null;questionIndex=0;submitting=false;$('attachButton').disabled=false;$('recordButton').disabled=false;$('intro').classList.remove('hidden');$('conversation').classList.add('hidden');$('questionBox').classList.add('hidden');$('resultBox').classList.add('hidden');$('busy').classList.add('hidden');$('messages').replaceChildren();$('description').disabled=false;$('sendButton').disabled=false;$('description').value='';showError('');clearPendingMedia();renderSidebar();
@@ -406,8 +424,9 @@ async function startAnalysis(description){
  await sendChat(description.trim());
 }
 
-async function sendChat(text,{audioInterviewAnswer=null}={}){
+async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}={}){
  if(submitting||!session)return;
+ const turnStarted=performance.now();
  voice.stop();const controller=new AbortController();requestController=controller;const deadline=setTimeout(()=>controller.abort(),120000);
  const message=String(text||'').trim();
  if(message.length<2){clearTimeout(deadline);showError(state.lang==='ar'?'اكتب رسالة أطول شوي.':'Please write a longer message.');return;}
@@ -446,8 +465,8 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
      payload.append('media',mediaFile,active.mediaName||'recording');
      payload.append('language',state.lang);
      setLoading('media');
-     const analysisResponse=await fetch('/api/media/analyze',{method:'POST',body:payload,signal:controller.signal});
-     const parsed=await analysisResponse.json();
+     const analysisResponse=await uploadMedia(payload,{signal:controller.signal,onUploaded:()=>{if(requestController===controller)setLoading('analysis');}});
+     const parsed=analysisResponse.body;
      if(!analysisResponse.ok||!parsed.analysis)throw Error(parsed.error||'Media model unavailable');
      mediaInsight=parsed.analysis;
      active.mediaAnalysis=mediaInsight;active.mediaAnalysisError=null;
@@ -462,18 +481,19 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
   if(controller.signal.aborted)throw new DOMException('Request cancelled or timed out.','AbortError');
   setLoading('reply');
   const response=await fetch('/api/chat',{signal:controller.signal,method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer})});
+   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(['ar','en'].includes(data.responseLanguage))active.lang=data.responseLanguage;
+  active.problemSummary=data.problemSummary||null;active.timings={chat:data.timings||null,media:active.mediaAnalysis?.timings||null};
   if(data.audioStatus==='classifier-error'&&data.audioError){
    if(active.mediaAnalysis?.audioEventAnalysis?.provider==='gemini')showError((state.lang==='ar'?'تعذر تحليل الصوت عبر Gemini: ':'Gemini audio analysis failed: ')+String(data.audioError).slice(0,240));
    else showError((state.lang==='ar'?'فشل مودل CLAP: ':'CLAP failed: ')+String(data.audioError).slice(0,170));
   }
   if(!state.cases.some(x=>x.id===active.id))return;
-  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
+  active.messages.push({role:'assistant',content:data.reply.slice(0,1900),canSkipQuestion:data.canSkipQuestion===true,clarificationOptions:Array.isArray(data.clarificationOptions)?data.clarificationOptions.slice(0,10).filter(x=>typeof x.label==='string'&&typeof x.text==='string'):[],audioInterview:data.audioInterview&&typeof data.audioInterview==='object'?data.audioInterview:null,sources:['publisher-knowledge-card','language-model-with-retrieval'].includes(data.grounding)&&Array.isArray(data.knowledgeMatches)?data.knowledgeMatches.slice(0,2).filter(x=>typeof x.source_url==='string'&&x.source_url.startsWith('https://')).map(x=>({url:x.source_url,label:active.lang==='en'?x.symptom_en:x.symptom_ar})):[]});
   persist();
-  if(session?.id===active.id){renderSession();voice.autoSpeak(data.reply);}
+  if(session?.id===active.id){successUntil=performance.now()+1300;clearTimeout(successTimer);successTimer=setTimeout(syncMechanicState,1400);renderSidebar();renderSession();voice.autoSpeak(data.reply,{turnStarted});}
  }catch(error){
   if(state.cases.some(x=>x.id===active.id)){
    // Remove only the failed user turn so it can be retried without duplicated chat context.
@@ -489,6 +509,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
  }finally{
   clearTimeout(deadline);
   if(requestController!==controller)return;
+  clearTimeout(loadingTimer);
   requestController=null;
   submitting=false;$('busy').classList.add('hidden');
   $('sendButton').disabled=false;
@@ -499,7 +520,7 @@ async function sendChat(text,{audioInterviewAnswer=null}={}){
   $('recordButton').disabled=false;
   // Choices rendered during the request were initially disabled. Refresh once
   // the response completes so only the latest choices become interactive.
-  if(session?.id===active.id && active.messages.at(-1)?.clarificationOptions?.length)renderSession();
+  if(session?.id===active.id && (active.messages.at(-1)?.clarificationOptions?.length||active.messages.at(-1)?.canSkipQuestion))renderSession();
  }
 }
 
@@ -529,6 +550,37 @@ function renderAudioClarifications(message,isLatest){
  }
  $('messages').append(wrap);
 }
+function renderProblemSummary(){
+ const summary=buildProblemSummary(session,state.lang);if(!summary)return;
+ summary.vehicle=carName(selectedCar());
+ const card=document.createElement('details');card.className='problem-summary';
+ const heading=textNode('summary',state.lang==='ar'?'ملخص تاخذه معك للفني':'A summary to take to your mechanic');card.append(heading);
+ const body=textNode('div','','problem-summary-body');
+ const ar=state.lang==='ar';
+ const sections=[
+  [ar?'وصفك للمشكلة':'Your symptom notes',summary.symptoms.length?summary.symptoms.join(' / '):(ar?'ما عندنا وصف محدد حتى الآن.':'No specific symptom notes yet.')],
+  [ar?'تقييم المساعد — احتمالات':'Assistant assessment — possibilities',summary.assessment],
+  [ar?'ملاحظات النموذج الصوتية — قد تخطئ':'Model sound observations — may be wrong',summary.evidence.join(' / ')||(ar?'غير متوفرة.':'Unavailable.')],
+  [ar?'ما لم يتأكد':'What remains uncertain',summary.uncertainty.join(' ')],
+  [ar?'نتائج ميكانيكية مؤكدة':'Confirmed mechanical findings',ar?'لا يوجد فحص موثق.':'No documented inspection.'],
+  [ar?'الخطوة الآمنة':'Safe next step',summary.nextStep]
+ ];
+ for(const [title,text] of sections){body.append(textNode('h3',title),textNode('p',text));}
+ if(summary.urgent)body.append(textNode('p',ar?'ظهرت أعراض خطر في وصفك؛ توقف بأمان واطلب المساعدة.':'Danger signs were reported; stop safely and get assistance.','summary-urgent'));
+ const copy=textNode('button',ar?'نسخ الملخص':'Copy summary','summary-copy');copy.type='button';
+ const status=textNode('span','','summary-copy-status');status.setAttribute('role','status');
+ copy.onclick=async()=>{
+  const text=summaryText(summary,state.lang);
+  try{
+   if(!navigator.clipboard?.writeText)throw Error('Clipboard unavailable');
+   await navigator.clipboard.writeText(text);status.textContent=ar?'تم النسخ':'Copied';
+  }catch{
+   // Selectable text remains available on insecure/clipboard-blocked browsers.
+   let fallback=body.querySelector('textarea');if(!fallback){fallback=document.createElement('textarea');fallback.readOnly=true;fallback.rows=8;fallback.setAttribute('aria-label',ar?'انسخ الملخص يدويًا':'Copy summary manually');body.append(fallback);}fallback.value=text;fallback.focus();fallback.select();status.textContent=ar?'حدد النص وانسخه يدويًا':'Select the text and copy it manually';
+  }
+ };
+ body.append(copy,status);card.append(body);$('messages').append(card);
+}
 function renderSession(){
  ++mediaRenderVersion;
  if(!session)return;
@@ -542,6 +594,10 @@ function renderSession(){
    if(index<previousCount)$('messages').lastElementChild.classList.add('message-settled');
    if(msg.role==='assistant'&&Array.isArray(msg.clarificationOptions)){
     renderAudioClarifications(msg,index===session.messages.length-1);
+   }
+   if(msg.role==='assistant'&&index===session.messages.length-1&&(msg.canSkipQuestion||msg.audioInterview&&msg.audioInterview.stage!=='optin')){
+    const skip=textNode('button',state.lang==='ar'?'تخطي السؤال وعرض المتاح':'Skip question and summarize','skip-question');skip.type='button';skip.disabled=submitting;
+    skip.onclick=()=>sendChat(state.lang==='ar'?'تخطّ السؤال ولخّص الاحتمالات بما تعرفه الآن دون أسئلة إضافية.':'Skip this question and summarize the possibilities using what is known, without more questions.',{skipClarification:true});$('messages').append(skip);
    }
    if(msg.role==='assistant'&&Array.isArray(msg.sources)&&msg.sources.length){
     const cited=textNode('div',state.lang==='ar'?'مصادر إرشادية: ':'Reference sources: ','message-sources');
@@ -557,6 +613,7 @@ function renderSession(){
   if(session.mediaId)showSavedMedia(session.mediaId,session.mediaType,session.mediaName);
   if(session.mediaAnalysisError)$('messages').append(textNode('div',(state.lang==='ar'?'تنبيه: المقطع محفوظ، لكن لم يتم تحليله: ':'Notice: saved media was not analyzed: ')+session.mediaAnalysisError,'media-warning'));
   if(session.mediaAnalysis)$('messages').append(textNode('div',state.lang==='ar'?'المرفق محفوظ. ملاحظات النماذج قد تخطئ، وقياسات الصوت الأولية لا تحدد نوعه أو العطل.':'Attachment saved. Model observations may be wrong; waveform metrics alone identify neither the sound nor a fault.','media-warning'));
+  renderProblemSummary();
   $('description').disabled=false;$('sendButton').disabled=Boolean(submitting);
   $('attachButton').disabled=Boolean(submitting);$('recordButton').disabled=Boolean(submitting);
   $('messages').lastElementChild?.scrollIntoView?.({block:'nearest'});
@@ -618,7 +675,7 @@ async function analyze(){
  }catch(e){showError(e.message||t('answerFailed'));const retry=textNode('button',t('retry'),'retry');retry.type='button';retry.addEventListener('click',analyze);$('errorBox').append(document.createElement('br'),retry);}
  finally{submitting=false;$('busy').classList.add('hidden');}
 }
-function loadCase(entry){discardRecording();voice.stop();requestController?.abort();requestController=null;submitting=false;$('busy').classList.add('hidden');visibleThreadId=null;visibleMessageCount=0;clearPendingMedia();session=entry;renderSidebar();showError('');renderSession();}
+function loadCase(entry){successUntil=0;clearTimeout(successTimer);discardRecording();voice.stop();requestController?.abort();requestController=null;submitting=false;$('busy').classList.add('hidden');visibleThreadId=null;visibleMessageCount=0;clearPendingMedia();session=entry;renderSidebar();showError('');renderSession();}
 async function deleteMediaBlob(id){
  const db=await openDb();
  try{await new Promise((resolve,reject)=>{const tx=db.transaction('files','readwrite');tx.objectStore('files').delete(id);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error);});}
@@ -669,7 +726,7 @@ async function deleteSavedMedia(id){
 }
 function openNav(){$('sidebar').inert=false;$('sidebar').classList.add('open');$('overlay').classList.remove('hidden');$('menuButton').setAttribute('aria-expanded','true');document.querySelector('.workspace').inert=true;$('closeSidebar').focus();}
 function closeNav(){const wasOpen=$('sidebar').classList.contains('open');$('sidebar').classList.remove('open');$('overlay').classList.add('hidden');$('menuButton').setAttribute('aria-expanded','false');document.querySelector('.workspace').inert=false;if(wasOpen)$('menuButton').focus();}
-function openCarDialog(){editingCarId=null;$('carName').value='';$('carDialogTitle').textContent=t('addVehicle');$('carDialog').showModal();$('carName').focus();}
+function openCarDialog(){editingCarId=null;editingCaseId=null;$('carName').value='';document.querySelector('label[for="carName"]').textContent=t('vehicleName');$('carDialogTitle').textContent=t('addVehicle');$('carDialog').showModal();$('carName').focus();}
 async function openDb(){
  return new Promise((resolve,reject)=>{
   if(!indexedDB)return reject(new Error('IndexedDB unavailable'));
@@ -755,6 +812,7 @@ function mediaFile(file){
  pendingMedia=file;showError('');showMedia(file);
 }
 function discardRecording(){
+ recordingMeter.stop();
  recordingGeneration++;
  if(recorder){recorder.onstop=null;recorder.ondataavailable=null;if(recorder.state!=='inactive')recorder.stop();recorder=null;}
  mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;recording=false;mediaChunks=[];
@@ -773,6 +831,7 @@ async function recordToggle(){
   const captured=new MediaRecorder(stream),chunks=[];recorder=captured;
   captured.ondataavailable=e=>{if(e.data?.size)chunks.push(e.data);};
   captured.onstop=()=>{
+   recordingMeter.stop();
    stream.getTracks().forEach(track=>track.stop());
    if(generation!==recordingGeneration)return;
    const blob=new Blob(chunks,{type:captured.mimeType||'audio/webm'});const type=blob.type.split(';')[0];
@@ -781,13 +840,14 @@ async function recordToggle(){
    $('recordButton').setAttribute('aria-label',t('recordLabel'));
    $('recordButton').classList.remove('recording');$('recordButton').querySelector('span').textContent=t('record');
   };
-  captured.start();recording=true;startRecordingClock();$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
+  captured.start();recording=true;startRecordingClock();delete $('recordingMeter').dataset.unavailable;void recordingMeter.start(stream);$('recordButton').setAttribute('aria-label',t('stopLabel'));$('recordButton').classList.add('recording');$('recordButton').querySelector('span').textContent=t('stop');
  }catch{if(generation===recordingGeneration){recording=false;stopRecordingClock();showError(t('recordError'));mediaStream?.getTracks().forEach(track=>track.stop());mediaStream=null;}}
  finally{if(generation===recordingGeneration)$('recordButton').disabled=false;}
 }
 $('addCar').addEventListener('click',openCarDialog);
 $('carForm').addEventListener('submit',e=>{
  e.preventDefault();const name=$('carName').value.trim();if(!name)return;
+ if(editingCaseId){const entry=state.cases.find(c=>c.id===editingCaseId);if(entry)entry.title=name;editingCaseId=null;persist();closeWorkshopDialog($('carDialog'));renderSidebar();return;}
  if(editingCarId){const car=state.cars.find(c=>c.id===editingCarId);if(car)car.name=name;editingCarId=null;persist();closeWorkshopDialog($('carDialog'));renderSidebar();return;}
  const car={id:makeId(),name};state.cars.push(car);state.carId=car.id;persist();closeWorkshopDialog($('carDialog'));$('carForm').reset();newAnalysis();closeNav();
 });
@@ -803,6 +863,7 @@ $('description').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey)
 $('attachButton').addEventListener('click',()=>$('mediaInput').click());
 $('mediaInput').addEventListener('change',e=>mediaFile(e.target.files?.[0]));
 $('recordButton').addEventListener('click',recordToggle);
+$('historySearch').addEventListener('input',renderHistory);
 document.querySelectorAll('[data-example]').forEach(button=>button.addEventListener('click',()=>{if(!session&&!submitting)startAnalysis(t('examples')[button.dataset.example]);}));
 applySettings();
 
@@ -816,7 +877,7 @@ document.addEventListener('keydown',event=>{
  if(!$('sidebar').classList.contains('open'))return;
  if(event.key==='Escape'){closeNav();return;}
  if(event.key==='Tab'){
-  const controls=[...$('sidebar').querySelectorAll('a[href],button:not(:disabled)')].filter(node=>node.getClientRects().length);
+  const controls=[...$('sidebar').querySelectorAll('a[href],button:not(:disabled),select,input,summary')].filter(node=>node.getClientRects().length);
   const first=controls[0],last=controls.at(-1);
   if(event.shiftKey&&document.activeElement===first){event.preventDefault();last?.focus();}
   else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
@@ -834,16 +895,16 @@ syncNavigation();
 
 // The mechanic reflects actual interface state; no inferred audio or diagnostic state.
 function syncMechanicState(){
- const pose=recording?'recording':speechState==='speaking'?'speaking':speechState==='loading'?'thinking':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':'welcome';
+ const pose=recording?'recording':speechState==='speaking'?'speaking':speechState==='loading'?'thinking':!$('errorBox').classList.contains('hidden')?'error':!$('busy').classList.contains('hidden')?'thinking':speechState==='idle'&&performance.now()<successUntil?'success':'welcome';
  document.body.dataset.assistantState=pose;
  const labels=state.lang==='ar'?{welcome:'معك، خطوة بخطوة',speaking:'الميكانيكي يتحدث',thinking:'جاري تجهيز الرد',recording:'أسمعك…',error:'جاهز للمساعدة'}:{welcome:'Here for your next mile',speaking:'Mechanic speaking',thinking:'Preparing your reply',recording:'Listening…',error:'Here to help'};
  document.querySelector('.assistant-dock').setAttribute('aria-label',state.lang==='ar'?'تشغيل صوت الشخصية':'Character speech playback');
- $('dockLabel').textContent=speechState==='paused'?(state.lang==='ar'?'القراءة متوقفة مؤقتًا':'Speech paused'):labels[pose];
+ $('dockLabel').textContent=speechState==='paused'?(state.lang==='ar'?'القراءة متوقفة مؤقتًا':'Speech paused'):pose==='success'?(state.lang==='ar'?'الرد جاهز':'Reply ready'):labels[pose];
  $('pauseSpeech').textContent=speechState==='paused'?(state.lang==='ar'?'متابعة':'Resume'):(state.lang==='ar'?'إيقاف مؤقت':'Pause');
  $('stopSpeech').textContent=state.lang==='ar'?'إيقاف':'Stop';
  $('pauseSpeech').disabled=speechState==='loading';
  if(recording){$('sendButton').disabled=true;$('attachButton').disabled=true;}
- document.querySelectorAll('[data-mechanic]').forEach(use=>use.setAttribute('href','/assets/mechanic.svg#'+pose));
+ document.querySelectorAll('[data-mechanic]').forEach(use=>use.setAttribute('href','/assets/mechanic.svg#'+(pose==='success'?'welcome':pose)));
 }
 function updateRecordingClock(){
  const seconds=Math.floor((performance.now()-recordingStartedAt)/1000);
@@ -873,9 +934,15 @@ $('confirmDialog').querySelector('form').addEventListener('submit',event=>{
  event.preventDefault();closeWorkshopDialog($('confirmDialog'),event.submitter?.value||'cancel');
 });
 
-function setLoading(phase){$('typingLabel').textContent=phase==='media'?(state.lang==='ar'?'رفع المرفق وتحليله…':'Uploading and analyzing attachment…'):t('analyzing');}
+function setLoading(phase){
+ clearTimeout(loadingTimer);
+ const ar=state.lang==='ar';
+ $('typingLabel').textContent=phase==='media'?(ar?'جاري رفع المرفق…':'Uploading attachment…'):phase==='analysis'?(ar?'وصل المرفق، جاري تحليله…':'Attachment uploaded; analyzing…'):t('analyzing');
+ loadingTimer=setTimeout(()=>{if(!$('busy').classList.contains('hidden'))$('typingLabel').textContent=ar?'الطلب ما زال قيد الانتظار. تقدر تلغيه وتحاول مرة ثانية.':'Still waiting for this request. You can cancel and try again.';},15000);
+}
 $('cancelRequest').onclick=()=>requestController?.abort();
-document.addEventListener('click',event=>{document.querySelectorAll('.vehicle-menu[open]').forEach(menu=>{if(!menu.contains(event.target))menu.open=false;});});
+document.addEventListener('click',event=>{document.querySelectorAll('.vehicle-menu[open],.thread-menu[open]').forEach(menu=>{if(!menu.contains(event.target))menu.open=false;});});
+document.addEventListener('keydown',event=>{if(event.key==='Escape')document.querySelectorAll('.vehicle-menu[open],.thread-menu[open]').forEach(menu=>{menu.open=false;menu.querySelector('summary').focus();});});
 
 $('pauseSpeech').onclick=()=>voice.togglePause();
 $('stopSpeech').onclick=()=>voice.stop();

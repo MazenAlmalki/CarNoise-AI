@@ -33,6 +33,7 @@ test('real upload processing invokes reference comparison and clear resemblance 
  const [reference]=await loadAudioReferences({});let count=0;
  const result=await analyzeUploadedMedia({mimetype:'audio/wav',size:reference.wav.length,buffer:reference.wav},'ar',{env,fetchImpl:async()=>{count++;return response(observation);}});
  assert.equal(count,1);assert.equal(result.audioEventAnalysis.succeeded,true);assert.equal(result.audioObservation.referenceComparison.matches.length,1);
+ assert.equal(result.timings.stages.waveform.status,'ok');assert.equal(result.timings.stages.normalize.status,'ok');assert.equal(result.timings.stages.audioProvider.status,'ok');assert.ok(result.timings.totalMs>=result.timings.stages.audioProvider.ms);
  const plan=planMinimalQuestions({current:'Analyze the attachment',mediaRequested:true,audioObservation:result.audioObservation});assert.equal(plan.askQuestion,false);
  assert.doesNotMatch(enforceQuestionBudget('A similar reference is available. When does it happen?',plan,{language:'en'}),/\?/);
  const uncertain=planMinimalQuestions({current:'Analyze the attachment',mediaRequested:true,audioObservation:{...result.audioObservation,referenceComparison:{result:'partial',needsClarification:true}}});assert.equal(uncertain.askQuestion,true);
@@ -44,6 +45,12 @@ test('positive vocal imitation stays separate from car-reference matches and nee
  const result=await describeAudioWithReferences(reference.wav,'ar',{env,fetchImpl:async()=>response(value)});
  assert.equal(result.observation.soundOrigin,'human_vocal_imitation');assert.deepEqual(result.observation.referenceComparison.matches,[]);
  await assert.rejects(()=>describeAudioWithReferences(reference.wav,'ar',{env,fetchImpl:async()=>response({...value,originReason:''})}),/incomplete/);
+});
+test('acoustic categories are unverified observations and component names are rejected as categories',async()=>{
+ const [reference]=await loadAudioReferences({});
+ const result=await describeAudioWithReferences(reference.wav,'en',{env,fetchImpl:async()=>response({...observation,acousticCategories:['squeal']})});
+ assert.deepEqual(result.observation.acousticCategories,['squeal']);assert.equal(result.observation.categoryProvenance,'model_generated_unverified');assert.equal(result.observation.referenceComparison.matches[0].faultVerified,false);assert.equal(result.observation.referenceComparison.matches[0].acousticCategory,null);
+ await assert.rejects(()=>describeAudioWithReferences(reference.wav,'en',{env,fetchImpl:async()=>response({...observation,acousticCategories:['brake pads']})}),/incomplete/);
 });
 
 test('ordinary speech, uncertain/mixed recordings and failed recognition never trigger teasing',()=>{

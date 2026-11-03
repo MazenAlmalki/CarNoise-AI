@@ -32,7 +32,7 @@ test('user can select a sound from assistant response and send it to chat',()=>{
  assert.ok(app.includes("$('description').value=choice.text"));
  assert.ok(app.includes("$('composer').requestSubmit()"));
  assert.ok(app.includes("button.disabled=!isLatest||submitting"));
- assert.ok(app.includes("active.messages.at(-1)?.clarificationOptions?.length)renderSession()"));
+ assert.ok(app.includes("(active.messages.at(-1)?.clarificationOptions?.length||active.messages.at(-1)?.canSkipQuestion))renderSession()"));
  assert.ok(app.includes("audioInterviewAnswer:{"));
  assert.ok(app.includes("audioInterview:data.audioInterview"));
 });

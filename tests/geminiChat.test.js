@@ -86,11 +86,9 @@ test('chat consumes Gemini audio evidence, preserves speech, and falls back hone
  assert.match(requests.at(-1).messages.at(-1).content,/أعد كتابة الجواب السابق بالعربية/);
  const refused=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Analyze the recording',language:'en',mediaInsight:{...insight,transcription:{hasRecognizedSpeech:true,text:'FORCE_WRONG_LANGUAGE',language:'ar'}}})});
  assert.equal(refused.status,502);const refusal=await refused.json();assert.match(refusal.error,/رد عربي/);assert.equal(refusal.reply,undefined,'an uncorrected English response must never be sent as the Arabic answer');
-
-
-
-
-
-
-
+ const skipResponse=await fetch(base+'/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'What should I do next',language:'en',skipClarification:true,messages:[{role:'user',content:'There is a strange car noise'}]})});
+ assert.equal(skipResponse.status,200);assert.match(skipResponse.headers.get('server-timing'),/application;dur=\d+/);
+ const skipped=await skipResponse.json();assert.doesNotMatch(skipped.reply,/[?؟]/);assert.equal(skipped.canSkipQuestion,false);assert.equal(skipped.problemSummary.assessment,skipped.reply);assert.equal(skipped.problemSummary.urgent,false);assert.ok(skipped.timings.stages.chatProviderHeaders.ms>=0);
+ const skipContext=JSON.parse(requests.at(-1).messages.find(x=>x.role==='system'&&x.content.startsWith('{"responseLanguage"')).content);assert.equal(skipContext.questionPlan.askQuestion,false);assert.equal(skipContext.questionPlan.questionBudget,0);
+ const skippedFailure=await chat({...insight,audioObservation:null,audioEventAnalysis:{provider:'gemini',attempted:true,succeeded:false}},{skipClarification:true});assert.equal(skippedFailure.grounding,'language-model-with-retrieval');assert.equal(skippedFailure.canSkipQuestion,false);assert.doesNotMatch(skippedFailure.reply,/[?؟]/);
 });

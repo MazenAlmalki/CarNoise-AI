@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "file": "بعض أصوات الأعطال في السيارة.mp4",
+      "sha256": "283042b2fa14e5c6b6ae1fc24c2f897ef13d4ee463e122915162714355017b66",
+      "duration_seconds": 28.235465,
+      "bytes": 1164876,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "reference_excerpts": 8,
+      "fault_label_status": "unverified_uploader_hypotheses",
+      "actual_audio_review": "pending; local decoding and signal measurements only",
+      "operating_conditions": null,
+      "vehicle": null,
+      "speech_or_music_present": null,
+      "usage_permission": "User submitted for project analysis; broader redistribution license not established.",
+      "duplicate_uploads": "Latest uploads match the original source hashes exactly; not additional independent samples."
+    },
+    {
+      "file": "بعض اصوات اعطال السيارة 2.mp4",
+      "sha256": "89bbd7fee4d6219148ae66373eaac61022fbefe35512335dfeb61149b515d72b",
+      "duration_seconds": 21.640998,
+      "bytes": 932227,
+      "video_codec": "h264",
+      "audio_codec": "aac",
+      "sample_rate_hz": 44100,
+      "channels": 2,
+      "reference_excerpts": 7,
+      "fault_label_status": "unverified_uploader_hypotheses",
+      "actual_audio_review": "pending; local decoding and signal measurements only",
+      "operating_conditions": null,
+      "vehicle": null,
+      "speech_or_music_present": null,
+      "usage_permission": "User submitted for project analysis; broader redistribution license not established.",
+      "duplicate_uploads": "Latest uploads match the original source hashes exactly; not additional independent samples."
+    }
+  ]
+}

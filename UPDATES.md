@@ -1,10 +1,22 @@
 # Development Log — ورشتك | Warshatak
 
-**Updated:** November 1, 2026  
+**Updated:** November 3, 2026
 **GitHub repository:** https://github.com/MazenAlmalki/CarNoise-AI  
 **Repository name:** `CarNoise-AI`; **application name:** `ورشتك / Warshatak`
 
 This log documents the work visible in our development conversation and GitHub repository. It distinguishes **implemented in source**, **locally reported working**, and **not yet implemented/tested**. It is a retrospective summary, not a claim that every feature has been fully tested in production.
+
+## November 3, 2026 — V2 garage, voice timing and audio evidence
+
+Implemented a narrow vehicle dropdown, per-vehicle searchable conversation history, additive meaningful titles/renaming and one overflow control per thread. Existing IDs, messages and IndexedDB media links are preserved; deletion still confirms. Added a copyable problem summary separating reported symptoms, automatic transcripts, model possibilities, uncertain audio observations and absent confirmed mechanical findings. Users can skip clarification and request a summary.
+
+Added actual microphone-energy visualization and a brief reply-ready mechanic reaction. Existing real-WAV amplitude mouth synchronization, cancellation, opt-in Arabic/English speech and the **silent** intro remain. Uploading/analyzing states now follow actual upload-completion events; slow requests can be cancelled/retried.
+
+Measured local audio baseline before editing. Waveform inspection now overlaps normalization/inference; video frames/vision overlap audio. Reference bytes/base64 are cached with manifest/file-metadata invalidation and hash checks on reload. Added media/chat/voice timings without user-content logs or credential changes. See [WARSHATAK_V2_REVIEW.md](WARSHATAK_V2_REVIEW.md) for measured scopes, benchmark commands and browser checks. No live latency or Arabic-voice quality claim is made.
+
+All 15 original WAVs and provenance are retained. Manifest v2 separates uploader-suspected component labels from pending independent acoustic reviews. Added a two-video source inventory, controlled model acoustic-category vocabulary and a reproducible evaluator that rejects same-file/source leakage and fault-label ground truth. Current readiness: 15 references, zero independent reviewed test recordings, metrics unavailable. No training, fine-tuning or verified fault accuracy is claimed. See [data/car-audio/README.md](data/car-audio/README.md).
+
+The older sections below are a historical snapshot; their Ollama/local-only descriptions do not describe the current hosted Gemini/Groq-compatible paths.
 
 ## 1. Project purpose
 

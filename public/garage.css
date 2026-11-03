@@ -1,0 +1,305 @@
+/* V2 garage: one vehicle selector, searchable threads, portable case notes. */
+.theme-switching,
+.theme-switching * {
+  transition: none !important;
+}
+.sidebar {
+  width: 236px;
+  flex-basis: 236px;
+}
+.car-list {
+  overflow: visible;
+  max-height: none;
+  min-height: 0;
+  padding: 0;
+}
+.vehicle-item {
+  gap: 6px;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+}
+.vehicle-item > .car-symbol {
+  width: 28px;
+  height: 32px;
+  flex: 0 0 28px;
+}
+.vehicle-select {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  height: 44px;
+  padding: 4px;
+  border: 0;
+  background: var(--panel2);
+  color: var(--text);
+  font: inherit;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.vehicle-select option {
+  background: var(--panel);
+  color: var(--text);
+}
+.vehicle-menu {
+  flex-shrink: 0;
+}
+.vehicle-menu > summary {
+  width: 30px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+}
+.vehicle-menu[open] > summary {
+  inset-inline-end: 5px;
+  top: 5px;
+}
+.vehicle-item:has(.vehicle-menu[open]) .vehicle-select {
+  margin-inline-end: 30px;
+}
+.history-heading {
+  margin-top: 24px;
+  margin-bottom: 8px;
+}
+.history-search {
+  flex-shrink: 0;
+  min-width: 0;
+  width: 100%;
+  min-height: 40px;
+  padding: 8px 11px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--panel2);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+.history-search::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.history-list {
+  min-height: 72px;
+  padding: 0 2px 8px;
+  gap: 5px;
+}
+.history-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 30px;
+  align-items: start;
+  border-radius: 10px;
+}
+.history-item:has(.active) {
+  background: var(--panel2);
+}
+.history-row {
+  width: 100%;
+  min-width: 0;
+  min-height: 58px;
+  padding: 9px 10px;
+  border: 0;
+  border-inline-start: 2px solid transparent;
+  border-radius: 9px;
+}
+.history-row.active {
+  border-inline-start-color: var(--accent);
+}
+.history-name {
+  display: block;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.history-date {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+}
+.thread-menu {
+  min-width: 0;
+}
+.thread-menu > summary {
+  list-style: none;
+  cursor: pointer;
+  width: 30px;
+  min-height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: 20px;
+}
+.thread-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.thread-menu > summary:hover,
+.thread-menu[open] > summary {
+  background: var(--surface);
+  color: var(--text);
+}
+.thread-menu[open] {
+  grid-column: 1 / -1;
+}
+.thread-menu[open] > summary {
+  position: absolute;
+  inset-inline-end: 0;
+  top: 0;
+}
+.thread-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px 8px 10px;
+}
+.thread-actions button {
+  flex: 1;
+  min-height: 36px;
+  font: inherit;
+  font-size: 11px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--panel);
+}
+.thread-actions button:hover {
+  border-color: var(--accent);
+}
+.problem-summary {
+  align-self: stretch;
+  width: 100%;
+  margin-block: 22px 8px;
+  padding: 0 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--panel);
+}
+.problem-summary > summary {
+  min-height: 58px;
+  display: list-item;
+  padding-block: 17px;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 14px;
+}
+.problem-summary-body {
+  padding-bottom: 20px;
+}
+.problem-summary h3 {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 18px 0 5px;
+  font-weight: 500;
+}
+.problem-summary p {
+  margin: 0;
+  line-height: 1.9;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+  white-space: pre-line;
+}
+.problem-summary textarea {
+  width: 100%;
+  margin-top: 14px;
+  font: inherit;
+  color: var(--text);
+  background: var(--panel2);
+}
+.summary-copy,
+.skip-question {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--panel2);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+  min-height: 40px;
+}
+.summary-copy {
+  margin-top: 20px;
+}
+.summary-copy-status {
+  font-size: 12px;
+  margin-inline-start: 10px;
+  color: var(--muted);
+}
+.problem-summary .summary-urgent {
+  margin-top: 18px;
+  color: var(--accent);
+  font-weight: 600;
+}
+.skip-question {
+  align-self: flex-start;
+  margin-block: 8px;
+}
+.recording-meter {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 26px;
+  width: 36px;
+  flex-shrink: 0;
+}
+.recording-meter i {
+  width: 4px;
+  height: 22px;
+  border-radius: 4px;
+  background: var(--accent);
+  transform: scaleY(calc(0.12 + var(--recording-level, 0) * 0.88));
+}
+.recording-meter i:nth-child(2n) {
+  height: 14px;
+}
+.recording-meter i:nth-child(3) {
+  height: 26px;
+}
+.recording-meter[data-unavailable] {
+  opacity: 0.35;
+}
+body[data-assistant-state="success"] .assistant-dock {
+  display: flex;
+}
+body[data-assistant-state="success"] .assistant-dock > svg {
+  animation: reply-ready 500ms ease-out 1;
+}
+body[data-assistant-state="success"] #dockLabel::before {
+  content: "✓";
+  color: var(--workshop-green);
+  margin-inline-end: 7px;
+}
+body[data-speech-state="idle"] .assistant-dock > button {
+  display: none;
+}
+@keyframes reply-ready {
+  from {
+    transform: translateY(4px) rotate(-3deg);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (max-width: 680px) {
+  .sidebar {
+    width: min(300px, 88vw);
+    flex-basis: auto;
+  }
+  .problem-summary {
+    padding-inline: 14px;
+  }
+  .history-row {
+    min-height: 60px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .recording-meter i {
+    transform: scaleY(0.3);
+  }
+  body[data-assistant-state="success"] .assistant-dock > svg {
+    animation: none;
+  }
+}

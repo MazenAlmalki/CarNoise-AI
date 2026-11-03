@@ -59,8 +59,8 @@ export function describePcm(pcm,sampleRate=8000){
   detected_activity_ratio:Math.round(clipRatio*100)/100,
   limitations:'Basic signal features: NOT speech transcription, sound event recognition or car fault identification. Cannot determine which vehicle part produced a noise. Ask the user for timing and sound description.'};
 }
-export async function analyzeWaveform(filePath){
- const pcm=await decodePcm(filePath,{ffmpeg:process.env.FFMPEG_PATH?.trim()||'ffmpeg'});
+export async function analyzeWaveform(filePath,{ffmpeg=process.env.FFMPEG_PATH}={}){
+ const pcm=await decodePcm(filePath,{ffmpeg:ffmpeg?.trim()||'ffmpeg'});
  const result=describePcm(pcm);
  if(!result.ok)throw Error(result.reason);
  return result;

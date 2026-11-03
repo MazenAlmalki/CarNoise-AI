@@ -26,12 +26,19 @@ import { publicAudioConfiguration, hasHostedAudioEvidence, hasHumanVocalImitatio
 import { publicSpeechFallback } from './speechFallback.js';
 import {mergeQuestionMemory} from '../public/questionMemory.js';
 import {selectedVehicleContext} from './vehicleContext.js';
+import {createTimings} from './timings.js';
 
 const app = express();
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 app.disable('x-powered-by');
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '32kb' }));
+// Browser DevTools can measure server preparation without recording user content.
+app.use('/api',(req,res,next)=>{
+ const started=performance.now(),send=res.send;
+ res.send=function(body){res.set('Server-Timing',`application;dur=${Math.round(performance.now()-started)}`);return send.call(this,body);};
+ next();
+});
 app.use('/api', rateLimit({ windowMs: 900000, limit: 30, standardHeaders: 'draft-7', legacyHeaders: false }));
 app.use(express.static(path.join(root, 'public')));
 
@@ -166,9 +173,10 @@ function mediaClarification(language='ar',failed=false){
 }
 
 app.post('/api/chat',async(req,res)=>{
+  const timing=createTimings();
   const data=req.body||{};
   const message=chatString(data.message,700);
-  const guided=data.audioInterviewAnswer?advanceSoundInterview(data.audioInterviewAnswer,data.language):null;
+  const guided=data.audioInterviewAnswer&&data.skipClarification!==true?advanceSoundInterview(data.audioInterviewAnswer,data.language):null;
   if(guided&&!guided.done)return res.json({...guided,knowledgeMatches:[]});
   const mediaObject=data.mediaInsight&&typeof data.mediaInsight==='object'?data.mediaInsight:null;
   const mediaType=['audio','video','image'].includes(mediaObject?.type)?mediaObject.type:null;
@@ -186,6 +194,7 @@ app.post('/api/chat',async(req,res)=>{
   const questionPlan=planMinimalQuestions({messages:data.messages,current:effectiveMessage,questionMemory,
    hasAudioCandidates:Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0,audioObservation:hostedAudio,
    mediaRequested:asksAboutUploadedMedia&&Boolean(mediaType||data.mediaFailure)});
+  if(data.skipClarification===true)Object.assign(questionPlan,{askQuestion:false,stopAsking:true,questionBudget:0,suggestedQuestion:null,suggestedQuestionEnglish:null});
   const vehicle=selectedVehicleContext(data.vehicle,effectiveMessage);
   const mediaInsight=mediaObject?JSON.stringify(mediaObject,(key,value)=>typeof value==='string'?value.slice(0,['text','description'].includes(key)?700:300):Array.isArray(value)?value.slice(0,6):value):null;
   const mediaFailure=typeof data.mediaFailure==='string'?data.mediaFailure.slice(0,240):null;
@@ -199,7 +208,7 @@ app.post('/api/chat',async(req,res)=>{
   // A waveform is NOT a sound event classification. Do not show a list of
   // guesses before attempting an actual classifier. When it isn't installed,
   // explain exactly which capability is missing rather than feigning analysis.
-  if(!guided?.done&&(mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0){
+  if(data.skipClarification!==true&&!guided?.done&&(mediaType==='audio'||(mediaType==='video'&&!mediaObject?.visual))&&asksAboutUploadedMedia&&!spokenText&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0){
     const classified=(Array.isArray(mediaObject?.audio?.matches)&&mediaObject.audio.matches.length>0)||hasHostedAudioEvidence(mediaObject);
     const wasAttempted=mediaObject?.audioEventAnalysis?.attempted===true;
     if(!classified && !wasAttempted)return res.json(beginSoundInterview({language,reason:'classifier-not-configured'}));
@@ -214,7 +223,7 @@ app.post('/api/chat',async(req,res)=>{
     // among the candidate set, so discuss only tentative categories and
     // do not equate a close match with confirmed mechanical causes.
   }
-  if(!mediaObject&&mediaFailure&&asksAboutUploadedMedia&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0)
+  if(data.skipClarification!==true&&!mediaObject&&mediaFailure&&asksAboutUploadedMedia&&questionPlan.clarificationAllowed&&questionMemory.questionsAsked===0&&questionPlan.answeredFields===0)
     return res.json(beginSoundInterview({language,reason:'classifier-error',error:mediaFailure}));
   const history=buildChatHistory(data.messages,{recent:10});
   const chatContext=conversationContext(data.messages,effectiveMessage);
@@ -258,14 +267,14 @@ app.post('/api/chat',async(req,res)=>{
     const maxOutput=Math.max(120,Math.min(1200,Number(process.env.CHAT_MAX_TOKENS)||450));
     const requestBody={model:api.model,temperature:0.25,max_tokens:maxOutput,messages,stream:false};
     const inferenceSignal=AbortSignal.timeout(api.local?120000:60000);
-    const response=await fetch(api.endpoint,{method:'POST',headers,body:JSON.stringify(requestBody),signal:inferenceSignal});
+    const response=await timing.measure('chatProviderHeaders',()=>fetch(api.endpoint,{method:'POST',headers,body:JSON.stringify(requestBody),signal:inferenceSignal}));
     if(!response.ok){console.error('Llama API:',response.status);return res.status(502).json({error:response.status===401?'مفتاح API غير صحيح. تحقق من CHAT_API_KEY.':response.status===402?'الرصيد المتاح لدى مزود API غير كافٍ.':response.status===429?'تجاوزت حد طلبات API؛ جرّب لاحقًا.':'Llama API غير متاح حاليًا. تحقق من النموذج وإعدادات الاتصال.'});}
-    const payload=await response.json();
+    const payload=await timing.measure('chatBody',()=>response.json());
     let reply=chatString(payload?.choices?.[0]?.message?.content,1900);
     // One bounded correction if the provider ignores the selected language.
     if(reply&&!replyMatchesLanguage(reply,language)){
      const correction=language==='ar'?'أعد كتابة الجواب السابق بالعربية السعودية فقط. حافظ على نفس الأدلة وعدم اليقين، ولا تضف تشخيصًا أو أسئلة جديدة.':'Rewrite the previous answer in English only. Keep the same evidence and uncertainty; add no diagnosis or new questions.';
-     const repaired=await fetch(api.endpoint,{method:'POST',headers,body:JSON.stringify({...requestBody,messages:[...messages,{role:'assistant',content:reply},{role:'system',content:correction}]}),signal:inferenceSignal});
+     const repaired=await timing.measure('languageCorrectionHeaders',()=>fetch(api.endpoint,{method:'POST',headers,body:JSON.stringify({...requestBody,messages:[...messages,{role:'assistant',content:reply},{role:'system',content:correction}]}),signal:inferenceSignal}));
      if(!repaired.ok)throw Error('Reply language correction failed.');
      const corrected=await repaired.json();reply=chatString(corrected?.choices?.[0]?.message?.content,1900);
      if(!replyMatchesLanguage(reply,language))return res.status(502).json({error:language==='ar'?'تعذّر الحصول على رد عربي من المودل. حاول إعادة الإرسال.':'The model did not return an English reply. Please retry.'});
@@ -284,7 +293,7 @@ app.post('/api/chat',async(req,res)=>{
       ? 'Possibilities consistent with the description: '+fallbackCard.possible_causes_en.join('; ')+'. Next step: '+fallbackCard.safe_next_step_en+'. This does not confirm a fault.'
       : 'من الاحتمالات المرتبطة بوصفك: '+fallbackCard.possible_causes_ar.join('؛ ')+'. الخطوة التالية: '+fallbackCard.safe_next_step_ar+'. هذا لا يؤكد العطل.'):null;
     const conciseReply=enforceQuestionBudget(safeReply,questionPlan,{language,fallbackReply:safetyWarning||fallbackReply});
-    return res.json({reply:conciseReply,responseLanguage:language,grounding:'language-model-with-retrieval',knowledgeMatches:[...summary,...saudiSources.map(x=>({id:x.id,symptom_ar:x.topic,symptom_en:x.topic,source_url:x.source_url})),...soundReading.map(x=>({id:x.subject,symptom_ar:x.title_ar,symptom_en:x.title_en,source_url:x.url})),...conditionalPatterns.map(x=>({id:x.id,symptom_ar:x.symptom_ar,symptom_en:x.symptom_en,source_url:x.source_url}))]});
+    return res.json({reply:conciseReply,responseLanguage:language,timings:timing.snapshot(),canSkipQuestion:questionPlan.askQuestion&&/[?؟]/.test(conciseReply),problemSummary:questionPlan.clarificationAllowed?{assessment:conciseReply,urgent:questionPlan.urgent||understanding.isDanger,nextStep:safetyWarning||(understanding.clearMatch?(language==='en'?matches[0]?.safe_next_step_en:matches[0]?.safe_next_step_ar):null)}:null,grounding:'language-model-with-retrieval',knowledgeMatches:[...summary,...saudiSources.map(x=>({id:x.id,symptom_ar:x.topic,symptom_en:x.topic,source_url:x.source_url})),...soundReading.map(x=>({id:x.subject,symptom_ar:x.title_ar,symptom_en:x.title_en,source_url:x.url})),...conditionalPatterns.map(x=>({id:x.id,symptom_ar:x.symptom_ar,symptom_en:x.symptom_en,source_url:x.source_url}))]});
   }catch(error){console.error('Llama chat:',error instanceof Error?error.message:'unknown');return res.status(502).json({error:language==='en'?'Cannot reach the AI model. Check your configuration.':'تعذّر الاتصال بمودل الذكاء الاصطناعي. تأكد من الإعدادات.'});}
 });
 

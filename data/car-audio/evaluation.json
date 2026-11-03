@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "groundTruthType": "acoustic_category",
+  "referenceManifest": "../uploaded_audio_references/manifest.json",
+  "testCases": [],
+  "note": "Blocked until independent held-out recordings have reviewed acoustic categories. Uploader component titles are not ground truth."
+}

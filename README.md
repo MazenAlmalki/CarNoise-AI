@@ -88,7 +88,7 @@ npm.cmd run check
 npm.cmd test
 ```
 
-Gemini tests use mocked provider responses and real local FFmpeg when available; live provider access must be checked with your own key. Optional FFmpeg integration tests report a skip if it is absent. An existing source-string assertion in `tests/carAudioCatalog.test.js:32` is a known baseline failure.
+Gemini tests use mocked provider responses and real local FFmpeg when available; live provider access must be checked with your own key. Optional FFmpeg integration tests report a skip if it is absent. V2 dataset evaluation remains blocked until independently reviewed held-out recordings exist; that readiness status is separate from the automated tests.
 
 ## Further documentation
 
@@ -101,3 +101,7 @@ Gemini tests use mocked provider responses and real local FFmpeg when available;
 The reference corpora include synthetic language examples and educational source summaries. They are not verified vehicle-fault training labels or evidence that a particular recording matches a video.
 
 Natural Arabic reply voice and waveform-synchronized mechanic: see [GEMINI_SPEECH_SETUP.md](GEMINI_SPEECH_SETUP.md). The cinematic intro stays silent.
+
+## V2 garage and sound evidence
+
+The compact vehicle switcher, searchable/renamable conversation history, copyable problem summary, actual microphone meter, upload phases and latency measurements are documented in [WARSHATAK_V2_REVIEW.md](WARSHATAK_V2_REVIEW.md). All 15 reference WAVs are retained. Their component titles remain **unverified suspected faults**, distinct from acoustic categories. See [data/car-audio/README.md](data/car-audio/README.md) for evaluation, provenance and limitations. The intro remains silent.

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/workshop.css" />
     <link rel="stylesheet" href="/intro.css" />
+    <link rel="stylesheet" href="/garage.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
@@ -54,9 +55,10 @@
         </div>
         <div id="carList" class="car-list"></div>
         <div class="side-label history-heading">
-          <span data-i18n="history">سجل المشاكل</span
-          ><span id="historyCount" class="count hidden">0</span>
+          <span data-i18n="history">سجل المشاكل</span>
         </div>
+        <label class="sr-only" for="historySearch" id="historySearchLabel">ابحث في محادثات السيارة</label>
+        <input id="historySearch" class="history-search" type="search" autocomplete="off" placeholder="ابحث في المحادثات…" />
         <div id="historyList" class="history-list"></div>
         <div class="side-bottom">
           <details id="experienceSettings" class="voice-panel">
@@ -280,7 +282,7 @@
               ><small data-i18n="recordingHint"
                 >اضغط إيقاف، ثم اسمع المقطع قبل الإرسال.</small
               ></span
-            ><time id="recordingDuration" dir="ltr" aria-hidden="true"
+            ><span id="recordingMeter" class="recording-meter" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><time id="recordingDuration" dir="ltr" aria-hidden="true"
               >00:00</time
             ><span class="recording-led" aria-hidden="true"></span>
           </div>
