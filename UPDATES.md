@@ -408,3 +408,7 @@ python scripts/import_kwerimoto.py
 - Added `tests/minimalQuestionsAndPatterns.test.js` and revised `tests/soundInterview.test.js` to guard against unnecessary repeated questions and test early completion.
 - Added `MINIMAL_QUESTIONS_AND_EVIDENCE.md` with source links, test situations and limitations.
 - Source-level JS syntax and isolated deterministic test cases were checked. Live Groq inference and comprehensive end-to-end tests on the user's laptop remain unverified; use `npm.cmd test` after pulling.
+
+### Phase 3 continuation — unified evidence and verification
+
+Preserve detailed written media descriptions alongside ASR, audio/video observations, vehicle/year corrections and unverified history. Add curated Saudi usage terms, shared media validation, measured upload percentages, unsent-draft preservation and narrow-layout containment. Final syntax checks, 156 Node tests and three mocked-provider Chromium suites passed. See [PHASE_3_REVIEW.md](PHASE_3_REVIEW.md). Stop here pending new recordings: no dataset ingestion, classifier implementation or training; suspected fault labels remain unverified and the requested 70% threshold stays disabled.

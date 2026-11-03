@@ -19,11 +19,12 @@ export function isClarificationRequest(text){
 }
 export function summarizeQuestionMemory(messages=[]){
  const turns=Array.isArray(messages)?messages:[];
- const questions=[];const details={};let firstUser='';
+ const questions=[];const details={};const vehicleStatements=[];let firstUser='';
  for(const turn of turns){
   const text=clean(turn?.content);if(!text)continue;
   if(turn.role==='user'){
    firstUser=firstUser||text;
+   if(/سيارتي|موديلها|موديل سيارتي|قصدي|اقصد|my car is|i drive|i meant|model year|actually|correction/i.test(normalize(text)))vehicleStatements.push(text.slice(0,700));
    for(const field of fields)if(detailPatterns[field].test(normalize(text)))details[field]=text;
   }else if(turn.role==='assistant'){
    const clauses=text.match(/[^.!؛\n؟?]+[؟?]/g)||[];
@@ -31,7 +32,7 @@ export function summarizeQuestionMemory(messages=[]){
    questions.push(...clauses.map(x=>x.trim()));
   }
  }
- return {questionsAsked:Math.min(50,questions.length),askedFields:[...new Set(questions.flatMap(clarificationFields))],
+ return {vehicleStatements:vehicleStatements.slice(-6),questionsAsked:Math.min(50,questions.length),askedFields:[...new Set(questions.flatMap(clarificationFields))],
   lastQuestions:questions.slice(-4).map(x=>x.slice(0,280)),
   userDetails:[...new Set([firstUser,...Object.values(details)].filter(Boolean))].slice(-4).map(x=>x.slice(0,250))};
 }
@@ -39,7 +40,7 @@ export function mergeQuestionMemory(messages=[],supplied=null){
  const actual=summarizeQuestionMemory(messages);
  if(!supplied||typeof supplied!=='object')return actual;
  const count=Number.isFinite(supplied.questionsAsked)?Math.min(50,Math.max(0,Math.floor(supplied.questionsAsked))):0;
- return {questionsAsked:Math.max(actual.questionsAsked,count),
+ return {vehicleStatements:[...new Set([...(Array.isArray(supplied.vehicleStatements)?supplied.vehicleStatements.filter(x=>typeof x==='string').map(x=>x.slice(0,700)):[]),...actual.vehicleStatements])].slice(-6),questionsAsked:Math.max(actual.questionsAsked,count),
   askedFields:[...new Set([...actual.askedFields,...(Array.isArray(supplied.askedFields)?supplied.askedFields.filter(x=>fields.includes(x)):[])])],
   lastQuestions:[...(Array.isArray(supplied.lastQuestions)?supplied.lastQuestions.filter(x=>typeof x==='string').map(x=>x.slice(0,280)):[]),...actual.lastQuestions].slice(-4),
   userDetails:[...new Set([...(Array.isArray(supplied.userDetails)?supplied.userDetails.filter(x=>typeof x==='string').map(x=>x.slice(0,250)):[]),...actual.userDetails])].slice(-6)};

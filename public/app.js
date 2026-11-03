@@ -1,3 +1,4 @@
+import {validateMedia,MEDIA_ACCEPT} from './media-formats.js';
 import {createReplyDelivery} from './reply-delivery.js';
 import {renderReferenceExample} from './reference-example.js';
 import {createCinematicIntro} from './cinematic-intro.js';
@@ -476,7 +477,7 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
      payload.append('media',mediaFile,active.mediaName||'recording');
      payload.append('language',state.lang);
      setLoading('media');
-     const analysisResponse=await uploadMedia(payload,{signal:controller.signal,onUploaded:()=>{if(requestController===controller)setLoading('analysis');}});
+     const analysisResponse=await uploadMedia(payload,{signal:controller.signal,onProgress:({percent})=>{if(requestController===controller)setLoading('media',percent);},onUploaded:()=>{if(requestController===controller)setLoading('analysis');}});
      const parsed=analysisResponse.body;
      if(!analysisResponse.ok||!parsed.analysis)throw Error(parsed.error||'Media model unavailable');
      mediaInsight=parsed.analysis;
@@ -492,10 +493,11 @@ async function sendChat(text,{audioInterviewAnswer=null,skipClarification=false}
   if(controller.signal.aborted)throw new DOMException('Request cancelled or timed out.','AbortError');
   setLoading('reply');
   const response=await fetch('/api/chat',{signal:controller.signal,method:'POST',headers:{'Content-Type':'application/json'},
-   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar())},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification,offeredReferenceIds:active.messages.filter(m=>m.referenceExample).map(m=>m.referenceExample.id).slice(-100)})});
+   body:JSON.stringify({message,language:audioInterviewAnswer?(active.lang||state.lang):state.lang,messages:boundedPrior,questionMemory:summarizeQuestionMemory(allPrior),vehicle:{name:carName(selectedCar()),year:selectedCar()?.year||null},vehicleHistory,mediaInsight:mediaInsight||active.mediaAnalysis||null,mediaFailure:active.mediaAnalysisError||null,audioInterviewAnswer,skipClarification,offeredReferenceIds:active.messages.filter(m=>m.referenceExample).map(m=>m.referenceExample.id).slice(-100)})});
   let data;try{data=await response.json();}catch{throw Error(t('answerFailed'));}
   if(!response.ok||typeof data.reply!=='string')throw Error(data.error||t('answerFailed'));
   if(['ar','en'].includes(data.responseLanguage))active.lang=data.responseLanguage;
+  active.evidenceConflicts=Array.isArray(data.evidenceConflicts)?data.evidenceConflicts:[];
   active.problemSummary=data.problemSummary||null;active.timings={chat:data.timings||null,media:active.mediaAnalysis?.timings||null};
   if(data.audioStatus==='classifier-error'&&data.audioError){
    if(active.mediaAnalysis?.audioEventAnalysis?.provider==='gemini')showError((state.lang==='ar'?'تعذر تحليل الصوت عبر Gemini: ':'Gemini audio analysis failed: ')+String(data.audioError).slice(0,240));
@@ -810,7 +812,7 @@ async function showSavedMedia(id,type,name){
    card.append(textNode('summary',state.lang==='ar'?'الكلام المفرّغ — قد يحتوي أخطاء':'Recognized speech — may contain errors'));
    const words=textNode('p',transcript.text.slice(0,1000));words.dir='auto';card.append(words);
    const edit=textNode('button',state.lang==='ar'?'صحّح الكلام أو أضف توضيح':'Correct or clarify','ghost-btn transcript-edit');edit.type='button';
-   edit.addEventListener('click',()=>{if(session?.id!==caseId||submitting)return;$('description').value=transcript.text.slice(0,600);$('description').focus();});
+   edit.addEventListener('click',()=>{if(session?.id!==caseId||submitting)return;if(!$('description').value.trim())$('description').value=transcript.text.slice(0,600);$('description').focus();});
    card.append(edit);attached.append(card);
   }
   if(session?.mediaAnalysis){
@@ -828,8 +830,8 @@ async function showSavedMedia(id,type,name){
 }
 function mediaFile(file){
  if(!file)return;
- if(!['audio/','video/','image/'].some(prefix=>file.type.startsWith(prefix))){showError(t('fileType'));return;}
- if(file.size>25*1024*1024){showError(t('fileTooLarge'));return;}
+ const validation=validateMedia(file);
+ if(!validation.ok){showError(t(validation.error==='too-large'?'fileTooLarge':'fileType'));return;}
  pendingMedia=file;showError('');showMedia(file);
 }
 function discardRecording(){
@@ -883,6 +885,7 @@ $('overlay').addEventListener('click',closeNav);
 $('composer').addEventListener('submit',e=>{e.preventDefault();if(!submitting)startAnalysis($('description').value);});
 $('description').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();$('composer').requestSubmit();}});
 $('attachButton').addEventListener('click',()=>$('mediaInput').click());
+$('mediaInput').accept=MEDIA_ACCEPT;
 $('mediaInput').addEventListener('change',e=>mediaFile(e.target.files?.[0]));
 $('recordButton').addEventListener('click',recordToggle);
 $('historySearch').addEventListener('input',renderHistory);
@@ -956,10 +959,10 @@ $('confirmDialog').querySelector('form').addEventListener('submit',event=>{
  event.preventDefault();closeWorkshopDialog($('confirmDialog'),event.submitter?.value||'cancel');
 });
 
-function setLoading(phase){
+function setLoading(phase,percent=null){
  clearTimeout(loadingTimer);
  const ar=state.lang==='ar';
- $('typingLabel').textContent=phase==='media'?(ar?'جاري رفع المرفق…':'Uploading attachment…'):phase==='analysis'?(ar?'وصل المرفق، جاري تحليله…':'Attachment uploaded; analyzing…'):t('analyzing');
+ $('typingLabel').textContent=phase==='media'?(ar?'جاري رفع المرفق…':'Uploading attachment…')+(Number.isFinite(percent)?' '+percent+'%':''):phase==='analysis'?(ar?'وصل المرفق، جاري تحليله…':'Attachment uploaded; analyzing…'):t('analyzing');
  loadingTimer=setTimeout(()=>{if(!$('busy').classList.contains('hidden'))$('typingLabel').textContent=ar?'الطلب ما زال قيد الانتظار. تقدر تلغيه وتحاول مرة ثانية.':'Still waiting for this request. You can cancel and try again.';},15000);
 }
 $('cancelRequest').onclick=()=>requestController?.abort();

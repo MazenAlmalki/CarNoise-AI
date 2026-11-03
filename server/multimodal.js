@@ -1,3 +1,4 @@
+import {validateMedia} from '../public/media-formats.js';
 import 'dotenv/config';
 import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
 import os from 'node:os';
@@ -20,14 +21,6 @@ async function runProcess(cmd,args,{timeout=40000,limit=maxStdout}={}){
   child.on('error',e=>{clearTimeout(timer);reject(e);});
   child.on('close',code=>{clearTimeout(timer);code===0?resolve(stdout):reject(new Error((stderr||'Processing failed').slice(-900)));});
  });
-}
-function fileExtension(type){
- const supported={
-  'image/jpeg':'.jpg','image/png':'.png','image/webp':'.webp',
-  'audio/wav':'.wav','audio/x-wav':'.wav','audio/mpeg':'.mp3','audio/mp4':'.m4a','audio/x-m4a':'.m4a','audio/aac':'.aac','audio/ogg':'.ogg','audio/webm':'.webm',
-  'video/mp4':'.mp4','video/webm':'.webm','video/quicktime':'.mov'
- };
- return supported[type]||null;
 }
 async function videoFrames(input,temp){
  const ffmpeg=process.env.FFMPEG_PATH?.trim()||'ffmpeg';
@@ -126,9 +119,10 @@ async function analyzeAudioTrack(source,temp,language,options){
  return {audioObservation,transcription,speechTranscriptionAnalysis,audio,audioEventAnalysis,waveform,warnings,timings:timing.snapshot()};
 }
 export async function analyzeUploadedMedia(file,language='ar',options={}){
- const extension=fileExtension(file.mimetype);
- if(!extension)throw new Error(language==='en'?'Unsupported media type.':'نوع الملف غير مدعوم.');
- if(!file.buffer?.length||file.size>25*1024*1024)throw new Error(language==='en'?'File must be below 25 MB.':'الملف يجب أن يكون أقل من 25 ميجابايت.');
+ const validation=validateMedia({mimetype:file?.mimetype,size:file?.buffer?.length});
+ if(!validation.ok)throw new Error(validation.error==='unsupported-type'?'Unsupported media type.':'Media must contain 1 byte to 25 MB.');
+ const extension=validation.extension;
+ file={...file,mimetype:validation.mime};
  const temp=await mkdtemp(path.join(os.tmpdir(),'warshatak-'));
  const source=path.join(temp,'upload'+extension);
  try{

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "scope": "Phase 3: evidence integration and interface verification only",
+  "phases": [
+    {"phase": 1, "name": "Preserve written and automatic evidence separately", "status": "implemented"},
+    {"phase": 2, "name": "Usage mappings, validation, progress and case memory", "status": "implemented"},
+    {"phase": 3, "name": "Regression verification and documentation", "status": "implemented"}
+  ],
+  "stop_after_phase": 3,
+  "dataset_ingestion": {"enabled": false, "requires": "New permission-cleared recordings and explicit follow-up authorization"},
+  "classifier_implementation": {"enabled": false},
+  "training": {"enabled": false},
+  "fault_labels": {"verified": false, "purpose": "Uploader hypotheses only, never ground truth"},
+  "requested_threshold": {"value": 0.7, "enabled": false, "validated": false, "reason": "Requires independent reviewed recordings, predefined acceptance criteria and measured calibration"},
+  "existing_evaluation": "evaluation.json; no independent reviewed test recordings available",
+  "next_prerequisites": [
+    "Wait for new recordings; do not collect or ingest automatically",
+    "Record consent/license, source hashes, complete source groups and recording conditions",
+    "Independently review acoustic categories without showing suspected component labels",
+    "Keep all excerpts from a source in the same split; preserve unknown and ambiguous examples",
+    "Validate any threshold independently before enabling it"
+  ]
+}

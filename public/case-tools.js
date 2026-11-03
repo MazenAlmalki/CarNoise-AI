@@ -92,6 +92,10 @@ export function buildProblemSummary(entry, language = "ar") {
       ? "الاحتمالات لم يؤكدها فحص ميكانيكي."
       : "Possibilities have not been confirmed by a mechanic.",
   ];
+  if (entry.evidenceConflicts?.length)
+    uncertainty.push(ar
+      ? 'قد يختلف الوصف المكتوب عن التفريغ أو ملاحظات الصوت. كلاهما غير مؤكد؛ وضّح الفرق إذا كان يغيّر النصيحة.'
+      : 'Written details may differ from the transcript or sound observations. Neither is verified; clarify the difference if it changes the advice.');
   if (observation?.uncertainty)
     uncertainty.push(clean(observation.uncertainty));
   if (!evidence.length)

@@ -33,7 +33,7 @@ fs.mkdirSync(artifacts, { recursive: true });
             },
             waveform: { kind: "waveform_features_only" },
             warnings: ["Gemini fixture: quota unavailable"],
-            transcription: { hasRecognizedSpeech: false, text: "" },
+            transcription: { hasRecognizedSpeech: true, text: "There is no sound when braking" },
           },
         }),
       );
@@ -158,6 +158,7 @@ fs.mkdirSync(artifacts, { recursive: true });
       await route.fulfill({
         json: {
           reply,
+          evidenceConflicts:body.mediaInsight?[{topic:"braking",status:"possible_conflict",verified:false}]:[],
           responseLanguage: ar ? "ar" : "en",
           canSkipQuestion: !body.skipClarification,
           problemSummary: {
@@ -269,13 +270,20 @@ fs.mkdirSync(artifacts, { recursive: true });
       ),
       true,
     );
-    await page.locator("#description").fill("حلل المرفق");
+    await page.locator("#description").fill("حلل المقطع، الفرامل تصفر عند التهدئة بعد مشوار طويل");
     await page.locator("#sendButton").click();
     await page.waitForFunction(
       () => document.querySelectorAll(".message.assistant").length === 3,
     );
     await page.locator("#busy").waitFor({ state: "hidden" });
     assert.equal(await page.locator("#recordButton").isEnabled(), true);
+    assert.equal(requests.at(-1).message,"حلل المقطع، الفرامل تصفر عند التهدئة بعد مشوار طويل");
+    assert.equal(requests.at(-1).vehicle.year,2020);
+    await page.locator("[data-saved-media-preview] .transcript-edit").waitFor();
+    await page.locator("#description").fill("تفصيل مكتوب لم أرسله بعد");
+    await page.locator(".transcript-edit").click();
+    assert.equal(await page.locator("#description").inputValue(),"تفصيل مكتوب لم أرسله بعد");
+    await page.locator("#description").fill("");
     const labels = await page.evaluate(() => window.__loadingLabels);
     assert.ok(labels.some((t) => /جاري رفع/.test(t)));
     assert.ok(labels.some((t) => /وصل المرفق/.test(t)));

@@ -105,3 +105,7 @@ Natural Arabic reply voice and waveform-synchronized mechanic: see [GEMINI_SPEEC
 ## V2 garage and sound evidence
 
 The compact vehicle switcher, searchable/renamable conversation history, copyable problem summary, actual microphone meter, upload phases and latency measurements are documented in [WARSHATAK_V2_REVIEW.md](WARSHATAK_V2_REVIEW.md). All 15 reference WAVs are retained. Their component titles remain **unverified suspected faults**, distinct from acoustic categories. See [data/car-audio/README.md](data/car-audio/README.md) for evaluation, provenance and limitations. The intro remains silent.
+
+## Phase 3 — unified case evidence
+
+Written symptom details are preserved alongside automatic transcripts, sound/video observations, vehicle corrections and unverified history. Shared media validation, measured upload progress and Saudi usage mappings support the same workflow. See [Phase 3 review](PHASE_3_REVIEW.md) for behavior, test commands and limitations. Work stops after Phase 3: new recordings are required before dataset ingestion, classifier work or training, and the requested 70% threshold remains disabled until independently validated.

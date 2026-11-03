@@ -1411,3 +1411,11 @@ body,
     animation: none;
   }
 }
+
+/* Phase 3: contain long descriptions and media on narrow RTL/LTR layouts. */
+.message,.message-content,.problem-summary,.transcript-card,.vehicle-item,.composer { min-width:0; overflow-wrap:anywhere; }
+.media-preview img,.media-preview video,.media-preview audio,[data-saved-media-preview] video,[data-saved-media-preview] audio { max-width:100%; }
+@media (max-width:480px) {
+ .transcript-card button,.problem-summary button { max-width:100%; white-space:normal; }
+ .vehicle-select { min-width:0; max-width:100%; }
+}

@@ -1,0 +1,171 @@
+{
+  "version": 2,
+  "provenance": "Manually curated Saudi usage mappings for language interpretation only; not recordings, diagnoses or independently validated labels. Ambiguous usage requires context.",
+  "terms": [
+    {
+      "id": "دبل",
+      "aliases": [
+        "دبل",
+        "الدبل"
+      ],
+      "meaning_en": "four-wheel-drive mode",
+      "meaning_ar": "وضع الدفع الرباعي",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "قير",
+      "aliases": [
+        "قير",
+        "القير",
+        "جير"
+      ],
+      "meaning_en": "transmission",
+      "meaning_ar": "ناقل الحركة",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "سلف",
+      "aliases": [
+        "سلف",
+        "السلف"
+      ],
+      "meaning_en": "starter motor",
+      "meaning_ar": "بادئ التشغيل",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "دينمو",
+      "aliases": [
+        "دينمو",
+        "الدينمو"
+      ],
+      "meaning_en": "alternator",
+      "meaning_ar": "مولد الشحن",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "كفر",
+      "aliases": [
+        "كفر",
+        "كفرات",
+        "الكفرات"
+      ],
+      "meaning_en": "tire",
+      "meaning_ar": "إطار",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "جنط",
+      "aliases": [
+        "جنط",
+        "جنوط"
+      ],
+      "meaning_en": "wheel rim",
+      "meaning_ar": "حافة العجلة",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "فحمات",
+      "aliases": [
+        "فحمات",
+        "الفحمات"
+      ],
+      "meaning_en": "brake pads",
+      "meaning_ar": "بطانات الفرامل",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "هوبات",
+      "aliases": [
+        "هوبات",
+        "الهوبات"
+      ],
+      "meaning_en": "brake discs",
+      "meaning_ar": "أقراص الفرامل",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "مساعدات",
+      "aliases": [
+        "مساعدات",
+        "المساعدات"
+      ],
+      "meaning_en": "shock absorbers",
+      "meaning_ar": "ممتصات الصدمات",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "عكوس",
+      "aliases": [
+        "عكوس",
+        "العكوس"
+      ],
+      "meaning_en": "drive shafts / CV joints",
+      "meaning_ar": "أعمدة نقل الحركة ومفاصلها",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "طرمبة",
+      "aliases": [
+        "طرمبة",
+        "الطرمبة"
+      ],
+      "meaning_en": "pump (type needs context)",
+      "meaning_ar": "مضخة، نوعها يعتمد على السياق",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "رديتر",
+      "aliases": [
+        "رديتر",
+        "الرديتر"
+      ],
+      "meaning_en": "radiator",
+      "meaning_ar": "مشع التبريد",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "بواجي",
+      "aliases": [
+        "بواجي",
+        "البواجي"
+      ],
+      "meaning_en": "spark plugs",
+      "meaning_ar": "شمعات الإشعال",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "تفتفة",
+      "aliases": [
+        "تفتفة",
+        "تفتفه",
+        "تفتف"
+      ],
+      "meaning_en": "user-reported uneven engine running",
+      "meaning_ar": "وصف المستخدم لعدم انتظام التشغيل",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "نتعة",
+      "aliases": [
+        "نتعة",
+        "نتعه",
+        "ينتع"
+      ],
+      "meaning_en": "user-reported jerk",
+      "meaning_ar": "وصف المستخدم لاندفاع أو تقطع",
+      "diagnosisConfirmed": false
+    },
+    {
+      "id": "ونة",
+      "aliases": [
+        "ونة",
+        "ونه",
+        "ونين"
+      ],
+      "meaning_en": "user-reported hum or whine",
+      "meaning_ar": "وصف المستخدم لطنين أو أنين",
+      "diagnosisConfirmed": false
+    }
+  ]
+}
