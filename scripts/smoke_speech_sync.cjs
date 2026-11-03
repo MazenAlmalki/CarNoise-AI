@@ -77,7 +77,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright"),
     await p.waitForFunction(()=>/Preparing your reply|جاري تجهيز الرد/.test(document.querySelector('#typingLabel').textContent));
     assert.equal(speechRequests,0,'speech must not start during the preparation pause');
     await p.locator(".speech-pending").waitFor();
-    assert.ok(Date.now()-firstSentAt>=2850,'fast replies receive a three-second preparation pause');
+    assert.ok(Date.now()-firstSentAt>=4850,'fast replies receive a five-second preparation pause');
     assert.doesNotMatch(
       await p.locator(".message.assistant").last().textContent(),
       /synchronized reply/,
@@ -190,7 +190,7 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright"),
     );
     assert.deepEqual(errors, []);
     console.log(
-      "PASS real playback reveals text at speech start; one TTS call; quota releases text; Show text now cancels; 15-second fallback; saved history visible; automatic speech off makes no TTS request; fast replies receive a three-second preparation pause. Provider mocked.",
+      "PASS real playback reveals text at speech start; one TTS call; quota releases text; Show text now cancels; 15-second fallback; saved history visible; automatic speech off makes no TTS request; fast replies receive a five-second preparation pause. Provider mocked.",
     );
   } finally {
     await b.close();

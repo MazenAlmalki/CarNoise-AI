@@ -436,3 +436,7 @@ Fast replies now keep the preparation state visible until about 1.4 seconds from
 ### Longer reply pacing and three reuploaded copies
 
 Raised the fast-reply preparation minimum from 1.4 to 3 seconds, preserving urgent-response bypass, cancellation and voice preferences. Verified the newly uploaded strut-mount clip and generic Video Project 18/19 copies against existing file hashes: strut mount, battery and brake pads respectively. No new reference entries or media duplication were needed; these remain known-recording identities rather than independently verified fault labels.
+
+### Five-second fast-reply pacing and technology explanation
+
+Raised the preparation minimum to five seconds at the user's request, without changing voice preferences, inference or urgent-response bypass. Added PROJECT_STACK_AR.md documenting the actual uploaded-source preparation, reference counts, local file/PCM identity, supported provider/model defaults and unverified training/accuracy claims. Presentation timing is not reported as model thinking time.
