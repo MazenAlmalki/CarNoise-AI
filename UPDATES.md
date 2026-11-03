@@ -456,3 +456,7 @@ Validation: syntax checks and 174 Node tests passed. Chromium verified a real kn
 ### Remove homepage problem suggestions
 
 Removed the three initial problem-example buttons and their section heading/click handler, so users start by writing their own description or attaching a clip. The welcome content, dictation, attachment and send controls remain available. Business-model canvas fields are unchanged.
+
+### Simplify interface copy
+
+Removed repeated welcome slogans, the workshop tip, decorative assistant badge and composer tagline. Shortened the welcome, input prompt and empty history text in Arabic and English. Kept upload/privacy information, dictation instructions and one concise inspection disclaimer.

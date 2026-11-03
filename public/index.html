@@ -99,9 +99,6 @@
             </div>
           </div>
           <div class="header-actions">
-            <span class="live-dot"
-              ><i></i><span data-i18n="aiAssistant">مساعد ذكي</span></span
-            >
             <button
               id="languageSwitch"
               class="pill-btn"
@@ -120,49 +117,17 @@
         </header>
         <main class="main" id="main">
           <div id="intro" class="intro">
-            <div class="workshop-heading">
-              <span data-i18n="workshopHeading">مساحة لسيارتك. وراحة بالك.</span
-              ><span class="workshop-edition">WARSHATAK / GARAGE</span>
-            </div>
             <div class="welcome-row">
               <div class="welcome-copy">
-                <div class="eyebrow">
-                  <span class="small-line"></span
-                  ><span data-i18n="eyebrow">وضوح أكثر. قلق أقل.</span>
-                </div>
-                <h1 data-i18n-html="heroTitle">
-                  كل صوت، وراه قصة.<br /><span>خلّنا نفهمها سوا.</span>
-                </h1>
-                <p class="subtitle" data-i18n="heroDescription">
-                  اوصف اللي تلاحظه، أو أرسل مقطع. نرتّب لك الاحتمالات والخطوة
-                  الجاية، بكل بساطة.
-                </p>
-                <div class="welcome-note">
-                  <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
-                  ><span data-i18n="welcomeNote"
-                    >إرشاد يساعدك تفهم، مو تشخيص نهائي.</span
-                  >
-                </div>
+                <h1 data-i18n-html="heroTitle">كيف نساعدك؟</h1>
+                <p class="subtitle" data-i18n="heroDescription">اكتب المشكلة أو أرفق مقطعًا.</p>
               </div>
               <div class="mechanic-stage" aria-hidden="true">
                 <div class="stage-disc"></div>
                 <svg class="mechanic mechanic-hero" viewBox="0 0 380 360">
                   <use data-mechanic href="/assets/mechanic.svg#welcome" />
                 </svg>
-                <div class="mechanic-caption">
-                  <span class="caption-line"></span
-                  ><span data-i18n="companionTag">معك، خطوة بخطوة</span>
-                </div>
               </div>
-            </div>
-            <div class="mechanic-tip">
-              <svg class="icon tip-marker" aria-hidden="true">
-                <use href="/assets/icons.svg#arrow" /></svg
-              ><strong data-i18n="tipLabel">نصيحة من الورشة</strong
-              ><span data-i18n="mechanicTip"
-                >قل لنا متى يظهر الصوت، وش يتغيّر معه. التفاصيل الصغيرة
-                تفرق.</span
-              >
             </div>
           </div>
           <section
@@ -282,10 +247,7 @@
               </button>
             </div>
           </form>
-          <div class="composer-caption">
-            <span data-i18n="composerHint"
-              >مساحة للكلام، والصوت، وكل التفاصيل.</span
-            ><span data-i18n="enterHint"
+          <div class="composer-caption"><span data-i18n="enterHint"
               >Enter للإرسال · Shift + Enter لسطر جديد</span
             >
           </div>
@@ -297,10 +259,7 @@
             ><button id="stopSpeech" type="button">إيقاف</button>
           </div>
           <p id="speechNotice" class="speech-notice hidden" role="status"></p>
-          <p class="footer-note" data-i18n="disclaimer">
-            النتائج ليست تشخيصًا. يُرفع المرفق إلى السيرفر مؤقتًا عند الإرسال؛
-            تحليل الصوت حسب إعدادات المزود.
-          </p>
+          <p class="footer-note" data-i18n="disclaimer">إرشاد أولي، لا يغني عن فحص مختص.</p>
         </div>
       </div>
     </div>
