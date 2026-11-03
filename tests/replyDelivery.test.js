@@ -48,7 +48,7 @@ test('cancelling preparation rejects immediately instead of releasing a stale re
  assert.equal(displayed,true);controller.abort();await assert.rejects(pending,{name:'AbortError'});
 });
 test('safety replies and already-slow responses receive no extra presentation pause',async()=>{
- for(const args of [{startedAt:performance.now(),urgent:true},{startedAt:performance.now()-3000}]){
+ for(const args of [{startedAt:performance.now(),urgent:true},{startedAt:performance.now()-5000}]){
   let displayed=false;await waitForReplyPreparation({...args,onWait:()=>displayed=true});assert.equal(displayed,false);
  }
 });

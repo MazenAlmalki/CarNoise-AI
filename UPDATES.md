@@ -432,3 +432,7 @@ The reuploaded belt clip exactly matched the registered file hash. The prior PCM
 ### Brief reply preparation pause
 
 Fast replies now keep the preparation state visible until about 1.4 seconds from Send, before text presentation or automatic read-aloud starts. The label is “Preparing your reply / جاري تجهيز الرد”, not a claim of extra inference. Already-slow responses receive no extra wait; urgent safety responses bypass it. Cancellation/navigation aborts the pause and cannot release a stale reply. Voice preferences and the no-automatic-paid-TTS rule for known-recording cards remain unchanged. Syntax checks and 172 Node tests passed; the browser speech-synchronization suite passed with mocked TTS and real playback.
+
+### Longer reply pacing and three reuploaded copies
+
+Raised the fast-reply preparation minimum from 1.4 to 3 seconds, preserving urgent-response bypass, cancellation and voice preferences. Verified the newly uploaded strut-mount clip and generic Video Project 18/19 copies against existing file hashes: strut mount, battery and brake pads respectively. No new reference entries or media duplication were needed; these remain known-recording identities rather than independently verified fault labels.
