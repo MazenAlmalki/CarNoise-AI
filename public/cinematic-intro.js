@@ -1,4 +1,4 @@
-import { introCopy, INTRO_SEEN_KEY } from "./intro-copy.js";
+import { introCopy } from "./intro-copy.js";
 // One silent welcome screen, dismissed only by an explicit action.
 export function createCinematicIntro({
   getLanguage,
@@ -44,9 +44,6 @@ export function createCinematicIntro({
   }
   function finish(immediate = false) {
     if (!dialog.open) return;
-    try {
-      localStorage.setItem(INTRO_SEEN_KEY, "1");
-    } catch {}
     clear();
     if (immediate) {
       close();
@@ -85,10 +82,7 @@ export function createCinematicIntro({
     if (dialog.open) close();
   });
   render();
-  let seen = false;
-  try {
-    seen = localStorage.getItem(INTRO_SEEN_KEY) === "1";
-  } catch {}
-  if (!seen) open();
+  // Show on every page load, including returning visitors with the old flag.
+  open();
   return { open, setLanguage: render };
 }

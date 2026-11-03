@@ -6,6 +6,10 @@
 
 This log documents the work visible in our development conversation and GitHub repository. It distinguishes **implemented in source**, **locally reported working**, and **not yet implemented/tested**. It is a retrospective summary, not a claim that every feature has been fully tested in production.
 
+## November 3, 2026 — Intro on every visit
+
+The silent intro now opens on every page load and refresh, regardless of the old first-visit flag. It still waits for Start chat, fades to the composer, and preserves vehicles/history/language. Browser regression covers reload with the legacy seen flag set.
+
 ## November 3, 2026 — Listen to a reference example
 
 Added one user-played reference example after a successful Gemini raw-audio comparison, with Close/Different/Not sure/Skip feedback. The server validates IDs against the hash-checked library and reserves the reply's single question for the example, respecting the two-question budget, urgency, speech/failure guards and offered-example history. Feedback is local, unverified resemblance, never a confirmed fault or training label. Playback uses the real WAV without a TTS call; players stop on recording, navigation, or other playback. Unknown references fail closed.

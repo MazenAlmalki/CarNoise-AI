@@ -92,8 +92,11 @@ const { chromium } = require(process.env.PLAYWRIGHT_MODULE || "playwright"),
       await p.locator(".reference-feedback button:enabled").count(),
       0,
     );
+    await p.evaluate(()=>localStorage.setItem("warshatak-cinematic-v1","1"));
     await p.reload();
-    assert.equal(await p.locator("#cinematicIntro[open]").count(), 0);
+    await p.locator("#cinematicIntro[open]").waitFor();
+    await p.locator("[data-intro=skip]").click();
+    await p.locator("#cinematicIntro").waitFor({state:"hidden"});
     await p.locator("#menuButton").click();
     await p.locator(".history-row").first().click();
     assert.equal(

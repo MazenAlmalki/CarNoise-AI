@@ -176,6 +176,8 @@ fs.mkdirSync(artifacts, { recursive: true });
       }),
     );
     await page.goto(base);
+    await page.locator("[data-intro=skip]").click();
+    await page.locator("#cinematicIntro").waitFor({state:"hidden"});
     assert.equal(await page.locator("#vehicleSelect option").count(), 25);
     assert.equal(await page.locator(".car-row").count(), 0);
     assert.equal(await page.locator("#historyList .history-row").count(), 1);
@@ -376,6 +378,8 @@ fs.mkdirSync(artifacts, { recursive: true });
       );
     }
     await page.reload();
+    await page.locator("[data-intro=skip]").click();
+    await page.locator("#cinematicIntro").waitFor({state:"hidden"});
     await page.setViewportSize({ width: 1440, height: 1000 });
     garage = await page.evaluate(() =>
       JSON.parse(localStorage.getItem("carnoise-garage-v2")),
