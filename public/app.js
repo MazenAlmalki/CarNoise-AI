@@ -1,3 +1,4 @@
+import {createCinematicIntro} from './cinematic-intro.js';
 import {createVoice} from './voice.js';
 import {summarizeQuestionMemory} from './questionMemory.js';
 const $=id=>document.getElementById(id);
@@ -308,6 +309,7 @@ let mediaRenderVersion=0;
 let visibleThreadId=null,visibleMessageCount=0;
 let recordingStartedAt=0,recordingClock=null;
 const t=k=>translations[state.lang][k],qList=()=>translations[state.lang].questions;
+let cinematicIntro=null;
 let speechState='idle',editingCarId=null,requestController=null,recordingGeneration=0;
 const voice=createVoice({container:$('voicePanel'),getLanguage:()=>state.lang,canSpeak:()=>!recording,onNotice:message=>{$('speechNotice').textContent=message;$('speechNotice').classList.toggle('hidden',!message);},onMouth:value=>document.body.style.setProperty('--mouth-open',String(value)),onState:value=>{speechState=value;document.body.dataset.speechState=value;syncMechanicState();}});
 
@@ -355,6 +357,7 @@ function renderSidebar(){
  }
 }
 function applySettings(){
+ cinematicIntro?.setLanguage(state.lang);
  voice.stop();voice.render();
  const root=document.documentElement;root.lang=state.lang;root.dir=state.lang==='ar'?'rtl':'ltr';root.dataset.theme=state.theme;
  document.querySelectorAll('[data-i18n]').forEach(n=>n.textContent=t(n.dataset.i18n));
@@ -802,15 +805,6 @@ $('recordButton').addEventListener('click',recordToggle);
 document.querySelectorAll('[data-example]').forEach(button=>button.addEventListener('click',()=>{if(!session&&!submitting)startAnalysis(t('examples')[button.dataset.example]);}));
 applySettings();
 
-// A bounded, keyboard-skippable introduction; returning sessions stay immediate.
-function dismissIntro(){const splash=$('splash');if(splash){splash.remove();document.removeEventListener('keydown',skipIntroKey);}}
-function skipIntroKey(event){if(event.key==='Escape'||event.key==='Enter'){event.preventDefault();dismissIntro();}}
-try{
- if(sessionStorage.getItem('warshatak-introduced')||state.cases.length||matchMedia('(prefers-reduced-motion: reduce)').matches)dismissIntro();
- sessionStorage.setItem('warshatak-introduced','1');
-}catch{dismissIntro();}
-$('skipIntro')?.addEventListener('click',dismissIntro);
-if($('splash')){document.addEventListener('keydown',skipIntroKey);setTimeout(dismissIntro,1800);}
 // Attachments use the same validation and upload path, including drag and drop.
 let dragDepth=0;
 $('composer').addEventListener('dragenter',event=>{event.preventDefault();if(!submitting){dragDepth++;$('composer').classList.add('drag-over');}});
@@ -883,3 +877,5 @@ document.addEventListener('click',event=>{document.querySelectorAll('.vehicle-me
 
 $('pauseSpeech').onclick=()=>voice.togglePause();
 $('stopSpeech').onclick=()=>voice.stop();
+
+cinematicIntro=createCinematicIntro({getLanguage:()=>state.lang,onLanguage:language=>{state.lang=language;if(session&&Array.isArray(session.messages))session.lang=language;persist();applySettings();},beforeOpen:()=>{if(submitting||recording){showError(state.lang==='ar'?'أوقف التسجيل أو انتظر اكتمال الرد قبل إعادة المقدمة.':'Stop recording or wait for the reply before replaying the intro.');return false;}voice.stop();closeNav();return true;}});

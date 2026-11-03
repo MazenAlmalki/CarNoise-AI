@@ -12,24 +12,10 @@
     <title>ورشتك | Warshatak</title>
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/workshop.css" />
+    <link rel="stylesheet" href="/intro.css" />
     <script type="module" src="/app.js"></script>
   </head>
   <body>
-    <div id="splash" class="splash" role="region" aria-label="Welcome">
-      <button id="skipIntro" class="skip-intro">تخطي / Skip</button>
-      <div class="splash-content">
-        <img
-          src="/assets/brand-mark.svg"
-          width="72"
-          height="72"
-          alt=""
-        /><strong data-i18n="brandName">ورشتك</strong
-        ><span data-i18n="splashTagline">معك، في كل مشوار.</span>
-        <svg class="intro-mechanic" viewBox="0 0 380 360" aria-hidden="true">
-          <use href="/assets/mechanic.svg#welcome" />
-        </svg>
-      </div>
-    </div>
     <a class="skip-link" href="#description" data-i18n="skipToChat"
       >انتقل للمحادثة</a
     >
@@ -73,6 +59,13 @@
         </div>
         <div id="historyList" class="history-list"></div>
         <div class="side-bottom">
+          <details id="experienceSettings" class="voice-panel">
+            <summary id="experienceTitle">تجربتك</summary>
+            <div class="voice-settings">
+              <button id="replayIntro" type="button">إعادة المقدمة</button
+              ><button id="settingsLanguage" type="button">English</button>
+            </div>
+          </details>
           <details id="voicePanel" class="voice-panel"></details>
           <div class="privacy-note">
             <svg class="icon"><use href="/assets/icons.svg#shield" /></svg
@@ -363,6 +356,45 @@
         </div>
       </div>
     </div>
+    <dialog
+      id="cinematicIntro"
+      class="cinematic-intro"
+      aria-label="Warshatak introduction"
+      data-phase="ready"
+      data-scene="logo"
+    >
+      <div class="intro-light" aria-hidden="true"></div>
+      <div class="intro-particles" aria-hidden="true">
+        <i style="--i: 0"></i><i style="--i: 1"></i><i style="--i: 2"></i
+        ><i style="--i: 3"></i><i style="--i: 4"></i><i style="--i: 5"></i
+        ><i style="--i: 6"></i><i style="--i: 7"></i><i style="--i: 8"></i
+        ><i style="--i: 9"></i><i style="--i: 10"></i><i style="--i: 11"></i
+        ><i style="--i: 12"></i><i style="--i: 13"></i>
+      </div>
+      <nav class="intro-toolbar" aria-label="Introduction controls">
+        <button data-intro="language" type="button">EN</button
+        ><button data-intro="mute" type="button" aria-pressed="false">
+          كتم الصوت</button
+        ><button data-intro="skip" type="button">تخطي المقدمة</button>
+      </nav>
+      <div class="intro-focus">
+        <div class="intro-emblem">
+          <img src="/assets/brand-mark.svg" alt="" width="88" height="88" />
+        </div>
+        <h1 data-intro="name">ورشتك</h1>
+        <p class="intro-tagline" data-intro="tagline"></p>
+      </div>
+      <div class="intro-start">
+        <button data-intro="begin" type="button" autofocus>
+          اضغط وابدأ الرحلة
+        </button>
+        <p data-intro="hint">تجربة قصيرة · صوت اختياري</p>
+      </div>
+      <div class="intro-captions">
+        <p data-intro="subtitles" aria-live="off"></p>
+        <p data-intro="notice" role="status"></p>
+      </div>
+    </dialog>
     <dialog id="carDialog" class="car-dialog" aria-labelledby="carDialogTitle">
       <form id="carForm">
         <div class="dialog-heading">
